@@ -1,0 +1,28 @@
+.header_container {
+  background: royalblue;
+
+  height: 160px;
+}
+
+.singIn_button{
+    color: #093c87;
+    background-color: #fff;
+    margin: 30px;
+    border: none;
+    font-size:24px ;
+    border-radius: 3px;
+    font-weight: 400;
+    width: 98px;
+    font-family: 'Roboto-Regular';
+}
+
+.signUp_botton{
+  width: 98px;
+  border-radius: 3px;
+  font-size: 24px;
+  color: white;
+    font-weight: 400;
+  background-color: #43bf82;
+  margin: 30px;
+  border: none;
+}

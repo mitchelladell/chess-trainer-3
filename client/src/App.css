@@ -1,0 +1,56 @@
+
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url("./css/fonts/Roboto-Regular.ttf") format("woff"),
+    url("./css/fonts/Roboto-Regular.ttf") format("opentype"),
+    url("./css/fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-Medium";
+  src: url("./css/fonts/Roboto-Medium.ttf") format("woff"),
+    url("./css/fonts/Roboto-Medium.ttf") format("opentype"),
+    url("./css/fonts/Roboto-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "RobotoCondensed-Bold";
+  src: url("./css/fonts/RobotoCondensed-Bold.ttf") format("woff"),
+    url("./css/fonts/RobotoCondensed-Bold.ttf") format("opentype"),
+    url("./css/fonts/RobotoCondensed-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto-Bold";
+  src: url("./css/fonts/Roboto-Bold.ttf") format("woff"),
+    url("./css/fonts/Roboto-Bold.ttf") format("opentype"),
+    url("./css/fonts/Roboto-Bold.ttf") format("truetype");
+}
+
+
+.main {
+  font-family: 'RobotoCondensed-Bold' !important;
+  background-color: wheat;
+}
+
+
+
+.App {
+  text-align: center;
+  background-color: wheat;
+  min-height: 100vh;
+}
+
+
+
+@keyframes App-logo-float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}

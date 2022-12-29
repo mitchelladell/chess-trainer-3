@@ -1,0 +1,16 @@
+.dashboard_container{
+        border-radius: 3px;
+        background-color: lightgray;
+        margin: 20px;
+        }
+.dashboard-image{
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    background: black;
+}
+
+.spaced_divs{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
