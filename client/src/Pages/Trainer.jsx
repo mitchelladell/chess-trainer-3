@@ -10,6 +10,8 @@ import translations from "../consts/translations";
 import { useSelector } from "react-redux";
 import Footer from "../components/Footer/Footer";
 
+import { Button } from "react-bootstrap";
+
 export default function Trainer() {
   const [game, setGame] = useState(new Chess());
   const lang = useSelector((state: any) => state.language.value);
@@ -19,6 +21,10 @@ export default function Trainer() {
   const [expectedNextMove, setExpectedNextMove] = useState("");
 
   const [SequenceState, setSequenceState] = useState("");
+  const [orientationWhite, setOrientationWhite] = useState(true);
+
+
+
 
 
  const [dimensions, setDimensions] = useState({
@@ -145,12 +151,17 @@ console.log('width', boardWidth)
             arePiecesDraggable={true}
             arePremovesAllowed={true}
             boardWidth={dimensions.width}
+            boardOrientation={orientationWhite ? 'white' : 'black'}
           />
         </Col>
         <Col xs={12} sm={3} md={4} lg={6}>
+                   <Button onClick={()=>setOrientationWhite(!orientationWhite)}> Flip The board </Button>
+
           {!moveState ? <div> {translations[lang].wrongMove} </div> : ""}{" "}
           {!moveState ? <div> {expectedNextMove} </div> : ""}
         </Col>
+
+
       </Row>
     </Container>
     </div>
