@@ -155,13 +155,10 @@ console.log('width', boardWidth)
           />
         </Col>
         <Col xs={12} sm={3} md={4} lg={6}>
-                   <Button onClick={()=>setOrientationWhite(!orientationWhite)}> Flip The board </Button>
-
+          <Button onClick={()=>setOrientationWhite(!orientationWhite)}> Flip The board </Button>
           {!moveState ? <div> {translations[lang].wrongMove} </div> : ""}{" "}
           {!moveState ? <div> {expectedNextMove} </div> : ""}
         </Col>
-
-
       </Row>
     </Container>
     </div>

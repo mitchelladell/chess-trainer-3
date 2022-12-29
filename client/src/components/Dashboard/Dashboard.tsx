@@ -29,10 +29,10 @@ const Dashboard: React.FC<IProps> = (props) => {
     <div className="dashboard_container">
       <Container>
         <Row>
-          <Col sm={2} md={2} lg={2}>
+          <Col sm={3} md={3} lg={2}>
             <img className="dashboard-image" alt=""></img>
           </Col>
-          <Col sm={8} md={8} lg={8}>
+          <Col sm={7} md={7} lg={8}>
             {" "}
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               {" "}
@@ -53,7 +53,7 @@ const Dashboard: React.FC<IProps> = (props) => {
               <ProgressBar now={props.progress} />
             </div>
           </Col>
-          <Col sm={2} md={2} lg={2}>
+          <Col sm={3} md={3} lg={2}>
             {" "}
             <div className="spaced_divs">
               <Button> Enroll </Button>
