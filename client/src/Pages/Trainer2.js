@@ -3,6 +3,7 @@ import PGN from "pgn-parser";
 import { Chessboard } from "react-chessboard";
 import { Chess } from "chess.js";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { current } from "@reduxjs/toolkit";
 
 async function readPGN(pgn2) {
   // Read the PGN file and parse it
@@ -31,6 +32,8 @@ function Trainer2() {
   const [turn, setTurn] = useState("w"); // "w" for white, "b" for black
 
   const [finalpgn, setFinalpgn] = useState([]);
+
+  const [nextMove, setNextMove] = useState("");
 
   const [comments, setComments] = useState([]);
   const [game, setGame] = useState(new Chess());
@@ -146,20 +149,43 @@ function Trainer2() {
     if (move === null) return false;
   }
 
+  const loadPostion = (index) => {
+    game.reset();
+    for (let i = 0; i <= index; i++) {
+      console.log("index", index);
+
+      game.move(moves[i]);
+    }
+
+    setPosition(game.fen());
+  };
+
+  useEffect(() => {
+    // Update nextMove whenever currentMove changes
+    const nextMove = moves[currentMove];
+    setNextMove(nextMove);
+  }, [currentMove]);
+
   function makeAMove(move) {
     // Make the move on the chessboard
-    const result = game.move(move);
+    game.move(move);
 
     const sideToMove = game.turn();
 
     console.log("sideTomove", sideToMove);
+
+    console.log("moves", moves);
     console.log("side", side);
+    console.log("history", game.history());
 
     // Update the component's state with the new position
     setPosition(game.fen());
 
+    console.log("pgn", pgn);
+    console.log("gamePGN", game.pgn());
+
     // Check if the move follows the PGN
-    if (!pgn.includes(game.pgn())) {
+    if (game.history()[currentMove] !== moves[currentMove]) {
       // The move does not follow the PGN, so add a delay before taking it back
       setTimeout(() => {
         // Undo the move
@@ -171,7 +197,8 @@ function Trainer2() {
     } else {
       setTimeout(() => {
         // Increment the current move index by one
-        setCurrentMove(currentMove + 1);
+        setCurrentMove((prevMove) => prevMove + 1);
+        console.log("currentMive", currentMove);
 
         // Check if the game is not over
         if (!game.game_over()) {
@@ -185,7 +212,10 @@ function Trainer2() {
           setPosition(game.fen());
 
           // Increment the current move index
-          setCurrentMove(currentMove + 1);
+          setCurrentMove((prevMove) => prevMove + 1);
+          console.log(nextMove, "nextMove");
+          console.log("game.fen", game.fen());
+          console.log(currentMove, "currentMove");
         }
       }, 1000);
 
@@ -193,7 +223,7 @@ function Trainer2() {
     }
   }
 
-  function onMove(from, to) {
+  /*   function onMove(from, to) {
     // Check if the move is legal
     const chess = new Chess(position);
     if (!chess.move({ from, to })) {
@@ -216,7 +246,7 @@ function Trainer2() {
     // Check if the move is correct
     const isCorrect = newPosition === solution;
     setCorrectMoves((correctMoves) => [...correctMoves, isCorrect]);
-  }
+  } */
 
   function handleMove(from, to) {
     const move = finalpgn[0].moves.find((m) => m.from === from && m.to === to);
@@ -268,12 +298,13 @@ function Trainer2() {
           <Col>
             <div>
               {data.map((move, index) => (
-                <div
-                  key={index}
-                  onClick={() => handleMove(move.from, move.to)}
-                  style={{ display: "flex" }}
-                >
-                  <div style={{ fontWeight: "bold", cursor: "pointer" }}>
+                <div key={index} style={{ display: "flex" }}>
+                  <div
+                    style={{ fontWeight: "bold", cursor: "pointer" }}
+                    onClick={() => {
+                      loadPostion(index);
+                    }}
+                  >
                     {move.move}{" "}
                   </div>{" "}
                   {move.comment}
