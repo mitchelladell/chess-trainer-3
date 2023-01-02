@@ -1,4 +1,3 @@
-
 @font-face {
   font-family: "Roboto-Regular";
   src: url("./css/fonts/Roboto-Regular.ttf") format("woff"),
@@ -27,21 +26,15 @@
     url("./css/fonts/Roboto-Bold.ttf") format("truetype");
 }
 
-
 .main {
-  font-family: 'RobotoCondensed-Bold' !important;
-  background-color: wheat;
+  font-family: "RobotoCondensed-Bold" !important;
 }
-
-
 
 .App {
   text-align: center;
-  background-color: wheat;
+  background-color: white;
   min-height: 100vh;
 }
-
-
 
 @keyframes App-logo-float {
   0% {

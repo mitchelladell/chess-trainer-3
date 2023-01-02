@@ -1,7 +1,6 @@
 .header_container {
   background: royalblue;
-
-  height: 160px;
+ padding: 10px;
 }
 
 .singIn_button{

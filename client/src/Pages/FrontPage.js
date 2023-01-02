@@ -21,15 +21,7 @@ const FrontPage = () => {
   });
 
   return (
-    <div
-      className="frontpage-container"
-      style={{
-        background: `url(${background})`,
-        width: "100vw",
-        height: "85vh",
-        backgroundSize: "contain",
-      }}
-    >
+    <div className="App">
       <Container align={"left"}>
         <div className="intro"> {greeting}</div>
         <Row>

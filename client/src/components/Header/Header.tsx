@@ -3,10 +3,9 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Dropdown from "react-bootstrap/Dropdown";
 import translations from "../../consts/translations";
-import { useSelector, useDispatch } from "react-redux";
-import { update } from "../../features/language/languageSlice";
+import Dropdown from "react-bootstrap/Dropdown";
+import { useSelector } from "react-redux";
 
 type Translation = {
   [key: string]: {
@@ -18,10 +17,7 @@ type Translation = {
 };
 
 const Header: React.FC = () => {
-  const lang = useSelector(
-    (state: { language: { value: string } }) => state.language.value
-  );
-  const dispatch = useDispatch();
+  const lang = useSelector((state: any) => state.language.value);
 
   return (
     <div className="header_container">
@@ -59,22 +55,6 @@ const Header: React.FC = () => {
               {" "}
               {(translations as Translation)[lang].signIn}
             </Button>
-            <div style={{ marginTop: "20px" }}>
-              <Dropdown>
-                <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                  {(translations as Translation)[lang].lang}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => dispatch(update("en"))}>
-                    {(translations as Translation).en.lang}
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => dispatch(update("ar"))}>
-                    {(translations as Translation).ar.lang}
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
           </Col>
         </Row>
       </Container>

@@ -17,10 +17,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <div className="header">
-        {" "}
-        <Header />
-      </div>
+      <Header />
       <Footer />
     </div>
   );

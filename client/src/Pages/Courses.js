@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import Header from "../components/Header/Header";
 import Dashboard from "../components/Dashboard/Dashboard";
 import Footer from "../components/Footer/Footer";
+import Video from "../components/VideoPlayer/VideoPlayer";
 
 import "./Courses.css";
 
@@ -13,7 +14,7 @@ const categories = [];
 
 const Courses = () => {
   return (
-    <div>
+    <div className="App">
       <Header />
       <Container fluid>
         <Row>
@@ -40,6 +41,7 @@ const Courses = () => {
           <Col sm={4} md={4} lg={4}>
             {" "}
             New Courses Here
+            <Video />
           </Col>
         </Row>
       </Container>

@@ -8,7 +8,7 @@ import "./Sign.css";
 
 const SignUp = () => {
   return (
-    <div>
+    <div className="App">
       <Header />
       <Container fluid>
         <Row>
