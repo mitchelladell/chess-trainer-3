@@ -11,7 +11,6 @@ import Trainer from "./Pages/Trainer";
 import Courses from "./Pages/Courses";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
-import Trainer2 from "./Pages/Trainer2";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -37,10 +36,7 @@ const router = createBrowserRouter([
     path: "trainer",
     element: <Trainer />,
   },
-  {
-    path: "trainer2",
-    element: <Trainer2 />,
-  },
+
   {
     path: "courses",
     element: <Courses />,

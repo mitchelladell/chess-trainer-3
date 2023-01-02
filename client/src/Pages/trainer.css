@@ -1,4 +1,8 @@
-.chessboard-board {
-    width: 50vw;
-    height: 50vw;
+
+.highlighted_move{
+    background-color:  cyan;
+}
+
+.moves_container{
+    background-color: #e4e4e4;
 }
