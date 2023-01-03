@@ -1,8 +1,8 @@
-
-.highlighted_move{
-    background-color:  cyan;
+.highlighted-move {
+    background-color: lightblue;
 }
-
 .moves_container{
     background-color: #e4e4e4;
+    overflow: auto;
+    border: 1px solid lightgray;
 }

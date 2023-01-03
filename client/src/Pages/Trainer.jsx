@@ -16,33 +16,32 @@ async function readPGN(pgn2) {
   const pgn = pgn2;
 
   const postion = PGN.parse(pgn);
-  console.log("game", postion);
 
   // Return the initial position and solution
   return postion;
 }
 
 const  Trainer = () => {
-  const pgn =
+  
+  const pgn1 =
     '[White "me"]\n[Black "you"]\n1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 (3. ...Nf6 {is the two knights}) 4. b4 Bxb4 5. c3 Ba5 6. d4 exd4 7. O-O Nge7 $1 *';
-  const [position, setPosition] = useState("");
-  const [history, setHistory] = useState([]);
-  const [initialPosition, setInitialPosition] = useState("");
-  const [solution, setSolution] = useState("");
-  const [correctMoves, setCorrectMoves] = useState([]);
-  const [moves, setMoves] = useState([]);
-  const [currentMove, setCurrentMove] = useState(0); // track the current move
-  const [data, setData] = useState([]);
-  const [clicked, setClicked] = useState(false);
- const [whiteOrientation, setWhiteOrientation]= useState(true)
+  
+  const pgn2 = '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 {This opening is called the Ruy Lopez.} 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Nb8 10. d4 Nbd7 11. c4 c6 12. cxb5 axb5 13. Nc3 Bb7 14. Bg5 b4 15. Nb1 h6 16. Bh4 c5 17. dxe5 Nxe4 18. Bxe7 Qxe7 19. exd6 Qf6 20. Nbd2 Nxd6 21. Nc4 Nxc4 22. Bxc4 Nb6 23. Ne5 Rae8 24. Bxf7+ Rxf7 25. Nxf7 Rxe1+ 26. Qxe1 Kxf7 27. Qe3 Qg5 28. Qxg5 hxg5 29. b3 Ke6 30. a3 Kd6 31. axb4 cxb4 32. Ra5 Nd5 33. f3 Bc8 34. Kf2 Bf5 35. Ra7 g6 36. Ra6+ Kc5 37. Ke1 Nf4 38. g3 Nxh3 39. Kd2 Kb5 40. Rd6 Kc5 41. Ra6 Nf2 42. g4 Bd3 43. Re6 1/2-1/2'
+  
+  let pgnList = [pgn1, pgn2];
 
-  const [side, setSide] = useState("w");
-  const [turn, setTurn] = useState("w"); // "w" for white, "b" for black
+  const [position, setPosition] = useState("");
+  const [moves, setMoves] = useState([]);
+  const [currentMove, setCurrentMove] = useState(0); 
+  const [data, setData] = useState([]);
+  const [whiteOrientation, setWhiteOrientation]= useState(true);
+  const [pgn, setPgn]= useState(pgnList[0]);
+  const [page, setPage] = useState(0);
+
+
 
   const [finalpgn, setFinalpgn] = useState([]);
-
-  const [nextMove, setNextMove] = useState("");
-
+  const [highlightedMoveIndex, setHighlightedMoveIndex] = useState(null);
   const [comments, setComments] = useState([]);
   const [game, setGame] = useState(new Chess());
 
@@ -69,41 +68,55 @@ const  Trainer = () => {
     }
   };
 
-  useEffect(() => {
-    // Read the PGN file and extract the initial position and solution
-    readPGN(pgn).then(({ initialPosition, solution }) => {
-      setInitialPosition(initialPosition);
-      setSolution(solution);
-      console.log("solution", initialPosition);
-      setPosition(initialPosition);
-    });
-  }, []);
+
 
   const getNextMove = (e) => {
     // Get the next move in the `moves` array
     const nextMove = moves[currentMove];
-    console.log("nextMove", nextMove);
     // Make the move on the chessboard
     game.move(nextMove);
     // Update the component's state with the new position and current move index
-    setPosition(game.fen());
     setCurrentMove(currentMove + 1);
+    setHighlightedMoveIndex(highlightedMoveIndex + 1 );
+    setPosition(game.fen());
   };
 
   const getPreviousMove = (e) => {
     // Undo the last move on the chessboard
     game.undo();
+
     // Update the component's state with the new position and current move index
-    setPosition(game.fen());
     setCurrentMove(currentMove - 1);
+    setHighlightedMoveIndex(highlightedMoveIndex - 1);
+    setPosition(game.fen());
   };
 
 const getFirstMove = ()=>{
 loadPostion(0);
+setHighlightedMoveIndex(0);
 }
 
   const getLastMove = ()=>{
-  loadPostion(moves.length);
+    loadPostion(moves.length);
+    setHighlightedMoveIndex(moves.length - 1);
+  }
+
+
+  const handleNextPageClick = ()=>{
+              setPgn(pgnList[page + 1]);
+                setPage(page + 1);
+                game.reset();
+                setPosition(game.fen());
+                setCurrentMove(0);
+  }
+
+
+  const handlePreviousPageClick = () =>{
+                 setPgn(pgnList[page - 1]);
+                setPage(page - 1);
+                game.reset();
+                setPosition(game.fen());
+                setCurrentMove(0);
   }
 
   document.onkeydown = checkKey;
@@ -146,25 +159,7 @@ loadPostion(0);
 
       console.log("comments", parsedComments);
 
-      const initialPosition =
-        finalpgn[0].headers.find((header) => header.name === "FEN")?.value ||
-        "";
-
-      const side = finalpgn[0].headers.find(
-        (header) => header.name === "White"
-      ).value;
-
-      setSide("me" ? "White" : "Black");
-
-      console.log("playingWithSide", side);
-      const solution = finalpgn[0].moves.slice(-1)[0].result || "";
-
-      console.log("solution", solution);
-      console.log("initialPosition", initialPosition);
-
-      setInitialPosition(initialPosition);
-      setSolution(solution);
-      setPosition(initialPosition);
+    
 
       const movesWithComments = finalpgn[0].moves.map((move) => {
         // Check if the move has a `ravs` property
@@ -182,7 +177,7 @@ loadPostion(0);
     });
 
     // Extract the initial position and solution from the parsed PGN
-  }, []);
+  }, [pgn]);
 
   function onDrop(sourceSquare, targetSquare) {
     const move = makeAMove({
@@ -195,41 +190,31 @@ loadPostion(0);
     if (move === null) return false;
   }
 
-  const loadPostion = (index) => {
-    game.reset();
-    for (let i = 0; i <= index; i++) {
-      console.log("index", index);
+ const loadPostion = (index) => {
+  // Reset the game to the initial position
+  game.reset();
+  // Highlight the selected move
+  setHighlightedMoveIndex(index);
 
-      game.move(moves[i]);
-      setCurrentMove(i);
-    }
+  // Make all the moves up to the selected move
+  for (let i = 0; i <= index; i++) {
+    game.move(moves[i]);
+  }
 
-    setPosition(game.fen());
-  };
+  // Update the component's state with the new position and current move index
+  setPosition(game.fen());
+  setCurrentMove(index + 1);
+};
 
-  useEffect(() => {
-    // Update nextMove whenever currentMove changes
-    const nextMove = moves[currentMove];
-    setNextMove(nextMove);
-  }, [currentMove]);
+
 
   function makeAMove(move) {
     // Make the move on the chessboard
     game.move(move);
 
-    const sideToMove = game.turn();
-
-    console.log("sideTomove", sideToMove);
-
-    console.log("moves", moves);
-    console.log("side", side);
-    console.log("history", game.history());
 
     // Update the component's state with the new position
     setPosition(game.fen());
-
-    console.log("pgn", pgn);
-    console.log("gamePGN", game.pgn());
 
     // Check if the move follows the PGN
     if (game.history()[currentMove] !== moves[currentMove]) {
@@ -245,7 +230,6 @@ loadPostion(0);
       setTimeout(() => {
         // Increment the current move index by one
         setCurrentMove((prevMove) => prevMove + 1);
-        console.log("currentMive", currentMove);
 
         // Check if the game is not over
         if (!game.game_over()) {
@@ -260,9 +244,7 @@ loadPostion(0);
 
           // Increment the current move index
           setCurrentMove((prevMove) => prevMove + 1);
-          console.log(nextMove, "nextMove");
-          console.log("game.fen", game.fen());
-          console.log(currentMove, "currentMove");
+
         }
       }, 1000);
 
@@ -311,6 +293,7 @@ loadPostion(0);
   return (
     <div>
       <Header />
+      <div style={{padding: '10px'}}>    
       <Container>
         <Row>
           <Col>
@@ -364,10 +347,10 @@ loadPostion(0);
               {data.map((move, index) => (
                 <div key={index} style={{ display: "flex" }}>
                   <div
+                  className={index === highlightedMoveIndex ? 'highlighted-move' : ''}
                     style={{ fontWeight: "bold", cursor: "pointer" }}
                     onClick={() => {
                       loadPostion(index);
-                      setClicked(true);
                     }}
                   >
                    {index+1}.  {move.move}{" "}
@@ -376,9 +359,24 @@ loadPostion(0);
                 </div>
               ))}
             </div>
+
+            <div>
+              <Button disabled={page <= 0} 
+              onClick={
+                handlePreviousPageClick
+              }>
+                Previous Page
+              </Button>
+                &nbsp;
+              <Button disabled={page >= pgnList.length - 1} 
+              onClick={handleNextPageClick}>
+                Next Page
+              </Button>
+            </div>
           </Col>
         </Row>
       </Container>
+      </div>
     </div>
   );
 }
