@@ -99,7 +99,7 @@ const Trainer = () => {
 
   const getFirstMove = () => {
     loadPostion(-1);
-    setHighlightedMoveIndex(0);
+    setHighlightedMoveIndex(-1);
   };
 
   const getLastMove = () => {
@@ -113,7 +113,7 @@ const Trainer = () => {
     game.reset();
     setPosition(game.fen());
     setCurrentMove(0);
-    setHighlightedMoveIndex(0);
+    setHighlightedMoveIndex(-1);
   };
 
   const handlePreviousPageClick = () => {
@@ -122,7 +122,7 @@ const Trainer = () => {
     game.reset();
     setPosition(game.fen());
     setCurrentMove(0);
-    setHighlightedMoveIndex(0);
+    setHighlightedMoveIndex(-1);
   };
 
   document.onkeydown = checkKey;
