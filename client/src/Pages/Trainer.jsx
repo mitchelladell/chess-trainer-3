@@ -42,9 +42,15 @@ const Trainer = () => {
   const [pgn, setPgn] = useState(pgnList[0]);
   const [page, setPage] = useState(0);
 
+  const [correctMove, setCorrectMove] = useState(false);
+  const [hasMadeMove, setHasMadeMove] = useState(false);
+  const [showIncorrectMove, setShowIncorrectMove] = useState(false);
+
   const [finalpgn, setFinalpgn] = useState([]);
   const [highlightedMoveIndex, setHighlightedMoveIndex] = useState(null);
   const [comments, setComments] = useState([]);
+
+  const [trainingMode, setTrainningMode] = useState(false);
   const [game, setGame] = useState(new Chess());
 
   const [dimensions, setDimensions] = useState({
@@ -161,9 +167,6 @@ const Trainer = () => {
 
       setComments(parsedComments);
       setMoves(parsedMoves);
-      console.log("moves", moves);
-
-      console.log("comments", parsedComments);
 
       const movesWithComments = finalpgn[0].moves.map((move) => {
         // Check if the move has a `ravs` property
@@ -213,23 +216,29 @@ const Trainer = () => {
   function makeAMove(move) {
     // Make the move on the chessboard
     game.move(move);
-
+    setHasMadeMove(true);
     // Update the component's state with the new position
     setPosition(game.fen());
 
     // Check if the move follows the PGN
     if (game.history()[currentMove] !== moves[currentMove]) {
       // The move does not follow the PGN, so add a delay before taking it back
+
+      setCorrectMove(false);
+      setShowIncorrectMove(true);
+
       setTimeout(() => {
         // Undo the move
         game.undo();
 
         // Update the component's state with the new position
         setPosition(game.fen());
-      }, 1000); // delay of 1 second
+        setShowIncorrectMove(false);
+      }, 250); // delay of 1/4 second
     } else {
       setTimeout(() => {
         // Increment the current move index by one
+        setCorrectMove(true);
         setCurrentMove((prevMove) => prevMove + 1);
 
         // Check if the game is not over
@@ -246,48 +255,8 @@ const Trainer = () => {
           // Increment the current move index
           setCurrentMove((prevMove) => prevMove + 1);
         }
-      }, 1000);
-
-      // The move follows the PGN, so do not undo the move
+      }, 500);
     }
-  }
-
-  /*   function onMove(from, to) {
-    // Check if the move is legal
-    const chess = new Chess(position);
-    if (!chess.move({ from, to })) {
-      alert("Illegal move!");
-      return;
-    }
-    const newPosition = chess.fen();
-
-    // Check if the move follows the PGN
-    if (!pgn.includes(chess.pgn())) {
-      alert("Move does not follow the PGN!");
-      chess.undo();
-      return;
-    }
-
-    // Update the history and the position
-    setHistory((history) => [...history, { from, to }]);
-    setPosition(newPosition);
-
-    // Check if the move is correct
-    const isCorrect = newPosition === solution;
-    setCorrectMoves((correctMoves) => [...correctMoves, isCorrect]);
-  } */
-
-  function handleMove(from, to) {
-    const move = finalpgn[0].moves.find((m) => m.from === from && m.to === to);
-
-    // Extract the LAN move string from the move
-    const lan = move.move;
-
-    // Make the move on the chessboard
-    game.move(lan);
-
-    // Update the component's state with the new position
-    setPosition(game.fen());
   }
 
   return (
@@ -344,33 +313,46 @@ const Trainer = () => {
                         <AiFillFastForward />
                       </Button>
                     </Col>
+                    <Col>
+                      <Button onClick={() => setTrainningMode(!trainingMode)}>
+                        {trainingMode ? "Exit Training" : "Test Yourself"}
+                      </Button>
+                    </Col>
                   </Row>
                 </div>
               </Container>
             </Col>
             <Col>
-              <div
-                className="moves_container"
-                style={{ height: dimensions.height }}
-              >
-                {data.map((move, index) => (
-                  <div key={index} style={{ display: "flex" }}>
-                    <div
-                      className={
-                        index === highlightedMoveIndex ? "highlighted-move" : ""
-                      }
-                      style={{ fontWeight: "bold", cursor: "pointer" }}
-                      onClick={() => {
-                        loadPostion(index);
-                      }}
-                    >
-                      {index + 1}. {move.move}{" "}
-                    </div>{" "}
-                    &nbsp;
-                    {move.comment}
-                  </div>
-                ))}
-              </div>
+              {!trainingMode ? (
+                <div
+                  className="moves_container"
+                  style={{ height: dimensions.height }}
+                >
+                  {data.map((move, index) => (
+                    <div key={index} style={{ display: "flex" }}>
+                      <div
+                        className={
+                          index === highlightedMoveIndex
+                            ? "highlighted-move"
+                            : ""
+                        }
+                        style={{ fontWeight: "bold", cursor: "pointer" }}
+                        onClick={() => {
+                          loadPostion(index);
+                        }}
+                      >
+                        {index + 1}. {move.move}{" "}
+                      </div>{" "}
+                      &nbsp;
+                      {move.comment}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div style={{ display: hasMadeMove ? "block" : "none" }}>
+                  {!correctMove ? "Incorrect move :(" : "Correct move!"}
+                </div>
+              )}
 
               <div>
                 <Button disabled={page <= 0} onClick={handlePreviousPageClick}>
