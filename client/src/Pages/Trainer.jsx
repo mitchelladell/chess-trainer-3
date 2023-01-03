@@ -6,10 +6,14 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Header from "../components/Header/Header";
 
 import { MdFlipCameraAndroid } from "react-icons/md";
-import { AiFillFastForward ,AiFillFastBackward, AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
+import {
+  AiFillFastForward,
+  AiFillFastBackward,
+  AiFillStepBackward,
+  AiFillStepForward,
+} from "react-icons/ai";
 
-import './Trainer.css';
-
+import "./Trainer.css";
 
 async function readPGN(pgn2) {
   // Read the PGN file and parse it
@@ -21,24 +25,22 @@ async function readPGN(pgn2) {
   return postion;
 }
 
-const  Trainer = () => {
-  
+const Trainer = () => {
   const pgn1 =
     '[White "me"]\n[Black "you"]\n1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 (3. ...Nf6 {is the two knights}) 4. b4 Bxb4 5. c3 Ba5 6. d4 exd4 7. O-O Nge7 $1 *';
-  
-  const pgn2 = '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 {This opening is called the Ruy Lopez.} 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Nb8 10. d4 Nbd7 11. c4 c6 12. cxb5 axb5 13. Nc3 Bb7 14. Bg5 b4 15. Nb1 h6 16. Bh4 c5 17. dxe5 Nxe4 18. Bxe7 Qxe7 19. exd6 Qf6 20. Nbd2 Nxd6 21. Nc4 Nxc4 22. Bxc4 Nb6 23. Ne5 Rae8 24. Bxf7+ Rxf7 25. Nxf7 Rxe1+ 26. Qxe1 Kxf7 27. Qe3 Qg5 28. Qxg5 hxg5 29. b3 Ke6 30. a3 Kd6 31. axb4 cxb4 32. Ra5 Nd5 33. f3 Bc8 34. Kf2 Bf5 35. Ra7 g6 36. Ra6+ Kc5 37. Ke1 Nf4 38. g3 Nxh3 39. Kd2 Kb5 40. Rd6 Kc5 41. Ra6 Nf2 42. g4 Bd3 43. Re6 1/2-1/2'
-  
+
+  const pgn2 =
+    "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 {This opening is called the Ruy Lopez.} 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Nb8 10. d4 Nbd7 11. c4 c6 12. cxb5 axb5 13. Nc3 Bb7 14. Bg5 b4 15. Nb1 h6 16. Bh4 c5 17. dxe5 Nxe4 18. Bxe7 Qxe7 19. exd6 Qf6 20. Nbd2 Nxd6 21. Nc4 Nxc4 22. Bxc4 Nb6 23. Ne5 Rae8 24. Bxf7+ Rxf7 25. Nxf7 Rxe1+ 26. Qxe1 Kxf7 27. Qe3 Qg5 28. Qxg5 hxg5 29. b3 Ke6 30. a3 Kd6 31. axb4 cxb4 32. Ra5 Nd5 33. f3 Bc8 34. Kf2 Bf5 35. Ra7 g6 36. Ra6+ Kc5 37. Ke1 Nf4 38. g3 Nxh3 39. Kd2 Kb5 40. Rd6 Kc5 41. Ra6 Nf2 42. g4 Bd3 43. Re6 1/2-1/2";
+
   let pgnList = [pgn1, pgn2];
 
   const [position, setPosition] = useState("");
   const [moves, setMoves] = useState([]);
-  const [currentMove, setCurrentMove] = useState(0); 
+  const [currentMove, setCurrentMove] = useState(0);
   const [data, setData] = useState([]);
-  const [whiteOrientation, setWhiteOrientation]= useState(true);
-  const [pgn, setPgn]= useState(pgnList[0]);
+  const [whiteOrientation, setWhiteOrientation] = useState(true);
+  const [pgn, setPgn] = useState(pgnList[0]);
   const [page, setPage] = useState(0);
-
-
 
   const [finalpgn, setFinalpgn] = useState([]);
   const [highlightedMoveIndex, setHighlightedMoveIndex] = useState(null);
@@ -46,8 +48,14 @@ const  Trainer = () => {
   const [game, setGame] = useState(new Chess());
 
   const [dimensions, setDimensions] = useState({
-    width: window.innerWidth > window.innerHeight ? window.innerHeight *0.7 : window.innerWidth * 0.7 ,
-    height: window.innerWidth > window.innerHeight ? window.innerHeight *0.7 : window.innerWidth * 0.7,
+    width:
+      window.innerWidth > window.innerHeight
+        ? window.innerHeight * 0.7
+        : window.innerWidth * 0.7,
+    height:
+      window.innerWidth > window.innerHeight
+        ? window.innerHeight * 0.7
+        : window.innerWidth * 0.7,
   });
 
   useEffect(() => {
@@ -68,8 +76,6 @@ const  Trainer = () => {
     }
   };
 
-
-
   const getNextMove = (e) => {
     // Get the next move in the `moves` array
     const nextMove = moves[currentMove];
@@ -77,7 +83,7 @@ const  Trainer = () => {
     game.move(nextMove);
     // Update the component's state with the new position and current move index
     setCurrentMove(currentMove + 1);
-    setHighlightedMoveIndex(highlightedMoveIndex + 1 );
+    setHighlightedMoveIndex(highlightedMoveIndex + 1);
     setPosition(game.fen());
   };
 
@@ -91,33 +97,33 @@ const  Trainer = () => {
     setPosition(game.fen());
   };
 
-const getFirstMove = ()=>{
-loadPostion(0);
-setHighlightedMoveIndex(0);
-}
+  const getFirstMove = () => {
+    loadPostion(-1);
+    setHighlightedMoveIndex(0);
+  };
 
-  const getLastMove = ()=>{
-    loadPostion(moves.length);
+  const getLastMove = () => {
+    loadPostion(moves.length - 1);
     setHighlightedMoveIndex(moves.length - 1);
-  }
+  };
 
+  const handleNextPageClick = () => {
+    setPgn(pgnList[page + 1]);
+    setPage(page + 1);
+    game.reset();
+    setPosition(game.fen());
+    setCurrentMove(0);
+    setHighlightedMoveIndex(0);
+  };
 
-  const handleNextPageClick = ()=>{
-              setPgn(pgnList[page + 1]);
-                setPage(page + 1);
-                game.reset();
-                setPosition(game.fen());
-                setCurrentMove(0);
-  }
-
-
-  const handlePreviousPageClick = () =>{
-                 setPgn(pgnList[page - 1]);
-                setPage(page - 1);
-                game.reset();
-                setPosition(game.fen());
-                setCurrentMove(0);
-  }
+  const handlePreviousPageClick = () => {
+    setPgn(pgnList[page - 1]);
+    setPage(page - 1);
+    game.reset();
+    setPosition(game.fen());
+    setCurrentMove(0);
+    setHighlightedMoveIndex(0);
+  };
 
   document.onkeydown = checkKey;
 
@@ -159,8 +165,6 @@ setHighlightedMoveIndex(0);
 
       console.log("comments", parsedComments);
 
-    
-
       const movesWithComments = finalpgn[0].moves.map((move) => {
         // Check if the move has a `ravs` property
         if (move.ravs) {
@@ -190,28 +194,25 @@ setHighlightedMoveIndex(0);
     if (move === null) return false;
   }
 
- const loadPostion = (index) => {
-  // Reset the game to the initial position
-  game.reset();
-  // Highlight the selected move
-  setHighlightedMoveIndex(index);
+  const loadPostion = (index) => {
+    // Reset the game to the initial position
+    game.reset();
+    // Highlight the selected move
+    setHighlightedMoveIndex(index);
 
-  // Make all the moves up to the selected move
-  for (let i = 0; i <= index; i++) {
-    game.move(moves[i]);
-  }
+    // Make all the moves up to the selected move
+    for (let i = 0; i <= index; i++) {
+      game.move(moves[i]);
+    }
 
-  // Update the component's state with the new position and current move index
-  setPosition(game.fen());
-  setCurrentMove(index + 1);
-};
-
-
+    // Update the component's state with the new position and current move index
+    setPosition(game.fen());
+    setCurrentMove(index + 1);
+  };
 
   function makeAMove(move) {
     // Make the move on the chessboard
     game.move(move);
-
 
     // Update the component's state with the new position
     setPosition(game.fen());
@@ -244,7 +245,6 @@ setHighlightedMoveIndex(0);
 
           // Increment the current move index
           setCurrentMove((prevMove) => prevMove + 1);
-
         }
       }, 1000);
 
@@ -293,92 +293,103 @@ setHighlightedMoveIndex(0);
   return (
     <div>
       <Header />
-      <div style={{padding: '10px'}}>    
-      <Container>
-        <Row>
-          <Col>
-            <Chessboard
-              onPieceDrop={onDrop}
-              position={game.fen()}
-              lightSquareStyle={{ backgroundColor: "white" }}
-              darkSquareStyle={{ backgroundColor: "black" }}
-              boardWidth={dimensions.width}
-              boardOrientation={whiteOrientation ? 'white' : 'black'}
-            />
+      <div style={{ padding: "10px" }}>
+        <Container>
+          <Row>
+            <Col>
+              <Chessboard
+                onPieceDrop={onDrop}
+                position={game.fen()}
+                lightSquareStyle={{ backgroundColor: "white" }}
+                darkSquareStyle={{ backgroundColor: "black" }}
+                boardWidth={dimensions.width}
+                boardOrientation={whiteOrientation ? "white" : "black"}
+              />
 
-            <Container>
-              <div >
-              <Row>
-                <Col>
-                <Button onClick={()=> setWhiteOrientation(!whiteOrientation)}>
-                  <MdFlipCameraAndroid />
-                </Button>
-                &nbsp;
-
-
-                 <Button onClick={()=>getFirstMove()}>
-                  <AiFillFastBackward/> 
-                </Button>
-                &nbsp;
-                  <Button
-                    disabled={currentMove <= 0}
-                    onClick={(e) => getPreviousMove(e)}
-                  >
-                  <AiFillStepBackward/> 
-                   </Button>{" "}
-                  &nbsp;
-                  <Button
-                    disabled={currentMove >= moves.length - 1}
-                    onClick={(e) => getNextMove(e)}
-                  >
-                    <AiFillStepForward/> 
-                  </Button>
-                  &nbsp;
-                  <Button onClick={()=>getLastMove()}>
-                  <AiFillFastForward/> 
-                </Button>
-                </Col>
-              </Row>
-              </div> 
-            </Container>
-          </Col>
-          <Col>
-            <div className="moves_container" style={{height: dimensions.height}}>
-              {data.map((move, index) => (
-                <div key={index} style={{ display: "flex" }}>
-                  <div
-                  className={index === highlightedMoveIndex ? 'highlighted-move' : ''}
-                    style={{ fontWeight: "bold", cursor: "pointer" }}
-                    onClick={() => {
-                      loadPostion(index);
-                    }}
-                  >
-                   {index+1}.  {move.move}{" "}
-                  </div>{" "} &nbsp;
-                   {move.comment}
+              <Container>
+                <div>
+                  <Row>
+                    <Col>
+                      <Button
+                        onClick={() => setWhiteOrientation(!whiteOrientation)}
+                      >
+                        <MdFlipCameraAndroid />
+                      </Button>
+                      &nbsp;
+                      <Button
+                        disabled={currentMove <= 0}
+                        onClick={() => getFirstMove()}
+                      >
+                        <AiFillFastBackward />
+                      </Button>
+                      &nbsp;
+                      <Button
+                        disabled={currentMove <= 0}
+                        onClick={(e) => getPreviousMove(e)}
+                      >
+                        <AiFillStepBackward />
+                      </Button>{" "}
+                      &nbsp;
+                      <Button
+                        disabled={currentMove >= moves.length - 1}
+                        onClick={(e) => getNextMove(e)}
+                      >
+                        <AiFillStepForward />
+                      </Button>
+                      &nbsp;
+                      <Button
+                        onClick={() => getLastMove()}
+                        disabled={currentMove >= moves.length - 1}
+                      >
+                        <AiFillFastForward />
+                      </Button>
+                    </Col>
+                  </Row>
                 </div>
-              ))}
-            </div>
+              </Container>
+            </Col>
+            <Col>
+              <div
+                className="moves_container"
+                style={{ height: dimensions.height }}
+              >
+                {data.map((move, index) => (
+                  <div key={index} style={{ display: "flex" }}>
+                    <div
+                      className={
+                        index === highlightedMoveIndex ? "highlighted-move" : ""
+                      }
+                      style={{ fontWeight: "bold", cursor: "pointer" }}
+                      onClick={() => {
+                        loadPostion(index);
+                      }}
+                    >
+                      {index + 1}. {move.move}{" "}
+                    </div>{" "}
+                    &nbsp;
+                    {move.comment}
+                  </div>
+                ))}
+              </div>
 
-            <div>
-              <Button disabled={page <= 0} 
-              onClick={
-                handlePreviousPageClick
-              }>
-                Previous Page
-              </Button>
+              <div>
+                <Button disabled={page <= 0} onClick={handlePreviousPageClick}>
+                  Previous Page
+                </Button>
                 &nbsp;
-              <Button disabled={page >= pgnList.length - 1} 
-              onClick={handleNextPageClick}>
-                Next Page
-              </Button>
-            </div>
-          </Col>
-        </Row>
-      </Container>
+                <Button
+                  disabled={page >= pgnList.length - 1}
+                  onClick={handleNextPageClick}
+                >
+                  Next Page
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </Container>
       </div>
     </div>
   );
-}
+};
 
 export default Trainer;
