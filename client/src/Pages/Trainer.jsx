@@ -4,6 +4,7 @@ import { Chessboard } from "react-chessboard";
 import { Chess } from "chess.js";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Header from "../components/Header/Header";
+import { useParams } from "react-router-dom";
 
 import { MdFlipCameraAndroid } from "react-icons/md";
 import {
@@ -34,17 +35,22 @@ const Trainer = () => {
 
   let pgnList = [pgn1, pgn2];
 
+  const { variation } = useParams();
+  console.log("variation", variation);
+
   const [position, setPosition] = useState("");
   const [moves, setMoves] = useState([]);
   const [currentMove, setCurrentMove] = useState(0);
   const [data, setData] = useState([]);
   const [whiteOrientation, setWhiteOrientation] = useState(true);
-  const [pgn, setPgn] = useState(pgnList[0]);
+  const [pgn, setPgn] = useState(variation);
   const [page, setPage] = useState(0);
 
   const [correctMove, setCorrectMove] = useState(false);
   const [hasMadeMove, setHasMadeMove] = useState(false);
   const [showIncorrectMove, setShowIncorrectMove] = useState(false);
+
+  const [showHint, setShowHint] = useState(false);
 
   const [finalpgn, setFinalpgn] = useState([]);
   const [highlightedMoveIndex, setHighlightedMoveIndex] = useState(null);
@@ -240,6 +246,7 @@ const Trainer = () => {
         // Increment the current move index by one
         setCorrectMove(true);
         setCurrentMove((prevMove) => prevMove + 1);
+        //  setHighlightedMoveIndex((prevMove) => prevMove + 1);
 
         // Check if the game is not over
         if (!game.game_over()) {
@@ -251,9 +258,11 @@ const Trainer = () => {
 
           // Update the component's state with the new position
           setPosition(game.fen());
+          setShowHint(false);
 
           // Increment the current move index
           setCurrentMove((prevMove) => prevMove + 1);
+          //  setHighlightedMoveIndex((prevMove) => prevMove + 1);
         }
       }, 500);
     }
@@ -350,7 +359,22 @@ const Trainer = () => {
                 </div>
               ) : (
                 <div style={{ display: hasMadeMove ? "block" : "none" }}>
-                  {!correctMove ? "Incorrect move :(" : "Correct move!"}
+                  {!correctMove ? (
+                    <div>
+                      Incorrect move, Try again :(
+                      <div>
+                        <Button onClick={() => setShowHint(!showHint)}>
+                          {""}
+                          {!correctMove && !showHint
+                            ? "Show Hint"
+                            : " Hide Hint"}
+                        </Button>
+                      </div>
+                      <div>{showHint ? moves[currentMove] : ""}</div>
+                    </div>
+                  ) : (
+                    <div>"Correct move!"</div>
+                  )}
                 </div>
               )}
 

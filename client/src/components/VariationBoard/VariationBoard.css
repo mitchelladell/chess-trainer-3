@@ -1,0 +1,49 @@
+.variation_board {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid grey;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.variation_name {
+  background-color: lightgrey;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.variation {
+  padding: 10px;
+}
+.variation_name a {
+  color: black;
+  text-decoration: none;
+}
+
+.variation a {
+  color: black;
+  text-decoration: none;
+}
+
+.variation_board > div:last-child {
+  display: flex;
+  justify-content: flex-end;
+  background-color: lightgrey;
+  padding: 10px;
+}
+
+.variation_board Button {
+  background-color: transparent;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+}
+
+.variation_board Button:hover {
+  background-color: grey;
+  color: white;
+  cursor: pointer;
+}

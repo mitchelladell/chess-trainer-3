@@ -1,16 +1,18 @@
-.dashboard_container{
-        border-radius: 3px;
-        background-color: lightgray;
-        margin: 20px;
-        }
-.dashboard-image{
-    width: 80px;
-    height: 80px;
-    margin: 5px;
-    background: black;
+.dashboard_container {
+  border-radius: 3px;
+  background-color: lightgray;
+  margin: 20px;
+}
+.dashboard-image {
+  width: 80px;
+  height: 80px;
+  margin: 5px;
+  background: black;
 }
 
-.spaced_divs{
-    margin-top: 5px;
-    margin-bottom: 5px;
+.spaced_divs {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  text-align: initial;
 }

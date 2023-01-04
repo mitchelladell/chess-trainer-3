@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import translations from "../../consts/translations";
 import ProgressBar from "react-bootstrap/ProgressBar";
+import { Link } from "react-router-dom";
 
 import "./Dashboard.css";
 
@@ -25,18 +26,28 @@ type IProps = {
   };
 }; */
 const Dashboard: React.FC<IProps> = (props) => {
+  const handleClick = () => {
+    console.log("hello");
+  };
+
   return (
     <div className="dashboard_container">
       <Container>
         <Row>
-          <Col sm={3} md={3} lg={2}>
+          <Col sm={3} md={3} lg={2} className="d-flex">
             <img className="dashboard-image" alt=""></img>
           </Col>
           <Col sm={7} md={7} lg={8}>
             {" "}
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               {" "}
-              {props.courseName}{" "}
+              <a href="/variation">
+                <div style={{ cursor: "pointer" }} onClick={handleClick}>
+                  {" "}
+                  {/* Should be a react Link redirecting to Variations */}
+                  {props.courseName}{" "}
+                </div>
+              </a>
               <div>
                 {" "}
                 {props.variationExist && (
@@ -56,7 +67,9 @@ const Dashboard: React.FC<IProps> = (props) => {
           <Col sm={3} md={3} lg={2}>
             {" "}
             <div className="spaced_divs">
-              <Button> Enroll </Button>
+              <Link to="/variation">
+                <Button> Enroll </Button>
+              </Link>
             </div>
           </Col>
         </Row>

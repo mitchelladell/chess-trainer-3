@@ -12,7 +12,7 @@ import "./Courses.css";
 
 const categories = [];
 
-const Courses = () => {
+const Courses = (props) => {
   return (
     <div className="App">
       <Header />
@@ -22,26 +22,15 @@ const Courses = () => {
             <Dashboard
               variationExist={true}
               now={60}
-              numberOfVariations="60/100"
-              courseName="Queen Opening"
-            />
-            <Dashboard
-              variationExist={true}
-              now={60}
-              numberOfVariations="60/100"
-              courseName="Queen Opening"
-            />
-            <Dashboard
-              variationExist={true}
-              now={60}
-              numberOfVariations="60/100"
+              numberOfVariations={`0/${props.numberOfVariations}`}
               courseName="Queen Opening"
             />
           </Col>
           <Col sm={4} md={4} lg={4}>
             {" "}
             New Courses Here
-            <Video />
+            {/*             <Video />
+             */}{" "}
           </Col>
         </Row>
       </Container>
