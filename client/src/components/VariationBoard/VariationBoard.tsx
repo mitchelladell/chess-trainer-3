@@ -16,7 +16,12 @@ const VariationBoard: React.FC<IProps> = (props) => {
       .then((response) => setData(response.data));
   }, []);
 
-  console.log("data", data);
+  const pgnWithName = data.map((obj) => {
+    const [name, pgn] = Object.entries(obj)[0];
+    return { name, pgn };
+  });
+
+  console.log("pgnNames", pgnWithName);
 
   return (
     <Container fluid>
@@ -30,6 +35,7 @@ const VariationBoard: React.FC<IProps> = (props) => {
                     to={`/trainer/${encodeURIComponent(
                       obj[Object.keys(obj)[0]]
                     )}`}
+                    state={{ pgnWithName: pgnWithName }}
                   >
                     {" "}
                     {Object.keys(obj)[0]}:
@@ -40,6 +46,7 @@ const VariationBoard: React.FC<IProps> = (props) => {
                     to={`/trainer/${encodeURIComponent(
                       obj[Object.keys(obj)[0]]
                     )}`}
+                    state={{ pgnWithName: pgnWithName }}
                   >
                     {obj[Object.keys(obj)[0]]}
                   </Link>
@@ -49,6 +56,7 @@ const VariationBoard: React.FC<IProps> = (props) => {
                     to={`/trainer/${encodeURIComponent(
                       obj[Object.keys(obj)[0]]
                     )}`}
+                    state={{ pgnWithName: pgnWithName }}
                   >
                     <Button>Learn</Button>
                   </Link>

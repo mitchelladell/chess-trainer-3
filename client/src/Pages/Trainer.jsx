@@ -5,6 +5,7 @@ import { Chess } from "chess.js";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Header from "../components/Header/Header";
 import { useParams } from "react-router-dom";
+import { useLocation } from "react-router";
 
 import { MdFlipCameraAndroid } from "react-icons/md";
 import {
@@ -32,8 +33,11 @@ const Trainer = () => {
 
   const pgn2 =
     "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 {This opening is called the Ruy Lopez.} 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Nb8 10. d4 Nbd7 11. c4 c6 12. cxb5 axb5 13. Nc3 Bb7 14. Bg5 b4 15. Nb1 h6 16. Bh4 c5 17. dxe5 Nxe4 18. Bxe7 Qxe7 19. exd6 Qf6 20. Nbd2 Nxd6 21. Nc4 Nxc4 22. Bxc4 Nb6 23. Ne5 Rae8 24. Bxf7+ Rxf7 25. Nxf7 Rxe1+ 26. Qxe1 Kxf7 27. Qe3 Qg5 28. Qxg5 hxg5 29. b3 Ke6 30. a3 Kd6 31. axb4 cxb4 32. Ra5 Nd5 33. f3 Bc8 34. Kf2 Bf5 35. Ra7 g6 36. Ra6+ Kc5 37. Ke1 Nf4 38. g3 Nxh3 39. Kd2 Kb5 40. Rd6 Kc5 41. Ra6 Nf2 42. g4 Bd3 43. Re6 1/2-1/2";
+  let pgndata = useLocation();
 
-  let pgnList = [pgn1, pgn2];
+  let pgnList = pgndata.state.pgnWithName;
+
+  console.log("list", pgnList);
 
   const { variation } = useParams();
   console.log("variation", variation);
@@ -45,6 +49,8 @@ const Trainer = () => {
   const [whiteOrientation, setWhiteOrientation] = useState(true);
   const [pgn, setPgn] = useState(variation);
   const [page, setPage] = useState(0);
+
+  const [testPgn, setTestPGN] = useState([]);
 
   const [correctMove, setCorrectMove] = useState(false);
   const [hasMadeMove, setHasMadeMove] = useState(false);
@@ -120,7 +126,7 @@ const Trainer = () => {
   };
 
   const handleNextPageClick = () => {
-    setPgn(pgnList[page + 1]);
+    setPgn(pgnList[page + 1].pgn);
     setPage(page + 1);
     game.reset();
     setPosition(game.fen());
@@ -129,7 +135,7 @@ const Trainer = () => {
   };
 
   const handlePreviousPageClick = () => {
-    setPgn(pgnList[page - 1]);
+    setPgn(pgnList[page - 1].pgn);
     setPage(page - 1);
     game.reset();
     setPosition(game.fen());
@@ -158,38 +164,10 @@ const Trainer = () => {
   useEffect(() => {
     readPGN(pgn).then((finalpgn) => {
       console.log("finalPgn", finalpgn);
-      setFinalpgn(finalpgn);
-      const ravs = finalpgn[0].moves.find((move) => move.ravs);
-
-      const parsedMoves = finalpgn[0].moves.map((move) => move.move);
-      // extract the comments from the parsed PGN data
-      const parsedComments = finalpgn[0].moves
-        .filter((move) => move.ravs)
-        .map((move) => move.ravs[0].moves[0].comments[0].text); //comments from ravs
-
-      /* const parsedComments = finalpgn[0].moves.map(   
-        (move) => move.comments[0]?.text
-      );  */ //comments from parent comment
-
-      setComments(parsedComments);
-      setMoves(parsedMoves);
-
-      const movesWithComments = finalpgn[0].moves.map((move) => {
-        // Check if the move has a `ravs` property
-        if (move.ravs) {
-          // Extract the comment from the `ravs` property
-          const comment = move.ravs[0].moves[0].comments[0].text;
-          // Return an object with the move and the comment
-          return { move: move.move, comment };
-        } else {
-          // If the move does not have a `ravs` property, return an object with the move and an empty comment
-          return { move: move.move, comment: "" };
-        }
-      });
-      setData(movesWithComments);
+      setTestPGN(finalpgn[0].moves);
+      console.log("testPgn", finalpgn[0].moves);
+      setFinalpgn(finalpgn[0].moves);
     });
-
-    // Extract the initial position and solution from the parsed PGN
   }, [pgn]);
 
   function onDrop(sourceSquare, targetSquare) {
@@ -278,10 +256,13 @@ const Trainer = () => {
               <Chessboard
                 onPieceDrop={onDrop}
                 position={game.fen()}
-                lightSquareStyle={{ backgroundColor: "white" }}
-                darkSquareStyle={{ backgroundColor: "black" }}
                 boardWidth={dimensions.width}
                 boardOrientation={whiteOrientation ? "white" : "black"}
+                showBoardNotation={true}
+                customSquareStyles={[
+                  { square: "e4", style: { backgroundColor: "red" } },
+                ]}
+                onSquareClick={(square) => console.log(square)}
               />
 
               <Container>
@@ -337,25 +318,41 @@ const Trainer = () => {
                   className="moves_container"
                   style={{ height: dimensions.height }}
                 >
-                  {data.map((move, index) => (
-                    <div key={index} style={{ display: "flex" }}>
-                      <div
-                        className={
-                          index === highlightedMoveIndex
-                            ? "highlighted-move"
-                            : ""
-                        }
-                        style={{ fontWeight: "bold", cursor: "pointer" }}
-                        onClick={() => {
-                          loadPostion(index);
-                        }}
-                      >
-                        {index + 1}. {move.move}{" "}
-                      </div>{" "}
-                      &nbsp;
-                      {move.comment}
-                    </div>
-                  ))}
+                  {finalpgn.length > 0 &&
+                    finalpgn.map((move, index) => (
+                      <div>
+                        <div
+                          key={index}
+                          className={
+                            index === highlightedMoveIndex
+                              ? "highlighted-move"
+                              : ""
+                          }
+                          style={{ fontWeight: "bold", cursor: "pointer" }}
+                          onClick={() => {
+                            loadPostion(index);
+                          }}
+                        >
+                          {index + 1}. {move.move}
+                        </div>
+                        {move.comments.length > 0 && (
+                          <div>
+                            {move.comments.map((c) => c.text).join(" ")}
+                          </div>
+                        )}
+                        {move.ravs && move.ravs.length > 0 && (
+                          <div>
+                            {move.ravs[0].moves.map((variation, index) => (
+                              <div key={index}>
+                                {variation.move}{" "}
+                                {variation.comments.length &&
+                                  variation.comments[0].text}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
                 </div>
               ) : (
                 <div style={{ display: hasMadeMove ? "block" : "none" }}>

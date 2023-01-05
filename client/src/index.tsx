@@ -47,7 +47,7 @@ const router = createBrowserRouter([
     element: <Courses />,
   },
   {
-    path: "variation",
+    path: "courses/variation",
     element: <VariationBoard />,
   },
 ]);

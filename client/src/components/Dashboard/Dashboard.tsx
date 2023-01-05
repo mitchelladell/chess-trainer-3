@@ -41,13 +41,13 @@ const Dashboard: React.FC<IProps> = (props) => {
             {" "}
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               {" "}
-              <a href="/variation">
+              <Link to="/courses/variation/">
                 <div style={{ cursor: "pointer" }} onClick={handleClick}>
                   {" "}
                   {/* Should be a react Link redirecting to Variations */}
                   {props.courseName}{" "}
                 </div>
-              </a>
+              </Link>
               <div>
                 {" "}
                 {props.variationExist && (
@@ -67,7 +67,7 @@ const Dashboard: React.FC<IProps> = (props) => {
           <Col sm={3} md={3} lg={2}>
             {" "}
             <div className="spaced_divs">
-              <Link to="/variation">
+              <Link to="/courses/variation/">
                 <Button> Enroll </Button>
               </Link>
             </div>
