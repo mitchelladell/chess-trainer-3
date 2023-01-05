@@ -166,6 +166,7 @@ const Trainer = () => {
       console.log("finalPgn", finalpgn);
       const parsedMoves = finalpgn[0].moves.map((move) => move.move);
       setMoves(parsedMoves);
+
       setTestPGN(finalpgn[0].moves);
       console.log("testPgn", finalpgn[0].moves);
       setFinalpgn(finalpgn[0].moves);
@@ -333,7 +334,7 @@ const Trainer = () => {
                         >
                           <div key={index}>
                             {" "}
-                            {index % 2 === 0 ? index + 1 : `${index}...`}.{" "}
+                            {move.move_number ? `${move.move_number}.` : "..."}
                             {move.move}
                           </div>
                         </div>
@@ -357,9 +358,9 @@ const Trainer = () => {
                     ))}
                 </div>
               ) : (
-                <div style={{ display: hasMadeMove ? "block" : "none" }}>
+                <div style={{ visibility: hasMadeMove ? "visible" : "hidden" }}>
                   {!correctMove ? (
-                    <div>
+                    <div style={{ marginBottom: "20px" }}>
                       Incorrect move, Try again :(
                       <div>
                         <Button onClick={() => setShowHint(!showHint)}>
