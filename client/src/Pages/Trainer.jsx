@@ -164,6 +164,8 @@ const Trainer = () => {
   useEffect(() => {
     readPGN(pgn).then((finalpgn) => {
       console.log("finalPgn", finalpgn);
+      const parsedMoves = finalpgn[0].moves.map((move) => move.move);
+      setMoves(parsedMoves);
       setTestPGN(finalpgn[0].moves);
       console.log("testPgn", finalpgn[0].moves);
       setFinalpgn(finalpgn[0].moves);
@@ -259,10 +261,6 @@ const Trainer = () => {
                 boardWidth={dimensions.width}
                 boardOrientation={whiteOrientation ? "white" : "black"}
                 showBoardNotation={true}
-                customSquareStyles={[
-                  { square: "e4", style: { backgroundColor: "red" } },
-                ]}
-                onSquareClick={(square) => console.log(square)}
               />
 
               <Container>
@@ -333,7 +331,11 @@ const Trainer = () => {
                             loadPostion(index);
                           }}
                         >
-                          {index + 1}. {move.move}
+                          <div key={index}>
+                            {" "}
+                            {index % 2 === 0 ? index + 1 : `${index}...`}.{" "}
+                            {move.move}
+                          </div>
                         </div>
                         {move.comments.length > 0 && (
                           <div>
