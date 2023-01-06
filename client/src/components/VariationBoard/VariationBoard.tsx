@@ -1,15 +1,27 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
 import react, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import translations from "../../consts/translations";
+import { useSelector } from "react-redux";
+import Video from "../VideoPlayer/VideoPlayer";
 
 import "./VariationBoard.css";
 import axios from "axios";
 
 type IProps = {};
 
+type Translation = {
+  [key: string]: {
+    turboCoach: "string";
+  };
+};
+
 const VariationBoard: React.FC<IProps> = (props) => {
   const [data, setData] = useState([]);
 
+  const lang = useSelector(
+    (state: { language: { value: string } }) => state.language.value
+  );
   useEffect(() => {
     axios
       .get("http://localhost:3001/pgn/1")
@@ -28,7 +40,7 @@ const VariationBoard: React.FC<IProps> = (props) => {
       {data.map((obj) => (
         <div key={Object.keys(obj)[0]}>
           <Row>
-            <Col xs={6} md={6} lg={6}>
+            <Col xs={12} md={6} lg={6}>
               <div className="variation_board">
                 <div className="variation_name">
                   <Link
@@ -38,18 +50,11 @@ const VariationBoard: React.FC<IProps> = (props) => {
                     state={{ pgnWithName: pgnWithName }}
                   >
                     {" "}
-                    {Object.keys(obj)[0]}:
+                    {Object.keys(obj)[0]}: {obj[Object.keys(obj)[0]]}
                   </Link>
                 </div>{" "}
                 <div className="variation">
-                  <Link
-                    to={`/trainer/${encodeURIComponent(
-                      obj[Object.keys(obj)[0]]
-                    )}`}
-                    state={{ pgnWithName: pgnWithName }}
-                  >
-                    {obj[Object.keys(obj)[0]]}
-                  </Link>
+                  <Video />
                 </div>{" "}
                 <div>
                   <Link
@@ -58,7 +63,10 @@ const VariationBoard: React.FC<IProps> = (props) => {
                     )}`}
                     state={{ pgnWithName: pgnWithName }}
                   >
-                    <Button>Learn</Button>
+                    <Button>
+                      {" "}
+                      {(translations as Translation)[lang].turboCoach}
+                    </Button>
                   </Link>
                 </div>
               </div>

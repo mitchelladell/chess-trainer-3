@@ -10,10 +10,17 @@
   background-color: lightgrey;
   padding: 10px;
   font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  max-height: 2.4em; /* 2 lines */
 }
 
 .variation {
   padding: 10px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 .variation_name a {
   color: black;

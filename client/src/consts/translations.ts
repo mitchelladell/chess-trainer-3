@@ -8,6 +8,7 @@ const translations: {
     keep_signIn: string;
     lang: string;
     wrongMove: string;
+    turboCoach: string;
   };
   ar: {
     signIn: string;
@@ -18,6 +19,7 @@ const translations: {
     keep_signIn: string;
     lang: string;
     wrongMove: string;
+    turboCoach: string;
   };
 } = {
   en: {
@@ -29,6 +31,7 @@ const translations: {
     keep_signIn: "keep me signed in",
     lang: "English",
     wrongMove: "Wrong Move",
+    turboCoach: "Turbo Coach",
   },
 
   ar: {
@@ -40,6 +43,7 @@ const translations: {
     keep_signIn: "ابقينى مسجل الدخول",
     lang: "العربية",
     wrongMove: "حركة خاظئة",
+    turboCoach: "المعلم السريع",
   },
 };
 
