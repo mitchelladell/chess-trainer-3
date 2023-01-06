@@ -254,7 +254,7 @@ const Trainer = () => {
       <Header />
       <div style={{ padding: "10px" }}>
         <Container>
-          <Row>
+          <Row no-gutters>
             <Col>
               <Chessboard
                 onPieceDrop={onDrop}
@@ -262,8 +262,18 @@ const Trainer = () => {
                 boardWidth={dimensions.width}
                 boardOrientation={whiteOrientation ? "white" : "black"}
                 showBoardNotation={true}
+                customBoardStyle={{
+                  borderRadius: "5px",
+                  boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
+                }}
+                customSquareStyle={true}
+                customSquareStyles={{
+                  boxShadow: "inset 0 0 1px 6px rgba(255, 240, 0)",
+                }}
+                customDropSquareStyle={{
+                  boxShadow: "inset 0 0 1px 6px rgba(255, 240, 0)",
+                }}
               />
-
               <Container>
                 <div>
                   <Row>
