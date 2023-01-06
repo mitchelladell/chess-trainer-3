@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
         <Container fluid>
           <Row>
             <Col>
-              <p>Copyright 2023</p>
+              <p>Copyright 2023 Contact us at :chessarabs.gmail.com</p>
             </Col>
             <Col className="d-flex justify-content-end">
               <Dropdown>

@@ -69,7 +69,7 @@ const Trainer = () => {
     width:
       window.innerWidth > window.innerHeight
         ? window.innerHeight * 0.7
-        : window.innerWidth * 0.7,
+        : window.innerWidth * 0.9,
     height:
       window.innerWidth > window.innerHeight
         ? window.innerHeight * 0.7
@@ -254,21 +254,23 @@ const Trainer = () => {
       <Header />
       <div style={{ padding: "10px" }}>
         <Container>
-          <Row no-gutters>
+          <Row no-gutters="true">
             <Col>
               <Chessboard
                 onPieceDrop={onDrop}
+                onMouseOverSquare={(square) => console.log("square", square)}
                 position={game.fen()}
                 boardWidth={dimensions.width}
                 boardOrientation={whiteOrientation ? "white" : "black"}
                 showBoardNotation={true}
+                customSquareStyles={{
+                  "square:hover": {
+                    boxShadow: "inset 0 0 1px 6px rgba(255, 0, 0)", // red color
+                  },
+                }}
                 customBoardStyle={{
                   borderRadius: "5px",
                   boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
-                }}
-                customSquareStyle={true}
-                customSquareStyles={{
-                  boxShadow: "inset 0 0 1px 6px rgba(255, 240, 0)",
                 }}
                 customDropSquareStyle={{
                   boxShadow: "inset 0 0 1px 6px rgba(255, 240, 0)",

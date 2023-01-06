@@ -32,7 +32,6 @@ const Header: React.FC = () => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item href="/trainer">trainer</Dropdown.Item>
                   <Dropdown.Item href="/courses">courses</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
