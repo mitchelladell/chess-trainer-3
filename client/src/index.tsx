@@ -11,7 +11,7 @@ import Trainer from "./Pages/Trainer";
 import Courses from "./Pages/Courses";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
-import VariationBoard from "./components/VariationBoard/VariationBoard";
+import Variations from "./Pages/Variations";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
   },
   {
     path: "courses/variation",
-    element: <VariationBoard />,
+    element: <Variations />,
   },
 ]);
 root.render(

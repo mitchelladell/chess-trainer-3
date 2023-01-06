@@ -31,7 +31,6 @@ const Courses = (props) => {
             {" "}
             <NewsBoard />
             <NewsBoard />
-            <NewsBoard />
             {/*             <Video />
              */}{" "}
           </Col>

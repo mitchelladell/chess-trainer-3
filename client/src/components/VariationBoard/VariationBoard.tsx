@@ -37,11 +37,11 @@ const VariationBoard: React.FC<IProps> = (props) => {
   console.log("pgnNames", pgnWithName);
 
   return (
-    <Container fluid>
+    <Container>
       {data.map((obj) => (
         <div key={Object.keys(obj)[0]}>
           <Row>
-            <Col xs={12} md={6} lg={6}>
+            <Col xs={12} sm={12} md={6} lg={6}>
               <div className="variation_board">
                 <div className="variation_name">
                   <Link

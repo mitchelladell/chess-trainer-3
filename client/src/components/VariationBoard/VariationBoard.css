@@ -1,10 +1,11 @@
 .variation_board {
   display: flex;
   flex-direction: column;
-  border: 1px solid royalblue;
+  border: 2px solid whitesmoke;
   border-radius: 5px;
   margin: 10px;
   overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .variation_name {
@@ -16,10 +17,14 @@
   text-overflow: ellipsis;
   display: -webkit-box;
   max-height: 2.4em; /* 2 lines */
+  background: linear-gradient(to bottom, royalblue, blue);
+  /* or */
+}
+.variation_name:hover {
+  background-color: darkblue;
 }
 
 .variation {
-  padding: 10px;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -37,22 +42,22 @@
 .variation_board > div:last-child {
   display: flex;
   justify-content: flex-end;
-  background-color: royalblue;
-  padding: 10px;
+  background-color: white;
 }
 
 .variation_board Button {
-  background-color: white;
+  background-color: royalblue;
   border: 1px solid white;
   border-radius: 5px;
   padding: 5px 10px;
   font-size: 14px;
   font-weight: bold;
-  color: black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: white;
 }
 
 .variation_board Button:hover {
-  background-color: whitesmoke;
-  color: black;
+  background-color: blue;
+  color: white;
   cursor: pointer;
 }
