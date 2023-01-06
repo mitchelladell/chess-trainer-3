@@ -7,6 +7,7 @@ import Video from "../VideoPlayer/VideoPlayer";
 
 import "./VariationBoard.css";
 import axios from "axios";
+import Footer from "../Footer/Footer";
 
 type IProps = {};
 

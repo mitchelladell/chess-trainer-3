@@ -9,6 +9,7 @@ import Footer from "../components/Footer/Footer";
 import Video from "../components/VideoPlayer/VideoPlayer";
 
 import "./Courses.css";
+import NewsBoard from "../components/NewsBoard/NewsBoard";
 
 const categories = [];
 
@@ -28,7 +29,9 @@ const Courses = (props) => {
           </Col>
           <Col sm={4} md={4} lg={4}>
             {" "}
-            New Courses Here
+            <NewsBoard />
+            <NewsBoard />
+            <NewsBoard />
             {/*             <Video />
              */}{" "}
           </Col>

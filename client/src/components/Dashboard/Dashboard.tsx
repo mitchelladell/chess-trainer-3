@@ -2,7 +2,6 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import translations from "../../consts/translations";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import { Link } from "react-router-dom";
 
