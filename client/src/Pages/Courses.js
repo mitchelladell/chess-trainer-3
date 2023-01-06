@@ -17,9 +17,9 @@ const Courses = (props) => {
   return (
     <div className="App">
       <Header />
-      <Container fluid>
+      <Container>
         <Row>
-          <Col sm={8} md={8} lg={8}>
+          <Col sm={9} md={9} lg={9}>
             <Dashboard
               variationExist={true}
               now={60}
@@ -27,7 +27,7 @@ const Courses = (props) => {
               courseName="Queen Opening"
             />
           </Col>
-          <Col sm={4} md={4} lg={4}>
+          <Col sm={3} md={3} lg={3}>
             {" "}
             <NewsBoard />
             <NewsBoard />

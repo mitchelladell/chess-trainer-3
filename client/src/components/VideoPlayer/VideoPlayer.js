@@ -1,4 +1,5 @@
 import React from "react";
+import "./VideoPlayer.css";
 
 const src = "https://www.youtube.com/embed/tgbNymZ7vqY";
 

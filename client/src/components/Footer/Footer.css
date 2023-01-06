@@ -1,13 +1,13 @@
-.footer{
-    position: fixed;
-     bottom: 0;
-     width: 100%;
-    background-color: grey;
-    padding: 10px;
-
+.footer {
+  /*     position: fixed;
+ */
+  bottom: 0;
+  width: 100%;
+  background-color: grey;
+  padding: 10px;
 }
 
-footer{
-    display: flex;
-    justify-content: space-between;
+footer {
+  display: flex;
+  justify-content: space-between;
 }

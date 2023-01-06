@@ -1,13 +1,15 @@
 .variation_board {
   display: flex;
   flex-direction: column;
-  border: 1px solid grey;
+  border: 1px solid royalblue;
   border-radius: 5px;
+  margin: 10px;
   overflow: hidden;
 }
 
 .variation_name {
-  background-color: lightgrey;
+  background-color: royalblue;
+  color: white;
   padding: 10px;
   font-weight: bold;
   overflow: hidden;
@@ -23,7 +25,7 @@
   text-align: center;
 }
 .variation_name a {
-  color: black;
+  color: white;
   text-decoration: none;
 }
 
@@ -35,13 +37,13 @@
 .variation_board > div:last-child {
   display: flex;
   justify-content: flex-end;
-  background-color: lightgrey;
+  background-color: royalblue;
   padding: 10px;
 }
 
 .variation_board Button {
-  background-color: transparent;
-  border: 1px solid grey;
+  background-color: white;
+  border: 1px solid white;
   border-radius: 5px;
   padding: 5px 10px;
   font-size: 14px;
@@ -50,7 +52,7 @@
 }
 
 .variation_board Button:hover {
-  background-color: grey;
-  color: white;
+  background-color: whitesmoke;
+  color: black;
   cursor: pointer;
 }
