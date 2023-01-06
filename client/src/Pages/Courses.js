@@ -16,27 +16,27 @@ const categories = [];
 const Courses = (props) => {
   return (
     <div className="App">
-      <Header />
-      <Container>
-        <Row>
-          <Col sm={9} md={9} lg={9}>
-            <Dashboard
-              variationExist={true}
-              now={60}
-              numberOfVariations={`0/${props.numberOfVariations}`}
-              courseName="Queen Opening"
-            />
-          </Col>
-          <Col sm={3} md={3} lg={3}>
-            {" "}
-            <NewsBoard />
-            <NewsBoard />
-            {/*             <Video />
-             */}{" "}
-          </Col>
-        </Row>
-      </Container>
-      <Footer />
+      <div style={{ overflow: "auto", height: "80vh" }}>
+        <Container>
+          <Row>
+            <Col sm={9} md={9} lg={9}>
+              <Dashboard
+                variationExist={true}
+                now={60}
+                numberOfVariations={`0/${props.numberOfVariations}`}
+                courseName="Queen Opening"
+              />
+            </Col>
+            <Col sm={3} md={3} lg={3}>
+              {" "}
+              <NewsBoard />
+              <NewsBoard />
+              {/*             <Video />
+               */}{" "}
+            </Col>
+          </Row>
+        </Container>
+      </div>
     </div>
   );
 };

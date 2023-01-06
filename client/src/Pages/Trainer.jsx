@@ -237,7 +237,6 @@ const Trainer = () => {
 
   return (
     <div>
-      <Header />
       <div style={{ padding: "10px" }}>
         <Container>
           <Row no-gutters="true">
@@ -355,7 +354,13 @@ const Trainer = () => {
                     ))}
                 </div>
               ) : (
-                <div style={{ visibility: hasMadeMove ? "visible" : "hidden" }}>
+                <div
+                  style={{
+                    visibility: hasMadeMove ? "visible" : "hidden",
+                    height: dimensions.height,
+                  }}
+                  className="moves_container"
+                >
                   {!correctMove ? (
                     <div style={{ marginBottom: "20px" }}>
                       Incorrect move, Try again :(

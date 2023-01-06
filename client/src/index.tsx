@@ -12,43 +12,79 @@ import Courses from "./Pages/Courses";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 import Variations from "./Pages/Variations";
+import Footer from "./components/Footer/Footer";
+import Layout from "./components/Layout/Layout";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <Layout>
+        <App />
+      </Layout>
+    ),
   },
+
   {
     path: "signup",
-    element: <SignUp />,
+    element: (
+      <Layout>
+        <SignUp />
+      </Layout>
+    ),
   },
   {
     path: "signin",
-    element: <SignIn />,
+    element: (
+      <Layout>
+        <SignIn />
+      </Layout>
+    ),
   },
   {
     path: "tutorials",
-    element: <Tutorials />,
+    element: (
+      <Layout>
+        <Tutorials />
+      </Layout>
+    ),
   },
   {
     path: "/trainer/:variation",
-    element: <Trainer />,
+    element: (
+      <Layout>
+        <Trainer />
+      </Layout>
+    ),
   },
 
   {
     path: "/courses/:course",
-    element: <Courses />,
+    element: (
+      <Layout>
+        <Courses />
+      </Layout>
+    ),
   },
   {
     path: "/courses/",
-    element: <Courses />,
+    element: (
+      <Layout>
+        <Courses />
+      </Layout>
+    ),
   },
   {
     path: "courses/variation",
-    element: <Variations />,
+    element: (
+      <Layout>
+        <Variations />
+      </Layout>
+    ),
   },
 ]);
 root.render(

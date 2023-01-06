@@ -13,9 +13,9 @@ const Variations = () => {
 
   return (
     <div className="App">
-      <Header />
-      <VariationBoard />
-      <Footer />
+      <div>
+        <VariationBoard />
+      </div>
     </div>
   );
 };
