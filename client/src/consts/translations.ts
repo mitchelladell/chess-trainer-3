@@ -9,6 +9,14 @@ const translations: {
     lang: string;
     wrongMove: string;
     turboCoach: string;
+    NextPage: string;
+    PreviousPage: string;
+    testYourself: string;
+    exitTraining: string;
+    showHint: string;
+    hideHint: string;
+    incorrectMove: string;
+    correctMove: String;
   };
   ar: {
     signIn: string;
@@ -20,6 +28,14 @@ const translations: {
     lang: string;
     wrongMove: string;
     turboCoach: string;
+    NextPage: string;
+    PreviousPage: string;
+    testYourself: string;
+    exitTraining: string;
+    showHint: string;
+    hideHint: string;
+    incorrectMove: string;
+    correctMove: String;
   };
 } = {
   en: {
@@ -30,8 +46,16 @@ const translations: {
     password: "password",
     keep_signIn: "keep me signed in",
     lang: "English",
-    wrongMove: "Wrong Move",
+    wrongMove: "Wrong Move, Try again",
     turboCoach: "Turbo Coach",
+    NextPage: "Next Page",
+    PreviousPage: "Previous Page",
+    testYourself: "Test Yourself",
+    exitTraining: "Exit Training",
+    showHint: "Show Hint",
+    hideHint: "Hide Hint",
+    incorrectMove: "Incorrect Move, Try again",
+    correctMove: "Correct Move ",
   },
 
   ar: {
@@ -42,8 +66,16 @@ const translations: {
     password: "كلمة المرور",
     keep_signIn: "ابقينى مسجل الدخول",
     lang: "العربية",
-    wrongMove: "حركة خاظئة",
+    wrongMove: " حركة خاطئة, حاول مجددا",
     turboCoach: "المعلم السريع",
+    NextPage: "الصفحة التالية",
+    PreviousPage: "الصفحة السابقة",
+    testYourself: "أختير نفسك",
+    exitTraining: "الخروج من التمرين",
+    showHint: "أرنى ملحوظة",
+    hideHint: "اخفى الملحوظة",
+    incorrectMove: "حركة خاطئة حاول مجددا",
+    correctMove: "حركة صحيحة",
   },
 };
 

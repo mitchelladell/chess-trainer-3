@@ -55,11 +55,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/trainer/:variation",
-    element: (
-      <Layout>
-        <Trainer />
-      </Layout>
-    ),
+    element: <Trainer />,
   },
 
   {

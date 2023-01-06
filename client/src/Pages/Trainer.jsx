@@ -6,6 +6,8 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Header from "../components/Header/Header";
 import { useParams } from "react-router-dom";
 import { useLocation } from "react-router";
+import { useSelector } from "react-redux";
+import ToggleButton from "react-bootstrap/ToggleButton";
 
 import { MdFlipCameraAndroid } from "react-icons/md";
 import {
@@ -16,6 +18,10 @@ import {
 } from "react-icons/ai";
 
 import "./Trainer.css";
+import translations from "../consts/translations";
+import Footer from "../components/Footer/Footer";
+
+import { Nav, Navbar, NavbarBrand } from "react-bootstrap";
 
 async function readPGN(pgn2) {
   // Read the PGN file and parse it
@@ -29,6 +35,7 @@ async function readPGN(pgn2) {
 
 const Trainer = () => {
   let pgndata = useLocation();
+  const lang = useSelector((state: any) => state.language.value);
 
   let pgnList = pgndata.state.pgnWithName;
 
@@ -38,7 +45,10 @@ const Trainer = () => {
   console.log("variation", variation);
 
   const [position, setPosition] = useState("");
+
+  const [focusMode, setFocusMode] = useState(false);
   const [moves, setMoves] = useState([]);
+
   const [currentMove, setCurrentMove] = useState(0);
   const [whiteOrientation, setWhiteOrientation] = useState(true);
   const [pgn, setPgn] = useState(variation);
@@ -59,7 +69,7 @@ const Trainer = () => {
     width:
       window.innerWidth > window.innerHeight
         ? window.innerHeight * 0.7
-        : window.innerWidth * 0.9,
+        : window.innerWidth * 0.7,
     height:
       window.innerWidth > window.innerHeight
         ? window.innerHeight * 0.7
@@ -69,6 +79,42 @@ const Trainer = () => {
   useEffect(() => {
     window.addEventListener("resize", handleResize, false);
   }, []);
+
+  function Sidebar() {
+    const [collapsed, setCollapsed] = useState(false);
+
+    return (
+      <div>
+        {!focusMode && (
+          <div>
+            <div
+              onClick={() => setCollapsed(!collapsed)}
+              style={{ justifyContent: "center", textAlign: "center" }}
+            >
+              {collapsed ? "Show Content" : "Hide Conent"}
+            </div>
+            <Navbar
+              bg="light"
+              expand="lg"
+              className={collapsed ? "collapsed" : ""}
+            >
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="flex-column">
+                  {pgnList.map((pgn) => (
+                    <div>
+                      <Nav.Link onClick={() => setPgn(pgn.pgn)}>
+                        {pgn.name}
+                      </Nav.Link>
+                    </div>
+                  ))}
+                </Nav>
+              </Navbar.Collapse>
+            </Navbar>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   const handleResize = () => {
     if (window.innerWidth > window.innerHeight) {
@@ -209,11 +255,12 @@ const Trainer = () => {
         setShowIncorrectMove(false);
       }, 250); // delay of 1/4 second
     } else {
+      setHighlightedMoveIndex((prev) => prev + 1);
+
       setTimeout(() => {
         // Increment the current move index by one
         setCorrectMove(true);
         setCurrentMove((prevMove) => prevMove + 1);
-        //  setHighlightedMoveIndex((prevMove) => prevMove + 1);
 
         // Check if the game is not over
         if (!game.game_over()) {
@@ -226,10 +273,10 @@ const Trainer = () => {
           // Update the component's state with the new position
           setPosition(game.fen());
           setShowHint(false);
+          setHighlightedMoveIndex((prev) => prev + 1);
 
           // Increment the current move index
           setCurrentMove((prevMove) => prevMove + 1);
-          //  setHighlightedMoveIndex((prevMove) => prevMove + 1);
         }
       }, 500);
     }
@@ -237,9 +284,23 @@ const Trainer = () => {
 
   return (
     <div>
-      <div style={{ padding: "10px" }}>
-        <Container>
+      {!focusMode && <Header />}
+      <div
+        className={focusMode ? "trainer_container_focus" : "trainer_container"}
+      >
+        <Container fluid>
           <Row no-gutters="true">
+            {/*  {!collapsed && !focusMode && <Sidebar />}
+              {!focusMode && (
+                <ToggleButton onClick={() => setCollapsed(!collapsed)}>
+                  {" "}
+                  {collapsed ? "Show Course Conents" : "Hide Course contents"}
+                </ToggleButton>
+              )} */}
+
+            <Col xs={2}>
+              <Sidebar />
+            </Col>
             <Col>
               <Chessboard
                 onPieceDrop={onDrop}
@@ -300,7 +361,13 @@ const Trainer = () => {
                     </Col>
                     <Col>
                       <Button onClick={() => setTrainningMode(!trainingMode)}>
-                        {trainingMode ? "Exit Training" : "Test Yourself"}
+                        {trainingMode
+                          ? `${translations[lang].exitTraining}`
+                          : `${translations[lang].testYourself}`}
+                      </Button>
+                      &nbsp;
+                      <Button onClick={() => setFocusMode(!focusMode)}>
+                        {focusMode ? "Exit Focus Mode" : "Enter Focus Mode"}
                       </Button>
                     </Col>
                   </Row>
@@ -315,7 +382,7 @@ const Trainer = () => {
                 >
                   {finalpgn.length > 0 &&
                     finalpgn.map((move, index) => (
-                      <div>
+                      <div key={index}>
                         <div
                           key={index}
                           className={
@@ -363,19 +430,19 @@ const Trainer = () => {
                 >
                   {!correctMove ? (
                     <div style={{ marginBottom: "20px" }}>
-                      Incorrect move, Try again :(
+                      {translations[lang].incorrectMove}
                       <div>
                         <Button onClick={() => setShowHint(!showHint)}>
                           {""}
                           {!correctMove && !showHint
-                            ? "Show Hint"
-                            : " Hide Hint"}
+                            ? `${translations[lang].showHint}`
+                            : `${translations[lang].hideHint}`}
                         </Button>
                       </div>
                       <div>{showHint ? moves[currentMove] : ""}</div>
                     </div>
                   ) : (
-                    <div>"Correct move!"</div>
+                    <div>{translations[lang].correctMove}</div>
                   )}
                 </div>
               )}
@@ -389,7 +456,7 @@ const Trainer = () => {
                         disabled={page <= 0}
                         onClick={handlePreviousPageClick}
                       >
-                        Previous Page
+                        {translations[lang].PreviousPage}
                       </Button>
                     </Col>
                     <Col>
@@ -397,7 +464,7 @@ const Trainer = () => {
                         disabled={page >= pgnList.length - 1}
                         onClick={handleNextPageClick}
                       >
-                        Next Page
+                        {translations[lang].NextPage}
                       </Button>
                     </Col>
                   </Row>
@@ -408,6 +475,7 @@ const Trainer = () => {
           </Row>
         </Container>
       </div>
+      {!focusMode && <Footer />}
     </div>
   );
 };

@@ -6,3 +6,17 @@
   overflow: auto;
   border: 1px solid lightgray;
 }
+.trainer_container_focus,
+.trainer_container {
+  padding: 10px;
+  background: white;
+}
+
+.trainer_container_focus {
+  background: black;
+  height: 100vh;
+}
+
+.collapsed {
+  visibility: hidden;
+}
