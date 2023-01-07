@@ -148,7 +148,11 @@ const Trainer = () => {
   };
 
   const rewardSystemEffect = () => {
-    const stars = [...Array(Math.min(correctMovesCount, 5)).keys()];
+    const stars = [
+      ...Array(
+        Math.min(Math.floor((correctMovesCount * 10) / moves.length), 5)
+      ).keys(),
+    ];
 
     return (
       <div
@@ -187,6 +191,7 @@ const Trainer = () => {
                   variant="success"
                   style={{ width: "100%" }}
                   now={(correctMovesCount * 200) / moves.length}
+                  max={100}
                   label={`${Math.floor(
                     (correctMovesCount * 200) / moves.length
                   )}%`}
@@ -210,7 +215,7 @@ const Trainer = () => {
           Correct Move
           <i class="bi bi-star"></i>
         </div>
-        {variationSolved && <div class="celebration">Congratulations!</div>}
+        {variationSolved && <div>Congratulations!</div>}
       </div>
     );
   };
@@ -269,6 +274,7 @@ const Trainer = () => {
     setCurrentMove(0);
     setHighlightedMoveIndex(-1);
     setVariationSolved(false);
+    setHasMadeMove(false);
   };
 
   const handlePreviousPageClick = () => {
@@ -281,6 +287,7 @@ const Trainer = () => {
     setCurrentMove(0);
     setHighlightedMoveIndex(-1);
     setVariationSolved(false);
+    setHasMadeMove(false);
   };
 
   document.onkeydown = checkKey;
@@ -360,6 +367,7 @@ const Trainer = () => {
   function makeAMove(move) {
     // Make the move on the chessboard
     game.move(move);
+
     setHasMadeMove(true);
     // Update the component's state with the new position
     setPosition(game.fen());
@@ -490,34 +498,39 @@ const Trainer = () => {
                 </Button>
                 <audio ref={falseAudio} src="/buzzer.mp3"></audio>
                 <audio ref={correctAudio} src="/correct-6033.mp3"></audio>
-                <Button
-                  className="mx-1"
-                  disabled={currentMove <= 0}
-                  onClick={() => getFirstMove()}
-                >
-                  <AiFillFastBackward />
-                </Button>
-                <Button
-                  className="mx-1"
-                  disabled={currentMove <= 0}
-                  onClick={(e) => getPreviousMove(e)}
-                >
-                  <AiFillStepBackward />
-                </Button>{" "}
-                <Button
-                  className="mx-1"
-                  disabled={currentMove >= moves.length - 1}
-                  onClick={(e) => getNextMove(e)}
-                >
-                  <AiFillStepForward />
-                </Button>
-                <Button
-                  className="mx-1"
-                  onClick={() => getLastMove()}
-                  disabled={currentMove >= moves.length - 1}
-                >
-                  <AiFillFastForward />
-                </Button>
+
+                {!trainingMode && (
+                  <div>
+                    <Button
+                      className="mx-1"
+                      disabled={currentMove <= 0}
+                      onClick={() => getFirstMove()}
+                    >
+                      <AiFillFastBackward />
+                    </Button>
+                    <Button
+                      className="mx-1"
+                      disabled={currentMove <= 0}
+                      onClick={(e) => getPreviousMove(e)}
+                    >
+                      <AiFillStepBackward />
+                    </Button>{" "}
+                    <Button
+                      className="mx-1"
+                      disabled={currentMove >= moves.length - 1}
+                      onClick={(e) => getNextMove(e)}
+                    >
+                      <AiFillStepForward />
+                    </Button>
+                    <Button
+                      className="mx-1"
+                      onClick={() => getLastMove()}
+                      disabled={currentMove >= moves.length - 1}
+                    >
+                      <AiFillFastForward />
+                    </Button>{" "}
+                  </div>
+                )}
                 <Button
                   className="mx-1"
                   onClick={() => setTrainningMode(!trainingMode)}
@@ -590,7 +603,7 @@ const Trainer = () => {
                     justifyContent: "center",
                   }}
                 >
-                  {!correctMove ? (
+                  {!variationSolved && !correctMove ? (
                     <div
                       style={{
                         borderRadius: "3px",

@@ -40,6 +40,10 @@
   width: 400px; /* the demo used inline styling */
 }
 
+.congratulations {
+  text-align: center;
+}
+
 .celebration {
   animation: bounce 0.5s ease-in-out infinite alternate,
     rotate 0.5s linear infinite;
