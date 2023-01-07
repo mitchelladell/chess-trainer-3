@@ -93,11 +93,7 @@ const Trainer = () => {
             >
               {collapsed ? "Show Content" : "Hide Conent"}
             </div>
-            <Navbar
-              bg="light"
-              expand="lg"
-              className={collapsed ? "collapsed" : ""}
-            >
+            <Navbar bg="light" className={collapsed ? "collapsed" : ""}>
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="flex-column">
                   {pgnList.map((pgn) => (
@@ -298,7 +294,7 @@ const Trainer = () => {
                 </ToggleButton>
               )} */}
 
-            <Col xs={2}>
+            <Col xs={2} sm={2} md={2}>
               <Sidebar />
             </Col>
             <Col>
