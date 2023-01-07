@@ -98,7 +98,15 @@ const Trainer = () => {
                 <Nav className="flex-column">
                   {pgnList.map((pgn) => (
                     <div>
-                      <Nav.Link onClick={() => setPgn(pgn.pgn)}>
+                      <Nav.Link
+                        onClick={() => {
+                          setPgn(pgn.pgn);
+                          game.reset();
+                          setPosition(game.fen());
+                          setCurrentMove(0);
+                          setHighlightedMoveIndex(-1);
+                        }}
+                      >
                         {pgn.name}
                       </Nav.Link>
                     </div>
