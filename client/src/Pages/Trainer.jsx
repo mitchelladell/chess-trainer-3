@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PGN from "pgn-parser";
 import { Chessboard } from "react-chessboard";
 import { Chess } from "chess.js";
@@ -343,18 +343,24 @@ const Trainer = () => {
     setCurrentMove(index + 1);
   };
 
+  /*   const moveSoundRef = useRef(null);
+   */
+  /*   return <audio ref={moveSoundRef} src="C:\Users\aamagebril\ownfiles\chess-typescript\chess-alpha\client\public\correct-6033.mp3" />;
+   */
   function makeAMove(move) {
     // Make the move on the chessboard
     game.move(move);
     setHasMadeMove(true);
     // Update the component's state with the new position
     setPosition(game.fen());
-
+    /*     moveSoundRef.current.play();
+     */
     // Check if the move follows the PGN
     if (game.history()[currentMove] !== moves[currentMove]) {
       // The move does not follow the PGN, so add a delay before taking it back
 
       setCorrectMove(false);
+
       setShowIncorrectMove(true);
 
       setTimeout(() => {
@@ -371,6 +377,7 @@ const Trainer = () => {
       setTimeout(() => {
         // Increment the current move index by one
         setCorrectMove(true);
+
         setCurrentMove((prevMove) => prevMove + 1);
         setCorrectMovesCount((prev) => prev + 1);
         console.log("correctCount", correctMovesCount);
@@ -396,6 +403,7 @@ const Trainer = () => {
 
           if (nextMove === moves[moves.length - 1]) {
             setVariationSolved(true);
+            return;
           }
         }
       }, 500);
@@ -410,25 +418,28 @@ const Trainer = () => {
       >
         <Container fluid>
           <Row>
-            {!collapsed && (
-              <Col xs={3} sm={3} md={3}>
-                {" "}
-                <Sidebar />
-              </Col>
-            )}
-            <Col xs={1} sm={1} md={1}>
+            <Col xs={3} sm={3} md={2}>
               <div
                 onClick={() => setCollapsed(!collapsed)}
                 style={{
-                  justifyContent: "center",
-                  textAlign: "center",
                   cursor: "pointer",
+                  textAlign: "center",
                 }}
               >
                 {collapsed ? ">>" : "<<"}
               </div>
             </Col>
-            <Col>
+          </Row>
+
+          <Row>
+            {!collapsed && (
+              <Col xs={3} sm={3} md={2}>
+                {" "}
+                <Sidebar />
+              </Col>
+            )}
+
+            <Col align={"right"}>
               <Container>
                 <Chessboard
                   onPieceDrop={onDrop}
@@ -456,6 +467,7 @@ const Trainer = () => {
                   marginBottom: "10px",
                   display: "flex",
                   flexWrap: "wrap",
+                  justifyContent: "end",
                 }}
               >
                 <Button
@@ -464,6 +476,7 @@ const Trainer = () => {
                 >
                   <MdFlipCameraAndroid />
                 </Button>
+                <Button></Button>
                 <Button
                   className="mx-1"
                   disabled={currentMove <= 0}
