@@ -379,6 +379,12 @@ const Trainer = () => {
       >
         <Container fluid>
           <Row>
+            {!collapsed && (
+              <Col xs={3} sm={3} md={3}>
+                {" "}
+                <Sidebar />
+              </Col>
+            )}
             <Col xs={1} sm={1} md={1}>
               <div
                 onClick={() => setCollapsed(!collapsed)}
@@ -391,12 +397,6 @@ const Trainer = () => {
                 {collapsed ? ">>" : "<<"}
               </div>
             </Col>
-            {!collapsed && (
-              <Col xs={2} sm={2} md={2}>
-                {" "}
-                <Sidebar />
-              </Col>
-            )}
             <Col>
               <Container>
                 <Chessboard
