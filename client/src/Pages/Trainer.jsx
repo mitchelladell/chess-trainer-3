@@ -24,7 +24,8 @@ import "./Trainer.css";
 import translations from "../consts/translations";
 import Footer from "../components/Footer/Footer";
 
-import { Nav, Navbar, NavbarBrand } from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
+import { current } from "@reduxjs/toolkit";
 
 async function readPGN(pgn2) {
   // Read the PGN file and parse it
@@ -342,6 +343,7 @@ const Trainer = () => {
 
     // illegal move
     if (move === null) return false;
+    return true;
   }
 
   const loadPostion = (index) => {
@@ -366,6 +368,12 @@ const Trainer = () => {
    */
   function makeAMove(move) {
     // Make the move on the chessboard
+
+    if (!game.move(move)) {
+      return false;
+      // The move is legal
+    }
+
     game.move(move);
 
     setHasMadeMove(true);
@@ -391,7 +399,6 @@ const Trainer = () => {
         setShowIncorrectMove(false);
       }, 250); // delay of 1/4 second
     } else {
-      setHighlightedMoveIndex((prev) => prev + 1);
       playCorrect();
 
       setTimeout(() => {
@@ -400,6 +407,8 @@ const Trainer = () => {
 
         setCurrentMove((prevMove) => prevMove + 1);
         setCorrectMovesCount((prev) => prev + 1);
+        setHighlightedMoveIndex((prev) => prev + 1);
+
         console.log("correctCount", correctMovesCount);
 
         // Check if the game is not over
@@ -428,6 +437,7 @@ const Trainer = () => {
         }
       }, 500);
     }
+    return;
   }
 
   return (
@@ -438,20 +448,19 @@ const Trainer = () => {
       >
         <Container fluid>
           <Row>
-            <Col xs={1} sm={1} md={1}>
-              <div
-                onClick={() => setCollapsed(!collapsed)}
-                style={{
-                  cursor: "pointer",
-                  textAlign: "center",
-                }}
-              >
-                {collapsed ? ">>" : "<<"}
-              </div>
-            </Col>
-          </Row>
-
-          <Row>
+            <Row>
+              <Col xs={1} sm={1} md={1} align={"center"}>
+                <div
+                  onClick={() => setCollapsed(!collapsed)}
+                  style={{
+                    cursor: "pointer",
+                    textAlign: "center",
+                  }}
+                >
+                  {collapsed ? ">>" : "<<"}
+                </div>
+              </Col>
+            </Row>
             {!collapsed && (
               <Col xs={3} sm={3} md={2}>
                 {" "}
@@ -465,6 +474,7 @@ const Trainer = () => {
                   onPieceDrop={onDrop}
                   position={game.fen()}
                   boardWidth={dimensions.width}
+                  areArrowsAllowed={true}
                   boardOrientation={whiteOrientation ? "white" : "black"}
                   showBoardNotation={true}
                   customSquareStyles={{
