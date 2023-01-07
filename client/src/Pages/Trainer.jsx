@@ -131,6 +131,16 @@ const Trainer = () => {
     );
   }
 
+  const correctAudio = useRef(null);
+  const falseAudio = useRef(null);
+
+  function playCorrect() {
+    correctAudio.current.play();
+  }
+  function playBuzzer() {
+    falseAudio.current.play();
+  }
+
   const findPgnIndex = () => {
     const index = pgnList.findIndex((element) => element.pgn === pgn);
     console.log("index", index);
@@ -358,6 +368,7 @@ const Trainer = () => {
     // Check if the move follows the PGN
     if (game.history()[currentMove] !== moves[currentMove]) {
       // The move does not follow the PGN, so add a delay before taking it back
+      playBuzzer();
 
       setCorrectMove(false);
 
@@ -373,6 +384,7 @@ const Trainer = () => {
       }, 250); // delay of 1/4 second
     } else {
       setHighlightedMoveIndex((prev) => prev + 1);
+      playCorrect();
 
       setTimeout(() => {
         // Increment the current move index by one
@@ -418,7 +430,7 @@ const Trainer = () => {
       >
         <Container fluid>
           <Row>
-            <Col xs={3} sm={3} md={2}>
+            <Col xs={1} sm={1} md={1}>
               <div
                 onClick={() => setCollapsed(!collapsed)}
                 style={{
@@ -476,7 +488,8 @@ const Trainer = () => {
                 >
                   <MdFlipCameraAndroid />
                 </Button>
-                <Button></Button>
+                <audio ref={falseAudio} src="/buzzer.mp3"></audio>
+                <audio ref={correctAudio} src="/correct-6033.mp3"></audio>
                 <Button
                   className="mx-1"
                   disabled={currentMove <= 0}
