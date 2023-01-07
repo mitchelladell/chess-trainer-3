@@ -8,6 +8,9 @@ import { useParams } from "react-router-dom";
 import { useLocation } from "react-router";
 import { useSelector } from "react-redux";
 import ToggleButton from "react-bootstrap/ToggleButton";
+import { Star, MdOutlineKeyboardArrowDown } from "react-bootstrap-icons";
+import { ProgressBar } from "react-bootstrap";
+import SidebarMenu from "react-bootstrap-sidebar-menu";
 
 import { MdFlipCameraAndroid } from "react-icons/md";
 import {
@@ -53,10 +56,13 @@ const Trainer = () => {
   const [whiteOrientation, setWhiteOrientation] = useState(true);
   const [pgn, setPgn] = useState(variation);
   const [page, setPage] = useState(0);
+  const [collapsed, setCollapsed] = useState(false);
+  const [navSelected, setNavSelected] = useState(null);
 
   const [correctMove, setCorrectMove] = useState(false);
   const [hasMadeMove, setHasMadeMove] = useState(false);
   const [showIncorrectMove, setShowIncorrectMove] = useState(false);
+  const [correctMovesCount, setCorrectMovesCount] = useState(0);
 
   const [showHint, setShowHint] = useState(false);
 
@@ -81,44 +87,40 @@ const Trainer = () => {
   }, []);
 
   function Sidebar() {
-    const [collapsed, setCollapsed] = useState(false);
-
     return (
       <div>
         {!focusMode && (
           <div>
-            <div
-              onClick={() => setCollapsed(!collapsed)}
-              style={{
-                justifyContent: "center",
-                textAlign: "center",
-                cursor: "pointer",
-              }}
-            >
-              {collapsed ? "Show Content" : "Hide Content"}
-            </div>
-            <Navbar bg="light" className={collapsed ? "collapsed" : ""}>
-              <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="flex-column">
-                  {pgnList.map((pgn) => (
-                    <div>
-                      <Nav.Link
-                        onClick={() => {
-                          setPgn(pgn.pgn);
-                          game.reset();
-                          setPosition(game.fen());
-                          setCurrentMove(0);
-                          setPage(findPgnIndex());
-                          setHighlightedMoveIndex(-1);
-                        }}
-                      >
-                        {pgn.name}
-                      </Nav.Link>
-                    </div>
-                  ))}
-                </Nav>
-              </Navbar.Collapse>
-            </Navbar>
+            {!collapsed && (
+              <Navbar bg="light" className={collapsed ? "collapsed" : ""}>
+                <Navbar.Collapse id="basic-navbar-nav">
+                  <Nav className="flex-column">
+                    {pgnList.map((pgn) => (
+                      <div>
+                        <Nav.Link
+                          onClick={() => {
+                            setPgn(pgn.pgn);
+                            game.reset();
+                            setPosition(game.fen());
+                            setCurrentMove(0);
+                            setPage(findPgnIndex());
+                            setCorrectMovesCount(0);
+                            setHighlightedMoveIndex(-1);
+                            setTrainningMode(false);
+                            setHasMadeMove(false);
+                            setNavSelected(pgn.name);
+                          }}
+                          style={{ fontFamily: "RobotoCondensed-Bold" }}
+                          className={navSelected === pgn.name ? "active" : ""}
+                        >
+                          {pgn.name}
+                        </Nav.Link>
+                      </div>
+                    ))}
+                  </Nav>
+                </Navbar.Collapse>
+              </Navbar>
+            )}
           </div>
         )}
       </div>
@@ -129,6 +131,73 @@ const Trainer = () => {
     const index = pgnList.findIndex((element) => element.pgn === pgn);
     console.log("index", index);
     return index;
+  };
+
+  const rewardSystemEffect = () => {
+    const stars = [...Array(Math.min(correctMovesCount, 5)).keys()];
+
+    return (
+      <div
+        style={{
+          borderRadius: "3px",
+          boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
+          width: "100%",
+        }}
+      >
+        <div
+          style={{
+            background: "royalblue",
+            fontSize: "35px",
+            fontFamily: "RobotoCondensed-Bold",
+            textAlign: "center",
+            borderTopLeftRadius: "5px",
+            borderTopRightRadius: "5px",
+          }}
+        >
+          {" "}
+          <div
+            style={{
+              display: "flex",
+              textAlign: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div style={{ width: "100%" }}>
+              {stars.map((i) => (
+                <Star key={i} color="gold" backgroundColor="gold" />
+              ))}
+
+              <div style={{ width: "100%", margin: "auto" }}>
+                <ProgressBar
+                  animated={true}
+                  variant="success"
+                  style={{ width: "100%" }}
+                  now={Math.floor((correctMovesCount * 100) / moves.length)}
+                  label={`${Math.floor(
+                    (correctMovesCount * 100) / moves.length
+                  )}%`}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          style={{
+            background: "black",
+            fontSize: "20px",
+            color: "white",
+            textAlign: "center",
+            fontFamily: "RobotoCondensed-Bold",
+            borderBottomLeftRadius: "5px",
+            borderBottomRightRadius: "5px",
+          }}
+        >
+          {" "}
+          Correct Move
+          <i class="bi bi-star"></i>
+        </div>
+      </div>
+    );
   };
 
   const handleResize = () => {
@@ -181,6 +250,7 @@ const Trainer = () => {
     setPage(page + 1);
     game.reset();
     setPosition(game.fen());
+    setCorrectMovesCount(0);
     setCurrentMove(0);
     setHighlightedMoveIndex(-1);
   };
@@ -190,6 +260,8 @@ const Trainer = () => {
     setPage(page - 1);
     game.reset();
     setPosition(game.fen());
+    setCorrectMovesCount(0);
+
     setCurrentMove(0);
     setHighlightedMoveIndex(-1);
   };
@@ -276,6 +348,8 @@ const Trainer = () => {
         // Increment the current move index by one
         setCorrectMove(true);
         setCurrentMove((prevMove) => prevMove + 1);
+        setCorrectMovesCount((prev) => prev + 1);
+        console.log("correctCount", correctMovesCount);
 
         // Check if the game is not over
         if (!game.game_over()) {
@@ -304,90 +378,104 @@ const Trainer = () => {
         className={focusMode ? "trainer_container_focus" : "trainer_container"}
       >
         <Container fluid>
-          <Row no-gutters="true">
-            {/*  {!collapsed && !focusMode && <Sidebar />}
-              {!focusMode && (
-                <ToggleButton onClick={() => setCollapsed(!collapsed)}>
-                  {" "}
-                  {collapsed ? "Show Course Conents" : "Hide Course contents"}
-                </ToggleButton>
-              )} */}
-
-            <Col xs={2} sm={2} md={2}>
-              <Sidebar />
+          <Row>
+            <Col xs={1} sm={1} md={1}>
+              <div
+                onClick={() => setCollapsed(!collapsed)}
+                style={{
+                  justifyContent: "center",
+                  textAlign: "center",
+                  cursor: "pointer",
+                }}
+              >
+                {collapsed ? ">>" : "<<"}
+              </div>
             </Col>
+            {!collapsed && (
+              <Col xs={2} sm={2} md={2}>
+                {" "}
+                <Sidebar />
+              </Col>
+            )}
             <Col>
-              <Chessboard
-                onPieceDrop={onDrop}
-                position={game.fen()}
-                boardWidth={dimensions.width}
-                boardOrientation={whiteOrientation ? "white" : "black"}
-                showBoardNotation={true}
-                customSquareStyles={{
-                  "square:hover": {
-                    boxShadow: "inset 0 0 1px 6px rgba(255, 0, 0)", // red color
-                  },
-                }}
-                customBoardStyle={{
-                  borderRadius: "5px",
-                  boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
-                }}
-                customDropSquareStyle={{
-                  boxShadow: "inset 0 0 1px 6px rgba(255, 240, 0)",
-                }}
-              />
               <Container>
-                <div>
-                  <Row>
-                    <Col>
-                      <Button
-                        onClick={() => setWhiteOrientation(!whiteOrientation)}
-                      >
-                        <MdFlipCameraAndroid />
-                      </Button>
-                      &nbsp;
-                      <Button
-                        disabled={currentMove <= 0}
-                        onClick={() => getFirstMove()}
-                      >
-                        <AiFillFastBackward />
-                      </Button>
-                      &nbsp;
-                      <Button
-                        disabled={currentMove <= 0}
-                        onClick={(e) => getPreviousMove(e)}
-                      >
-                        <AiFillStepBackward />
-                      </Button>{" "}
-                      &nbsp;
-                      <Button
-                        disabled={currentMove >= moves.length - 1}
-                        onClick={(e) => getNextMove(e)}
-                      >
-                        <AiFillStepForward />
-                      </Button>
-                      &nbsp;
-                      <Button
-                        onClick={() => getLastMove()}
-                        disabled={currentMove >= moves.length - 1}
-                      >
-                        <AiFillFastForward />
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button onClick={() => setTrainningMode(!trainingMode)}>
-                        {trainingMode
-                          ? `${translations[lang].exitTraining}`
-                          : `${translations[lang].testYourself}`}
-                      </Button>
-                      &nbsp;
-                      <Button onClick={() => setFocusMode(!focusMode)}>
-                        {focusMode ? "Exit Focus Mode" : "Enter Focus Mode"}
-                      </Button>
-                    </Col>
-                  </Row>
-                </div>
+                <Chessboard
+                  onPieceDrop={onDrop}
+                  position={game.fen()}
+                  boardWidth={dimensions.width}
+                  boardOrientation={whiteOrientation ? "white" : "black"}
+                  showBoardNotation={true}
+                  customSquareStyles={{
+                    "square:hover": {
+                      boxShadow: "inset 0 0 1px 6px rgba(255, 0, 0)", // red color
+                    },
+                  }}
+                  customBoardStyle={{
+                    borderRadius: "5px",
+                    boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
+                  }}
+                  customDropSquareStyle={{
+                    boxShadow: "inset 0 0 1px 6px rgba(255, 240, 0)",
+                  }}
+                />
               </Container>
+              <div
+                style={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  display: "flex",
+                  flexWrap: "wrap",
+                }}
+              >
+                <Button
+                  className="mx-1"
+                  onClick={() => setWhiteOrientation(!whiteOrientation)}
+                >
+                  <MdFlipCameraAndroid />
+                </Button>
+                <Button
+                  className="mx-1"
+                  disabled={currentMove <= 0}
+                  onClick={() => getFirstMove()}
+                >
+                  <AiFillFastBackward />
+                </Button>
+                <Button
+                  className="mx-1"
+                  disabled={currentMove <= 0}
+                  onClick={(e) => getPreviousMove(e)}
+                >
+                  <AiFillStepBackward />
+                </Button>{" "}
+                <Button
+                  className="mx-1"
+                  disabled={currentMove >= moves.length - 1}
+                  onClick={(e) => getNextMove(e)}
+                >
+                  <AiFillStepForward />
+                </Button>
+                <Button
+                  className="mx-1"
+                  onClick={() => getLastMove()}
+                  disabled={currentMove >= moves.length - 1}
+                >
+                  <AiFillFastForward />
+                </Button>
+                <Button
+                  className="mx-1"
+                  onClick={() => setTrainningMode(!trainingMode)}
+                >
+                  {trainingMode
+                    ? `${translations[lang].exitTraining}`
+                    : `${translations[lang].testYourself}`}
+                </Button>
+                <Button
+                  className="mx-1"
+                  onClick={() => setFocusMode(!focusMode)}
+                >
+                  {focusMode ? "Exit Focus Mode" : "Focus Mode"}
+                </Button>
+              </div>
             </Col>
             <Col>
               {!trainingMode ? (
@@ -440,32 +528,78 @@ const Trainer = () => {
                   style={{
                     visibility: hasMadeMove ? "visible" : "hidden",
                     height: dimensions.height,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
-                  className="moves_container"
                 >
                   {!correctMove ? (
-                    <div style={{ marginBottom: "20px" }}>
-                      {translations[lang].incorrectMove}
-                      <div>
-                        <Button onClick={() => setShowHint(!showHint)}>
+                    <div
+                      style={{
+                        borderRadius: "3px",
+                        width: "100%",
+                        boxShadow:
+                          "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.20), 0 1px 5px 0 rgba(0, 0, 0, 0.12)",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: "35px",
+                          background: "royalblue",
+                          color: "black",
+                          boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
+                          fontFamily: "RobotoCondensed-Bold",
+                          width: "100%",
+                          borderTopLeftRadius: "5px",
+                          borderTopRightRadius: "5px",
+                          textAlign: "center",
+                        }}
+                      >
+                        {" "}
+                        <Button
+                          className="mx-2"
+                          onClick={() => setShowHint(!showHint)}
+                        >
                           {""}
                           {!correctMove && !showHint
                             ? `${translations[lang].showHint}`
                             : `${translations[lang].hideHint}`}
                         </Button>
                       </div>
-                      <div>{showHint ? moves[currentMove] : ""}</div>
+                      <div
+                        style={{
+                          textAlign: "center",
+                          background: "black",
+                          color: "white",
+                          fontFamily: "RobotoCondensed-Bold",
+                        }}
+                      >
+                        {translations[lang].incorrectMove}
+                      </div>
+                      <div
+                        style={{
+                          backgroundColor: "white",
+                          fontSize: "20px",
+                          color: "black",
+                          textAlign: "center",
+                          fontFamily: "RobotoCondensed-Bold",
+                          borderBottomLeftRadius: "5px",
+                          borderBottomRightRadius: "5px",
+                        }}
+                      >
+                        {showHint ? moves[currentMove] : ""}
+                      </div>
                     </div>
                   ) : (
-                    <div>{translations[lang].correctMove}</div>
+                    rewardSystemEffect()
                   )}
                 </div>
               )}
 
               <div>
                 <Container>
-                  <Row className="no-gutters">
-                    <Col align={"end"}>
+                  <Row>
+                    <Col align={"right"}>
                       {" "}
                       <Button
                         disabled={page <= 0}
@@ -476,6 +610,7 @@ const Trainer = () => {
                     </Col>
                     <Col>
                       <Button
+                        className="mx-2"
                         disabled={page >= pgnList.length - 1}
                         onClick={handleNextPageClick}
                       >

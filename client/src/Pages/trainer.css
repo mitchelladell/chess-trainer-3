@@ -5,11 +5,16 @@
   background-color: #e4e4e4;
   overflow: auto;
   border: 1px solid lightgray;
+  background: darkgoldenrod;
+  border-radius: 5px;
 }
 .trainer_container_focus,
 .trainer_container {
   padding: 10px;
-  background: white;
+}
+
+.closed {
+  display: none;
 }
 
 .trainer_container_focus {
@@ -19,4 +24,18 @@
 
 .collapsed {
   visibility: hidden;
+}
+
+.reward_area {
+  margin: 0 auto;
+}
+
+.collapsing.width {
+  transition-property: width;
+  width: 0;
+  height: auto;
+}
+
+.collapsing.width > * {
+  width: 400px; /* the demo used inline styling */
 }
