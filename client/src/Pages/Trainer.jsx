@@ -89,9 +89,13 @@ const Trainer = () => {
           <div>
             <div
               onClick={() => setCollapsed(!collapsed)}
-              style={{ justifyContent: "center", textAlign: "center" }}
+              style={{
+                justifyContent: "center",
+                textAlign: "center",
+                cursor: "pointer",
+              }}
             >
-              {collapsed ? "Show Content" : "Hide Conent"}
+              {collapsed ? "Show Content" : "Hide Content"}
             </div>
             <Navbar bg="light" className={collapsed ? "collapsed" : ""}>
               <Navbar.Collapse id="basic-navbar-nav">
@@ -104,6 +108,7 @@ const Trainer = () => {
                           game.reset();
                           setPosition(game.fen());
                           setCurrentMove(0);
+                          setPage(findPgnIndex());
                           setHighlightedMoveIndex(-1);
                         }}
                       >
@@ -119,6 +124,12 @@ const Trainer = () => {
       </div>
     );
   }
+
+  const findPgnIndex = () => {
+    const index = pgnList.findIndex((element) => element.pgn === pgn);
+    console.log("index", index);
+    return index;
+  };
 
   const handleResize = () => {
     if (window.innerWidth > window.innerHeight) {
