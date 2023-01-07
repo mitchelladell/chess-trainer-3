@@ -39,3 +39,26 @@
 .collapsing.width > * {
   width: 400px; /* the demo used inline styling */
 }
+
+.celebration {
+  animation: bounce 0.5s ease-in-out infinite alternate,
+    rotate 0.5s linear infinite;
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

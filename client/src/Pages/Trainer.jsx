@@ -59,10 +59,14 @@ const Trainer = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [navSelected, setNavSelected] = useState(null);
 
+  const [variationsCount, setVariationsCount] = useState(0);
+
   const [correctMove, setCorrectMove] = useState(false);
   const [hasMadeMove, setHasMadeMove] = useState(false);
   const [showIncorrectMove, setShowIncorrectMove] = useState(false);
   const [correctMovesCount, setCorrectMovesCount] = useState(0);
+
+  const [variationSolved, setVariationSolved] = useState(false);
 
   const [showHint, setShowHint] = useState(false);
 
@@ -172,9 +176,9 @@ const Trainer = () => {
                   animated={true}
                   variant="success"
                   style={{ width: "100%" }}
-                  now={Math.floor((correctMovesCount * 100) / moves.length)}
+                  now={(correctMovesCount * 200) / moves.length}
                   label={`${Math.floor(
-                    (correctMovesCount * 100) / moves.length
+                    (correctMovesCount * 200) / moves.length
                   )}%`}
                 />
               </div>
@@ -196,6 +200,7 @@ const Trainer = () => {
           Correct Move
           <i class="bi bi-star"></i>
         </div>
+        {variationSolved && <div class="celebration">Congratulations!</div>}
       </div>
     );
   };
@@ -253,6 +258,7 @@ const Trainer = () => {
     setCorrectMovesCount(0);
     setCurrentMove(0);
     setHighlightedMoveIndex(-1);
+    setVariationSolved(false);
   };
 
   const handlePreviousPageClick = () => {
@@ -264,6 +270,7 @@ const Trainer = () => {
 
     setCurrentMove(0);
     setHighlightedMoveIndex(-1);
+    setVariationSolved(false);
   };
 
   document.onkeydown = checkKey;
@@ -286,9 +293,26 @@ const Trainer = () => {
 
   useEffect(() => {
     readPGN(pgn).then((finalpgn) => {
+      console.log("finalPGN[0]", finalpgn[0]);
       const parsedMoves = finalpgn[0].moves.map((move) => move.move);
       setMoves(parsedMoves);
       setFinalpgn(finalpgn[0].moves);
+
+      function countVariations(pgn) {
+        let count = 0;
+        for (const move of pgn.moves) {
+          if (move.ravs) {
+            count += move.ravs.length;
+            for (const variation of move.ravs) {
+              count += countVariations(variation);
+            }
+          }
+        }
+        return count;
+      }
+
+      const variationCount = countVariations(finalpgn[0]);
+      setVariationsCount(variationCount + 1);
     });
   }, [pgn]);
 
@@ -366,6 +390,13 @@ const Trainer = () => {
 
           // Increment the current move index
           setCurrentMove((prevMove) => prevMove + 1);
+
+          console.log("nextMove", nextMove);
+          console.log("currentMove", currentMove);
+
+          if (nextMove === moves[moves.length - 1]) {
+            setVariationSolved(true);
+          }
         }
       }, 500);
     }
@@ -559,6 +590,7 @@ const Trainer = () => {
                         <Button
                           className="mx-2"
                           onClick={() => setShowHint(!showHint)}
+                          variant="secondary"
                         >
                           {""}
                           {!correctMove && !showHint
@@ -569,9 +601,11 @@ const Trainer = () => {
                       <div
                         style={{
                           textAlign: "center",
-                          background: "black",
+                          background: "#c33",
                           color: "white",
                           fontFamily: "RobotoCondensed-Bold",
+                          fontSize: "30px",
+                          boxShadow: "0 0 5px 5px rgb(255 255 255 / 50%)",
                         }}
                       >
                         {translations[lang].incorrectMove}
@@ -584,6 +618,8 @@ const Trainer = () => {
                           textAlign: "center",
                           fontFamily: "RobotoCondensed-Bold",
                           borderBottomLeftRadius: "5px",
+                          animation: "shadow-glow 1s infinite",
+
                           borderBottomRightRadius: "5px",
                         }}
                       >
