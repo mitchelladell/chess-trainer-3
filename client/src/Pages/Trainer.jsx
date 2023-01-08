@@ -563,7 +563,10 @@ const Trainer = () => {
                       }}
                     >
                       {finalpgn.map((move, index) => (
-                        <div key={index} style={{ display: "flex" }}>
+                        <div
+                          key={index}
+                          style={{ display: "flex", flexWrap: "wrap" }}
+                        >
                           <div
                             key={index}
                             className={
@@ -590,6 +593,7 @@ const Trainer = () => {
                           </div>
 
                           <div style={{ margin: "5px" }}>
+                            {" "}
                             {move.comments.length > 0 &&
                               move.comments.map((c) => c.text).join(" ")}
                           </div>
@@ -601,12 +605,25 @@ const Trainer = () => {
                                   key={index}
                                   style={{
                                     display: "flex",
+                                    flexWrap: "wrap",
                                   }}
                                 >
                                   {" "}
-                                  {variation.move}{" "}
-                                  {variation.comments.length &&
-                                    variation.comments[0].text}
+                                  <div
+                                    style={{
+                                      margin: "5px",
+                                    }}
+                                  >
+                                    {variation.move}{" "}
+                                  </div>
+                                  <div
+                                    style={{
+                                      margin: "5px",
+                                    }}
+                                  >
+                                    {variation.comments.length &&
+                                      variation.comments[0].text}{" "}
+                                  </div>
                                 </div>
                               ))}
                             </div>
