@@ -1,9 +1,11 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import LanguageReducer from '../features/language/languageSlice';
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import LanguageReducer from "../features/language/languageSlice";
+import pgnSlice from "../features/pgns/pgnSlice";
 
 export const store = configureStore({
   reducer: {
     language: LanguageReducer,
+    pgn: pgnSlice,
   },
 });
 

@@ -6,7 +6,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import Header from "../components/Header/Header";
 import { useParams } from "react-router-dom";
 import { useLocation } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { Star, MdOutlineKeyboardArrowDown } from "react-bootstrap-icons";
 import { ProgressBar } from "react-bootstrap";
@@ -26,6 +26,7 @@ import Footer from "../components/Footer/Footer";
 
 import { Nav, Navbar } from "react-bootstrap";
 import { current } from "@reduxjs/toolkit";
+import { update } from "../features/pgns/pgnSlice";
 
 async function readPGN(pgn2) {
   // Read the PGN file and parse it
@@ -39,6 +40,8 @@ async function readPGN(pgn2) {
 
 const Trainer = () => {
   let pgndata = useLocation();
+  const dispatch = useDispatch();
+
   const lang = useSelector((state: any) => state.language.value);
 
   let pgnList = pgndata.state.pgnWithName;
@@ -311,10 +314,11 @@ const Trainer = () => {
 
   useEffect(() => {
     readPGN(pgn).then((finalpgn) => {
-      console.log("finalPGN[0]", finalpgn[0]);
+      console.log("finalPGN[0]", finalpgn);
       const parsedMoves = finalpgn[0].moves.map((move) => move.move);
       setMoves(parsedMoves);
       setFinalpgn(finalpgn[0].moves);
+      dispatch(update(finalpgn[0]));
 
       function countVariations(pgn) {
         let count = 0;
@@ -332,7 +336,7 @@ const Trainer = () => {
       const variationCount = countVariations(finalpgn[0]);
       setVariationsCount(variationCount + 1);
     });
-  }, [pgn]);
+  }, []);
 
   function onDrop(sourceSquare, targetSquare) {
     const move = makeAMove({
@@ -613,7 +617,7 @@ const Trainer = () => {
                     justifyContent: "center",
                   }}
                 >
-                  {!variationSolved && !correctMove ? (
+                  {hasMadeMove && !variationSolved && !correctMove ? (
                     <div
                       style={{
                         borderRadius: "3px",

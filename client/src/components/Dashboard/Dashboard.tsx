@@ -4,6 +4,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import { Link } from "react-router-dom";
+import PGN from "pgn-parser";
+
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { update } from "../../features/language/languageSlice";
 
 import "./Dashboard.css";
 
@@ -23,11 +29,45 @@ type IProps = {
     signIn: string;
     lang: string;
   };
+
 }; */
+
+async function readPGN(pgn2: any) {
+  // Read the PGN file and parse it
+  const pgn = pgn2;
+  console.log("pgn", pgn);
+
+  const postion = PGN.parse(pgn);
+
+  // Return the initial position and solution
+  return postion;
+}
 const Dashboard: React.FC<IProps> = (props) => {
-  const handleClick = () => {
-    console.log("hello");
-  };
+  const [data, setData] = useState<any>([]);
+
+  const [pgnList, setPgnList] = useState([]);
+  const [totalVariations, setTotalVariations] = useState(0);
+  const [pgn, setPgn] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/pgn/1").then((response) => {
+      setData(response.data);
+    });
+  }, []);
+
+  const pgnWithName = data.map((obj: any) => {
+    const [name, pgn] = Object.entries(obj)[0];
+    return { name, pgn };
+  });
+
+  console.log("pgnWithName", pgnWithName);
+  let totalCount = 0;
+
+  pgnWithName.forEach((pgnwithname: any) => {
+    const matches = pgnwithname.pgn.match(/\(/g);
+    const count = matches ? matches.length + 1 : 1;
+    totalCount += count;
+  });
 
   return (
     <div className="dashboard_container">
@@ -41,7 +81,7 @@ const Dashboard: React.FC<IProps> = (props) => {
             <div style={{ display: "flex", justifyContent: "space-between" }}>
               {" "}
               <Link to="/courses/variation/">
-                <div style={{ cursor: "pointer" }} onClick={handleClick}>
+                <div style={{ cursor: "pointer" }}>
                   {" "}
                   {/* Should be a react Link redirecting to Variations */}
                   {props.courseName}{" "}
@@ -54,10 +94,7 @@ const Dashboard: React.FC<IProps> = (props) => {
                 )} <BsThreeDotsVertical />{" "}
               </div>
             </div>
-            <div className="spaced_divs">
-              {" "}
-              Number OF variations : {props.numberOfVariations}
-            </div>
+            <div className="spaced_divs"> 0 / {totalCount}</div>
             <div className="progres_bar">
               {" "}
               <ProgressBar now={props.progress} />
