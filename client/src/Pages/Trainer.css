@@ -1,16 +1,19 @@
 .highlighted-move {
-  background-color: lightblue;
+  background-color: #ffd700; /* golden color */
 }
+
 .moves_container {
-  background-color: #e4e4e4;
+  background-color: #e6e6e6;
   overflow: auto;
-  border: 1px solid lightgray;
+  border: 1px solid #b28704; /* darker golden color */
   background: whitesmoke;
   border-radius: 5px;
 }
+
 .trainer_container_focus,
 .trainer_container {
   padding: 10px;
+  background: #e6e6e6; /* darker golden color */
 }
 
 .closed {
@@ -18,7 +21,6 @@
 }
 
 .trainer_container_focus {
-  background: black;
   height: 100vh;
 }
 
@@ -37,16 +39,18 @@
 }
 
 .collapsing.width > * {
-  width: 400px; /* the demo used inline styling */
+  width: 400px;
 }
 
 .congratulations {
   text-align: center;
+  color: #fff9c4; /* light golden color */
 }
 
 .celebration {
   animation: bounce 0.5s ease-in-out infinite alternate,
     rotate 0.5s linear infinite;
+  color: #fff9c4; /* light golden color */
 }
 
 @keyframes bounce {
@@ -65,4 +69,21 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.trainer_buttons {
+  background: goldenrod;
+  border: 1px solid goldenrod;
+}
+
+.trainer_buttons:hover {
+  background: goldenrod;
+  border: 1px solid goldenrod;
+}
+
+.trainer_buttons[disabled] {
+  background-color: gray;
+  color: white;
+  cursor: not-allowed;
+  border: 1px solid grey;
 }

@@ -39,7 +39,7 @@ const translations: {
   };
 } = {
   en: {
-    signIn: "sign in",
+    signIn: "Login",
     signUp: "sign up",
     courses: "Courses",
     email: "email",

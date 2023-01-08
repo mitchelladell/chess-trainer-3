@@ -28,8 +28,8 @@ const Footer: React.FC = () => {
               <p>Copyright 2023 Contact us at :chessarabs.gmail.com</p>
             </Col>
             <Col className="d-flex justify-content-end">
-              <Dropdown>
-                <Dropdown.Toggle variant="primary" id="dropdown-basic">
+              <Dropdown className="lang_button">
+                <Dropdown.Toggle id="dropdown-basic">
                   {(translations as Translation)[lang].lang}
                 </Dropdown.Toggle>
 

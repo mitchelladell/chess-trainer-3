@@ -32,7 +32,7 @@ const SignIn = () => {
                     label={translations[lang].keep_signIn}
                   />
                 </Form.Group>
-                <Button variant="primary" type="submit">
+                <Button className="singin_button" type="submit">
                   {translations[lang].signIn}
                 </Button>
               </Form>

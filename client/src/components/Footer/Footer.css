@@ -3,11 +3,32 @@
  */
   bottom: 0;
   width: 100%;
-  background-color: grey;
+  background-color: #808080;
   padding: 10px;
 }
 
 footer {
   display: flex;
   justify-content: space-between;
+}
+
+.lang_button:hover {
+  /* styles for the dropdown toggle button when hovered */
+  background: gold;
+  border-radius: 3px;
+  border-bottom: none !important;
+}
+
+.lang_button .dropdown-toggle {
+  /* styles for the dropdown toggle button */
+  background: goldenrod;
+  border-radius: 3px;
+  border: 1px solid goldenrod;
+  color: black;
+}
+
+.lang_button .dropdown-menu {
+  /* styles for the dropdown menu */
+  background: goldenrod;
+  border-radius: 3px;
 }

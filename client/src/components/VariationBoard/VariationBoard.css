@@ -9,19 +9,15 @@
 }
 
 .variation_name {
-  background-color: royalblue;
-  color: white;
+  background-color: #e6e6e6;
+  color: rgba(0, 0, 0, 0.87);
   padding: 10px;
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   max-height: 2.4em; /* 2 lines */
-  background: linear-gradient(to bottom, royalblue, blue);
   /* or */
-}
-.variation_name:hover {
-  background-color: darkblue;
 }
 
 .variation {
@@ -30,12 +26,12 @@
   text-align: center;
 }
 .variation_name a {
-  color: white;
+  color: rgba(0, 0, 0, 0.87);
   text-decoration: none;
 }
 
 .variation a {
-  color: black;
+  color: rgba(0, 0, 0, 0.87);
   text-decoration: none;
 }
 
@@ -46,18 +42,19 @@
 }
 
 .variation_board Button {
-  background-color: royalblue;
+  background-color: goldenrod;
   border: 1px solid white;
   border-radius: 5px;
   padding: 5px 10px;
   font-size: 14px;
   font-weight: bold;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  color: white;
+  border: 1px solid goldenrod;
+  color: rgba(0, 0, 0, 0.87);
 }
 
 .variation_board Button:hover {
-  background-color: blue;
-  color: white;
+  background-color: gold;
+  color: rgba(0, 0, 0, 0.87);
   cursor: pointer;
+  border: 1px solid goldenrod;
 }

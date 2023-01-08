@@ -1,27 +1,23 @@
 .header_container {
-  background: darkblue;
+  background: rgb(15, 33, 49);
   padding: 10px;
 }
 
-.singIn_button {
-  color: #093c87;
-  background-color: #fff;
-  margin: 30px;
+.signUp,
+.login,
+.courses_nav_tab {
+  background: none;
   border: none;
-  font-size: 24px;
-  border-radius: 3px;
-  font-weight: 400;
-  width: 98px;
-  font-family: "Roboto-Regular";
 }
-
-.signUp_botton {
-  width: 98px;
-  border-radius: 3px;
-  font-size: 24px;
-  color: white;
-  font-weight: 400;
-  background-color: #43bf82;
-  margin: 30px;
+.signUp:hover,
+.login:hover,
+.courses_nav_tab:hover {
+  background: goldenrod;
+}
+.signUp:active,
+.login:active,
+.courses_nav_tab:active {
+  background: goldenrod;
   border: none;
+  border-bottom: 3px solid goldenrod;
 }

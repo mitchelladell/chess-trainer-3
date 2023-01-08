@@ -104,7 +104,7 @@ const Dashboard: React.FC<IProps> = (props) => {
             {" "}
             <div className="spaced_divs">
               <Link to="/courses/variation/">
-                <Button> Enroll </Button>
+                <Button className="golden_button"> Enroll </Button>
               </Link>
             </div>
           </Col>

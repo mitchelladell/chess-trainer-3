@@ -16,3 +16,12 @@
   display: flex;
   text-align: initial;
 }
+.golden_button {
+  background-color: #ff9833;
+  border: 1px solid #ff9833;
+}
+
+.golden_button:hover {
+  background-color: #ffbf00;
+  border: 1px solid goldenrod;
+}

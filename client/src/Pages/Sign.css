@@ -28,4 +28,18 @@
 
 .sign-form Form Button {
   margin-top: 15px;
+  background: goldenrod;
+  border: 1px solid gold;
+}
+
+.sign-form Form Button:hover {
+  margin-top: 15px;
+  background: goldenrod;
+  border: 1px solid yellow;
+}
+
+.sign-form Form Button:active {
+  margin-top: 15px;
+  background: none;
+  border: 1px solid none;
 }

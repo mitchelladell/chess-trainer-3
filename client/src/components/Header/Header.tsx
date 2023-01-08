@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import translations from "../../consts/translations";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 type Translation = {
   [key: string]: {
@@ -26,31 +27,18 @@ const Header: React.FC = () => {
           <Col align={"left"} xs={6} md={6} lg={6}>
             <div>
               {" "}
-              <Dropdown>
-                <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                  {(translations as Translation)[lang].courses}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item href="/courses">courses</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <Link to="/courses">
+                {" "}
+                <Button className="courses_nav_tab"> Courses</Button>
+              </Link>
             </div>
           </Col>
           <Col align={"right"} xs={6} md={6} lg={6}>
-            <Button
-              style={{ color: "white", background: "#43bf82" }}
-              size="lg"
-              href="/signup"
-            >
+            <Button href="/signup" className="signUp">
               {" "}
               {(translations as Translation)[lang].signUp}
             </Button>{" "}
-            <Button
-              style={{ color: "#093c87", background: " white" }}
-              size="lg"
-              href="/signin"
-            >
+            <Button href="/signin" className="login">
               {" "}
               {(translations as Translation)[lang].signIn}
             </Button>

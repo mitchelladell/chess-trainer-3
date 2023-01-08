@@ -493,7 +493,7 @@ const Trainer = () => {
                 }}
               >
                 <Button
-                  className="mx-1"
+                  className="mx-1 trainer_buttons"
                   onClick={() => setWhiteOrientation(!whiteOrientation)}
                 >
                   <MdFlipCameraAndroid />
@@ -503,28 +503,28 @@ const Trainer = () => {
                 {!trainingMode && (
                   <div>
                     <Button
-                      className="mx-1"
+                      className="mx-1 trainer_buttons"
                       disabled={currentMove <= 0}
                       onClick={() => getFirstMove()}
                     >
                       <AiFillFastBackward />
                     </Button>
                     <Button
-                      className="mx-1"
+                      className="mx-1 trainer_buttons"
                       disabled={currentMove <= 0}
                       onClick={(e) => getPreviousMove(e)}
                     >
                       <AiFillStepBackward />
                     </Button>{" "}
                     <Button
-                      className="mx-1"
+                      className="mx-1 trainer_buttons"
                       disabled={currentMove >= moves.length - 1}
                       onClick={(e) => getNextMove(e)}
                     >
                       <AiFillStepForward />
                     </Button>
                     <Button
-                      className="mx-1"
+                      className="mx-1 trainer_buttons"
                       onClick={() => getLastMove()}
                       disabled={currentMove >= moves.length - 1}
                     >
@@ -533,7 +533,7 @@ const Trainer = () => {
                   </div>
                 )}
                 <Button
-                  className="mx-1"
+                  className="mx-1 trainer_buttons"
                   onClick={() => setTrainningMode(!trainingMode)}
                 >
                   {trainingMode
@@ -541,7 +541,7 @@ const Trainer = () => {
                     : `${translations[lang].testYourself}`}
                 </Button>
                 <Button
-                  className="mx-1"
+                  className="mx-1 trainer_buttons"
                   onClick={() => setFocusMode(!focusMode)}
                 >
                   {focusMode ? "Exit Focus Mode" : "Focus Mode"}
@@ -628,7 +628,7 @@ const Trainer = () => {
                       >
                         {" "}
                         <Button
-                          className="mx-2"
+                          className="mx-2 trainer_buttons"
                           onClick={() => setShowHint(!showHint)}
                           variant="secondary"
                         >
@@ -680,13 +680,14 @@ const Trainer = () => {
                       <Button
                         disabled={page <= 0}
                         onClick={handlePreviousPageClick}
+                        className="mx-2 trainer_buttons"
                       >
                         {translations[lang].PreviousPage}
                       </Button>
                     </Col>
                     <Col>
                       <Button
-                        className="mx-2"
+                        className="mx-2 trainer_buttons"
                         disabled={page >= pgnList.length - 1}
                         onClick={handleNextPageClick}
                       >
