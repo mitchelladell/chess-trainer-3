@@ -611,14 +611,16 @@ const Trainer = () => {
                                   {" "}
                                   <div
                                     style={{
-                                      margin: "5px",
+                                      marginRight: "5px",
+                                      marginLeft: "5px",
                                     }}
                                   >
                                     {variation.move}{" "}
                                   </div>
                                   <div
                                     style={{
-                                      margin: "5px",
+                                      marginRight: "5px",
+                                      marginLeft: "5px",
                                     }}
                                   >
                                     {variation.comments.length &&
