@@ -69,6 +69,7 @@ const Trainer = () => {
   const [hasMadeMove, setHasMadeMove] = useState(false);
   const [showIncorrectMove, setShowIncorrectMove] = useState(false);
   const [correctMovesCount, setCorrectMovesCount] = useState(0);
+  const [wrongMovesCount, setWrongMovesCount] = useState(0);
 
   const [variationSolved, setVariationSolved] = useState(false);
 
@@ -136,13 +137,9 @@ const Trainer = () => {
   }
 
   const correctAudio = useRef(null);
-  const falseAudio = useRef(null);
 
   function playCorrect() {
     correctAudio.current.play();
-  }
-  function playBuzzer() {
-    falseAudio.current.play();
   }
 
   const findPgnIndex = () => {
@@ -152,9 +149,11 @@ const Trainer = () => {
   };
 
   const rewardSystemEffect = () => {
+    let percentage = moves.length / 2 - wrongMovesCount;
+    console.log("percentage", percentage);
     const stars = [
       ...Array(
-        Math.min(Math.floor((correctMovesCount * 10) / moves.length), 5)
+        Math.min(Math.floor((percentage * 200) / moves.length), 5)
       ).keys(),
     ];
 
@@ -185,10 +184,6 @@ const Trainer = () => {
             }}
           >
             <div style={{ width: "100%" }}>
-              {stars.map((i) => (
-                <Star key={i} color="gold" backgroundColor="gold" />
-              ))}
-
               <div style={{ width: "100%", margin: "auto" }}>
                 <ProgressBar
                   animated={true}
@@ -201,6 +196,14 @@ const Trainer = () => {
                   )}%`}
                 />
               </div>
+              {variationSolved && (
+                <div>
+                  {" "}
+                  {stars.map((i) => (
+                    <Star key={i} color="gold" backgroundColor="gold" />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -287,7 +290,6 @@ const Trainer = () => {
     game.reset();
     setPosition(game.fen());
     setCorrectMovesCount(0);
-
     setCurrentMove(0);
     setHighlightedMoveIndex(-1);
     setVariationSolved(false);
@@ -314,29 +316,11 @@ const Trainer = () => {
 
   useEffect(() => {
     readPGN(pgn).then((finalpgn) => {
-      console.log("finalPGN[0]", finalpgn);
       const parsedMoves = finalpgn[0].moves.map((move) => move.move);
       setMoves(parsedMoves);
       setFinalpgn(finalpgn[0].moves);
-      dispatch(update(finalpgn[0]));
-
-      function countVariations(pgn) {
-        let count = 0;
-        for (const move of pgn.moves) {
-          if (move.ravs) {
-            count += move.ravs.length;
-            for (const variation of move.ravs) {
-              count += countVariations(variation);
-            }
-          }
-        }
-        return count;
-      }
-
-      const variationCount = countVariations(finalpgn[0]);
-      setVariationsCount(variationCount + 1);
     });
-  }, []);
+  }, [pgn]);
 
   function onDrop(sourceSquare, targetSquare) {
     const move = makeAMove({
@@ -377,6 +361,9 @@ const Trainer = () => {
       return false;
       // The move is legal
     }
+    if (!trainingMode) {
+      return false;
+    }
 
     game.move(move);
 
@@ -388,11 +375,11 @@ const Trainer = () => {
     // Check if the move follows the PGN
     if (game.history()[currentMove] !== moves[currentMove]) {
       // The move does not follow the PGN, so add a delay before taking it back
-      playBuzzer();
 
       setCorrectMove(false);
 
       setShowIncorrectMove(true);
+      setWrongMovesCount((prev) => prev + 1);
 
       setTimeout(() => {
         // Undo the move
@@ -410,6 +397,7 @@ const Trainer = () => {
         setCorrectMove(true);
 
         setCurrentMove((prevMove) => prevMove + 1);
+
         setCorrectMovesCount((prev) => prev + 1);
         setHighlightedMoveIndex((prev) => prev + 1);
 
@@ -450,10 +438,9 @@ const Trainer = () => {
       <div
         className={focusMode ? "trainer_container_focus" : "trainer_container"}
       >
-        <Container fluid>
+        <Container>
           <Row>
-            <Row>
-              <Col xs={1} sm={1} md={1} align={"center"}>
+            {/*     <Col xs={1} sm={1} md={1} align={"center"}>
                 <div
                   onClick={() => setCollapsed(!collapsed)}
                   style={{
@@ -470,7 +457,7 @@ const Trainer = () => {
                 {" "}
                 <Sidebar />
               </Col>
-            )}
+            )} */}
 
             <Col align={"right"}>
               <Container>
@@ -478,6 +465,7 @@ const Trainer = () => {
                   onPieceDrop={onDrop}
                   position={game.fen()}
                   boardWidth={dimensions.width}
+                  arePiecesDraggable={trainingMode}
                   areArrowsAllowed={true}
                   boardOrientation={whiteOrientation ? "white" : "black"}
                   showBoardNotation={true}
@@ -510,7 +498,6 @@ const Trainer = () => {
                 >
                   <MdFlipCameraAndroid />
                 </Button>
-                <audio ref={falseAudio} src="/buzzer.mp3"></audio>
                 <audio ref={correctAudio} src="/correct-6033.mp3"></audio>
 
                 {!trainingMode && (
@@ -582,7 +569,7 @@ const Trainer = () => {
                             loadPostion(index);
                           }}
                         >
-                          <div key={index}>
+                          <div key={index} style={{ margin: "5px" }}>
                             {" "}
                             {move.move_number ? `${move.move_number}.` : "..."}
                             {move.move}
