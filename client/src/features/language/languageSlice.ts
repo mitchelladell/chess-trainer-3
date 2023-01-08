@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type LanguageState = {
-  value: string,
+  value: string;
 };
 
 const initialState: LanguageState = {
@@ -20,10 +20,7 @@ export const languageSlice = createSlice({
       localStorage.setItem("lang", action.payload);
 
       state.value = action.payload;
-
-      console.log("payload", action.payload);
     },
-  
   },
 });
 

@@ -563,7 +563,7 @@ const Trainer = () => {
                       }}
                     >
                       {finalpgn.map((move, index) => (
-                        <div key={index}>
+                        <div key={index} style={{ display: "flex" }}>
                           <div
                             key={index}
                             className={
@@ -571,17 +571,16 @@ const Trainer = () => {
                                 ? "highlighted-move"
                                 : ""
                             }
-                            style={{ fontWeight: "bold", cursor: "pointer" }}
+                            style={{
+                              fontWeight: "bold",
+                              cursor: "pointer",
+                              margin: "5px",
+                            }}
                             onClick={() => {
                               loadPostion(index);
                             }}
                           >
-                            <div
-                              key={index}
-                              style={{
-                                margin: "5px",
-                              }}
-                            >
+                            <div key={index}>
                               {" "}
                               {move.move_number
                                 ? `${move.move_number}.`
@@ -589,17 +588,23 @@ const Trainer = () => {
                               {move.move}
                             </div>
                           </div>
-                          {move.comments.length > 0 && (
-                            <div>
-                              {move.comments.map((c) => c.text).join(" ")}
-                            </div>
-                          )}
+
+                          <div style={{ margin: "5px" }}>
+                            {move.comments.length > 0 &&
+                              move.comments.map((c) => c.text).join(" ")}
+                          </div>
+
                           {move.ravs && move.ravs.length > 0 && (
-                            <div>
+                            <div style={{ display: "flex", margin: "5px" }}>
                               {move.ravs[0].moves.map((variation, index) => (
-                                <div key={index}>
-                                  <div> {variation.move} </div>
-                                  <div> </div>
+                                <div
+                                  key={index}
+                                  style={{
+                                    display: "flex",
+                                  }}
+                                >
+                                  {" "}
+                                  {variation.move}{" "}
                                   {variation.comments.length &&
                                     variation.comments[0].text}
                                 </div>

@@ -26,7 +26,7 @@ const Header: React.FC = () => {
       <Container fluid>
         <Row>
           <Nav>
-            <Col md={9}>
+            <Col md={9} sm={8} xs={8} lg={10} xl={10}>
               {" "}
               <Nav.Link className="link" href="/courses">
                 {(translations as Translation)[lang].courses}

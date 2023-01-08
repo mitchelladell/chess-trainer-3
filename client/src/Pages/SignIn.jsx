@@ -2,14 +2,14 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 import translations from "../consts/translations";
-import Header from "../components/Header/Header";
 import { useSelector } from "react-redux";
 import "./Sign.css";
 import { Container, Row, Col } from "react-bootstrap";
-import Footer from "../components/Footer/Footer";
 
 const SignIn = () => {
   const lang = useSelector((state: any) => state.language.value);
+
+  console.log("lang", lang);
 
   return (
     <div>
