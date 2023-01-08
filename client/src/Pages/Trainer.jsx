@@ -554,45 +554,62 @@ const Trainer = () => {
                   className="moves_container"
                   style={{ height: dimensions.height }}
                 >
-                  {finalpgn.length > 0 &&
-                    finalpgn.map((move, index) => (
-                      <div key={index}>
-                        <div
-                          key={index}
-                          className={
-                            index === highlightedMoveIndex
-                              ? "highlighted-move"
-                              : ""
-                          }
-                          style={{ fontWeight: "bold", cursor: "pointer" }}
-                          onClick={() => {
-                            loadPostion(index);
-                          }}
-                        >
-                          <div key={index} style={{ margin: "5px" }}>
-                            {" "}
-                            {move.move_number ? `${move.move_number}.` : "..."}
-                            {move.move}
+                  {finalpgn.length > 0 && (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      {finalpgn.map((move, index) => (
+                        <div key={index}>
+                          <div
+                            key={index}
+                            className={
+                              index === highlightedMoveIndex
+                                ? "highlighted-move"
+                                : ""
+                            }
+                            style={{ fontWeight: "bold", cursor: "pointer" }}
+                            onClick={() => {
+                              loadPostion(index);
+                            }}
+                          >
+                            <div
+                              key={index}
+                              style={{
+                                margin: "5px",
+                              }}
+                            >
+                              {" "}
+                              {move.move_number
+                                ? `${move.move_number}.`
+                                : "..."}
+                              {move.move}
+                            </div>
                           </div>
+                          {move.comments.length > 0 && (
+                            <div>
+                              {move.comments.map((c) => c.text).join(" ")}
+                            </div>
+                          )}
+                          {move.ravs && move.ravs.length > 0 && (
+                            <div>
+                              {move.ravs[0].moves.map((variation, index) => (
+                                <div key={index}>
+                                  <div> {variation.move} </div>
+                                  <div> </div>
+                                  {variation.comments.length &&
+                                    variation.comments[0].text}
+                                </div>
+                              ))}
+                            </div>
+                          )}
                         </div>
-                        {move.comments.length > 0 && (
-                          <div>
-                            {move.comments.map((c) => c.text).join(" ")}
-                          </div>
-                        )}
-                        {move.ravs && move.ravs.length > 0 && (
-                          <div>
-                            {move.ravs[0].moves.map((variation, index) => (
-                              <div key={index}>
-                                {variation.move}{" "}
-                                {variation.comments.length &&
-                                  variation.comments[0].text}
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
+                      ))}
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div
