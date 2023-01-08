@@ -21,3 +21,19 @@
   border: none;
   border-bottom: 3px solid goldenrod;
 }
+
+.nav-item.active {
+  background-color: blue;
+  color: white;
+}
+
+.link {
+  color: white;
+  width: max-content;
+}
+
+.link:hover {
+  color: white;
+  background: goldenrod;
+  border-radius: 3px;
+}
