@@ -459,7 +459,7 @@ const Trainer = () => {
               </Col>
             )} */}
 
-            <Col align={"right"}>
+            <Col align={"center"}>
               <Container>
                 <Chessboard
                   onPieceDrop={onDrop}
@@ -489,7 +489,7 @@ const Trainer = () => {
                   marginBottom: "10px",
                   display: "flex",
                   flexWrap: "wrap",
-                  justifyContent: "end",
+                  justifyContent: "center",
                 }}
               >
                 <Button
@@ -689,30 +689,22 @@ const Trainer = () => {
                 </div>
               )}
 
-              <div>
-                <Container>
-                  <Row>
-                    <Col align={"right"}>
-                      {" "}
-                      <Button
-                        disabled={page <= 0}
-                        onClick={handlePreviousPageClick}
-                        className="mx-2 trainer_buttons"
-                      >
-                        {translations[lang].PreviousPage}
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button
-                        className="mx-2 trainer_buttons"
-                        disabled={page >= pgnList.length - 1}
-                        onClick={handleNextPageClick}
-                      >
-                        {translations[lang].NextPage}
-                      </Button>
-                    </Col>
-                  </Row>
-                </Container>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                {" "}
+                <Button
+                  disabled={page <= 0}
+                  onClick={handlePreviousPageClick}
+                  className="mx-2 trainer_buttons"
+                >
+                  {translations[lang].PreviousPage}
+                </Button>
+                <Button
+                  className="mx-2 trainer_buttons"
+                  disabled={page >= pgnList.length - 1}
+                  onClick={handleNextPageClick}
+                >
+                  {translations[lang].NextPage}
+                </Button>
                 &nbsp;
               </div>
             </Col>
