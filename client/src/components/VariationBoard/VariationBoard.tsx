@@ -64,7 +64,7 @@ const VariationBoard: React.FC<IProps> = (props) => {
                     )}`}
                     state={{ pgnWithName: pgnWithName }}
                   >
-                    <Button>
+                    <Button variant="warning">
                       {" "}
                       {(translations as Translation)[lang].turboCoach}
                     </Button>

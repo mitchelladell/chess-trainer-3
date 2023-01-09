@@ -75,6 +75,13 @@
 .trainer_buttons {
   background: goldenrod;
   border: 1px solid goldenrod;
+  font-size: 26px;
+}
+
+@media screen and (max-width: 700px) {
+  .trainer_buttons {
+    font-size: 18px;
+  }
 }
 
 .trainer_buttons:hover {

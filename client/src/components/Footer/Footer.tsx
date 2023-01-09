@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
             </Col>
             <Col className="d-flex justify-content-end">
               <Dropdown className="lang_button">
-                <Dropdown.Toggle id="dropdown-basic">
+                <Dropdown.Toggle variant="warning">
                   {(translations as Translation)[lang].lang}
                 </Dropdown.Toggle>
 

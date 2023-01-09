@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { Star, MdOutlineKeyboardArrowDown } from "react-bootstrap-icons";
 import { ProgressBar } from "react-bootstrap";
-import SidebarMenu from "react-bootstrap-sidebar-menu";
+import Stars from "../components/Stars/Star";
 
 import { MdFlipCameraAndroid } from "react-icons/md";
 import {
@@ -220,7 +220,7 @@ const Trainer = () => {
         >
           {" "}
           Correct Move
-          <i class="bi bi-star"></i>
+          <i className="bi bi-star"></i>
         </div>
         {variationSolved && <div>Congratulations!</div>}
       </div>
@@ -361,10 +361,10 @@ const Trainer = () => {
       return false;
       // The move is legal
     }
-    if (!trainingMode) {
+
+    if (variationSolved) {
       return false;
     }
-
     game.move(move);
 
     setHasMadeMove(true);
@@ -481,7 +481,7 @@ const Trainer = () => {
                   customDropSquareStyle={{
                     boxShadow: "inset 0 0 1px 6px rgba(255, 240, 0)",
                   }}
-                />
+                ></Chessboard>
               </Container>
               <div
                 style={{
@@ -494,6 +494,7 @@ const Trainer = () => {
               >
                 <Button
                   className="mx-1 trainer_buttons"
+                  variant="warning"
                   onClick={() => setWhiteOrientation(!whiteOrientation)}
                 >
                   <MdFlipCameraAndroid />
@@ -504,6 +505,7 @@ const Trainer = () => {
                   <div>
                     <Button
                       className="mx-1 trainer_buttons"
+                      variant="warning"
                       disabled={currentMove <= 0}
                       onClick={() => getFirstMove()}
                     >
@@ -511,12 +513,14 @@ const Trainer = () => {
                     </Button>
                     <Button
                       className="mx-1 trainer_buttons"
+                      variant="warning"
                       disabled={currentMove <= 0}
                       onClick={(e) => getPreviousMove(e)}
                     >
                       <AiFillStepBackward />
                     </Button>{" "}
                     <Button
+                      variant="warning"
                       className="mx-1 trainer_buttons"
                       disabled={currentMove >= moves.length - 1}
                       onClick={(e) => getNextMove(e)}
@@ -524,6 +528,7 @@ const Trainer = () => {
                       <AiFillStepForward />
                     </Button>
                     <Button
+                      variant="warning"
                       className="mx-1 trainer_buttons"
                       onClick={() => getLastMove()}
                       disabled={currentMove >= moves.length - 1}
@@ -534,6 +539,7 @@ const Trainer = () => {
                 )}
                 <Button
                   className="mx-1 trainer_buttons"
+                  variant="warning"
                   onClick={() => setTrainningMode(!trainingMode)}
                 >
                   {trainingMode
@@ -541,6 +547,7 @@ const Trainer = () => {
                     : `${translations[lang].testYourself}`}
                 </Button>
                 <Button
+                  variant="warning"
                   className="mx-1 trainer_buttons"
                   onClick={() => setFocusMode(!focusMode)}
                 >
@@ -592,7 +599,7 @@ const Trainer = () => {
                             </div>
                           </div>
 
-                          <div style={{ margin: "5px" }}>
+                          <div style={{ margin: "5px", color: "royalblue" }}>
                             {" "}
                             {move.comments.length > 0 &&
                               move.comments.map((c) => c.text).join(" ")}
@@ -608,23 +615,25 @@ const Trainer = () => {
                                     flexWrap: "wrap",
                                   }}
                                 >
-                                  {" "}
                                   <div
                                     style={{
                                       marginRight: "5px",
                                       marginLeft: "5px",
                                     }}
                                   >
-                                    {variation.move}{" "}
+                                    {"-".repeat(index + 1)} {variation.move}
                                   </div>
                                   <div
                                     style={{
                                       marginRight: "5px",
                                       marginLeft: "5px",
+                                      color: "royalblue",
                                     }}
                                   >
-                                    {variation.comments.length &&
-                                      variation.comments[0].text}{" "}
+                                    <div>
+                                      {variation.comments.length > 0 &&
+                                        variation.comments[0].text}
+                                    </div>
                                   </div>
                                 </div>
                               ))}
@@ -669,9 +678,9 @@ const Trainer = () => {
                       >
                         {" "}
                         <Button
+                          variant="warning"
                           className="mx-2 trainer_buttons"
                           onClick={() => setShowHint(!showHint)}
-                          variant="secondary"
                         >
                           {""}
                           {!correctMove && !showHint
@@ -708,7 +717,7 @@ const Trainer = () => {
                       </div>
                     </div>
                   ) : (
-                    rewardSystemEffect()
+                    <Stars percent={50} />
                   )}
                 </div>
               )}
@@ -719,11 +728,13 @@ const Trainer = () => {
                   disabled={page <= 0}
                   onClick={handlePreviousPageClick}
                   className="mx-2 trainer_buttons"
+                  variant="warning"
                 >
                   {translations[lang].PreviousPage}
                 </Button>
                 <Button
                   className="mx-2 trainer_buttons"
+                  variant="warning"
                   disabled={page >= pgnList.length - 1}
                   onClick={handleNextPageClick}
                 >

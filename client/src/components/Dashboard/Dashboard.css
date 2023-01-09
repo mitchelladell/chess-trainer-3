@@ -25,3 +25,8 @@
   background-color: #ffbf00;
   border: 1px solid goldenrod;
 }
+
+.golden_button:active {
+  background-color: #ffbf00;
+  border: 1px solid goldenrod;
+}
