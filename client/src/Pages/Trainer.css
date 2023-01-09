@@ -1,6 +1,7 @@
 .highlighted-move {
   background-color: #ffd700; /* golden color */
   border-radius: 3px;
+  font-family: "RobotoCondensed-Bold";
 }
 
 .moves_container {
@@ -23,6 +24,7 @@
 
 .trainer_container_focus {
   height: 100vh;
+  background-color: black;
 }
 
 .collapsed {

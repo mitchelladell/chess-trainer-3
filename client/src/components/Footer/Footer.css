@@ -28,6 +28,12 @@ footer {
   border-radius: 3px;
   font-size: 26px;
 }
+.lang_button .dropdown-menu .dropdown-item:active {
+  background: gold;
+  border-radius: 3px;
+  color: black;
+  font-size: 26px;
+}
 
 @media screen and (max-width: 700px) {
   .lang_button .dropdown-menu,

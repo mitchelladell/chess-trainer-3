@@ -17,6 +17,11 @@ const translations: {
     hideHint: string;
     incorrectMove: string;
     correctMove: String;
+    enroll: string;
+    Retry: string;
+    enterFocusMode: string;
+    exitFocusMode: string;
+    congratulations: string;
   };
   ar: {
     signIn: string;
@@ -36,6 +41,11 @@ const translations: {
     hideHint: string;
     incorrectMove: string;
     correctMove: String;
+    enroll: string;
+    Retry: string;
+    enterFocusMode: string;
+    exitFocusMode: string;
+    congratulations: string;
   };
 } = {
   en: {
@@ -54,13 +64,18 @@ const translations: {
     exitTraining: "Exit Training",
     showHint: "Show Hint",
     hideHint: "Hide Hint",
-    incorrectMove: "Incorrect Move, Try again",
-    correctMove: "Correct Move ",
+    incorrectMove: "Incorrect",
+    correctMove: "Correct",
+    enterFocusMode: "Focus Mode",
+    enroll: "Enroll",
+    Retry: "Retry",
+    exitFocusMode: "Exit Focus Mode",
+    congratulations: "Congratulations!",
   },
 
   ar: {
     signIn: "تسجيل الدخول",
-    signUp: "تسجيل",
+    signUp: "",
     courses: "الكورسات",
     email: "بريد الكترونى",
     password: "كلمة المرور",
@@ -72,10 +87,15 @@ const translations: {
     PreviousPage: "الصفحة السابقة",
     testYourself: "أختير نفسك",
     exitTraining: "الخروج من التمرين",
-    showHint: "أرنى ملحوظة",
-    hideHint: "اخفى الملحوظة",
+    showHint: "مساعدة",
+    hideHint: "اخفى المساعدة",
     incorrectMove: "حركة خاطئة حاول مجددا",
-    correctMove: "حركة صحيحة",
+    correctMove: "نقلة صحيحة",
+    enterFocusMode: "وضع التركيز",
+    enroll: "التحق بالدرس",
+    Retry: "أعد المحاولة",
+    exitFocusMode: "الخروج من وضع التركيز",
+    congratulations: "تهانينا",
   },
 };
 

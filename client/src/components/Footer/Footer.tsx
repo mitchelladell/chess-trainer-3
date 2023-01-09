@@ -34,10 +34,16 @@ const Footer: React.FC = () => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => dispatch(update("en"))}>
+                  <Dropdown.Item
+                    variant="warning"
+                    onClick={() => dispatch(update("en"))}
+                  >
                     {(translations as Translation).en.lang}
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => dispatch(update("ar"))}>
+                  <Dropdown.Item
+                    variant="warning"
+                    onClick={() => dispatch(update("ar"))}
+                  >
                     {(translations as Translation).ar.lang}
                   </Dropdown.Item>
                 </Dropdown.Menu>

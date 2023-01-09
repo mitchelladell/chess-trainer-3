@@ -9,8 +9,6 @@ import { Container, Row, Col } from "react-bootstrap";
 const SignIn = () => {
   const lang = useSelector((state: any) => state.language.value);
 
-  console.log("lang", lang);
-
   return (
     <div>
       <Container fluid>

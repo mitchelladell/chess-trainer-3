@@ -11,6 +11,7 @@ const Stars = ({ percent }: any) => {
       {Array.from({ length: filledStars }, (_, i) => (
         <i
           className="fa fa-star"
+          key={i}
           style={{ fontSize: "35px", color: "gold" }}
         ></i>
       ))}
@@ -20,6 +21,7 @@ const Stars = ({ percent }: any) => {
         <span key={i} role="img" aria-label="half star">
           <i
             className="fa fa-star-half-full"
+            key={i}
             style={{ fontSize: "35px", color: "gold" }}
           ></i>
         </span>

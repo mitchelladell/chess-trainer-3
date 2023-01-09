@@ -149,13 +149,10 @@ const Trainer = () => {
   };
 
   const rewardSystemEffect = () => {
-    let percentage = moves.length / 2 - wrongMovesCount;
+    let percentage =
+      ((moves.length / 2 - wrongMovesCount) * 200) / moves.length;
+
     console.log("percentage", percentage);
-    const stars = [
-      ...Array(
-        Math.min(Math.floor((percentage * 200) / moves.length), 5)
-      ).keys(),
-    ];
 
     return (
       <div
@@ -178,7 +175,6 @@ const Trainer = () => {
           {" "}
           <div
             style={{
-              display: "flex",
               textAlign: "center",
               justifyContent: "center",
             }}
@@ -199,9 +195,7 @@ const Trainer = () => {
               {variationSolved && (
                 <div>
                   {" "}
-                  {stars.map((i) => (
-                    <Star key={i} color="gold" backgroundColor="gold" />
-                  ))}
+                  <Stars percent={percentage} />
                 </div>
               )}
             </div>
@@ -219,10 +213,19 @@ const Trainer = () => {
           }}
         >
           {" "}
-          Correct Move
-          <i className="bi bi-star"></i>
+          {translations[lang].correct}
         </div>
-        {variationSolved && <div>Congratulations!</div>}
+        {variationSolved && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              fontSize: "24px",
+            }}
+          >
+            {translations[lang].congratulations}
+          </div>
+        )}
       </div>
     );
   };
@@ -272,9 +275,7 @@ const Trainer = () => {
     setHighlightedMoveIndex(moves.length - 1);
   };
 
-  const handleNextPageClick = () => {
-    setPgn(pgnList[page + 1].pgn);
-    setPage(page + 1);
+  const resetGame = () => {
     game.reset();
     setPosition(game.fen());
     setCorrectMovesCount(0);
@@ -284,16 +285,16 @@ const Trainer = () => {
     setHasMadeMove(false);
   };
 
+  const handleNextPageClick = () => {
+    setPgn(pgnList[page + 1].pgn);
+    setPage(page + 1);
+    resetGame();
+  };
+
   const handlePreviousPageClick = () => {
     setPgn(pgnList[page - 1].pgn);
     setPage(page - 1);
-    game.reset();
-    setPosition(game.fen());
-    setCorrectMovesCount(0);
-    setCurrentMove(0);
-    setHighlightedMoveIndex(-1);
-    setVariationSolved(false);
-    setHasMadeMove(false);
+    resetGame();
   };
 
   document.onkeydown = checkKey;
@@ -367,9 +368,11 @@ const Trainer = () => {
     }
     game.move(move);
 
-    setHasMadeMove(true);
     // Update the component's state with the new position
     setPosition(game.fen());
+
+    setHasMadeMove(true);
+
     /*     moveSoundRef.current.play();
      */
     // Check if the move follows the PGN
@@ -391,10 +394,10 @@ const Trainer = () => {
       }, 250); // delay of 1/4 second
     } else {
       playCorrect();
+      setCorrectMove(true);
 
       setTimeout(() => {
         // Increment the current move index by one
-        setCorrectMove(true);
 
         setCurrentMove((prevMove) => prevMove + 1);
 
@@ -430,6 +433,33 @@ const Trainer = () => {
       }, 500);
     }
     return;
+  }
+
+  function renderVariations(variations, indentLevel) {
+    return variations.map((variation, index) => (
+      <div
+        key={index}
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          marginLeft: `${5 * (indentLevel + 1)}px`,
+        }}
+      >
+        <div style={{ marginRight: "5px" }}>
+          {"-".repeat(indentLevel + 1)} {variation.move}
+        </div>
+        <div style={{ marginRight: "5px", color: "royalblue" }}>
+          <div>
+            {variation.comments.length > 0 && variation.comments[0].text}
+          </div>
+        </div>
+        {variation.ravs && variation.ravs.length > 0 && (
+          <div style={{ display: "flex", margin: "5px" }}>
+            {renderVariations(variation.ravs[0].moves, indentLevel + 1)}
+          </div>
+        )}
+      </div>
+    ));
   }
 
   return (
@@ -540,7 +570,10 @@ const Trainer = () => {
                 <Button
                   className="mx-1 trainer_buttons"
                   variant="warning"
-                  onClick={() => setTrainningMode(!trainingMode)}
+                  onClick={() => {
+                    setTrainningMode(!trainingMode);
+                    resetGame();
+                  }}
                 >
                   {trainingMode
                     ? `${translations[lang].exitTraining}`
@@ -551,7 +584,9 @@ const Trainer = () => {
                   className="mx-1 trainer_buttons"
                   onClick={() => setFocusMode(!focusMode)}
                 >
-                  {focusMode ? "Exit Focus Mode" : "Focus Mode"}
+                  {focusMode
+                    ? `${translations[lang].exitFocusMode}`
+                    : `${translations[lang].enterFocusMode}`}
                 </Button>
               </div>
             </Col>
@@ -584,6 +619,8 @@ const Trainer = () => {
                             style={{
                               fontWeight: "bold",
                               cursor: "pointer",
+                              fontFamily: "RobotoCondensed-Bold",
+                              fontSize: "20px",
                               margin: "5px",
                             }}
                             onClick={() => {
@@ -649,7 +686,6 @@ const Trainer = () => {
                   style={{
                     visibility: hasMadeMove ? "visible" : "hidden",
                     height: dimensions.height,
-                    display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                   }}
@@ -717,7 +753,7 @@ const Trainer = () => {
                       </div>
                     </div>
                   ) : (
-                    <Stars percent={50} />
+                    <div>{rewardSystemEffect()}</div>
                   )}
                 </div>
               )}
