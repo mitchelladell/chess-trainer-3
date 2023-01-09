@@ -23,30 +23,25 @@ const Header: React.FC = () => {
 
   return (
     <div className="header_container">
-      <Container fluid>
-        <Row>
-          <Nav>
-            <Col md={2} sm={3} xs={3} lg={1} xl={1}>
-              {" "}
-              <Nav.Link className="link" href="/courses">
-                {(translations as Translation)[lang].courses}
-              </Nav.Link>{" "}
-            </Col>
-            <Col></Col>
-            <Col md={2} sm={3} xs={3} lg={1} xl={1}>
-              {" "}
-              <Nav.Link className="link" href="/signup">
-                {(translations as Translation)[lang].signUp}
-              </Nav.Link>
-            </Col>
-            <Col md={2} sm={3} xs={3} lg={1} xl={1}>
-              <Nav.Link className="link" href="/signin">
-                {(translations as Translation)[lang].signIn}
-              </Nav.Link>
-            </Col>
-          </Nav>
-        </Row>
-      </Container>
+      <Nav>
+        <div style={{ display: "flex", width: "100%", justifyContent: "left" }}>
+          <Nav.Link className="link" href="/courses">
+            {(translations as Translation)[lang].courses}
+          </Nav.Link>
+        </div>
+      </Nav>
+      <div style={{ display: "flex", width: "100%", justifyContent: "right" }}>
+        {" "}
+        <Nav>
+          {" "}
+          <Nav.Link className="link" href="/signup">
+            {(translations as Translation)[lang].signUp}
+          </Nav.Link>
+          <Nav.Link className="link" href="/signin">
+            {(translations as Translation)[lang].signIn}
+          </Nav.Link>
+        </Nav>
+      </div>
     </div>
   );
 };
