@@ -104,47 +104,6 @@ const Trainer = () => {
     window.addEventListener("resize", handleResize, false);
   }, []);
 
-  function Sidebar() {
-    return (
-      <div>
-        {!focusMode && (
-          <div>
-            {!collapsed && (
-              <Navbar bg="light" className={collapsed ? "collapsed" : ""}>
-                <Navbar.Collapse id="basic-navbar-nav">
-                  <Nav className="flex-column">
-                    {pgnList.map((pgn) => (
-                      <div>
-                        <Nav.Link
-                          onClick={() => {
-                            setPgn(pgn.pgn);
-                            game.reset();
-                            setPosition(game.fen());
-                            setCurrentMove(0);
-                            setPage(findPgnIndex());
-                            setCorrectMovesCount(0);
-                            setHighlightedMoveIndex(-1);
-                            setTrainningMode(false);
-                            setHasMadeMove(false);
-                            setNavSelected(pgn.name);
-                          }}
-                          style={{ fontFamily: "RobotoCondensed-Bold" }}
-                          className={navSelected === pgn.name ? "active" : ""}
-                        >
-                          {pgn.name}
-                        </Nav.Link>
-                      </div>
-                    ))}
-                  </Nav>
-                </Navbar.Collapse>
-              </Navbar>
-            )}
-          </div>
-        )}
-      </div>
-    );
-  }
-
   const correctAudio = useRef(null);
 
   function playCorrect() {
@@ -179,7 +138,7 @@ const Trainer = () => {
             style={{
               background: "royalblue",
               fontSize: "35px",
-              fontFamily: "SourceSerifPro-Bold",
+              fontFamily: "Montserrat-Medium",
               textAlign: "center",
               borderTopLeftRadius: "5px",
               borderTopRightRadius: "5px",
@@ -731,7 +690,7 @@ const Trainer = () => {
                           background: "royalblue",
                           color: "black",
                           boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
-                          fontFamily: "RobotoCondensed-Bold",
+                          fontFamily: "Montserrat-Bold",
                           width: "100%",
                           borderTopLeftRadius: "5px",
                           borderTopRightRadius: "5px",
@@ -773,7 +732,6 @@ const Trainer = () => {
                           fontSize: "20px",
                           color: "black",
                           textAlign: "center",
-                          fontFamily: "RobotoCondensed-Bold",
                           borderBottomLeftRadius: "5px",
                           animation: "shadow-glow 1s infinite",
 
