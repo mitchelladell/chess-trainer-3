@@ -63,6 +63,7 @@ const Trainer = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [navSelected, setNavSelected] = useState(null);
   const [arrows, setArrows] = useState([]);
+  const [percent, setPercent] = useState(0);
 
   const [variationsCount, setVariationsCount] = useState(0);
 
@@ -154,12 +155,15 @@ const Trainer = () => {
     return index;
   };
 
-  const rewardSystemEffect = () => {
-    let percentage =
+  const calculateStars = () => {
+    const percentage =
       ((moves.length / 2 - wrongMovesCount) * 200) / moves.length;
 
+    setPercent(percentage);
     console.log("percentage", percentage);
+  };
 
+  const rewardSystemEffect = () => {
     return (
       <div
         style={{
@@ -201,7 +205,7 @@ const Trainer = () => {
               {variationSolved && (
                 <div>
                   {" "}
-                  <Stars percent={percentage} />
+                  <Stars percent={percent} />
                 </div>
               )}
             </div>
@@ -305,6 +309,7 @@ const Trainer = () => {
     setHighlightedMoveIndex(-1);
     setVariationSolved(false);
     setHasMadeMove(false);
+    setPercent(0);
   };
 
   const handleNextPageClick = () => {
@@ -363,6 +368,8 @@ const Trainer = () => {
 
     // Update the component's state with the new position
     setPosition(game.fen());
+    setWrongMovesCount((prev) => prev - 1);
+
     setShowIncorrectMove(false);
     console.log("correct", moves[currentMove]);
 
@@ -419,6 +426,8 @@ const Trainer = () => {
 
     setHasMadeMove(true);
     setHintRequested(false);
+
+    calculateStars();
 
     /*     moveSoundRef.current.play();
      */
