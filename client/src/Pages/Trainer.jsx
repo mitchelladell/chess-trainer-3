@@ -583,18 +583,9 @@ const Trainer = () => {
                   style={{ height: dimensions.height }}
                 >
                   {finalpgn.length > 0 && (
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        flexWrap: "wrap",
-                      }}
-                    >
+                    <div>
                       {finalpgn.map((move, index) => (
-                        <div
-                          key={index}
-                          style={{ display: "flex", flexWrap: "wrap" }}
-                        >
+                        <div key={index}>
                           <div
                             key={index}
                             className={
@@ -630,13 +621,7 @@ const Trainer = () => {
                           {move.ravs && move.ravs.length > 0 && (
                             <div style={{ display: "flex", margin: "5px" }}>
                               {move.ravs[0].moves.map((variation, index) => (
-                                <div
-                                  key={index}
-                                  style={{
-                                    display: "flex",
-                                    flexWrap: "wrap",
-                                  }}
-                                >
+                                <div key={index}>
                                   <div
                                     style={{
                                       marginRight: "5px",
@@ -687,7 +672,7 @@ const Trainer = () => {
                       <div
                         style={{
                           fontSize: "35px",
-                          background: "royalblue",
+                          background: "white",
                           color: "black",
                           boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
                           fontFamily: "Montserrat-Bold",
@@ -697,6 +682,16 @@ const Trainer = () => {
                           textAlign: "center",
                         }}
                       >
+                        <div
+                          style={{
+                            textAlign: "center",
+                            background: "red",
+                            color: "white",
+                            fontSize: "30px",
+                          }}
+                        >
+                          {translations[lang].incorrectMove}
+                        </div>
                         {numberOfTries > 1 ? (
                           <Button
                             variant="warning"
@@ -714,31 +709,6 @@ const Trainer = () => {
                             {translations[lang].tryAgain}
                           </Button>
                         )}
-                      </div>
-                      <div
-                        style={{
-                          textAlign: "center",
-                          background: "#c33",
-                          color: "white",
-                          fontSize: "30px",
-                          boxShadow: "0 0 5px 5px rgb(255 255 255 / 50%)",
-                        }}
-                      >
-                        {translations[lang].incorrectMove}
-                      </div>
-                      <div
-                        style={{
-                          backgroundColor: "white",
-                          fontSize: "20px",
-                          color: "black",
-                          textAlign: "center",
-                          borderBottomLeftRadius: "5px",
-                          animation: "shadow-glow 1s infinite",
-
-                          borderBottomRightRadius: "5px",
-                        }}
-                      >
-                        {showHint ? moves[currentMove] : ""}
                       </div>
                     </div>
                   ) : (

@@ -17,15 +17,15 @@
   text-align: initial;
 }
 .golden_button {
-  background-color: #ff9833;
-  border: 1px solid #ff9833;
+  background-color: goldenrod;
+  border: 1px solid goldenrod;
   font-family: "Montserrat-Bold";
   font-size: 18px;
   width: 100px;
 }
 
 .golden_button:hover {
-  background-color: #ffbf00;
+  background-color: gold;
   border: 1px solid goldenrod;
 }
 
