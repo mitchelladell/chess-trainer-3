@@ -62,6 +62,7 @@ const Trainer = () => {
   const [page, setPage] = useState(0);
   const [collapsed, setCollapsed] = useState(false);
   const [navSelected, setNavSelected] = useState(null);
+  const [arrows, setArrows] = useState([]);
 
   const [variationsCount, setVariationsCount] = useState(0);
 
@@ -213,7 +214,7 @@ const Trainer = () => {
           }}
         >
           {" "}
-          {translations[lang].correct}
+          {translations[lang].correctMove}
         </div>
         {variationSolved && (
           <div
@@ -276,6 +277,8 @@ const Trainer = () => {
   };
 
   const resetGame = () => {
+    setArrows([]);
+
     game.reset();
     setPosition(game.fen());
     setCorrectMovesCount(0);
@@ -334,6 +337,18 @@ const Trainer = () => {
     if (move === null) return false;
     return true;
   }
+
+  const handleHint = () => {
+    console.log("correct", moves[currentMove]);
+    const move = game.move(moves[currentMove], { verbose: true });
+    setArrows([move.from, move.to]);
+
+    game.undo();
+    setPosition(game.fen());
+
+    console.log("move", move.from, move.to);
+    console.log("arrow", arrows);
+  };
 
   const loadPostion = (index) => {
     // Reset the game to the initial position
@@ -394,6 +409,7 @@ const Trainer = () => {
       }, 250); // delay of 1/4 second
     } else {
       playCorrect();
+      setArrows([]);
       setCorrectMove(true);
 
       setTimeout(() => {
@@ -489,27 +505,21 @@ const Trainer = () => {
               </Col>
             )} */}
 
-            <Col align={"center"}>
+            <Col>
               <Container>
                 <Chessboard
                   onPieceDrop={onDrop}
                   position={game.fen()}
                   boardWidth={dimensions.width}
                   arePiecesDraggable={trainingMode}
-                  areArrowsAllowed={true}
+                  customArrows={arrows.length > 0 && [arrows]}
+                  /*                   customArrows={[handleHint()]}
+                   */ areArrowsAllowed={true}
                   boardOrientation={whiteOrientation ? "white" : "black"}
                   showBoardNotation={true}
-                  customSquareStyles={{
-                    "square:hover": {
-                      boxShadow: "inset 0 0 1px 6px rgba(255, 0, 0)", // red color
-                    },
-                  }}
                   customBoardStyle={{
                     borderRadius: "5px",
                     boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
-                  }}
-                  customDropSquareStyle={{
-                    boxShadow: "inset 0 0 1px 6px rgba(255, 240, 0)",
                   }}
                 ></Chessboard>
               </Container>
@@ -722,6 +732,13 @@ const Trainer = () => {
                           {!correctMove && !showHint
                             ? `${translations[lang].showHint}`
                             : `${translations[lang].hideHint}`}
+                        </Button>
+                        <Button
+                          variant="warning"
+                          className="mx-2 trainer_buttons"
+                          onClick={() => handleHint()}
+                        >
+                          Show Hint
                         </Button>
                       </div>
                       <div
