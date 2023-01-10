@@ -91,7 +91,7 @@ const translations: {
     turboCoach: "المعلم السريع",
     NextPage: "الصفحة التالية",
     PreviousPage: "الصفحة السابقة",
-    testYourself: "أختير نفسك",
+    testYourself: "أختبر نفسك",
     exitTraining: "الخروج من التمرين",
     showHint: "مساعدة",
     hideHint: "اخفى المساعدة",

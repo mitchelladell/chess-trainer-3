@@ -19,6 +19,9 @@
 .golden_button {
   background-color: #ff9833;
   border: 1px solid #ff9833;
+  font-family: "Montserrat-Bold";
+  font-size: 18px;
+  width: 100px;
 }
 
 .golden_button:hover {

@@ -99,7 +99,13 @@ const Dashboard: React.FC<IProps> = (props) => {
           </Col>
           <Col sm={7} md={7} lg={8}>
             {" "}
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontFamily: "Montserrat-Bold",
+              }}
+            >
               {" "}
               <Link to="/courses/variation/">
                 <div style={{ cursor: "pointer" }}>

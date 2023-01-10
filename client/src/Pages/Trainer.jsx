@@ -178,7 +178,7 @@ const Trainer = () => {
           style={{
             background: "royalblue",
             fontSize: "35px",
-            fontFamily: "RobotoCondensed-Bold",
+            fontFamily: "SourceSerifPro-Bold",
             textAlign: "center",
             borderTopLeftRadius: "5px",
             borderTopRightRadius: "5px",
@@ -219,7 +219,7 @@ const Trainer = () => {
             fontSize: "20px",
             color: "white",
             textAlign: "center",
-            fontFamily: "RobotoCondensed-Bold",
+            fontFamily: "SourceSerifPro-Bold",
             borderBottomLeftRadius: "5px",
             borderBottomRightRadius: "5px",
           }}
@@ -435,6 +435,7 @@ const Trainer = () => {
     // Check if the move follows the PGN
     if (game.history()[currentMove] !== moves[currentMove]) {
       if (!incorrectMoves.has(moves[currentMove])) {
+        console.log("getting In");
         setWrongMovesCount((prev) => prev + 1);
         incorrectMoves.add(moves[currentMove]);
       }
@@ -680,9 +681,8 @@ const Trainer = () => {
                                 : ""
                             }
                             style={{
-                              fontWeight: "bold",
                               cursor: "pointer",
-                              fontFamily: "RobotoCondensed-Bold",
+                              fontFamily: "Montserrat-Bold",
                               fontSize: "20px",
                               margin: "5px",
                             }}
