@@ -57,6 +57,8 @@ const Trainer = () => {
   const [moves, setMoves] = useState([]);
 
   const [currentMove, setCurrentMove] = useState(0);
+  const [incorrectMoves, setIncorrectMoves] = useState(new Set());
+
   const [whiteOrientation, setWhiteOrientation] = useState(true);
   const [pgn, setPgn] = useState(variation);
   const [page, setPage] = useState(0);
@@ -368,7 +370,6 @@ const Trainer = () => {
 
     // Update the component's state with the new position
     setPosition(game.fen());
-    setWrongMovesCount((prev) => prev - 1);
 
     setShowIncorrectMove(false);
     console.log("correct", moves[currentMove]);
@@ -433,12 +434,14 @@ const Trainer = () => {
      */
     // Check if the move follows the PGN
     if (game.history()[currentMove] !== moves[currentMove]) {
+      if (!incorrectMoves.has(moves[currentMove])) {
+        setWrongMovesCount((prev) => prev + 1);
+        incorrectMoves.add(moves[currentMove]);
+      }
       setBoardEnabled(false);
-      console.log("tryAgain");
       setCorrectMove(false);
 
       setShowIncorrectMove(true);
-      setWrongMovesCount((prev) => prev + 1);
 
       // The move does not follow the PGN, so add a delay before taking it back
       // handleTryAgain();
