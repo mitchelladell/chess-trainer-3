@@ -71,6 +71,11 @@ const Trainer = () => {
   const [showIncorrectMove, setShowIncorrectMove] = useState(false);
   const [correctMovesCount, setCorrectMovesCount] = useState(0);
   const [wrongMovesCount, setWrongMovesCount] = useState(0);
+  const [boardEnabled, setBoardEnabled] = useState(true);
+
+  const [numberOfTries, setNumberOfTries] = useState(0);
+
+  const [hintRequested, setHintRequested] = useState(true);
 
   const [variationSolved, setVariationSolved] = useState(false);
 
@@ -231,6 +236,21 @@ const Trainer = () => {
     );
   };
 
+  const handleTryAgain = () => {
+    setHintRequested(true);
+    setNumberOfTries(numberOfTries + 1);
+    setTimeout(() => {
+      // Undo the move
+      game.undo();
+
+      // Update the component's state with the new position
+      setPosition(game.fen());
+      setShowIncorrectMove(false);
+    }, 250); // delay of 1/4 second
+    setBoardEnabled(true);
+    setCorrectMove(true);
+  };
+
   const handleResize = () => {
     if (window.innerWidth > window.innerHeight) {
       setDimensions({
@@ -278,7 +298,6 @@ const Trainer = () => {
 
   const resetGame = () => {
     setArrows([]);
-
     game.reset();
     setPosition(game.fen());
     setCorrectMovesCount(0);
@@ -339,15 +358,27 @@ const Trainer = () => {
   }
 
   const handleHint = () => {
-    console.log("correct", moves[currentMove]);
-    const move = game.move(moves[currentMove], { verbose: true });
-    setArrows([move.from, move.to]);
-
+    // Undo the move
     game.undo();
-    setPosition(game.fen());
 
-    console.log("move", move.from, move.to);
-    console.log("arrow", arrows);
+    // Update the component's state with the new position
+    setPosition(game.fen());
+    setShowIncorrectMove(false);
+    console.log("correct", moves[currentMove]);
+
+    setTimeout(() => {
+      const move = game.move(moves[currentMove], { verbose: true });
+      setArrows([move.from, move.to]);
+
+      game.undo();
+      setPosition(game.fen());
+      console.log("move", move.from, move.to);
+      console.log("arrow", arrows);
+      setBoardEnabled(true);
+      setCorrectMove(true);
+      setNumberOfTries(0);
+      setHintRequested(false);
+    }, 250); // delay of 1/4 second
   };
 
   const loadPostion = (index) => {
@@ -387,13 +418,22 @@ const Trainer = () => {
     setPosition(game.fen());
 
     setHasMadeMove(true);
+    setHintRequested(false);
 
     /*     moveSoundRef.current.play();
      */
     // Check if the move follows the PGN
     if (game.history()[currentMove] !== moves[currentMove]) {
-      // The move does not follow the PGN, so add a delay before taking it back
+      setBoardEnabled(false);
+      console.log("tryAgain");
+      setCorrectMove(false);
 
+      setShowIncorrectMove(true);
+      setWrongMovesCount((prev) => prev + 1);
+
+      // The move does not follow the PGN, so add a delay before taking it back
+      // handleTryAgain();
+      /* 
       setCorrectMove(false);
 
       setShowIncorrectMove(true);
@@ -406,7 +446,7 @@ const Trainer = () => {
         // Update the component's state with the new position
         setPosition(game.fen());
         setShowIncorrectMove(false);
-      }, 250); // delay of 1/4 second
+      }, 250); // delay of 1/4 second */
     } else {
       playCorrect();
       setArrows([]);
@@ -511,10 +551,11 @@ const Trainer = () => {
                   onPieceDrop={onDrop}
                   position={game.fen()}
                   boardWidth={dimensions.width}
-                  arePiecesDraggable={trainingMode}
+                  arePiecesDraggable={
+                    trainingMode && boardEnabled && !variationSolved
+                  }
                   customArrows={arrows.length > 0 && [arrows]}
-                  /*                   customArrows={[handleHint()]}
-                   */ areArrowsAllowed={true}
+                  areArrowsAllowed={true}
                   boardOrientation={whiteOrientation ? "white" : "black"}
                   showBoardNotation={true}
                   customBoardStyle={{
@@ -722,24 +763,23 @@ const Trainer = () => {
                           textAlign: "center",
                         }}
                       >
-                        {" "}
-                        <Button
-                          variant="warning"
-                          className="mx-2 trainer_buttons"
-                          onClick={() => setShowHint(!showHint)}
-                        >
-                          {""}
-                          {!correctMove && !showHint
-                            ? `${translations[lang].showHint}`
-                            : `${translations[lang].hideHint}`}
-                        </Button>
-                        <Button
-                          variant="warning"
-                          className="mx-2 trainer_buttons"
-                          onClick={() => handleHint()}
-                        >
-                          Show Hint
-                        </Button>
+                        {numberOfTries > 1 ? (
+                          <Button
+                            variant="warning"
+                            className="mx-2 trainer_buttons"
+                            onClick={() => handleHint()}
+                          >
+                            {translations[lang].showHint}
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="warning"
+                            className="mx-2 trainer_buttons"
+                            onClick={() => handleTryAgain()}
+                          >
+                            {translations[lang].tryAgain}
+                          </Button>
+                        )}
                       </div>
                       <div
                         style={{
@@ -770,31 +810,32 @@ const Trainer = () => {
                       </div>
                     </div>
                   ) : (
-                    <div>{rewardSystemEffect()}</div>
+                    <div>{!hintRequested && rewardSystemEffect()}</div>
                   )}
                 </div>
               )}
 
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                {" "}
-                <Button
-                  disabled={page <= 0}
-                  onClick={handlePreviousPageClick}
-                  className="mx-2 trainer_buttons"
-                  variant="warning"
-                >
-                  {translations[lang].PreviousPage}
-                </Button>
-                <Button
-                  className="mx-2 trainer_buttons"
-                  variant="warning"
-                  disabled={page >= pgnList.length - 1}
-                  onClick={handleNextPageClick}
-                >
-                  {translations[lang].NextPage}
-                </Button>
-                &nbsp;
-              </div>
+              {!trainingMode && (
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  {" "}
+                  <Button
+                    disabled={page <= 0}
+                    onClick={handlePreviousPageClick}
+                    className="mx-2 trainer_buttons"
+                    variant="warning"
+                  >
+                    {translations[lang].PreviousPage}
+                  </Button>
+                  <Button
+                    className="mx-2 trainer_buttons"
+                    variant="warning"
+                    disabled={page >= pgnList.length - 1}
+                    onClick={handleNextPageClick}
+                  >
+                    {translations[lang].NextPage}
+                  </Button>
+                </div>
+              )}
             </Col>
           </Row>
         </Container>

@@ -14,12 +14,19 @@ import { update } from "../../features/language/languageSlice";
 import "./Dashboard.css";
 
 import { BsThreeDotsVertical, BsBook } from "react-icons/bs";
+import translations from "../../consts/translations";
 
 type IProps = {
   variationExist: boolean;
   courseName: string;
   progress: number;
   numberOfVariations: string;
+};
+
+type Translation = {
+  [key: string]: {
+    learn: "string";
+  };
 };
 
 /* type Translation = {
@@ -46,6 +53,10 @@ const Dashboard: React.FC<IProps> = (props) => {
   const [data, setData] = useState<any>([]);
 
   const [pgnList, setPgnList] = useState([]);
+
+  const lang = useSelector(
+    (state: { language: { value: string } }) => state.language.value
+  );
   const [totalVariations, setTotalVariations] = useState(0);
   const [pgn, setPgn] = useState([]);
 
@@ -106,7 +117,7 @@ const Dashboard: React.FC<IProps> = (props) => {
               <Link to="/courses/variation/">
                 <Button variant="warning" className="golden_button">
                   {" "}
-                  Enroll{" "}
+                  {(translations as Translation)[lang].learn}
                 </Button>
               </Link>
             </div>

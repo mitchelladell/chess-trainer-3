@@ -22,6 +22,8 @@ const translations: {
     enterFocusMode: string;
     exitFocusMode: string;
     congratulations: string;
+    learn: string;
+    tryAgain: string;
   };
   ar: {
     signIn: string;
@@ -46,6 +48,8 @@ const translations: {
     enterFocusMode: string;
     exitFocusMode: string;
     congratulations: string;
+    learn: string;
+    tryAgain: string;
   };
 } = {
   en: {
@@ -71,6 +75,8 @@ const translations: {
     Retry: "Retry",
     exitFocusMode: "Exit Focus Mode",
     congratulations: "Congratulations!",
+    learn: "Learn",
+    tryAgain: "Try again",
   },
 
   ar: {
@@ -96,6 +102,8 @@ const translations: {
     Retry: "أعد المحاولة",
     exitFocusMode: "الخروج من وضع التركيز",
     congratulations: "تهانينا",
+    learn: "تعلم",
+    tryAgain: "حاول مجددا",
   },
 };
 
