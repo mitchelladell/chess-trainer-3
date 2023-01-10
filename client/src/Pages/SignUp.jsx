@@ -1,11 +1,23 @@
 import { Row, Col, Container } from "react-bootstrap/";
+import { useEffect } from "react";
+
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import "./Sign.css";
+import { useDispatch } from "react-redux";
+import { update } from "../features/language/languageSlice";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const lang = localStorage.getItem("lang");
+    if (lang) {
+      dispatch(update(lang));
+    }
+  }, [dispatch]);
   return (
     <div className="App">
       <Container fluid>

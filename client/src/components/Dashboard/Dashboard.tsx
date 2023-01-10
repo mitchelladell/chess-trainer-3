@@ -41,6 +41,7 @@ type Translation = {
 
 async function readPGN(pgn2: any) {
   // Read the PGN file and parse it
+
   const pgn = pgn2;
   console.log("pgn", pgn);
 
@@ -50,9 +51,18 @@ async function readPGN(pgn2: any) {
   return postion;
 }
 const Dashboard: React.FC<IProps> = (props) => {
+  const dispatch = useDispatch();
+
   const [data, setData] = useState<any>([]);
 
   const [pgnList, setPgnList] = useState([]);
+
+  useEffect(() => {
+    const lang = localStorage.getItem("lang");
+    if (lang) {
+      dispatch(update(lang));
+    }
+  }, [dispatch]);
 
   const lang = useSelector(
     (state: { language: { value: string } }) => state.language.value

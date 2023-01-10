@@ -5,9 +5,21 @@ import translations from "../consts/translations";
 import { useSelector } from "react-redux";
 import "./Sign.css";
 import { Container, Row, Col } from "react-bootstrap";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { update } from "../features/language/languageSlice";
 
 const SignIn = () => {
   const lang = useSelector((state: any) => state.language.value);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const lang = localStorage.getItem("lang");
+    if (lang) {
+      dispatch(update(lang));
+    }
+  }, [dispatch]);
 
   return (
     <div>
