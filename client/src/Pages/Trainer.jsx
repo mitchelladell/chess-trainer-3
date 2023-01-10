@@ -174,59 +174,62 @@ const Trainer = () => {
           width: "100%",
         }}
       >
-        <div
-          style={{
-            background: "royalblue",
-            fontSize: "35px",
-            fontFamily: "SourceSerifPro-Bold",
-            textAlign: "center",
-            borderTopLeftRadius: "5px",
-            borderTopRightRadius: "5px",
-          }}
-        >
-          {" "}
+        <div>
           <div
             style={{
+              background: "royalblue",
+              fontSize: "35px",
+              fontFamily: "SourceSerifPro-Bold",
               textAlign: "center",
-              justifyContent: "center",
+              borderTopLeftRadius: "5px",
+              borderTopRightRadius: "5px",
             }}
           >
-            <div style={{ width: "100%" }}>
-              <div style={{ width: "100%", margin: "auto" }}>
-                <ProgressBar
-                  animated={true}
-                  variant="success"
-                  style={{ width: "100%" }}
-                  now={(correctMovesCount * 200) / moves.length}
-                  max={100}
-                  label={`${Math.floor(
-                    (correctMovesCount * 200) / moves.length
-                  )}%`}
-                />
-              </div>
-              {variationSolved && (
-                <div>
-                  {" "}
-                  <Stars percent={percent} />
+            {" "}
+            <div
+              style={{
+                textAlign: "center",
+                justifyContent: "center",
+              }}
+            >
+              <div style={{ width: "100%" }}>
+                <div style={{ width: "100%", margin: "auto" }}>
+                  <ProgressBar
+                    animated={true}
+                    variant="success"
+                    style={{ width: "100%" }}
+                    now={(correctMovesCount * 200) / moves.length}
+                    max={100}
+                    label={`${Math.floor(
+                      (correctMovesCount * 200) / moves.length
+                    )}%`}
+                  />
                 </div>
-              )}
+                {variationSolved && (
+                  <div>
+                    {" "}
+                    <Stars percent={percent} />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
+          <div
+            style={{
+              background: "black",
+              fontSize: "20px",
+              color: "white",
+              textAlign: "center",
+              fontFamily: "SourceSerifPro-Bold",
+              borderBottomLeftRadius: "5px",
+              borderBottomRightRadius: "5px",
+            }}
+          >
+            {" "}
+            {translations[lang].correctMove}
+          </div>{" "}
         </div>
-        <div
-          style={{
-            background: "black",
-            fontSize: "20px",
-            color: "white",
-            textAlign: "center",
-            fontFamily: "SourceSerifPro-Bold",
-            borderBottomLeftRadius: "5px",
-            borderBottomRightRadius: "5px",
-          }}
-        >
-          {" "}
-          {translations[lang].correctMove}
-        </div>
+
         {variationSolved && (
           <div
             style={{
@@ -377,11 +380,9 @@ const Trainer = () => {
     setTimeout(() => {
       const move = game.move(moves[currentMove], { verbose: true });
       setArrows([move.from, move.to]);
-
       game.undo();
       setPosition(game.fen());
-      console.log("move", move.from, move.to);
-      console.log("arrow", arrows);
+      setHasMadeMove(false);
       setBoardEnabled(true);
       setCorrectMove(true);
       setNumberOfTries(0);
@@ -443,23 +444,6 @@ const Trainer = () => {
       setCorrectMove(false);
 
       setShowIncorrectMove(true);
-
-      // The move does not follow the PGN, so add a delay before taking it back
-      // handleTryAgain();
-      /* 
-      setCorrectMove(false);
-
-      setShowIncorrectMove(true);
-      setWrongMovesCount((prev) => prev + 1);
-
-      setTimeout(() => {
-        // Undo the move
-        game.undo();
-
-        // Update the component's state with the new position
-        setPosition(game.fen());
-        setShowIncorrectMove(false);
-      }, 250); // delay of 1/4 second */
     } else {
       playCorrect();
       setArrows([]);
@@ -539,51 +523,30 @@ const Trainer = () => {
       >
         <Container>
           <Row>
-            {/*     <Col xs={1} sm={1} md={1} align={"center"}>
-                <div
-                  onClick={() => setCollapsed(!collapsed)}
-                  style={{
-                    cursor: "pointer",
-                    textAlign: "center",
-                  }}
-                >
-                  {collapsed ? ">>" : "<<"}
-                </div>
-              </Col>
-            </Row>
-            {!collapsed && (
-              <Col xs={3} sm={3} md={2}>
-                {" "}
-                <Sidebar />
-              </Col>
-            )} */}
-
             <Col>
-              <Container>
-                <Chessboard
-                  onPieceDrop={onDrop}
-                  position={game.fen()}
-                  boardWidth={dimensions.width}
-                  arePiecesDraggable={
-                    trainingMode && boardEnabled && !variationSolved
-                  }
-                  customArrows={arrows.length > 0 && [arrows]}
-                  areArrowsAllowed={true}
-                  boardOrientation={whiteOrientation ? "white" : "black"}
-                  showBoardNotation={true}
-                  customBoardStyle={{
-                    borderRadius: "5px",
-                    boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
-                  }}
-                ></Chessboard>
-              </Container>
+              <Chessboard
+                onPieceDrop={onDrop}
+                position={game.fen()}
+                boardWidth={dimensions.width}
+                arePiecesDraggable={
+                  trainingMode && boardEnabled && !variationSolved
+                }
+                customArrows={arrows.length > 0 && [arrows]}
+                areArrowsAllowed={true}
+                boardOrientation={whiteOrientation ? "white" : "black"}
+                showBoardNotation={true}
+                customBoardStyle={{
+                  borderRadius: "5px",
+                  boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
+                }}
+              ></Chessboard>
               <div
                 style={{
                   marginTop: "10px",
                   marginBottom: "10px",
                   display: "flex",
                   flexWrap: "wrap",
-                  justifyContent: "center",
+                  justifyContent: "left",
                 }}
               >
                 <Button
@@ -798,7 +761,6 @@ const Trainer = () => {
                           textAlign: "center",
                           background: "#c33",
                           color: "white",
-                          fontFamily: "RobotoCondensed-Bold",
                           fontSize: "30px",
                           boxShadow: "0 0 5px 5px rgb(255 255 255 / 50%)",
                         }}

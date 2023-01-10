@@ -79,6 +79,7 @@
   border: 1px solid goldenrod;
   font-family: "Montserrat-Bold";
   font-size: 24px;
+  margin: 5px;
 }
 
 @media screen and (max-width: 700px) {
@@ -97,4 +98,5 @@
   color: white;
   cursor: not-allowed;
   border: 1px solid grey;
+  margin: 5px;
 }
