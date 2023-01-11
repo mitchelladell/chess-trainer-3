@@ -56,6 +56,8 @@ const Trainer = () => {
   const [focusMode, setFocusMode] = useState(false);
   const [moves, setMoves] = useState([]);
 
+  const [selectedMove, setSelectedMove] = useState(0);
+
   const [currentMove, setCurrentMove] = useState(0);
   const [incorrectMoves, setIncorrectMoves] = useState(new Set());
 
@@ -308,6 +310,7 @@ const Trainer = () => {
 
   useEffect(() => {
     readPGN(pgn).then((finalpgn) => {
+      console.log("finalPgn", finalpgn);
       const parsedMoves = finalpgn[0].moves.map((move) => move.move);
       setMoves(parsedMoves);
       setFinalpgn(finalpgn[0].moves);
@@ -347,6 +350,27 @@ const Trainer = () => {
       setNumberOfTries(0);
       setHintRequested(false);
     }, 250); // delay of 1/4 second
+  };
+
+  const loadVariations = (index) => {
+    // Set the selected move to the corresponding move in the variations array
+    setSelectedMove(selectedMove.ravs[0].moves[index]);
+    console.log("setSelectedMove", selectedMove.ravs[0].moves[index]);
+    // reset the position
+    game.reset();
+    //set the highlighted move
+    setHighlightedMoveIndex(index);
+    // find the subvariation index
+    let subVariationIndex = moves.findIndex(
+      (move) => move.move === selectedMove.ravs[0].moves[0].move
+    );
+    // Make all the moves up to the selected move in the subvariation
+    for (let i = 0; i <= index; i++) {
+      game.move(moves[subVariationIndex + i]);
+    }
+    // Update the component's state with the new position and current move index
+    setPosition(game.fen());
+    setCurrentMove(index + 1);
   };
 
   const loadPostion = (index) => {
@@ -446,6 +470,47 @@ const Trainer = () => {
     }
     return;
   }
+
+  const DisplayMoves = ({ moves, depth = 0 }) => {
+    return moves.map((move, index) => (
+      <div key={index}>
+        <div
+          style={{
+            marginRight: "5px",
+            marginLeft: "5px",
+            cursor: "pointer",
+          }}
+          onClick={() => loadVariations(index)}
+        >
+          {"-".repeat(depth)} {move.move}
+        </div>
+        <div
+          style={{
+            marginRight: "5px",
+            marginLeft: "5px",
+            color: "royalblue",
+          }}
+        >
+          <div>{move.comments.length > 0 && move.comments[0].text}</div>
+        </div>
+        {move.ravs && move.ravs.length > 0 && (
+          <DisplayMoves moves={move.ravs[0].moves} depth={depth + 1} />
+        )}
+      </div>
+    ));
+  };
+
+  const getMoves = (variation) => {
+    let moves = [];
+    for (const move of variation) {
+      if (move.ravs) {
+        moves = moves.concat(getMoves(move.ravs));
+      } else {
+        moves.push(move);
+      }
+    }
+    return moves;
+  };
 
   function renderVariations(variations, indentLevel) {
     return variations.map((variation, index) => (
@@ -584,12 +649,12 @@ const Trainer = () => {
                 >
                   {finalpgn.length > 0 && (
                     <div>
-                      {finalpgn.map((move, index) => (
-                        <div key={index}>
+                      {finalpgn.map((move, moveIndex) => (
+                        <div key={moveIndex}>
                           <div
-                            key={index}
+                            key={moveIndex}
                             className={
-                              index === highlightedMoveIndex
+                              moveIndex === highlightedMoveIndex
                                 ? "highlighted-move"
                                 : ""
                             }
@@ -600,10 +665,10 @@ const Trainer = () => {
                               margin: "5px",
                             }}
                             onClick={() => {
-                              loadPostion(index);
+                              loadPostion(moveIndex);
                             }}
                           >
-                            <div key={index}>
+                            <div key={moveIndex}>
                               {" "}
                               {move.move_number
                                 ? `${move.move_number}.`
@@ -620,30 +685,7 @@ const Trainer = () => {
 
                           {move.ravs && move.ravs.length > 0 && (
                             <div style={{ display: "flex", margin: "5px" }}>
-                              {move.ravs[0].moves.map((variation, index) => (
-                                <div key={index}>
-                                  <div
-                                    style={{
-                                      marginRight: "5px",
-                                      marginLeft: "5px",
-                                    }}
-                                  >
-                                    {"-".repeat(index + 1)} {variation.move}
-                                  </div>
-                                  <div
-                                    style={{
-                                      marginRight: "5px",
-                                      marginLeft: "5px",
-                                      color: "royalblue",
-                                    }}
-                                  >
-                                    <div>
-                                      {variation.comments.length > 0 &&
-                                        variation.comments[0].text}
-                                    </div>
-                                  </div>
-                                </div>
-                              ))}
+                              <DisplayMoves moves={move.ravs[0].moves} />{" "}
                             </div>
                           )}
                         </div>
