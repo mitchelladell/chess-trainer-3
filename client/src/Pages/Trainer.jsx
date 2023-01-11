@@ -257,12 +257,12 @@ const Trainer = () => {
   };
 
   const getFirstMove = () => {
-    loadPostion(-1);
+    loadPosition(-1);
     setHighlightedMoveIndex(-1);
   };
 
   const getLastMove = () => {
-    loadPostion(moves.length - 1);
+    loadPosition(moves.length - 1);
     setHighlightedMoveIndex(moves.length - 1);
   };
 
@@ -373,7 +373,7 @@ const Trainer = () => {
     setCurrentMove(index + 1);
   };
 
-  const loadPostion = (index) => {
+  const loadPosition = (index) => {
     // Reset the game to the initial position
     game.reset();
     // Highlight the selected move
@@ -480,7 +480,7 @@ const Trainer = () => {
             marginLeft: "5px",
             cursor: "pointer",
           }}
-          onClick={() => loadVariations(index)}
+          onClick={() => console.log("variations", moves)}
         >
           {"-".repeat(depth)} {move.move}
         </div>
@@ -509,35 +509,9 @@ const Trainer = () => {
         moves.push(move);
       }
     }
+    console.log("movesGet", moves);
     return moves;
   };
-
-  function renderVariations(variations, indentLevel) {
-    return variations.map((variation, index) => (
-      <div
-        key={index}
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          marginLeft: `${5 * (indentLevel + 1)}px`,
-        }}
-      >
-        <div style={{ marginRight: "5px" }}>
-          {"-".repeat(indentLevel + 1)} {variation.move}
-        </div>
-        <div style={{ marginRight: "5px", color: "royalblue" }}>
-          <div>
-            {variation.comments.length > 0 && variation.comments[0].text}
-          </div>
-        </div>
-        {variation.ravs && variation.ravs.length > 0 && (
-          <div style={{ display: "flex", margin: "5px" }}>
-            {renderVariations(variation.ravs[0].moves, indentLevel + 1)}
-          </div>
-        )}
-      </div>
-    ));
-  }
 
   return (
     <div>
@@ -665,7 +639,7 @@ const Trainer = () => {
                               margin: "5px",
                             }}
                             onClick={() => {
-                              loadPostion(moveIndex);
+                              loadPosition(moveIndex);
                             }}
                           >
                             <div key={moveIndex}>
@@ -680,7 +654,9 @@ const Trainer = () => {
                           <div style={{ margin: "5px", color: "royalblue" }}>
                             {" "}
                             {move.comments.length > 0 &&
-                              move.comments.map((c) => c.text).join(" ")}
+                              move.comments
+                                .map((c) => c.text + "test")
+                                .join(" ")}
                           </div>
 
                           {move.ravs && move.ravs.length > 0 && (
