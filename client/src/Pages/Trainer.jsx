@@ -69,6 +69,8 @@ const Trainer = () => {
   const [arrows, setArrows] = useState([]);
   const [percent, setPercent] = useState(0);
 
+  const [variantMoves, setVariantMoves] = useState([]);
+
   const [variationsCount, setVariationsCount] = useState(0);
 
   const [correctMove, setCorrectMove] = useState(false);
@@ -310,10 +312,10 @@ const Trainer = () => {
 
   useEffect(() => {
     readPGN(pgn).then((finalpgn) => {
-      console.log("finalPgn", finalpgn);
       const parsedMoves = finalpgn[0].moves.map((move) => move.move);
       setMoves(parsedMoves);
       setFinalpgn(finalpgn[0].moves);
+      console.log("finalpgn", finalpgn);
     });
   }, [pgn]);
 
@@ -352,26 +354,40 @@ const Trainer = () => {
     }, 250); // delay of 1/4 second
   };
 
-  const loadVariations = (index) => {
-    // Set the selected move to the corresponding move in the variations array
-    setSelectedMove(selectedMove.ravs[0].moves[index]);
-    console.log("setSelectedMove", selectedMove.ravs[0].moves[index]);
-    // reset the position
-    game.reset();
-    //set the highlighted move
-    setHighlightedMoveIndex(index);
-    // find the subvariation index
-    let subVariationIndex = moves.findIndex(
-      (move) => move.move === selectedMove.ravs[0].moves[0].move
-    );
-    // Make all the moves up to the selected move in the subvariation
-    for (let i = 0; i <= index; i++) {
-      game.move(moves[subVariationIndex + i]);
+  function findParentMoves(move) {
+    const moves = finalpgn;
+    const previousMoves = [];
+
+    function extractMoves(move, targetMoveNumber, previousMoves) {
+      if (move.move_number === targetMoveNumber) {
+        return previousMoves;
+      }
+      if (move.ravs) {
+        for (let i = 0; i < move.ravs[0].moves.length; i++) {
+          previousMoves.push(move.ravs[0].moves[i].move);
+          return extractMoves(
+            move.ravs[0].moves[i],
+            targetMoveNumber,
+            previousMoves
+          );
+        }
+      } else {
+        previousMoves.push(move.move);
+      }
     }
-    // Update the component's state with the new position and current move index
-    setPosition(game.fen());
-    setCurrentMove(index + 1);
-  };
+
+    for (let i = 0; i < moves.length; i++) {
+      if (moves[i].move_number === move.targetMoveNumber) {
+        const extractedMoves = extractMoves(
+          moves[i],
+          move.targetMoveNumber,
+          previousMoves
+        );
+        console.log(extractedMoves);
+        return extractedMoves;
+      }
+    }
+  }
 
   const loadPosition = (index) => {
     // Reset the game to the initial position
@@ -387,6 +403,19 @@ const Trainer = () => {
     // Update the component's state with the new position and current move index
     setPosition(game.fen());
     setCurrentMove(index + 1);
+  };
+
+  const playMoves = (index, depth = 0) => {
+    finalpgn.forEach((move, i) => {
+      if (move.ravs) {
+        playMoves(move.ravs, index, depth + 1);
+      } else if (i === index) {
+        console.log("Playing moves till index: " + i);
+        console.log("Depth: " + depth);
+        loadPosition(i);
+        // Code to play the moves till this point
+      }
+    });
   };
 
   /*   const moveSoundRef = useRef(null);
@@ -471,8 +500,8 @@ const Trainer = () => {
     return;
   }
 
-  const DisplayMoves = ({ moves, depth = 0 }) => {
-    return moves.map((move, index) => (
+  const DisplayMoves = ({ variationMoves, depth = 0 }) => {
+    return variationMoves.map((move, index) => (
       <div key={index}>
         <div
           style={{
@@ -480,7 +509,23 @@ const Trainer = () => {
             marginLeft: "5px",
             cursor: "pointer",
           }}
-          onClick={() => console.log("variations", moves)}
+          onClick={() => {
+            const varMoves = magic(finalpgn, move);
+            console.log("varMoves", varMoves);
+
+            game.reset();
+            // Highlight the selected move
+            //   setHighlightedMoveIndex(index);
+
+            // Make all the moves up to the selected move
+            for (let i = 0; i <= varMoves.length; i++) {
+              game.move(varMoves[i]);
+            }
+
+            // Update the component's state with the new position and current move index
+            setPosition(game.fen());
+            //  setCurrentMove(index + 1);
+          }}
         >
           {"-".repeat(depth)} {move.move}
         </div>
@@ -493,25 +538,40 @@ const Trainer = () => {
         >
           <div>{move.comments.length > 0 && move.comments[0].text}</div>
         </div>
-        {move.ravs && move.ravs.length > 0 && (
-          <DisplayMoves moves={move.ravs[0].moves} depth={depth + 1} />
-        )}
+        {move.ravs &&
+          move.ravs.length > 0 &&
+          move.ravs.map((subMoves, i) => (
+            <DisplayMoves
+              variationMoves={subMoves.moves}
+              depth={depth + 1}
+              key={i}
+            />
+          ))}
       </div>
     ));
   };
 
-  const getMoves = (variation) => {
-    let moves = [];
-    for (const move of variation) {
-      if (move.ravs) {
-        moves = moves.concat(getMoves(move.ravs));
-      } else {
-        moves.push(move);
+  function equals(obj1, obj2) {
+    return obj1.move_number == obj2.move_number && obj1.move == obj2.move;
+  }
+
+  function magic(d: any, find: any): any {
+    const ret = [];
+    for (const e of d) {
+      if (equals(e, find)) {
+        ret.push(e.move);
+        return ret;
       }
+      if (e.ravs) {
+        for (const rav of e.ravs) {
+          const ret2 = magic(rav.moves, find);
+          if (ret2) return [...ret, ...ret2];
+        }
+      }
+      ret.push(e.move);
     }
-    console.log("movesGet", moves);
-    return moves;
-  };
+    return undefined;
+  }
 
   return (
     <div>
@@ -661,7 +721,9 @@ const Trainer = () => {
 
                           {move.ravs && move.ravs.length > 0 && (
                             <div style={{ display: "flex", margin: "5px" }}>
-                              <DisplayMoves moves={move.ravs[0].moves} />{" "}
+                              <DisplayMoves
+                                variationMoves={move.ravs[0].moves}
+                              />{" "}
                             </div>
                           )}
                         </div>
