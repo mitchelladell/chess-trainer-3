@@ -682,7 +682,12 @@ const Trainer = () => {
                   style={{ height: dimensions.height }}
                 >
                   {finalpgn.length > 0 && (
-                    <div>
+                    <div
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                      }}
+                    >
                       {finalpgn.map((move, moveIndex) => (
                         <div key={moveIndex}>
                           <div
