@@ -71,16 +71,7 @@ const Trainer = () => {
   const [percent, setPercent] = useState(0);
   const [gridPGn, setGridPGN] = useState([]);
 
-  const [variantMoves, setVariantMoves] = useState([]);
-
   const [gridMoves, setGridMoves] = useState([]);
-
-  const [allMoves, setAllMoves] = useState([]);
-
-  const [variationsCount, setVariationsCount] = useState(0);
-
-  const [highlightedVariationIndex, setHighlightedVariationIndex] =
-    useState(null);
 
   const [correctMove, setCorrectMove] = useState(false);
   const [hasMadeMove, setHasMadeMove] = useState(false);
@@ -96,6 +87,7 @@ const Trainer = () => {
   const [variationSolved, setVariationSolved] = useState(false);
 
   const [showHint, setShowHint] = useState(false);
+  const [allMoves, setAllMoves] = useState([]);
 
   const [formattedPgn, setFormattedPgn] = useState([]);
 
@@ -152,53 +144,44 @@ const Trainer = () => {
     return moves;
   }
 
-  const GridPgn = () => {
-    // console.log("pgn", pgn);
-
-    const gridMoves = gridPGn.map((move) => move.move);
-    // setAllMoves(movess);
-
+  const movesGrid = () => {
     return (
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
         {" "}
         {gridPGn.map((move, index) => (
           <div key={index}>
-            <div>
-              <div
-                className={
-                  index === highlightedMoveIndex ? "highlighted-move" : ""
+            <div
+              className={
+                index === highlightedMoveIndex ? "highlighted-move" : ""
+              }
+              style={{
+                cursor: "pointer",
+                fontFamily: "Montserrat-Bold",
+                fontSize: "20px",
+                margin: "5px",
+              }}
+              onClick={() => {
+                if (!move.isVariation) {
+                  loadPosition(index, gridMoves);
+                } else {
+                  let variantionMoves = loadVariationMoves(formattedPgn, move);
+                  loadPosition(index, variantionMoves);
                 }
-                style={{
-                  cursor: "pointer",
-                  fontFamily: "Montserrat-Bold",
-                  fontSize: "20px",
-                  margin: "5px",
-                }}
-                onClick={() => {
-                  if (!move.isVariation) {
-                    loadPosition(index, gridMoves);
-                  } else {
-                    let variantionMoves = magic(formattedPgn, move);
-                    console.log("moveActually", move);
-                    console.log("setOfMoves", variantionMoves);
-                    loadPosition(index, variantionMoves);
-                  }
-                }}
-              >
-                {move.depth ? "*".repeat(move.depth) : ""}
-                {move.move_number ? `${move.move_number}.` : "..."}
-                {move.move}
-              </div>
-              <div
-                style={{
-                  fontSize: "18px",
-                  fontFamily: "Montserrat-Medium",
-                  color: "royalblue",
-                }}
-              >
-                {" "}
-                {move.comment}
-              </div>
+              }}
+            >
+              {move.depth ? "*".repeat(move.depth) : ""}
+              {move.move_number ? `${move.move_number}.` : "..."}
+              {move.move}
+            </div>
+            <div
+              style={{
+                fontSize: "18px",
+                fontFamily: "Montserrat-Medium",
+                color: "royalblue",
+              }}
+            >
+              {" "}
+              {move.comment}
             </div>
           </div>
         ))}
@@ -317,7 +300,7 @@ const Trainer = () => {
 
   const getNextMove = (e) => {
     // Get the next move in the `moves` array
-    const nextMove = moves[currentMove];
+    const nextMove = gridMoves[currentMove];
     // Make the move on the chessboard
     game.move(nextMove);
     // Update the component's state with the new position and current move index
@@ -337,13 +320,13 @@ const Trainer = () => {
   };
 
   const getFirstMove = () => {
-    loadPosition(-1);
+    loadPosition(-1, gridMoves);
     setHighlightedMoveIndex(-1);
   };
 
   const getLastMove = () => {
-    loadPosition(moves.length - 1);
-    setHighlightedMoveIndex(moves.length - 1);
+    loadPosition(gridMoves.length - 1, gridMoves);
+    setHighlightedMoveIndex(gridMoves.length - 1);
   };
 
   const resetGame = () => {
@@ -390,14 +373,15 @@ const Trainer = () => {
 
   useEffect(() => {
     readPGN(pgn).then((formattedPgn) => {
-      // const parsedMoves = formattedPgn[0].moves.map((move) => move.move);
-      // setMoves(parsedMoves);
+      const parsedMoves = formattedPgn[0].moves.map((move) => move.move);
+      setMoves(parsedMoves);
       setFormattedPgn(formattedPgn[0].moves);
       console.log("formatted", formattedPgn);
 
       setGridPGN(allExtractedMoves(formattedPgn[0].moves, 0));
-      setGridMoves(gridPGn.map((move) => move.move));
-      console.log("gridMoves", gridMoves);
+      setGridMoves(
+        allExtractedMoves(formattedPgn[0].moves, 0).map((move) => move.move)
+      );
 
       console.log("formattedPgn", formattedPgn);
     });
@@ -541,7 +525,7 @@ const Trainer = () => {
     return obj1.move_number === obj2.move_number && obj1.move === obj2.move;
   }
 
-  function magic(d: any, find: any): any {
+  function loadVariationMoves(d: any, find: any): any {
     const ret = [];
     for (const e of d) {
       if (equals(e, find)) {
@@ -550,7 +534,7 @@ const Trainer = () => {
       }
       if (e.ravs) {
         for (const rav of e.ravs) {
-          const ret2 = magic(rav.moves, find);
+          const ret2 = loadVariationMoves(rav.moves, find);
           if (ret2) return [...ret, ...ret2];
         }
       }
@@ -623,7 +607,7 @@ const Trainer = () => {
                     <Button
                       variant="warning"
                       className="mx-1 trainer_buttons"
-                      disabled={currentMove >= moves.length - 1}
+                      disabled={currentMove >= gridMoves.length}
                       onClick={(e) => getNextMove(e)}
                     >
                       <AiFillStepForward />
@@ -632,7 +616,7 @@ const Trainer = () => {
                       variant="warning"
                       className="mx-1 trainer_buttons"
                       onClick={() => getLastMove()}
-                      disabled={currentMove >= moves.length - 1}
+                      disabled={currentMove >= gridMoves.length}
                     >
                       <AiFillFastForward />
                     </Button>{" "}
@@ -667,7 +651,7 @@ const Trainer = () => {
                   className="moves_container"
                   style={{ height: dimensions.height }}
                 >
-                  <GridPgn />
+                  {movesGrid()}
                 </div>
               ) : (
                 <div
