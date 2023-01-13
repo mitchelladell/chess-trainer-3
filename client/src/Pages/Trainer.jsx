@@ -360,9 +360,19 @@ const Trainer = () => {
 
     // up arrow
     if (e.keyCode == "37") {
+      e.preventDefault();
+
+      if (currentMove <= 0) {
+        return;
+      }
       getPreviousMove(e);
+
       // left arrow
     } else if (e.keyCode == "39") {
+      e.preventDefault();
+      if (currentMove >= gridMoves.length) {
+        return;
+      }
       getNextMove(e);
       // right arrow
     }
@@ -694,7 +704,7 @@ const Trainer = () => {
                         >
                           {translations[lang].incorrectMove}
                         </div>
-                        {numberOfTries > 1 ? (
+                        {numberOfTries > 0 ? (
                           <Button
                             variant="warning"
                             className="mx-2 trainer_buttons"
