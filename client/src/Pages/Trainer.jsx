@@ -40,6 +40,7 @@ async function readPGN(pgn2) {
 
 const Trainer = () => {
   let pgndata = useLocation();
+  let currentMoveIndex = 0;
   const dispatch = useDispatch();
 
   const lang = useSelector((state: any) => state.language.value);
@@ -68,10 +69,18 @@ const Trainer = () => {
   const [navSelected, setNavSelected] = useState(null);
   const [arrows, setArrows] = useState([]);
   const [percent, setPercent] = useState(0);
+  const [gridPGn, setGridPGN] = useState([]);
 
   const [variantMoves, setVariantMoves] = useState([]);
 
+  const [gridMoves, setGridMoves] = useState([]);
+
+  const [allMoves, setAllMoves] = useState([]);
+
   const [variationsCount, setVariationsCount] = useState(0);
+
+  const [highlightedVariationIndex, setHighlightedVariationIndex] =
+    useState(null);
 
   const [correctMove, setCorrectMove] = useState(false);
   const [hasMadeMove, setHasMadeMove] = useState(false);
@@ -88,7 +97,8 @@ const Trainer = () => {
 
   const [showHint, setShowHint] = useState(false);
 
-  const [finalpgn, setFinalpgn] = useState([]);
+  const [formattedPgn, setFormattedPgn] = useState([]);
+
   const [highlightedMoveIndex, setHighlightedMoveIndex] = useState(null);
   const [trainingMode, setTrainningMode] = useState(false);
   const [game, setGame] = useState(new Chess());
@@ -114,18 +124,86 @@ const Trainer = () => {
     correctAudio.current.play();
   }
 
-  const findPgnIndex = () => {
-    const index = pgnList.findIndex((element) => element.pgn === pgn);
-    console.log("index", index);
-    return index;
-  };
-
   const calculateStars = () => {
     const percentage =
       ((moves.length / 2 - wrongMovesCount) * 200) / moves.length;
 
     setPercent(percentage);
     console.log("percentage", percentage);
+  };
+
+  function allExtractedMoves(pgn, depth = 0) {
+    let moves = [];
+    for (let move of pgn) {
+      if (move.move) {
+        moves.push({
+          move: move.move,
+          comment: move.comments.length > 0 ? move.comments[0].text : "",
+          depth: depth,
+          ...(move.move_number ? { move_number: move.move_number } : null),
+          isVariation: depth > 0, // true if move is a variation, false otherwise
+        });
+      }
+      if (move.ravs) {
+        let subvariations = allExtractedMoves(move.ravs[0].moves, depth + 1);
+        moves = [...moves, ...subvariations];
+      }
+    }
+    return moves;
+  }
+
+  const GridPgn = () => {
+    // console.log("pgn", pgn);
+
+    const gridMoves = gridPGn.map((move) => move.move);
+    // setAllMoves(movess);
+
+    return (
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+        {" "}
+        {gridPGn.map((move, index) => (
+          <div key={index}>
+            <div>
+              <div
+                className={
+                  index === highlightedMoveIndex ? "highlighted-move" : ""
+                }
+                style={{
+                  cursor: "pointer",
+                  fontFamily: "Montserrat-Bold",
+                  fontSize: "20px",
+                  margin: "5px",
+                }}
+                onClick={() => {
+                  if (!move.isVariation) {
+                    loadPosition(index, gridMoves);
+                  } else {
+                    let variantionMoves = magic(formattedPgn, move);
+                    console.log("moveActually", move);
+                    console.log("setOfMoves", variantionMoves);
+                    loadPosition(index, variantionMoves);
+                  }
+                }}
+              >
+                {move.depth ? "*".repeat(move.depth) : ""}
+                {move.move_number ? `${move.move_number}.` : "..."}
+                {move.move}
+              </div>
+              <div
+                style={{
+                  fontSize: "18px",
+                  fontFamily: "Montserrat-Medium",
+                  color: "royalblue",
+                }}
+              >
+                {" "}
+                {move.comment}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
   };
 
   const rewardSystemEffect = () => {
@@ -311,11 +389,17 @@ const Trainer = () => {
   }
 
   useEffect(() => {
-    readPGN(pgn).then((finalpgn) => {
-      const parsedMoves = finalpgn[0].moves.map((move) => move.move);
-      setMoves(parsedMoves);
-      setFinalpgn(finalpgn[0].moves);
-      console.log("finalpgn", finalpgn);
+    readPGN(pgn).then((formattedPgn) => {
+      // const parsedMoves = formattedPgn[0].moves.map((move) => move.move);
+      // setMoves(parsedMoves);
+      setFormattedPgn(formattedPgn[0].moves);
+      console.log("formatted", formattedPgn);
+
+      setGridPGN(allExtractedMoves(formattedPgn[0].moves, 0));
+      setGridMoves(gridPGn.map((move) => move.move));
+      console.log("gridMoves", gridMoves);
+
+      console.log("formattedPgn", formattedPgn);
     });
   }, [pgn]);
 
@@ -354,46 +438,12 @@ const Trainer = () => {
     }, 250); // delay of 1/4 second
   };
 
-  function findParentMoves(move) {
-    const moves = finalpgn;
-    const previousMoves = [];
-
-    function extractMoves(move, targetMoveNumber, previousMoves) {
-      if (move.move_number === targetMoveNumber) {
-        return previousMoves;
-      }
-      if (move.ravs) {
-        for (let i = 0; i < move.ravs[0].moves.length; i++) {
-          previousMoves.push(move.ravs[0].moves[i].move);
-          return extractMoves(
-            move.ravs[0].moves[i],
-            targetMoveNumber,
-            previousMoves
-          );
-        }
-      } else {
-        previousMoves.push(move.move);
-      }
-    }
-
-    for (let i = 0; i < moves.length; i++) {
-      if (moves[i].move_number === move.targetMoveNumber) {
-        const extractedMoves = extractMoves(
-          moves[i],
-          move.targetMoveNumber,
-          previousMoves
-        );
-        console.log(extractedMoves);
-        return extractedMoves;
-      }
-    }
-  }
-
-  const loadPosition = (index) => {
+  const loadPosition = (index, moves) => {
     // Reset the game to the initial position
     game.reset();
     // Highlight the selected move
     setHighlightedMoveIndex(index);
+    console.log("index", index);
 
     // Make all the moves up to the selected move
     for (let i = 0; i <= index; i++) {
@@ -403,19 +453,6 @@ const Trainer = () => {
     // Update the component's state with the new position and current move index
     setPosition(game.fen());
     setCurrentMove(index + 1);
-  };
-
-  const playMoves = (index, depth = 0) => {
-    finalpgn.forEach((move, i) => {
-      if (move.ravs) {
-        playMoves(move.ravs, index, depth + 1);
-      } else if (i === index) {
-        console.log("Playing moves till index: " + i);
-        console.log("Depth: " + depth);
-        loadPosition(i);
-        // Code to play the moves till this point
-      }
-    });
   };
 
   /*   const moveSoundRef = useRef(null);
@@ -500,59 +537,8 @@ const Trainer = () => {
     return;
   }
 
-  const DisplayMoves = ({ variationMoves, depth = 0 }) => {
-    return variationMoves.map((move, index) => (
-      <div key={index}>
-        <div
-          style={{
-            marginRight: "5px",
-            marginLeft: "5px",
-            cursor: "pointer",
-          }}
-          onClick={() => {
-            const varMoves = magic(finalpgn, move);
-            console.log("varMoves", varMoves);
-
-            game.reset();
-            // Highlight the selected move
-            //   setHighlightedMoveIndex(index);
-
-            // Make all the moves up to the selected move
-            for (let i = 0; i <= varMoves.length; i++) {
-              game.move(varMoves[i]);
-            }
-
-            // Update the component's state with the new position and current move index
-            setPosition(game.fen());
-            //  setCurrentMove(index + 1);
-          }}
-        >
-          {"-".repeat(depth)} {move.move}
-        </div>
-        <div
-          style={{
-            marginRight: "5px",
-            marginLeft: "5px",
-            color: "royalblue",
-          }}
-        >
-          <div>{move.comments.length > 0 && move.comments[0].text}</div>
-        </div>
-        {move.ravs &&
-          move.ravs.length > 0 &&
-          move.ravs.map((subMoves, i) => (
-            <DisplayMoves
-              variationMoves={subMoves.moves}
-              depth={depth + 1}
-              key={i}
-            />
-          ))}
-      </div>
-    ));
-  };
-
   function equals(obj1, obj2) {
-    return obj1.move_number == obj2.move_number && obj1.move == obj2.move;
+    return obj1.move_number === obj2.move_number && obj1.move === obj2.move;
   }
 
   function magic(d: any, find: any): any {
@@ -681,60 +667,7 @@ const Trainer = () => {
                   className="moves_container"
                   style={{ height: dimensions.height }}
                 >
-                  {finalpgn.length > 0 && (
-                    <div
-                      style={{
-                        display: "grid",
-                        gridTemplateColumns: "1fr 1fr",
-                      }}
-                    >
-                      {finalpgn.map((move, moveIndex) => (
-                        <div key={moveIndex}>
-                          <div
-                            key={moveIndex}
-                            className={
-                              moveIndex === highlightedMoveIndex
-                                ? "highlighted-move"
-                                : ""
-                            }
-                            style={{
-                              cursor: "pointer",
-                              fontFamily: "Montserrat-Bold",
-                              fontSize: "20px",
-                              margin: "5px",
-                            }}
-                            onClick={() => {
-                              loadPosition(moveIndex);
-                            }}
-                          >
-                            <div key={moveIndex}>
-                              {" "}
-                              {move.move_number
-                                ? `${move.move_number}.`
-                                : "..."}
-                              {move.move}
-                            </div>
-                          </div>
-
-                          <div style={{ margin: "5px", color: "royalblue" }}>
-                            {" "}
-                            {move.comments.length > 0 &&
-                              move.comments
-                                .map((c) => c.text + "test")
-                                .join(" ")}
-                          </div>
-
-                          {move.ravs && move.ravs.length > 0 && (
-                            <div style={{ display: "flex", margin: "5px" }}>
-                              <DisplayMoves
-                                variationMoves={move.ravs[0].moves}
-                              />{" "}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                  <GridPgn />
                 </div>
               ) : (
                 <div

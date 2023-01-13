@@ -99,6 +99,50 @@
   }
 }
 
+.pgn-viewer {
+  font-family: Arial, sans-serif;
+}
+
+.move-line {
+  display: flex;
+  align-items: center;
+}
+
+.move-number {
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.move {
+  margin-right: 8px;
+}
+
+.comments {
+  font-style: italic;
+}
+
+.variation {
+  margin-left: 16px;
+}
+
+.variation-move-line {
+  display: flex;
+  align-items: center;
+}
+
+.variation-move-number {
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.variation-move {
+  margin-right: 8px;
+}
+
+.variation-comments {
+  font-style: italic;
+}
+
 .trainer_buttons:hover {
   background: gold;
   border: 1px solid goldenrod;
