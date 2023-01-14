@@ -91,9 +91,9 @@ const Trainer = () => {
 
   const [formattedPgn, setFormattedPgn] = useState([]);
 
-  const [highlightedMoveIndex, setHighlightedMoveIndex] = useState(null);
+  const [highlightedMoveIndex, setHighlightedMoveIndex] = useState(-1);
   const [highlightedVariationIndex, setHighlightedVariationIndex] =
-    useState(null);
+    useState(-1);
 
   const [trainingMode, setTrainningMode] = useState(false);
   const [game, setGame] = useState(new Chess());
