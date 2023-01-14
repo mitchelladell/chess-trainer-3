@@ -92,6 +92,9 @@ const Trainer = () => {
   const [formattedPgn, setFormattedPgn] = useState([]);
 
   const [highlightedMoveIndex, setHighlightedMoveIndex] = useState(null);
+  const [highlightedVariationIndex, setHighlightedVariationIndex] =
+    useState(null);
+
   const [trainingMode, setTrainningMode] = useState(false);
   const [game, setGame] = useState(new Chess());
 
@@ -150,7 +153,65 @@ const Trainer = () => {
         {" "}
         {gridPGn.map((move, index) => (
           <div key={index}>
-            <div
+            {!move.isVariation ? ( //A main Line Div
+              <div
+                style={{
+                  cursor: "pointer",
+                  fontFamily: "Montserrat-Bold",
+                  fontSize: "20px",
+                  margin: "5px",
+                }}
+                className={
+                  formattedPgn.findIndex(
+                    (innerMove) =>
+                      innerMove.move === move.move &&
+                      innerMove.move_number === move.move_number
+                  ) === highlightedMoveIndex
+                    ? "highlighted-move"
+                    : ""
+                }
+                onClick={() => {
+                  loadPosition(index, gridMoves);
+                  setHighlightedMoveIndex(
+                    formattedPgn.findIndex(
+                      (innerMove) =>
+                        innerMove.move === move.move &&
+                        innerMove.move_number === move.move_number
+                    )
+                  );
+                  setHighlightedVariationIndex(null);
+                  console.log("move.move", move.move);
+                  console.log("move.number", move.move_number);
+                }}
+              >
+                {" "}
+                {move.move_number ? `${move.move_number}.` : "..."} {move.move}
+              </div>
+            ) : (
+              <div //A variations Div
+                style={{
+                  cursor: "pointer",
+                  fontFamily: "Montserrat-Medium",
+                  fontSize: "18px",
+                  margin: "5px",
+                }}
+                className={
+                  index === highlightedVariationIndex ? "highlighted-move" : ""
+                }
+                onClick={() => {
+                  let variantionMoves = loadVariationMoves(formattedPgn, move);
+                  //   setHighlightedMoveIndex(index);
+                  loadPosition(index, variantionMoves);
+                  setHighlightedVariationIndex(index);
+                  setHighlightedMoveIndex(null);
+                }}
+              >
+                {" "}
+                {move.depth ? "*".repeat(move.depth) : ""} {move.move}
+              </div>
+            )}
+
+            {/*      <div
               className={
                 index === highlightedMoveIndex ? "highlighted-move" : ""
               }
@@ -163,8 +224,10 @@ const Trainer = () => {
               onClick={() => {
                 if (!move.isVariation) {
                   loadPosition(index, gridMoves);
+                 // setHighlightedVariationIndex(index);
                 } else {
                   let variantionMoves = loadVariationMoves(formattedPgn, move);
+               //   setHighlightedMoveIndex(index);
                   loadPosition(index, variantionMoves);
                 }
               }}
@@ -172,7 +235,7 @@ const Trainer = () => {
               {move.depth ? "*".repeat(move.depth) : ""}
               {move.move_number ? `${move.move_number}.` : "..."}
               {move.move}
-            </div>
+            </div> */}
             <div
               style={{
                 fontSize: "18px",
@@ -300,7 +363,9 @@ const Trainer = () => {
 
   const getNextMove = (e) => {
     // Get the next move in the `moves` array
-    const nextMove = gridMoves[currentMove];
+    const nextMove = moves[currentMove];
+
+    console.log("nextMOve", nextMove);
     // Make the move on the chessboard
     game.move(nextMove);
     // Update the component's state with the new position and current move index
@@ -320,13 +385,13 @@ const Trainer = () => {
   };
 
   const getFirstMove = () => {
-    loadPosition(-1, gridMoves);
+    loadPosition(-1, moves);
     setHighlightedMoveIndex(-1);
   };
 
   const getLastMove = () => {
-    loadPosition(gridMoves.length - 1, gridMoves);
-    setHighlightedMoveIndex(gridMoves.length - 1);
+    loadPosition(moves.length - 1, gridMoves);
+    setHighlightedMoveIndex(moves.length - 1);
   };
 
   const resetGame = () => {
@@ -370,7 +435,7 @@ const Trainer = () => {
       // left arrow
     } else if (e.keyCode == "39") {
       e.preventDefault();
-      if (currentMove >= gridMoves.length) {
+      if (currentMove >= moves.length) {
         return;
       }
       getNextMove(e);
@@ -617,7 +682,7 @@ const Trainer = () => {
                     <Button
                       variant="warning"
                       className="mx-1 trainer_buttons"
-                      disabled={currentMove >= gridMoves.length}
+                      disabled={currentMove >= moves.length}
                       onClick={(e) => getNextMove(e)}
                     >
                       <AiFillStepForward />
@@ -626,7 +691,7 @@ const Trainer = () => {
                       variant="warning"
                       className="mx-1 trainer_buttons"
                       onClick={() => getLastMove()}
-                      disabled={currentMove >= gridMoves.length}
+                      disabled={currentMove >= moves.length}
                     >
                       <AiFillFastForward />
                     </Button>{" "}
