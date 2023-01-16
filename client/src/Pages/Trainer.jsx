@@ -57,9 +57,9 @@ const Trainer = () => {
   const [focusMode, setFocusMode] = useState(false);
   const [moves, setMoves] = useState([]);
 
-  const [selectedMove, setSelectedMove] = useState(0);
+  const [selectedMove, setSelectedMove] = useState(null);
 
-  const [currentMove, setCurrentMove] = useState(0);
+  const [currentMove, setCurrentMove] = useState(-1);
   const [incorrectMoves, setIncorrectMoves] = useState(new Set());
 
   const [whiteOrientation, setWhiteOrientation] = useState(true);
@@ -85,6 +85,8 @@ const Trainer = () => {
   const [hintRequested, setHintRequested] = useState(true);
 
   const [variationSolved, setVariationSolved] = useState(false);
+  const [variantionMoves, setVariationMoves] = useState([]);
+  const [tempVariantionMoves, setTempVariationMoves] = useState([]);
 
   const [showHint, setShowHint] = useState(false);
   const [allMoves, setAllMoves] = useState([]);
@@ -161,27 +163,23 @@ const Trainer = () => {
                   fontSize: "20px",
                   margin: "5px",
                 }}
-                className={
-                  formattedPgn.findIndex(
-                    (innerMove) =>
-                      innerMove.move === move.move &&
-                      innerMove.move_number === move.move_number
-                  ) === highlightedMoveIndex
-                    ? "highlighted-move"
-                    : ""
-                }
+                className={selectedMove === move ? "highlighted-move" : ""}
                 onClick={() => {
-                  loadPosition(index, gridMoves);
-                  setHighlightedMoveIndex(
-                    formattedPgn.findIndex(
-                      (innerMove) =>
-                        innerMove.move === move.move &&
-                        innerMove.move_number === move.move_number
-                    )
+                  let variantMoves = loadVariationMoves(formattedPgn, move);
+
+                  loadPosition(
+                    variantMoves.length - 1,
+                    //    gridPGn.map((move) => move.move)
+                    variantMoves.map((move) => move.move)
                   );
+                  console.log("varMoves", variantMoves);
+
+                  setSelectedMove(move);
+                  setCurrentMove(index);
                   setHighlightedVariationIndex(null);
-                  console.log("move.move", move.move);
-                  console.log("move.number", move.move_number);
+                  console.log("gridPGN", gridPGn);
+
+                  console.log("move", move);
                 }}
               >
                 {" "}
@@ -195,15 +193,30 @@ const Trainer = () => {
                   fontSize: "18px",
                   margin: "5px",
                 }}
-                className={
-                  index === highlightedVariationIndex ? "highlighted-move" : ""
-                }
+                className={selectedMove === move ? "highlighted-move" : ""}
                 onClick={() => {
-                  let variantionMoves = loadVariationMoves(formattedPgn, move);
+                  let variantMoves = loadVariationMoves(formattedPgn, move);
+                  console.log("varMoves", variantMoves);
+                  console.log("move", move);
+
                   //   setHighlightedMoveIndex(index);
-                  loadPosition(index, variantionMoves);
-                  setHighlightedVariationIndex(index);
-                  setHighlightedMoveIndex(null);
+                  loadPosition(
+                    variantMoves.length - 1,
+                    variantMoves.map((move) => move.move)
+                  );
+                  //  setHighlightedVariationIndex(index);
+                  // setHighlightedMoveIndex(null);
+
+                  setCurrentMove(index);
+
+                  // setHighlightedVariationIndex(null);
+
+                  console.log("move", move);
+                  setSelectedMove(move);
+                  setVariationMoves(variantMoves);
+                  setTempVariationMoves(variantMoves);
+
+                  console.log("variationMov", variantionMoves);
                 }}
               >
                 {" "}
@@ -362,26 +375,76 @@ const Trainer = () => {
   };
 
   const getNextMove = (e) => {
+    let nextMove = gridPGn.indexOf(selectedMove) + 1;
+    console.log("nextMove", nextMove);
+
     // Get the next move in the `moves` array
-    const nextMove = moves[currentMove];
+    while (gridPGn[nextMove].isVariation) {
+      console.log("GridIsVAriation", gridPGn[nextMove]);
+      nextMove++;
+    }
+    console.log("GridIsnOtVariation", gridPGn[nextMove]);
+
+    console.log("selectedMOve", selectedMove);
+    let variantMoves = loadVariationMoves(formattedPgn, gridPGn[nextMove]);
+    console.log("variantMoves", variantMoves);
+
+    setSelectedMove(gridPGn[nextMove]);
+    setCurrentMove(gridPGn[variantMoves.length - 1]);
+    console.log("nextMove", gridPGn[nextMove]);
+
+    loadPosition(
+      nextMove,
+      variantMoves.map((move) => move.move)
+    );
+    setCurrentMove((prev) => prev + 1);
+    nextMove++;
 
     console.log("nextMOve", nextMove);
-    // Make the move on the chessboard
-    game.move(nextMove);
-    // Update the component's state with the new position and current move index
-    setCurrentMove(currentMove + 1);
-    setHighlightedMoveIndex(highlightedMoveIndex + 1);
-    setPosition(game.fen());
+
+    console.log("gameHistory", game.history());
   };
 
-  const getPreviousMove = (e) => {
-    // Undo the last move on the chessboard
-    game.undo();
+  const getPreviousMove = () => {
+    /*     if (tempVariantionMoves.length > 0) {    //variation Implementation
 
-    // Update the component's state with the new position and current move index
-    setCurrentMove(currentMove - 1);
-    setHighlightedMoveIndex(highlightedMoveIndex - 1);
-    setPosition(game.fen());
+
+      tempVariantionMoves.pop();
+      loadPosition(
+        tempVariantionMoves.length,
+        tempVariantionMoves.map((move) => move.move)
+      );
+      setSelectedMove(tempVariantionMoves[moves.length - 1]);
+    } */
+
+    if (currentMove < 0) {
+      return;
+    }
+
+    let nextMove = gridPGn.indexOf(selectedMove) - 1;
+
+    // Get the next move in the `moves` array
+    while (gridPGn[nextMove].isVariation) {
+      nextMove--;
+    }
+    console.log("previousmove", nextMove);
+    console.log("currentMove", currentMove);
+
+    setSelectedMove(gridPGn[nextMove]);
+    setCurrentMove(nextMove);
+    console.log("currentMOve", currentMove);
+
+    console.log("selectedMOve", selectedMove);
+    let variantMoves = loadVariationMoves(formattedPgn, gridPGn[nextMove]);
+
+    loadPosition(
+      nextMove,
+      variantMoves.map((move) => move.move)
+    );
+    setCurrentMove((prev) => prev - 1);
+    nextMove--;
+
+    console.log("nextMOve", nextMove);
   };
 
   const getFirstMove = () => {
@@ -427,17 +490,12 @@ const Trainer = () => {
     if (e.keyCode == "37") {
       e.preventDefault();
 
-      if (currentMove <= 0) {
-        return;
-      }
       getPreviousMove(e);
 
       // left arrow
     } else if (e.keyCode == "39") {
       e.preventDefault();
-      if (currentMove >= moves.length) {
-        return;
-      }
+
       getNextMove(e);
       // right arrow
     }
@@ -448,7 +506,7 @@ const Trainer = () => {
 
   useEffect(() => {
     readPGN(pgn).then((formattedPgn) => {
-      const parsedMoves = formattedPgn[0].moves.map((move) => move.move);
+      const parsedMoves = formattedPgn[0].moves;
       setMoves(parsedMoves);
       setFormattedPgn(formattedPgn[0].moves);
       console.log("formatted", formattedPgn);
@@ -500,8 +558,8 @@ const Trainer = () => {
   const loadPosition = (index, moves) => {
     // Reset the game to the initial position
     game.reset();
+    console.log("positionMoves", moves);
     // Highlight the selected move
-    setHighlightedMoveIndex(index);
     console.log("index", index);
 
     // Make all the moves up to the selected move
@@ -511,7 +569,6 @@ const Trainer = () => {
 
     // Update the component's state with the new position and current move index
     setPosition(game.fen());
-    setCurrentMove(index + 1);
   };
 
   /*   const moveSoundRef = useRef(null);
@@ -600,20 +657,52 @@ const Trainer = () => {
     return obj1.move_number === obj2.move_number && obj1.move === obj2.move;
   }
 
-  function loadVariationMoves(d: any, find: any): any {
+  function loadVariationMoves(
+    d: any,
+    find: any,
+    isMain: boolean = true,
+    depth = 0
+  ): any {
+    if (isMain) {
+      const found = d.filter((e) => equals(e, find));
+      console.log("found", found);
+      if (found.length > 0)
+        return [
+          ...d.slice(0, d.indexOf(found[0])).map((e) => ({
+            move: e.move,
+            comment: e.comments.length > 0 ? e.comments[0].text : "",
+            depth: 0,
+            ...(e.move_number ? { move_number: e.move_number } : null),
+            isVariation: false,
+          })),
+          ...found,
+        ];
+    }
     const ret = [];
     for (const e of d) {
       if (equals(e, find)) {
-        ret.push(e.move);
+        ret.push({
+          move: e.move,
+          comment: e.comments.length > 0 ? e.comments[0].text : "",
+          depth: depth,
+          ...(e.move_number ? { move_number: e.move_number } : null),
+          isVariation: depth > 0,
+        });
         return ret;
       }
       if (e.ravs) {
         for (const rav of e.ravs) {
-          const ret2 = loadVariationMoves(rav.moves, find);
+          const ret2 = loadVariationMoves(rav.moves, find, false, depth + 1);
           if (ret2) return [...ret, ...ret2];
         }
       }
-      ret.push(e.move);
+      ret.push({
+        move: e.move,
+        comment: e.comments.length > 0 ? e.comments[0].text : "",
+        depth: depth,
+        ...(e.move_number ? { move_number: e.move_number } : null),
+        isVariation: depth > 0,
+      });
     }
     return undefined;
   }

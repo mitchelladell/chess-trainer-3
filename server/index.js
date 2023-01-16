@@ -40,6 +40,10 @@ app.get("/pgn/1", (req, res) => {
       "Test PGN":
         "1. d4 d5 2. Nf3 c5 (2... Nc6) 3. Bf4 Nc6 4. c3 e6 5. Nbd2 Bd6 (5... Be7 6. e3 Nf6 (6... h6 7. Bd3)) 1/2-1/2",
     },
+    {
+      "Tough PGN":
+        " 1. d4 Nf6 2. c4 c5 3. d5 e6 4. Nc3 (4. dxe6 fxe6 5. Bg5 (5. Nc3 d5 6. cxd5 exd5 7. Bg5 d4 8. Ne4 Be7 9. Nxf6+ Bxf6 10. Bxf6 Qxf6 $15) 5... Be7 6. Nc3 O-O 7. Nf3 Nc6 $11) (4. Nf3 exd5 5. cxd5 d6 6. e4 a6 (6... g6 $11) 7. Bd3 Bg4 8. Nbd2 Nbd7 9. h3 Ne5 10. Be2 Bxf3 11. Nxf3 Nxf3+ 12. Bxf3 Be7 13. O-O Nd7 $11) (4. Bg5 h6 $5 (4... exd5 5. cxd5 d6 $11) 5. Bh4 (5. Bxf6 Qxf6 6. Nc3 d6 7. Nf3 e5 8. e4 Be7 9. Be2 O-O $11) 5... g5 6. Bg3 Qb6 7. Nc3 $5 (7. Be5 Bg7 8. Nc3 d6 9. Bxf6 Bxf6 $11) 7... Qxb2 8. Be5 (8. Rc1 d6 9. e4 exd5 10. cxd5 a6 11. Nf3 Bg4 $13) 8... Ne4 9. Bxh8 (9. Rc1 f6 10. Nf3 Nxf2 11. Kxf2 fxe5 12. Nb5 e4 $36) 9... Nxc3 10. Qc1 Qxc1+ 11. Rxc1 Nxa2 12. Rb1 exd5 13. cxd5 Nb4 $11) 4... exd5 5. cxd5 d6 6. Nf3 (6. e4 g6 7. Be2 (7. Bb5+ Bd7 (7... Nbd7 $11) 8. a4 Bg7 9. Nf3 O-O 10. O-O Bg4 11. h3 Bxf3 12. Qxf3 Nbd7 $11) 7... Bg7 8. Bg5 O-O 9. Qd2 { King's Indian} Re8 10. f3 a6 11. a4 Qa5 $11) 6... g6 7. Nd2 (7. Bg5 h6 (7... Bg7 $11) 8. Bh4 g5 9. Bg3 Nh5 10. e3 Nxg3 11. hxg3 Bg7 12. Bd3 Nd7 13. Qc2 Qe7 $11) 7... Bg7 8. Nc4 O-O 9. Bf4 (9. g3 b6 10. a4 Ba6 11. Nb5 Ne8 12. Bg2 Bxb5 13. axb5 Nd7 14. Bf4 Ne5 $11 (14... Qe7 15. O-O g5 $5 $13)) (9. Bg5 Qe7 10. Qd2 b6 11. Qf4 Rd8 12. O-O-O (12. Ne4 Nbd7 13. Nexd6 h6 14. Bh4 g5 15. Nf5 Qf8 16. Bxg5 hxg5 17. Qxg5 b5 $13) 12... Ba6 13. e4 Bxc4 14. Bxc4 a6 $11) 9... b6 $5 ( 9... Ne8 $11) 10. Bxd6 (10. e3 Ne8 (10... Nh5 $13) 11. Qd2 Ba6 12. a4 f5 $11) 10... Re8 11. e3 (11. Bg3 Nh5 12. e3 Nxg3 13. hxg3 Bxc3+ 14. bxc3 Bb7 15. d6 b5 16. Nb2 Re6 $44) 11... Ne4 12. Nxe4 Rxe4 13. Bg3 b5 14. Nd6 (14. Nd2 Rb4 15. b3 c4 16. Rc1 Qa5 17. bxc4 Nd7 $11) 14... Rb4 $44 *",
+    },
   ]);
 });
 
