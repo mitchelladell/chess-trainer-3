@@ -11,6 +11,7 @@ import ToggleButton from "react-bootstrap/ToggleButton";
 import { Star, MdOutlineKeyboardArrowDown } from "react-bootstrap-icons";
 import { ProgressBar } from "react-bootstrap";
 import Stars from "../components/Stars/Star";
+import _ from "lodash";
 
 import { MdFlipCameraAndroid } from "react-icons/md";
 import {
@@ -47,10 +48,7 @@ const Trainer = () => {
 
   let pgnList = pgndata.state.pgnWithName;
 
-  console.log("list", pgnList);
-
   const { variation } = useParams();
-  console.log("variation", variation);
 
   const [position, setPosition] = useState("");
 
@@ -58,6 +56,8 @@ const Trainer = () => {
   const [moves, setMoves] = useState([]);
 
   const [selectedMove, setSelectedMove] = useState(null);
+
+  const [variantionEntered, setVariationEntered] = useState(false);
 
   const [currentMove, setCurrentMove] = useState(-1);
   const [incorrectMoves, setIncorrectMoves] = useState(new Set());
@@ -112,6 +112,23 @@ const Trainer = () => {
   });
 
   useEffect(() => {
+    readPGN(pgn).then((formattedPgn) => {
+      const parsedMoves = formattedPgn[0].moves;
+      setMoves(parsedMoves);
+
+      const newFormatted = modifyDataStructure(formattedPgn[0].moves, 0);
+      console.log("newFormatted", newFormatted);
+      setFormattedPgn(newFormatted);
+      console.log("formattedPGn", formattedPgn);
+
+      setGridPGN(allExtractedMoves(formattedPgn[0].moves, 0));
+      setGridMoves(
+        allExtractedMoves(formattedPgn[0].moves, 0).map((move) => move.move)
+      );
+    });
+  }, [pgn]);
+
+  useEffect(() => {
     window.addEventListener("resize", handleResize, false);
   }, []);
 
@@ -126,7 +143,6 @@ const Trainer = () => {
       ((moves.length / 2 - wrongMovesCount) * 200) / moves.length;
 
     setPercent(percentage);
-    console.log("percentage", percentage);
   };
 
   function allExtractedMoves(pgn, depth = 0) {
@@ -149,121 +165,16 @@ const Trainer = () => {
     return moves;
   }
 
-  const movesGrid = () => {
-    return (
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-        {" "}
-        {gridPGn.map((move, index) => (
-          <div key={index}>
-            {!move.isVariation ? ( //A main Line Div
-              <div
-                style={{
-                  cursor: "pointer",
-                  fontFamily: "Montserrat-Bold",
-                  fontSize: "20px",
-                  margin: "5px",
-                }}
-                className={selectedMove === move ? "highlighted-move" : ""}
-                onClick={() => {
-                  let variantMoves = loadVariationMoves(formattedPgn, move);
-
-                  loadPosition(
-                    variantMoves.length - 1,
-                    //    gridPGn.map((move) => move.move)
-                    variantMoves.map((move) => move.move)
-                  );
-                  console.log("varMoves", variantMoves);
-
-                  setSelectedMove(move);
-                  setCurrentMove(index);
-                  setHighlightedVariationIndex(null);
-                  console.log("gridPGN", gridPGn);
-
-                  console.log("move", move);
-                }}
-              >
-                {" "}
-                {move.move_number ? `${move.move_number}.` : "..."} {move.move}
-              </div>
-            ) : (
-              <div //A variations Div
-                style={{
-                  cursor: "pointer",
-                  fontFamily: "Montserrat-Medium",
-                  fontSize: "18px",
-                  margin: "5px",
-                }}
-                className={selectedMove === move ? "highlighted-move" : ""}
-                onClick={() => {
-                  let variantMoves = loadVariationMoves(formattedPgn, move);
-                  console.log("varMoves", variantMoves);
-                  console.log("move", move);
-
-                  //   setHighlightedMoveIndex(index);
-                  loadPosition(
-                    variantMoves.length - 1,
-                    variantMoves.map((move) => move.move)
-                  );
-                  //  setHighlightedVariationIndex(index);
-                  // setHighlightedMoveIndex(null);
-
-                  setCurrentMove(index);
-
-                  // setHighlightedVariationIndex(null);
-
-                  console.log("move", move);
-                  setSelectedMove(move);
-                  setVariationMoves(variantMoves);
-                  setTempVariationMoves(variantMoves);
-
-                  console.log("variationMov", variantionMoves);
-                }}
-              >
-                {" "}
-                {move.depth ? "*".repeat(move.depth) : ""} {move.move}
-              </div>
-            )}
-
-            {/*      <div
-              className={
-                index === highlightedMoveIndex ? "highlighted-move" : ""
-              }
-              style={{
-                cursor: "pointer",
-                fontFamily: "Montserrat-Bold",
-                fontSize: "20px",
-                margin: "5px",
-              }}
-              onClick={() => {
-                if (!move.isVariation) {
-                  loadPosition(index, gridMoves);
-                 // setHighlightedVariationIndex(index);
-                } else {
-                  let variantionMoves = loadVariationMoves(formattedPgn, move);
-               //   setHighlightedMoveIndex(index);
-                  loadPosition(index, variantionMoves);
-                }
-              }}
-            >
-              {move.depth ? "*".repeat(move.depth) : ""}
-              {move.move_number ? `${move.move_number}.` : "..."}
-              {move.move}
-            </div> */}
-            <div
-              style={{
-                fontSize: "18px",
-                fontFamily: "Montserrat-Medium",
-                color: "royalblue",
-              }}
-            >
-              {" "}
-              {move.comment}
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  };
+  function modifyDataStructure(data, depth = 0) {
+    for (let move of data) {
+      move.isVariation = depth > 0;
+      move.depth = depth;
+      if (move.ravs) {
+        modifyDataStructure(move.ravs[0].moves, depth + 1);
+      }
+    }
+    return data;
+  }
 
   const rewardSystemEffect = () => {
     return (
@@ -376,22 +287,16 @@ const Trainer = () => {
 
   const getNextMove = (e) => {
     let nextMove = gridPGn.indexOf(selectedMove) + 1;
-    console.log("nextMove", nextMove);
 
     // Get the next move in the `moves` array
     while (gridPGn[nextMove].isVariation) {
-      console.log("GridIsVAriation", gridPGn[nextMove]);
       nextMove++;
     }
-    console.log("GridIsnOtVariation", gridPGn[nextMove]);
 
-    console.log("selectedMOve", selectedMove);
     let variantMoves = loadVariationMoves(formattedPgn, gridPGn[nextMove]);
-    console.log("variantMoves", variantMoves);
 
     setSelectedMove(gridPGn[nextMove]);
     setCurrentMove(gridPGn[variantMoves.length - 1]);
-    console.log("nextMove", gridPGn[nextMove]);
 
     loadPosition(
       nextMove,
@@ -399,52 +304,66 @@ const Trainer = () => {
     );
     setCurrentMove((prev) => prev + 1);
     nextMove++;
-
-    console.log("nextMOve", nextMove);
-
-    console.log("gameHistory", game.history());
   };
 
   const getPreviousMove = () => {
-    /*     if (tempVariantionMoves.length > 0) {    //variation Implementation
+    let variantMoves = loadVariationMoves(formattedPgn, selectedMove);
+    console.log("variationMoves", variantMoves);
 
+    console.log("selectedMove", selectedMove);
 
-      tempVariantionMoves.pop();
-      loadPosition(
-        tempVariantionMoves.length,
-        tempVariantionMoves.map((move) => move.move)
-      );
-      setSelectedMove(tempVariantionMoves[moves.length - 1]);
-    } */
+    let nextMove =
+      variantMoves.findIndex(
+        (obj) =>
+          obj.move === selectedMove.move &&
+          obj.comment === selectedMove.comment &&
+          obj.depth === selectedMove.depth &&
+          obj.move_number === selectedMove.move_number &&
+          obj.isVariation === selectedMove.isVariation
+      ) - 1;
+    console.log("nextMove", nextMove);
 
     if (currentMove < 0) {
       return;
     }
 
-    let nextMove = gridPGn.indexOf(selectedMove) - 1;
-
-    // Get the next move in the `moves` array
-    while (gridPGn[nextMove].isVariation) {
-      nextMove--;
-    }
-    console.log("previousmove", nextMove);
-    console.log("currentMove", currentMove);
-
-    setSelectedMove(gridPGn[nextMove]);
-    setCurrentMove(nextMove);
-    console.log("currentMOve", currentMove);
-
-    console.log("selectedMOve", selectedMove);
-    let variantMoves = loadVariationMoves(formattedPgn, gridPGn[nextMove]);
-
+    //   if (variantionEntered) {
+    console.log("selectedMove", selectedMove);
+    console.log("move", gridPGn[nextMove]);
+    console.log("gridPGN", gridPGn);
     loadPosition(
       nextMove,
       variantMoves.map((move) => move.move)
     );
-    setCurrentMove((prev) => prev - 1);
-    nextMove--;
+    let gridMoveIndex = gridPGn.findIndex(
+      (obj) =>
+        obj.move === variantMoves[nextMove].move &&
+        obj.comment === variantMoves[nextMove].comment &&
+        obj.depth === variantMoves[nextMove].depth &&
+        obj.move_number === variantMoves[nextMove].move_number &&
+        obj.isVariation === variantMoves[nextMove].isVariation
+    );
 
-    console.log("nextMOve", nextMove);
+    console.log("gridMoveIndex", gridMoveIndex);
+    setSelectedMove(gridPGn[gridMoveIndex]);
+
+    console.log("variantMoves[nextMove]", variantMoves[nextMove - 1]);
+    //  } else {
+    // Get the next move in the `moves` array
+    /*       while (gridPGn[nextMove].isVariation) {
+        nextMove--;
+      }
+
+      setSelectedMove(gridPGn[nextMove]);
+      setCurrentMove(nextMove);
+
+      loadPosition(
+        nextMove,
+        variantMoves.map((move) => move.move)
+      );
+      setCurrentMove((prev) => prev - 1);
+      nextMove--; */
+    // }
   };
 
   const getFirstMove = () => {
@@ -504,21 +423,119 @@ const Trainer = () => {
     setGame(gameCopy);
   }
 
-  useEffect(() => {
-    readPGN(pgn).then((formattedPgn) => {
-      const parsedMoves = formattedPgn[0].moves;
-      setMoves(parsedMoves);
-      setFormattedPgn(formattedPgn[0].moves);
-      console.log("formatted", formattedPgn);
+  const movesGrid = () => {
+    return (
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+        {" "}
+        {gridPGn.map((move, index) => (
+          <div key={index}>
+            {!move.isVariation ? ( //A main Line Div
+              <div
+                style={{
+                  cursor: "pointer",
+                  fontFamily: "Montserrat-Bold",
+                  fontSize: "20px",
+                  margin: "5px",
+                }}
+                className={selectedMove === move ? "highlighted-move" : ""}
+                onClick={() => {
+                  let variantMoves = loadVariationMoves(formattedPgn, move);
+                  console.log("selectedMove", selectedMove);
+                  console.log("gridPGN", gridPGn);
 
-      setGridPGN(allExtractedMoves(formattedPgn[0].moves, 0));
-      setGridMoves(
-        allExtractedMoves(formattedPgn[0].moves, 0).map((move) => move.move)
-      );
+                  loadPosition(
+                    variantMoves.length - 1,
+                    //    gridPGn.map((move) => move.move)
+                    variantMoves.map((move) => move.move)
+                  );
+                  setVariationEntered(false);
+                  setVariationMoves(variantMoves);
 
-      console.log("formattedPgn", formattedPgn);
-    });
-  }, [pgn]);
+                  setSelectedMove(move);
+                  setCurrentMove(index);
+                  setHighlightedVariationIndex(null);
+                }}
+              >
+                {" "}
+                {move.move_number ? `${move.move_number}.` : "..."} {move.move}
+              </div>
+            ) : (
+              <div //A variations Div
+                style={{
+                  cursor: "pointer",
+                  fontFamily: "Montserrat-Medium",
+                  fontSize: "18px",
+                  margin: "5px",
+                }}
+                className={selectedMove === move ? "highlighted-move" : ""}
+                onClick={() => {
+                  console.log("formattedPGN", formattedPgn);
+                  let variantMoves = loadVariationMoves(formattedPgn, move);
+
+                  //   setHighlightedMoveIndex(index);
+                  console.log("gridPGN", gridPGn);
+                  loadPosition(
+                    variantMoves.length - 1,
+                    variantMoves.map((move) => move.move)
+                  );
+                  setVariationEntered(true);
+                  //  setHighlightedVariationIndex(index);
+                  // setHighlightedMoveIndex(null);
+
+                  setCurrentMove(index);
+
+                  // setHighlightedVariationIndex(null);
+
+                  setSelectedMove(move);
+                  setVariationMoves(variantMoves);
+                  setTempVariationMoves(variantMoves);
+                }}
+              >
+                {" "}
+                {move.depth ? "*".repeat(move.depth) : ""} {move.move}
+              </div>
+            )}
+
+            {/*      <div
+              className={
+                index === highlightedMoveIndex ? "highlighted-move" : ""
+              }
+              style={{
+                cursor: "pointer",
+                fontFamily: "Montserrat-Bold",
+                fontSize: "20px",
+                margin: "5px",
+              }}
+              onClick={() => {
+                if (!move.isVariation) {
+                  loadPosition(index, gridMoves);
+                 // setHighlightedVariationIndex(index);
+                } else {
+                  let variantionMoves = loadVariationMoves(formattedPgn, move);
+               //   setHighlightedMoveIndex(index);
+                  loadPosition(index, variantionMoves);
+                }
+              }}
+            >
+              {move.depth ? "*".repeat(move.depth) : ""}
+              {move.move_number ? `${move.move_number}.` : "..."}
+              {move.move}
+            </div> */}
+            <div
+              style={{
+                fontSize: "18px",
+                fontFamily: "Montserrat-Medium",
+                color: "royalblue",
+              }}
+            >
+              {" "}
+              {move.comment}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   function onDrop(sourceSquare, targetSquare) {
     const move = makeAMove({
@@ -540,7 +557,6 @@ const Trainer = () => {
     setPosition(game.fen());
 
     setShowIncorrectMove(false);
-    console.log("correct", moves[currentMove]);
 
     setTimeout(() => {
       const move = game.move(moves[currentMove], { verbose: true });
@@ -558,9 +574,7 @@ const Trainer = () => {
   const loadPosition = (index, moves) => {
     // Reset the game to the initial position
     game.reset();
-    console.log("positionMoves", moves);
     // Highlight the selected move
-    console.log("index", index);
 
     // Make all the moves up to the selected move
     for (let i = 0; i <= index; i++) {
@@ -601,7 +615,6 @@ const Trainer = () => {
     // Check if the move follows the PGN
     if (game.history()[currentMove] !== moves[currentMove]) {
       if (!incorrectMoves.has(moves[currentMove])) {
-        console.log("getting In");
         setWrongMovesCount((prev) => prev + 1);
         incorrectMoves.add(moves[currentMove]);
       }
@@ -622,8 +635,6 @@ const Trainer = () => {
         setCorrectMovesCount((prev) => prev + 1);
         setHighlightedMoveIndex((prev) => prev + 1);
 
-        console.log("correctCount", correctMovesCount);
-
         // Check if the game is not over
         if (!game.game_over()) {
           // Get the next move in the `moves` array
@@ -640,9 +651,6 @@ const Trainer = () => {
           // Increment the current move index
           setCurrentMove((prevMove) => prevMove + 1);
 
-          console.log("nextMove", nextMove);
-          console.log("currentMove", currentMove);
-
           if (nextMove === moves[moves.length - 1]) {
             setVariationSolved(true);
             return;
@@ -654,7 +662,12 @@ const Trainer = () => {
   }
 
   function equals(obj1, obj2) {
-    return obj1.move_number === obj2.move_number && obj1.move === obj2.move;
+    return (
+      obj1.move_number === obj2.move_number &&
+      obj1.move === obj2.move &&
+      obj1.depth === obj2.depth &&
+      obj1.isVariation === obj2.isVariation
+    );
   }
 
   function loadVariationMoves(
@@ -665,8 +678,7 @@ const Trainer = () => {
   ): any {
     if (isMain) {
       const found = d.filter((e) => equals(e, find));
-      console.log("found", found);
-      if (found.length > 0)
+      if (found.length > 0) {
         return [
           ...d.slice(0, d.indexOf(found[0])).map((e) => ({
             move: e.move,
@@ -675,9 +687,20 @@ const Trainer = () => {
             ...(e.move_number ? { move_number: e.move_number } : null),
             isVariation: false,
           })),
-          ...found,
+          ...found.map((e) => {
+            // return a new object with the properties you want to keep
+            return {
+              move: e.move,
+              comment: e.comments.length > 0 ? e.comments[0].text : "",
+              depth: 0,
+              ...(e.move_number ? { move_number: e.move_number } : null),
+              isVariation: false,
+            };
+          }),
         ];
+      }
     }
+
     const ret = [];
     for (const e of d) {
       if (equals(e, find)) {
