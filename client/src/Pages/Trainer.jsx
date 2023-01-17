@@ -151,6 +151,7 @@ const Trainer = () => {
       if (move.move) {
         moves.push({
           move: move.move,
+          id: move.id,
           comment: move.comments.length > 0 ? move.comments[0].text : "",
           depth: depth,
           ...(move.move_number ? { move_number: move.move_number } : null),
@@ -165,12 +166,13 @@ const Trainer = () => {
     return moves;
   }
 
-  function modifyDataStructure(data, depth = 0) {
+  function modifyDataStructure(data, depth = 0, id = 0) {
     for (let move of data) {
+      move.id = id++;
       move.isVariation = depth > 0;
       move.depth = depth;
       if (move.ravs) {
-        modifyDataStructure(move.ravs[0].moves, depth + 1);
+        modifyDataStructure(move.ravs[0].moves, depth + 1, id);
       }
     }
     return data;
@@ -316,17 +318,15 @@ const Trainer = () => {
       variantMoves.findIndex(
         (obj) =>
           obj.move === selectedMove.move &&
-          obj.comment === selectedMove.comment &&
-          obj.depth === selectedMove.depth &&
-          obj.move_number === selectedMove.move_number &&
-          obj.isVariation === selectedMove.isVariation
+          obj.id === selectedMove.id &&
+          obj.move_number === selectedMove.move_number
       ) - 1;
     console.log("nextMove", nextMove);
 
-    if (currentMove < 0) {
+    /*    if (currentMove < 0) {
       return;
     }
-
+ */
     //   if (variantionEntered) {
     console.log("selectedMove", selectedMove);
     console.log("move", gridPGn[nextMove]);
@@ -338,10 +338,8 @@ const Trainer = () => {
     let gridMoveIndex = gridPGn.findIndex(
       (obj) =>
         obj.move === variantMoves[nextMove].move &&
-        obj.comment === variantMoves[nextMove].comment &&
-        obj.depth === variantMoves[nextMove].depth &&
-        obj.move_number === variantMoves[nextMove].move_number &&
-        obj.isVariation === variantMoves[nextMove].isVariation
+        obj.id === variantMoves[nextMove].id &&
+        obj.move_number === variantMoves[nextMove].move_number
     );
 
     console.log("gridMoveIndex", gridMoveIndex);
@@ -442,6 +440,7 @@ const Trainer = () => {
                   let variantMoves = loadVariationMoves(formattedPgn, move);
                   console.log("selectedMove", selectedMove);
                   console.log("gridPGN", gridPGn);
+                  console.log("varMoves", variantMoves);
 
                   loadPosition(
                     variantMoves.length - 1,
@@ -470,10 +469,15 @@ const Trainer = () => {
                 className={selectedMove === move ? "highlighted-move" : ""}
                 onClick={() => {
                   console.log("formattedPGN", formattedPgn);
+                  console.log("selectedMove", selectedMove);
+                  console.log("");
+
                   let variantMoves = loadVariationMoves(formattedPgn, move);
 
                   //   setHighlightedMoveIndex(index);
                   console.log("gridPGN", gridPGn);
+                  console.log("varMoves", variantMoves);
+
                   loadPosition(
                     variantMoves.length - 1,
                     variantMoves.map((move) => move.move)
@@ -666,7 +670,8 @@ const Trainer = () => {
       obj1.move_number === obj2.move_number &&
       obj1.move === obj2.move &&
       obj1.depth === obj2.depth &&
-      obj1.isVariation === obj2.isVariation
+      obj1.isVariation === obj2.isVariation &&
+      obj1.id === obj2.id
     );
   }
 
@@ -682,6 +687,7 @@ const Trainer = () => {
         return [
           ...d.slice(0, d.indexOf(found[0])).map((e) => ({
             move: e.move,
+            id: e.id,
             comment: e.comments.length > 0 ? e.comments[0].text : "",
             depth: 0,
             ...(e.move_number ? { move_number: e.move_number } : null),
@@ -695,6 +701,7 @@ const Trainer = () => {
               depth: 0,
               ...(e.move_number ? { move_number: e.move_number } : null),
               isVariation: false,
+              id: e.id,
             };
           }),
         ];
@@ -706,6 +713,7 @@ const Trainer = () => {
       if (equals(e, find)) {
         ret.push({
           move: e.move,
+          id: e.id,
           comment: e.comments.length > 0 ? e.comments[0].text : "",
           depth: depth,
           ...(e.move_number ? { move_number: e.move_number } : null),
@@ -721,6 +729,7 @@ const Trainer = () => {
       }
       ret.push({
         move: e.move,
+        id: e.id,
         comment: e.comments.length > 0 ? e.comments[0].text : "",
         depth: depth,
         ...(e.move_number ? { move_number: e.move_number } : null),
@@ -803,7 +812,7 @@ const Trainer = () => {
                       variant="warning"
                       className="mx-1 trainer_buttons"
                       onClick={() => getLastMove()}
-                      disabled={currentMove >= moves.length}
+                      disabled={selectedMove === moves[moves.length - 1]}
                     >
                       <AiFillFastForward />
                     </Button>{" "}
