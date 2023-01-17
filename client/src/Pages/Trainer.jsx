@@ -310,9 +310,6 @@ const Trainer = () => {
 
   const getPreviousMove = () => {
     let variantMoves = loadVariationMoves(formattedPgn, selectedMove);
-    console.log("variationMoves", variantMoves);
-
-    console.log("selectedMove", selectedMove);
 
     let nextMove =
       variantMoves.findIndex(
@@ -321,12 +318,11 @@ const Trainer = () => {
           obj.id === selectedMove.id &&
           obj.move_number === selectedMove.move_number
       ) - 1;
-    console.log("nextMove", nextMove);
 
-    /*    if (currentMove < 0) {
+    if (currentMove < 0) {
       return;
     }
- */
+
     //   if (variantionEntered) {
     console.log("selectedMove", selectedMove);
     console.log("move", gridPGn[nextMove]);
@@ -347,7 +343,7 @@ const Trainer = () => {
 
     console.log("variantMoves[nextMove]", variantMoves[nextMove - 1]);
     //  } else {
-    // Get the next move in the `moves` array
+    // Get the next move in the `moves` array   //tbh get moves till the end of the variation
     /*       while (gridPGn[nextMove].isVariation) {
         nextMove--;
       }
@@ -499,32 +495,6 @@ const Trainer = () => {
                 {move.depth ? "*".repeat(move.depth) : ""} {move.move}
               </div>
             )}
-
-            {/*      <div
-              className={
-                index === highlightedMoveIndex ? "highlighted-move" : ""
-              }
-              style={{
-                cursor: "pointer",
-                fontFamily: "Montserrat-Bold",
-                fontSize: "20px",
-                margin: "5px",
-              }}
-              onClick={() => {
-                if (!move.isVariation) {
-                  loadPosition(index, gridMoves);
-                 // setHighlightedVariationIndex(index);
-                } else {
-                  let variantionMoves = loadVariationMoves(formattedPgn, move);
-               //   setHighlightedMoveIndex(index);
-                  loadPosition(index, variantionMoves);
-                }
-              }}
-            >
-              {move.depth ? "*".repeat(move.depth) : ""}
-              {move.move_number ? `${move.move_number}.` : "..."}
-              {move.move}
-            </div> */}
             <div
               style={{
                 fontSize: "18px",
@@ -563,7 +533,7 @@ const Trainer = () => {
     setShowIncorrectMove(false);
 
     setTimeout(() => {
-      const move = game.move(moves[currentMove], { verbose: true });
+      const move = game.move(moves[currentMove].move, { verbose: true });
       setArrows([move.from, move.to]);
       game.undo();
       setPosition(game.fen());
@@ -613,14 +583,17 @@ const Trainer = () => {
     setHintRequested(false);
 
     calculateStars();
+    console.log("moves", moves);
+    console.log("currentMove", moves[currentMove]);
+    console.log("game.history()[currentMove] ", game.history()[currentMove]);
 
     /*     moveSoundRef.current.play();
      */
     // Check if the move follows the PGN
-    if (game.history()[currentMove] !== moves[currentMove]) {
-      if (!incorrectMoves.has(moves[currentMove])) {
+    if (game.history()[currentMove] !== moves[currentMove].move) {
+      if (!incorrectMoves.has(moves[currentMove].move)) {
         setWrongMovesCount((prev) => prev + 1);
-        incorrectMoves.add(moves[currentMove]);
+        incorrectMoves.add(moves[currentMove].move);
       }
       setBoardEnabled(false);
       setCorrectMove(false);
@@ -642,7 +615,7 @@ const Trainer = () => {
         // Check if the game is not over
         if (!game.game_over()) {
           // Get the next move in the `moves` array
-          const nextMove = moves[currentMove + 1];
+          const nextMove = moves[currentMove + 1].move;
 
           // Make the next move on the chessboard
           game.move(nextMove);
@@ -655,7 +628,7 @@ const Trainer = () => {
           // Increment the current move index
           setCurrentMove((prevMove) => prevMove + 1);
 
-          if (nextMove === moves[moves.length - 1]) {
+          if (nextMove === moves[moves.length - 1].move) {
             setVariationSolved(true);
             return;
           }
