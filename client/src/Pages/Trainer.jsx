@@ -118,7 +118,7 @@ const Trainer = () => {
 
       const newFormatted = modifyDataStructure(formattedPgn[0].moves, 0);
       console.log("newFormatted", newFormatted);
-      setFormattedPgn(newFormatted);
+      setFormattedPgn(parsedMoves);
       console.log("formattedPGn", formattedPgn);
 
       setGridPGN(allExtractedMoves(formattedPgn[0].moves, 0));
@@ -172,10 +172,10 @@ const Trainer = () => {
       move.isVariation = depth > 0;
       move.depth = depth;
       if (move.ravs) {
-        modifyDataStructure(move.ravs[0].moves, depth + 1, id + 1);
+        id = modifyDataStructure(move.ravs[0].moves, depth + 1, id);
       }
     }
-    return data;
+    return id;
   }
 
   const rewardSystemEffect = () => {
@@ -459,6 +459,7 @@ const Trainer = () => {
                 }}
               >
                 {" "}
+                <div style={{ color: " red" }}> {move.id} </div>
                 {move.move_number ? `${move.move_number}.` : "..."} {move.move}
               </div>
             ) : (
@@ -499,6 +500,7 @@ const Trainer = () => {
                 }}
               >
                 {" "}
+                <div style={{ color: " red" }}> {move.id} </div>
                 {move.depth ? "*".repeat(move.depth) : ""} {move.move}
               </div>
             )}
