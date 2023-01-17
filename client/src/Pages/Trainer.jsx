@@ -172,7 +172,7 @@ const Trainer = () => {
       move.isVariation = depth > 0;
       move.depth = depth;
       if (move.ravs) {
-        modifyDataStructure(move.ravs[0].moves, depth + 1, id);
+        modifyDataStructure(move.ravs[0].moves, depth + 1, id + 1);
       }
     }
     return data;
@@ -309,6 +309,8 @@ const Trainer = () => {
   };
 
   const getPreviousMove = () => {
+    console.log("currentMove", currentMove);
+
     let variantMoves = loadVariationMoves(formattedPgn, selectedMove);
 
     let nextMove =
@@ -319,7 +321,12 @@ const Trainer = () => {
           obj.move_number === selectedMove.move_number
       ) - 1;
 
-    if (currentMove < 0) {
+    if (nextMove < 0 || nextMove === undefined) {
+      console.log("test");
+      setSelectedMove(null);
+      game.reset();
+
+      console.log("selectedMove", selectedMove);
       return;
     }
 
@@ -340,6 +347,7 @@ const Trainer = () => {
 
     console.log("gridMoveIndex", gridMoveIndex);
     setSelectedMove(gridPGn[gridMoveIndex]);
+    setCurrentMove(gridPGn[gridMoveIndex]);
 
     console.log("variantMoves[nextMove]", variantMoves[nextMove - 1]);
     //  } else {
@@ -349,7 +357,6 @@ const Trainer = () => {
       }
 
       setSelectedMove(gridPGn[nextMove]);
-      setCurrentMove(nextMove);
 
       loadPosition(
         nextMove,
