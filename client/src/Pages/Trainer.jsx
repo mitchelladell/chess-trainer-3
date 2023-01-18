@@ -397,7 +397,11 @@ const Trainer = () => {
   };
 
   const getLastMove = () => {
-    loadPosition(moves.length - 1, gridMoves);
+    loadPosition(
+      moves.length - 1,
+      moves.map((move) => move.move)
+    );
+    console.log("moves", moves);
     // setHighlightedMoveIndex(moves.length - 1);
     setSelectedMove(moves[moves.length - 1]);
     console.log("selectedMOve", selectedMove);
