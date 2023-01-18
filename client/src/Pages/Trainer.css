@@ -119,6 +119,7 @@
 
 .comments {
   font-style: italic;
+  /*   display: flex; */
 }
 
 .variation {

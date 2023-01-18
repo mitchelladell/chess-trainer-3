@@ -79,6 +79,7 @@ const Trainer = () => {
   const [correctMovesCount, setCorrectMovesCount] = useState(0);
   const [wrongMovesCount, setWrongMovesCount] = useState(0);
   const [boardEnabled, setBoardEnabled] = useState(true);
+  const [studyStarted, setStudyStarted] = useState(false);
 
   const [numberOfTries, setNumberOfTries] = useState(0);
 
@@ -450,10 +451,12 @@ const Trainer = () => {
         setSelectedMove(gridPGn[0]);
       }
       getNextMove(e);
+      setStudyStarted(true);
     }
     // right arrow
     else if (e.keyCode == "40") {
       getLastMove();
+      setStudyStarted(true);
       // down arrow
     }
     const gameCopy = { ...game };
@@ -466,7 +469,7 @@ const Trainer = () => {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
         {" "}
         {gridPGn.map((move, index) => (
-          <div key={index}>
+          <div key={index} style={{ gridColumn: move.comment ? "1 / -1" : "" }}>
             {!move.isVariation ? ( //A main Line Div
               <div
                 style={{
@@ -474,6 +477,7 @@ const Trainer = () => {
                   fontFamily: "Montserrat-Bold",
                   fontSize: "20px",
                   margin: "5px",
+                  gridColumn: "1 / -1",
                 }}
                 className={
                   selectedMove?.id === move.id ? "highlighted-move" : ""
@@ -507,6 +511,8 @@ const Trainer = () => {
                   fontFamily: "Montserrat-Medium",
                   fontSize: "18px",
                   margin: "5px",
+                  /*   display: "flex",
+                    flexWrap: "nowrap", */
                 }}
                 className={
                   selectedMove?.id === move.id ? "highlighted-move" : ""
@@ -539,18 +545,25 @@ const Trainer = () => {
                 }}
               >
                 {" "}
+                {move.move_number ? move.move_number : "..."}{" "}
                 {move.depth ? "*".repeat(move.depth) : ""} {move.move}
               </div>
             )}
-            <div
-              style={{
-                fontSize: "18px",
-                fontFamily: "Montserrat-Medium",
-                color: "royalblue",
-              }}
-            >
-              {" "}
-              {move.comment}
+
+            <div className="comments">
+              <div
+                style={{
+                  fontSize: "18px",
+                  fontFamily: "Montserrat-Medium",
+                  color: "royalblue",
+
+                  /*  flexGrow: 1,
+                  flexShrink: 0, */
+                }}
+              >
+                {" "}
+                {move.comment}
+              </div>
             </div>
           </div>
         ))}
@@ -782,7 +795,10 @@ const Trainer = () => {
                       className="mx-1 trainer_buttons"
                       variant="warning"
                       disabled={selectedMove === null}
-                      onClick={() => getFirstMove()}
+                      onClick={() => {
+                        getFirstMove();
+                        setStudyStarted(false);
+                      }}
                     >
                       <AiFillFastBackward />
                     </Button>
@@ -790,7 +806,10 @@ const Trainer = () => {
                       className="mx-1 trainer_buttons"
                       variant="warning"
                       disabled={selectedMove === null}
-                      onClick={(e) => getPreviousMove(e)}
+                      onClick={(e) => {
+                        getPreviousMove(e);
+                        setStudyStarted(false);
+                      }}
                     >
                       <AiFillStepBackward />
                     </Button>{" "}
@@ -798,11 +817,13 @@ const Trainer = () => {
                       variant="warning"
                       className="mx-1 trainer_buttons"
                       disabled={
+                        studyStarted &&
                         selectedMove?.id ===
-                        variantionMoves[variantionMoves.length - 1]?.id
+                          variantionMoves[variantionMoves.length - 1]?.id
                       }
                       onClick={(e) => {
                         getNextMove(e);
+                        setStudyStarted(true);
                       }}
                     >
                       <AiFillStepForward />
@@ -810,10 +831,14 @@ const Trainer = () => {
                     <Button
                       variant="warning"
                       className="mx-1 trainer_buttons"
-                      onClick={() => getLastMove()}
+                      onClick={() => {
+                        getLastMove();
+                        setStudyStarted(true);
+                      }}
                       disabled={
+                        studyStarted &&
                         selectedMove?.id ===
-                        variantionMoves[variantionMoves.length - 1]?.id
+                          variantionMoves[variantionMoves.length - 1]?.id
                       }
                     >
                       <AiFillFastForward />
