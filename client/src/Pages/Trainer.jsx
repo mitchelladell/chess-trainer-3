@@ -288,37 +288,60 @@ const Trainer = () => {
   };
 
   const getNextMove = (e) => {
-    let nextMove = gridPGn.indexOf(selectedMove) + 1;
+    //   let nextMove = gridPGn.findIndex((obj) => obj.id === selectedMove.id) + 1;
 
     // Get the next move in the `moves` array
-    while (gridPGn[nextMove].isVariation) {
+    /*   while (gridPGn[nextMove].isVariation) {
       nextMove++;
-    }
+    } */
 
-    let variantMoves = loadVariationMoves(formattedPgn, gridPGn[nextMove]);
+    /*   if (!selectedMove) {
+      setSelectedMove(gridPGn[0]);
+    } */
 
-    setSelectedMove(gridPGn[nextMove]);
-    setCurrentMove(gridPGn[variantMoves.length - 1]);
+    let variantMoves = loadVariationMoves(
+      formattedPgn,
+      selectedMove ? selectedMove : gridPGn[0]
+    );
+
+    setVariationMoves(variantMoves);
+
+    let nextMove =
+      variantMoves.findIndex(
+        (obj) =>
+          obj?.move === selectedMove?.move && obj?.id === selectedMove?.id
+      ) + 1;
+    console.log("variantMoves", variantMoves);
 
     loadPosition(
       nextMove,
       variantMoves.map((move) => move.move)
     );
-    setCurrentMove((prev) => prev + 1);
-    nextMove++;
+
+    let gridMoveIndex = gridPGn.findIndex(
+      (obj) =>
+        obj.move === variantMoves[nextMove].move &&
+        obj.id === variantMoves[nextMove].id &&
+        obj.move_number === variantMoves[nextMove].move_number
+    );
+
+    console.log("gridMoveIndex", gridMoveIndex);
+    setSelectedMove(gridPGn[gridMoveIndex]);
+    setCurrentMove(gridPGn[gridMoveIndex]);
   };
 
   const getPreviousMove = () => {
     console.log("currentMove", currentMove);
 
     let variantMoves = loadVariationMoves(formattedPgn, selectedMove);
+    setVariationMoves(variantMoves);
 
     let nextMove =
       variantMoves.findIndex(
         (obj) =>
-          obj.move === selectedMove.move &&
-          obj.id === selectedMove.id &&
-          obj.move_number === selectedMove.move_number
+          obj?.move === selectedMove?.move &&
+          obj?.id === selectedMove?.id &&
+          obj?.move_number === selectedMove?.move_number
       ) - 1;
 
     if (nextMove < 0 || nextMove === undefined) {
@@ -374,7 +397,10 @@ const Trainer = () => {
 
   const getLastMove = () => {
     loadPosition(moves.length - 1, gridMoves);
-    setHighlightedMoveIndex(moves.length - 1);
+    // setHighlightedMoveIndex(moves.length - 1);
+    setSelectedMove(moves[moves.length - 1]);
+    console.log("selectedMOve", selectedMove);
+    // console.log("lastMOve", moves[moves.length - 1]);
   };
 
   const resetGame = () => {
@@ -387,6 +413,7 @@ const Trainer = () => {
     setVariationSolved(false);
     setHasMadeMove(false);
     setPercent(0);
+    setSelectedMove(null);
   };
 
   const handleNextPageClick = () => {
@@ -413,11 +440,21 @@ const Trainer = () => {
       getPreviousMove(e);
 
       // left arrow
+    }
+    if (e.keyCode == "38") {
+      resetGame();
+      // up arrow
     } else if (e.keyCode == "39") {
       e.preventDefault();
-
+      if (!selectedMove) {
+        setSelectedMove(gridPGn[0]);
+      }
       getNextMove(e);
-      // right arrow
+    }
+    // right arrow
+    else if (e.keyCode == "40") {
+      getLastMove();
+      // down arrow
     }
     const gameCopy = { ...game };
 
@@ -438,7 +475,9 @@ const Trainer = () => {
                   fontSize: "20px",
                   margin: "5px",
                 }}
-                className={selectedMove === move ? "highlighted-move" : ""}
+                className={
+                  selectedMove?.id === move.id ? "highlighted-move" : ""
+                }
                 onClick={() => {
                   let variantMoves = loadVariationMoves(formattedPgn, move);
                   console.log("selectedMove", selectedMove);
@@ -446,7 +485,7 @@ const Trainer = () => {
                   console.log("varMoves", variantMoves);
 
                   loadPosition(
-                    variantMoves.length - 1,
+                    variantMoves.findIndex((obj) => obj.id === move.id),
                     //    gridPGn.map((move) => move.move)
                     variantMoves.map((move) => move.move)
                   );
@@ -459,7 +498,6 @@ const Trainer = () => {
                 }}
               >
                 {" "}
-                <div style={{ color: " red" }}> {move.id} </div>
                 {move.move_number ? `${move.move_number}.` : "..."} {move.move}
               </div>
             ) : (
@@ -470,11 +508,12 @@ const Trainer = () => {
                   fontSize: "18px",
                   margin: "5px",
                 }}
-                className={selectedMove === move ? "highlighted-move" : ""}
+                className={
+                  selectedMove?.id === move.id ? "highlighted-move" : ""
+                }
                 onClick={() => {
                   console.log("formattedPGN", formattedPgn);
                   console.log("selectedMove", selectedMove);
-                  console.log("");
 
                   let variantMoves = loadVariationMoves(formattedPgn, move);
 
@@ -483,7 +522,7 @@ const Trainer = () => {
                   console.log("varMoves", variantMoves);
 
                   loadPosition(
-                    variantMoves.length - 1,
+                    variantMoves.findIndex((obj) => obj.id === move.id),
                     variantMoves.map((move) => move.move)
                   );
                   setVariationEntered(true);
@@ -500,7 +539,6 @@ const Trainer = () => {
                 }}
               >
                 {" "}
-                <div style={{ color: " red" }}> {move.id} </div>
                 {move.depth ? "*".repeat(move.depth) : ""} {move.move}
               </div>
             )}
@@ -555,6 +593,7 @@ const Trainer = () => {
   };
 
   const loadPosition = (index, moves) => {
+    console.log("moves", moves);
     // Reset the game to the initial position
     game.reset();
     // Highlight the selected move
@@ -663,44 +702,13 @@ const Trainer = () => {
     isMain: boolean = true,
     depth = 0
   ): any {
-    if (isMain) {
-      const found = d.filter((e) => equals(e, find));
-      if (found.length > 0) {
-        return [
-          ...d.slice(0, d.indexOf(found[0])).map((e) => ({
-            move: e.move,
-            id: e.id,
-            comment: e.comments.length > 0 ? e.comments[0].text : "",
-            depth: 0,
-            ...(e.move_number ? { move_number: e.move_number } : null),
-            isVariation: false,
-          })),
-          ...found.map((e) => {
-            // return a new object with the properties you want to keep
-            return {
-              move: e.move,
-              comment: e.comments.length > 0 ? e.comments[0].text : "",
-              depth: 0,
-              ...(e.move_number ? { move_number: e.move_number } : null),
-              isVariation: false,
-              id: e.id,
-            };
-          }),
-        ];
-      }
-    }
-
     const ret = [];
+    const seen = new Set();
+
     for (const e of d) {
       if (equals(e, find)) {
-        ret.push({
-          move: e.move,
-          id: e.id,
-          comment: e.comments.length > 0 ? e.comments[0].text : "",
-          depth: depth,
-          ...(e.move_number ? { move_number: e.move_number } : null),
-          isVariation: depth > 0,
-        });
+        ret.push(...d.filter((move) => !seen.has(move)));
+
         return ret;
       }
       if (e.ravs) {
@@ -709,14 +717,18 @@ const Trainer = () => {
           if (ret2) return [...ret, ...ret2];
         }
       }
-      ret.push({
-        move: e.move,
-        id: e.id,
-        comment: e.comments.length > 0 ? e.comments[0].text : "",
-        depth: depth,
-        ...(e.move_number ? { move_number: e.move_number } : null),
-        isVariation: depth > 0,
-      });
+
+      if (!seen.has(e)) {
+        seen.add(e);
+        ret.push({
+          move: e.move,
+          id: e.id,
+          comment: e.comments.length > 0 ? e.comments[0].text : "",
+          depth: depth,
+          ...(e.move_number ? { move_number: e.move_number } : null),
+          isVariation: depth > 0,
+        });
+      }
     }
     return undefined;
   }
@@ -769,7 +781,7 @@ const Trainer = () => {
                     <Button
                       className="mx-1 trainer_buttons"
                       variant="warning"
-                      disabled={currentMove <= 0}
+                      disabled={selectedMove === null}
                       onClick={() => getFirstMove()}
                     >
                       <AiFillFastBackward />
@@ -777,7 +789,7 @@ const Trainer = () => {
                     <Button
                       className="mx-1 trainer_buttons"
                       variant="warning"
-                      disabled={currentMove <= 0}
+                      disabled={selectedMove === null}
                       onClick={(e) => getPreviousMove(e)}
                     >
                       <AiFillStepBackward />
@@ -785,8 +797,13 @@ const Trainer = () => {
                     <Button
                       variant="warning"
                       className="mx-1 trainer_buttons"
-                      disabled={currentMove >= moves.length}
-                      onClick={(e) => getNextMove(e)}
+                      disabled={
+                        selectedMove?.id ===
+                        variantionMoves[variantionMoves.length - 1]?.id
+                      }
+                      onClick={(e) => {
+                        getNextMove(e);
+                      }}
                     >
                       <AiFillStepForward />
                     </Button>
@@ -794,7 +811,10 @@ const Trainer = () => {
                       variant="warning"
                       className="mx-1 trainer_buttons"
                       onClick={() => getLastMove()}
-                      disabled={selectedMove === moves[moves.length - 1]}
+                      disabled={
+                        selectedMove?.id ===
+                        variantionMoves[variantionMoves.length - 1]?.id
+                      }
                     >
                       <AiFillFastForward />
                     </Button>{" "}

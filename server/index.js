@@ -26,7 +26,7 @@ app.get("/pgn/1", (req, res) => {
   res.json([
     {
       "king opening":
-        '[White "me"]\n[Black "you"]\n1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 (3. ...Nf6 {is the two knights}) 4. b4 Bxb4 5. c3 Ba5 6. d4 exd4 7. O-O Nge7 $1 *',
+        '[White "me"]\n[Black "you"]\n1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 (3. Nf6 {is the two knights}) 4. b4 Bxb4 5. c3 Ba5 6. d4 exd4 7. O-O Nge7 $1 *',
     },
     {
       "Queen Opening":
@@ -43,6 +43,14 @@ app.get("/pgn/1", (req, res) => {
     {
       "Tough PGN":
         " 1. d4 Nf6 2. c4 c5 3. d5 e6 4. Nc3 (4. dxe6 fxe6 5. Bg5 (5. Nc3 d5 6. cxd5 exd5 7. Bg5 d4 8. Ne4 Be7 9. Nxf6+ Bxf6 10. Bxf6 Qxf6 $15) 5... Be7 6. Nc3 O-O 7. Nf3 Nc6 $11) (4. Nf3 exd5 5. cxd5 d6 6. e4 a6 (6... g6 $11) 7. Bd3 Bg4 8. Nbd2 Nbd7 9. h3 Ne5 10. Be2 Bxf3 11. Nxf3 Nxf3+ 12. Bxf3 Be7 13. O-O Nd7 $11) (4. Bg5 h6 $5 (4... exd5 5. cxd5 d6 $11) 5. Bh4 (5. Bxf6 Qxf6 6. Nc3 d6 7. Nf3 e5 8. e4 Be7 9. Be2 O-O $11) 5... g5 6. Bg3 Qb6 7. Nc3 $5 (7. Be5 Bg7 8. Nc3 d6 9. Bxf6 Bxf6 $11) 7... Qxb2 8. Be5 (8. Rc1 d6 9. e4 exd5 10. cxd5 a6 11. Nf3 Bg4 $13) 8... Ne4 9. Bxh8 (9. Rc1 f6 10. Nf3 Nxf2 11. Kxf2 fxe5 12. Nb5 e4 $36) 9... Nxc3 10. Qc1 Qxc1+ 11. Rxc1 Nxa2 12. Rb1 exd5 13. cxd5 Nb4 $11) 4... exd5 5. cxd5 d6 6. Nf3 (6. e4 g6 7. Be2 (7. Bb5+ Bd7 (7... Nbd7 $11) 8. a4 Bg7 9. Nf3 O-O 10. O-O Bg4 11. h3 Bxf3 12. Qxf3 Nbd7 $11) 7... Bg7 8. Bg5 O-O 9. Qd2 { King's Indian} Re8 10. f3 a6 11. a4 Qa5 $11) 6... g6 7. Nd2 (7. Bg5 h6 (7... Bg7 $11) 8. Bh4 g5 9. Bg3 Nh5 10. e3 Nxg3 11. hxg3 Bg7 12. Bd3 Nd7 13. Qc2 Qe7 $11) 7... Bg7 8. Nc4 O-O 9. Bf4 (9. g3 b6 10. a4 Ba6 11. Nb5 Ne8 12. Bg2 Bxb5 13. axb5 Nd7 14. Bf4 Ne5 $11 (14... Qe7 15. O-O g5 $5 $13)) (9. Bg5 Qe7 10. Qd2 b6 11. Qf4 Rd8 12. O-O-O (12. Ne4 Nbd7 13. Nexd6 h6 14. Bh4 g5 15. Nf5 Qf8 16. Bxg5 hxg5 17. Qxg5 b5 $13) 12... Ba6 13. e4 Bxc4 14. Bxc4 a6 $11) 9... b6 $5 ( 9... Ne8 $11) 10. Bxd6 (10. e3 Ne8 (10... Nh5 $13) 11. Qd2 Ba6 12. a4 f5 $11) 10... Re8 11. e3 (11. Bg3 Nh5 12. e3 Nxg3 13. hxg3 Bxc3+ 14. bxc3 Bb7 15. d6 b5 16. Nb2 Re6 $44) 11... Ne4 12. Nxe4 Rxe4 13. Bg3 b5 14. Nd6 (14. Nd2 Rb4 15. b3 c4 16. Rc1 Qa5 17. bxc4 17. Nd7 $11) 14... Rb4 $44 *",
+    },
+
+    {
+      h6: "1. d4 Nf6 2. c4 c5 3. d5 e6 4. Nc3 exd5 5. cxd5 d6 6. Nf3 g6 7. Nd2 Bg7 8. Nc4 O-O 9. Bf4 b6 10. Bxd6 Re8 11. e3 Ne4 12. Nxe4 Rxe4 (12... f5 13. Nc3 Bxc3+ (13... h6 { strong move } 14. a3) 14. bxc3) 13. Bg3 b5 14. Nd6 Rb4 *",
+    },
+    {
+      broken:
+        "1. d4 Nf6 2. c4 c5 3. d5 e6 4. g3 exd5 5. cxd5 b5 $5 (5... d6 { Tranposition to 'normal' fianchetto}) 6. Bg2 (6. e4 Nxe4 7. Qe2 (7. Bg2 Nd6 8. Nf3 Be7 9. O-O O-O 10. Bf4 (10. a4 Bb7 11. Bf4 b4 12. Nbd2 Ne8 13. Ne4 d6 $11) 10... Na6 11. Re1 Bb7 (11... Re8 $5 $11) 12. Nc3 Nc7 $11) 7... Qe7 8. Bg2 f5 $5 (8... Nd6 9. Be3 Na6 $11) 9. Nh3 (9. d6 Qe6 10. Nc3 Bxd6 11. g4 g6 12. gxf5 gxf5 $13) 9... b4 10. d6 (10. Be3 g6 11. Qc2 d6 12. Nd2 Bg7 13. Nxe4 fxe4 14. Ng5 O-O 15. Bxe4 Bf5 $11) (10. O-O Ba6 11. Qc2 Bxf1 12. Kxf1 h6 13. Nd2 Nd6 14. Nb3 Qf6 15. Nxc5 Be7 $11) 10... Qxd6 11. f3 Ba6 12. Qe3 Nc6 13. fxe4 Be7 14. e5 $6 (14. Qd2 Nd4 15. e5 Qxe5+ $36) (14. exf5 O-O 15. Qe4 Rae8 16. Qd5+ Kh8 17. Qxd6 Bxd6+ 18. Kd1 Rxf5 $36) 14... Nxe5 $1 15. Bxa8 O-O $36) (6. Nf3 Bb7 7. e4 Nxe4 8. Bg2 (8. Bxb5 Qa5+ 9. Nfd2 Bxd5 10. O-O Qxb5 11. Nxe4 Qc6 12. Nbc3 Be6 $11) 8... Bd6 (8... Be7 $11) 9. O-O (9. Nh4 Nf6 10. Nf5 O-O 11. Nxd6 Qe7+ 12. Ne4 Nxe4 13. O-O Nd6 $11) 9... O-O 10. Nh4 (10. Re1 f5 11. Nc3 Nxc3 12. bxc3 Na6 $11) 10... Nf6 11. Nf5 Be5 12. f4 Bd4+ 13. Nxd4 cxd4 14. Qxd4 Na6 $11) 6...FF d6 7. b4 (7. e4 Nbd7 8. f4 (8. Ne2 g6 9. O-O Bg7 10. Bf4 Qb6 11. Nd2 O-O 12. a4 Nh5 13. Bg5 b4 $11) 8... g6 9. Qe2 Bg7 10. e5 dxe5 (10... O-O $5 11. exf6 Nxf6 12. Qxb5 Re8+ 13. Ne2 Rb8 $36) 11. fxe5 O-O 12. exf6 Nxf6 13. Qxb5 Rb8 14. Qd3 (14. Qxb8 $2 Re8+ 15. Ne2 Rxe2+ $19) 14... Re8+ $36) 7... Bb7 8. bxc5 dxc5 9. e4 Bd6 10. Nd2 O-O 11. Ne2 Re8 12. O-O Nbd7 13. a4 (13. Bb2 a5 14. Rc1 a4 15. a3 Ne5 16. Qc2 Qd7 $11) 13... b4 14. Nc4 Ne5 15. Nxd6 Qxd6 $11 *",
     },
   ]);
 });
