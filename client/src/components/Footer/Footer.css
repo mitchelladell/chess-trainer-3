@@ -10,7 +10,7 @@
 footer {
   display: flex;
   justify-content: space-between;
-  font-size: 26px;
+  font-size: 18px;
 }
 
 .lang_button .dropdown-toggle {
@@ -19,26 +19,26 @@ footer {
   border-radius: 3px;
   border: 1px solid goldenrod;
   color: black;
-  font-size: 26px;
+  font-size: 18px;
 }
 
 .lang_button .dropdown-menu {
   /* styles for the dropdown menu */
   background: goldenrod;
   border-radius: 3px;
-  font-size: 26px;
+  font-size: 18px;
 }
 .lang_button .dropdown-menu .dropdown-item:active {
   background: gold;
   border-radius: 3px;
   color: black;
-  font-size: 26px;
+  font-size: 18px;
 }
 
 @media screen and (max-width: 700px) {
   .lang_button .dropdown-menu,
   footer,
   .lang_button .dropdown-toggle {
-    font-size: 18px;
+    font-size: 14px;
   }
 }

@@ -752,7 +752,7 @@ const Trainer = () => {
 
   return (
     <div>
-      {!focusMode && <Header />}
+      <Header isLoggedIn={true} />
       <div
         className={focusMode ? "trainer_container_focus" : "trainer_container"}
       >
@@ -784,17 +784,19 @@ const Trainer = () => {
                   justifyContent: "left",
                 }}
               >
-                <Button
-                  className="mx-1 trainer_buttons"
-                  variant="warning"
-                  onClick={() => setWhiteOrientation(!whiteOrientation)}
-                >
-                  <MdFlipCameraAndroid />
-                </Button>
                 <audio ref={correctAudio} src="/correct-6033.mp3"></audio>
 
                 {!trainingMode && (
                   <div>
+                    <Button
+                      variant="warning"
+                      className="mx-1 trainer_buttons"
+                      onClick={() => setFocusMode(!focusMode)}
+                    >
+                      {focusMode
+                        ? `${translations[lang].exitFocusMode}`
+                        : `${translations[lang].enterFocusMode}`}
+                    </Button>
                     <Button
                       className="mx-1 trainer_buttons"
                       variant="warning"
@@ -850,7 +852,7 @@ const Trainer = () => {
                   </div>
                 )}
                 <Button
-                  className="mx-1 trainer_buttons"
+                  className="mx-1 trainer_buttons test_yourself"
                   variant="warning"
                   onClick={() => {
                     setTrainningMode(!trainingMode);
@@ -861,16 +863,16 @@ const Trainer = () => {
                     ? `${translations[lang].exitTraining}`
                     : `${translations[lang].testYourself}`}
                 </Button>
-                <Button
-                  variant="warning"
-                  className="mx-1 trainer_buttons"
-                  onClick={() => setFocusMode(!focusMode)}
-                >
-                  {focusMode
-                    ? `${translations[lang].exitFocusMode}`
-                    : `${translations[lang].enterFocusMode}`}
-                </Button>
               </div>
+            </Col>
+            <Col sm={1} md={1} lg={1} xs={1}>
+              <Button
+                className="mx-1 trainer_buttons"
+                variant="warning"
+                onClick={() => setWhiteOrientation(!whiteOrientation)}
+              >
+                <MdFlipCameraAndroid />
+              </Button>
             </Col>
             <Col>
               {!trainingMode ? (
@@ -952,13 +954,13 @@ const Trainer = () => {
                   <Button
                     disabled={page <= 0}
                     onClick={handlePreviousPageClick}
-                    className="mx-2 trainer_buttons"
+                    className="mx-2 trainer_buttons previous"
                     variant="warning"
                   >
                     {translations[lang].PreviousPage}
                   </Button>
                   <Button
-                    className="mx-2 trainer_buttons"
+                    className="mx-2 trainer_buttons next"
                     variant="warning"
                     disabled={page >= pgnList.length - 1}
                     onClick={handleNextPageClick}

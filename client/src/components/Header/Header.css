@@ -1,5 +1,5 @@
 .header_container {
-  background: #4b4a4a;
+  background: #daa520;
   padding: 10px;
   display: flex;
 }
@@ -11,17 +11,19 @@
   border: none;
   width: 100px;
 }
+
 .signUp:hover,
 .login:hover,
 .courses_nav_tab:hover {
-  background: goldenrod;
+  background: gold;
 }
+
 .signUp:active,
 .login:active,
 .courses_nav_tab:active {
-  background: goldenrod;
+  background: #000000b3;
   border: none;
-  border-bottom: 3px solid goldenrod;
+  color: black;
 }
 
 .nav-item.active {
@@ -41,4 +43,57 @@
   color: white;
   background: goldenrod;
   border-radius: 3px;
+}
+
+.custom-dropdown-toggle {
+  /* custom styles for the toggle button */
+  background: #daa520;
+  border: none;
+  color: black;
+  border: none;
+  font-family: "Montserrat-Bold";
+}
+.custom-dropdown-toggle:hover {
+  background: gold;
+  color: black;
+  border: none;
+}
+.custom-dropdown-item:hover,
+.custom-dropdown-item:focus,
+.custom-dropdown-toggle:focus,
+.custom-dropdown-toggle:active {
+  color: white;
+  background: black !important;
+}
+
+.custom-dropdown-toggle:not(:focus) {
+  background: goldenrod;
+  color: black;
+}
+
+.custom-dropdown-menu {
+  /* custom styles for the dropdown menu */
+  background: #daa520;
+  border: none;
+  border: 1px solid goldenrod;
+  box-shadow: 0px 0px 24px #000000;
+  border-radius: 33px 0px 16px 19px;
+}
+
+.custom-dropdown-item:active {
+  color: white;
+  background: black !important;
+  border-radius: 33px 0px 16px 19px;
+}
+.custom-dropdown-item:hover {
+  color: white;
+  background: gold;
+  border-radius: 33px 0px 16px 19px;
+}
+
+.custom-dropdown-item {
+  /* custom styles for the dropdown items */
+  border: none;
+  color: black;
+  font-family: "Montserrat-Bold";
 }
