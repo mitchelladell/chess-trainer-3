@@ -777,7 +777,8 @@ const Trainer = () => {
                   display: "flex",
                   flexWrap: "wrap",
                   justifyContent: "left",
-                  marginLeft: "30px",
+                  /*                   marginLeft: "30px",
+                   */
                 }}
               >
                 <audio ref={correctAudio} src="/correct-6033.mp3"></audio>
