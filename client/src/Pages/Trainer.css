@@ -185,3 +185,8 @@
   cursor: not-allowed;
   border: 1px solid grey;
 }
+
+.trainer_buttons.focus {
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}

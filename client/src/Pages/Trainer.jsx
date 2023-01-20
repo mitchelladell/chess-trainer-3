@@ -737,22 +737,39 @@ const Trainer = () => {
         <Container>
           <Row>
             <Col>
-              <Chessboard
-                onPieceDrop={onDrop}
-                position={game.fen()}
-                boardWidth={dimensions.width}
-                arePiecesDraggable={
-                  trainingMode && boardEnabled && !variationSolved
-                }
-                customArrows={arrows.length > 0 && [arrows]}
-                areArrowsAllowed={true}
-                boardOrientation={whiteOrientation ? "white" : "black"}
-                showBoardNotation={true}
-                customBoardStyle={{
-                  borderRadius: "5px",
-                  boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
-                }}
-              ></Chessboard>
+              <div style={{ display: "inline-flex" }}>
+                <Chessboard
+                  onPieceDrop={onDrop}
+                  position={game.fen()}
+                  boardWidth={dimensions.width}
+                  arePiecesDraggable={
+                    trainingMode && boardEnabled && !variationSolved
+                  }
+                  customArrows={arrows.length > 0 && [arrows]}
+                  areArrowsAllowed={true}
+                  boardOrientation={whiteOrientation ? "white" : "black"}
+                  showBoardNotation={true}
+                  customBoardStyle={{
+                    borderRadius: "5px",
+                    boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
+                  }}
+                />
+                <div style={{ marginLeft: "5px" }}>
+                  {" "}
+                  <Button
+                    className="trainer_buttons"
+                    variant="warning"
+                    onClick={() => setWhiteOrientation(!whiteOrientation)}
+                  >
+                    <div
+                    //   style={{ display: "flex" }}
+                    /* className="d-block mx-auto" */
+                    >
+                      <MdFlipCameraAndroid />
+                    </div>
+                  </Button>{" "}
+                </div>
+              </div>
               <div
                 style={{
                   marginTop: "10px",
@@ -760,6 +777,7 @@ const Trainer = () => {
                   display: "flex",
                   flexWrap: "wrap",
                   justifyContent: "left",
+                  marginLeft: "30px",
                 }}
               >
                 <audio ref={correctAudio} src="/correct-6033.mp3"></audio>
@@ -768,17 +786,21 @@ const Trainer = () => {
                   <div>
                     <Button
                       variant="warning"
-                      className="mx-1 trainer_buttons"
+                      className="trainer_buttons focus"
                       onClick={() => setFocusMode(!focusMode)}
                     >
                       {focusMode ? (
-                        <MdCenterFocusWeak />
+                        <div className="mx-auto d-block">
+                          <MdCenterFocusWeak />
+                        </div>
                       ) : (
-                        <MdCenterFocusStrong />
+                        <div className="mx-auto d-block">
+                          <MdCenterFocusStrong />
+                        </div>
                       )}
                     </Button>
                     <Button
-                      className="mx-1 trainer_buttons"
+                      className="trainer_buttons"
                       variant="warning"
                       disabled={selectedMove === null}
                       onClick={() => {
@@ -789,7 +811,7 @@ const Trainer = () => {
                       <AiFillFastBackward />
                     </Button>
                     <Button
-                      className="mx-1 trainer_buttons"
+                      className="trainer_buttons"
                       variant="warning"
                       disabled={selectedMove === null}
                       onClick={(e) => {
@@ -801,7 +823,7 @@ const Trainer = () => {
                     </Button>{" "}
                     <Button
                       variant="warning"
-                      className="mx-1 trainer_buttons"
+                      className=" trainer_buttons"
                       disabled={
                         studyStarted &&
                         selectedMove?.id ===
@@ -816,7 +838,7 @@ const Trainer = () => {
                     </Button>
                     <Button
                       variant="warning"
-                      className="mx-1 trainer_buttons"
+                      className=" trainer_buttons"
                       onClick={() => {
                         getLastMove();
                         setStudyStarted(true);
@@ -832,7 +854,7 @@ const Trainer = () => {
                   </div>
                 )}
                 <Button
-                  className="mx-1 trainer_buttons test_yourself"
+                  className=" trainer_buttons test_yourself"
                   variant="warning"
                   onClick={() => {
                     setTrainningMode(!trainingMode);
@@ -845,15 +867,7 @@ const Trainer = () => {
                 </Button>
               </div>
             </Col>
-            <Col sm={1} md={1} lg={1} xs={1}>
-              <Button
-                className="mx-1 trainer_buttons"
-                variant="warning"
-                onClick={() => setWhiteOrientation(!whiteOrientation)}
-              >
-                <MdFlipCameraAndroid />
-              </Button>
-            </Col>
+
             <Col>
               {!trainingMode ? (
                 <div

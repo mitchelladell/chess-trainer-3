@@ -94,7 +94,7 @@ const Header: React.FC<IProps> = (props) => {
                   </Dropdown.Menu>
                 </Dropdown>
               </Col>
-              <Col align="right">
+              <Col style={{ margin: "auto" }} align="right">
                 <AiOutlineBell size={"28px"} />
               </Col>
 
