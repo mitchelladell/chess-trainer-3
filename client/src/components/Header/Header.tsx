@@ -66,7 +66,7 @@ const Header: React.FC<IProps> = (props) => {
                     className="custom-dropdown-toggle"
                     id="dropdown-basic"
                   >
-                    Courses
+                    {(translations as Translation)[lang].courses}
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu className="custom-dropdown-menu">
@@ -99,7 +99,38 @@ const Header: React.FC<IProps> = (props) => {
               </Col>
 
               <Col>
-                <FaUserAlt size={"28px"} />
+                <Dropdown className="custom-dropdown">
+                  <Dropdown.Toggle
+                    className="custom-dropdown-toggle-user"
+                    id="dropdown-basic"
+                  >
+                    <FaUserAlt size={"28px"} />
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu className="custom-dropdown-menu">
+                    <Dropdown.Item
+                      className="custom-dropdown-item"
+                      as={Link}
+                      to="#/action-1"
+                    >
+                      Action
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      className="custom-dropdown-item"
+                      as={Link}
+                      to="#/action-1"
+                    >
+                      Another action
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      className="custom-dropdown-item"
+                      as={Link}
+                      to="#/action-1"
+                    >
+                      Something else
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </Col>
             </Row>
           </Container>{" "}

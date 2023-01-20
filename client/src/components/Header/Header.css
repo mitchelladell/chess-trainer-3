@@ -58,6 +58,7 @@
   color: black;
   border: none;
 }
+
 .custom-dropdown-item:hover,
 .custom-dropdown-item:focus,
 .custom-dropdown-toggle:focus,
@@ -68,6 +69,28 @@
 
 .custom-dropdown-toggle:not(:focus) {
   background: goldenrod;
+  color: black;
+}
+
+.custom-dropdown-toggle:not(:focus) {
+  background: goldenrod;
+  color: black;
+}
+
+.custom-dropdown-toggle-user {
+  border: none;
+}
+.custom-dropdown-toggle-user:focus {
+  background: goldenrod !important;
+  color: black;
+}
+.custom-dropdown-toggle-user:active {
+  background: goldenrod !important;
+  color: black !important;
+}
+
+.custom-dropdown-toggle-user:not(:focus) {
+  background: goldenrod !important;
   color: black;
 }
 

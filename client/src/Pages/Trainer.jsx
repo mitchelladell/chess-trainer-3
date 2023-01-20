@@ -11,7 +11,7 @@ import ToggleButton from "react-bootstrap/ToggleButton";
 import { Star, MdOutlineKeyboardArrowDown } from "react-bootstrap-icons";
 import { ProgressBar } from "react-bootstrap";
 import Stars from "../components/Stars/Star";
-import _ from "lodash";
+import { useMeasure } from "react-measure";
 
 import { MdFlipCameraAndroid } from "react-icons/md";
 import {
@@ -20,6 +20,7 @@ import {
   AiFillStepBackward,
   AiFillStepForward,
 } from "react-icons/ai";
+import { MdCenterFocusWeak, MdCenterFocusStrong } from "react-icons/md";
 
 import "./Trainer.css";
 import translations from "../consts/translations";
@@ -374,26 +375,10 @@ const Trainer = () => {
     setCurrentMove(gridPGn[gridMoveIndex]);
 
     console.log("variantMoves[nextMove]", variantMoves[nextMove - 1]);
-    //  } else {
-    // Get the next move in the `moves` array   //tbh get moves till the end of the variation
-    /*       while (gridPGn[nextMove].isVariation) {
-        nextMove--;
-      }
-
-      setSelectedMove(gridPGn[nextMove]);
-
-      loadPosition(
-        nextMove,
-        variantMoves.map((move) => move.move)
-      );
-      setCurrentMove((prev) => prev - 1);
-      nextMove--; */
-    // }
   };
 
   const getFirstMove = () => {
-    loadPosition(-1, moves);
-    setHighlightedMoveIndex(-1);
+    resetGame();
   };
 
   const getLastMove = () => {
@@ -401,11 +386,7 @@ const Trainer = () => {
       moves.length - 1,
       moves.map((move) => move.move)
     );
-    console.log("moves", moves);
-    // setHighlightedMoveIndex(moves.length - 1);
     setSelectedMove(moves[moves.length - 1]);
-    console.log("selectedMOve", selectedMove);
-    // console.log("lastMOve", moves[moves.length - 1]);
   };
 
   const resetGame = () => {
@@ -752,7 +733,7 @@ const Trainer = () => {
 
   return (
     <div>
-      <Header isLoggedIn={true} />
+      {!focusMode && <Header isLoggedIn={true} />}
       <div
         className={focusMode ? "trainer_container_focus" : "trainer_container"}
       >
@@ -793,9 +774,11 @@ const Trainer = () => {
                       className="mx-1 trainer_buttons"
                       onClick={() => setFocusMode(!focusMode)}
                     >
-                      {focusMode
-                        ? `${translations[lang].exitFocusMode}`
-                        : `${translations[lang].enterFocusMode}`}
+                      {focusMode ? (
+                        <MdCenterFocusWeak />
+                      ) : (
+                        <MdCenterFocusStrong />
+                      )}
                     </Button>
                     <Button
                       className="mx-1 trainer_buttons"
