@@ -540,10 +540,7 @@ const Trainer = () => {
                 style={{
                   fontSize: "18px",
                   fontFamily: "Montserrat-Medium",
-                  color: "royalblue",
-
-                  /*  flexGrow: 1,
-                  flexShrink: 0, */
+                  color: "white",
                 }}
               >
                 {" "}
