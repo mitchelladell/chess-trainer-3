@@ -776,7 +776,10 @@ const Trainer = () => {
                   marginBottom: "10px",
                   display: "flex",
                   flexWrap: "wrap",
-                  justifyContent: "left",
+                  width: dimensions.width,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  //   justifyContent: "left",
                   /*                   marginLeft: "30px",
                    */
                 }}
