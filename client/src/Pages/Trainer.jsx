@@ -761,10 +761,7 @@ const Trainer = () => {
                     variant="warning"
                     onClick={() => setWhiteOrientation(!whiteOrientation)}
                   >
-                    <div
-                    //   style={{ display: "flex" }}
-                    /* className="d-block mx-auto" */
-                    >
+                    <div className="d-flex justify-content-center align-items-center">
                       <MdFlipCameraAndroid />
                     </div>
                   </Button>{" "}
@@ -794,11 +791,11 @@ const Trainer = () => {
                       onClick={() => setFocusMode(!focusMode)}
                     >
                       {focusMode ? (
-                        <div className="mx-auto d-block">
+                        <div className="d-flex justify-content-center align-items-center">
                           <MdCenterFocusWeak />
                         </div>
                       ) : (
-                        <div className="mx-auto d-block">
+                        <div className="d-flex justify-content-center align-items-center">
                           <MdCenterFocusStrong />
                         </div>
                       )}
@@ -812,7 +809,9 @@ const Trainer = () => {
                         setStudyStarted(false);
                       }}
                     >
-                      <AiFillFastBackward />
+                      <div className="d-flex justify-content-center align-items-center">
+                        <AiFillFastBackward />
+                      </div>
                     </Button>
                     <Button
                       className="trainer_buttons"
@@ -823,7 +822,10 @@ const Trainer = () => {
                         setStudyStarted(false);
                       }}
                     >
-                      <AiFillStepBackward />
+                      <div className="d-flex justify-content-center align-items-center">
+                        {" "}
+                        <AiFillStepBackward />
+                      </div>
                     </Button>{" "}
                     <Button
                       variant="warning"
@@ -838,7 +840,9 @@ const Trainer = () => {
                         setStudyStarted(true);
                       }}
                     >
-                      <AiFillStepForward />
+                      <div className="d-flex justify-content-center align-items-center">
+                        <AiFillStepForward />
+                      </div>
                     </Button>
                     <Button
                       variant="warning"
@@ -853,12 +857,14 @@ const Trainer = () => {
                           variantionMoves[variantionMoves.length - 1]?.id
                       }
                     >
-                      <AiFillFastForward />
-                    </Button>{" "}
+                      <div className="d-flex justify-content-center align-items-center">
+                        <AiFillFastForward />
+                      </div>
+                    </Button>
                   </div>
                 )}
                 <Button
-                  className=" trainer_buttons test_yourself"
+                  className=" trainer_buttons  test_yourself"
                   variant="warning"
                   onClick={() => {
                     setTrainningMode(!trainingMode);
