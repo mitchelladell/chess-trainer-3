@@ -23,6 +23,13 @@
     url("./css/fonts/Montserrat-Regular.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "AmiriQuran-Regular";
+  src: url("./css/fonts/AmiriQuran-Regular.ttf") format("woff"),
+    url("./css/fonts/AmiriQuran-Regular.ttf") format("opentype"),
+    url("./css/fonts/AmiriQuran-Regular.ttf") format("truetype");
+}
+
 .main {
   font-family: "SourceSerifPro-Regular" !important;
 }

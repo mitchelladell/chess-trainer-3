@@ -394,6 +394,7 @@ const Trainer = () => {
 
   const resetGame = () => {
     setArrows([]);
+
     game.reset();
     setPosition(game.fen());
     setCorrectMovesCount(0);
@@ -813,7 +814,7 @@ const Trainer = () => {
                   arePiecesDraggable={
                     trainingMode && boardEnabled && !variationSolved
                   }
-                  customArrows={arrows.length > 0 && [arrows]}
+                  customArrows={arrows.length > 0 ? [arrows] : []}
                   areArrowsAllowed={true}
                   boardOrientation={whiteOrientation ? "white" : "black"}
                   showBoardNotation={false}
