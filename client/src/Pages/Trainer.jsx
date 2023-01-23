@@ -694,6 +694,61 @@ const Trainer = () => {
     );
   }
 
+  const GridYDirection = () => {
+    const squares = ["8", "7", "6", "5", "4", "3", "2", "1"];
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: whiteOrientation ? "column" : "column-reverse",
+          height: dimensions.width,
+          justifyContent: "space-evenly",
+          marginRight: "5px",
+        }}
+      >
+        {squares.map((square) => (
+          <div
+            style={{
+              textAlign: "end",
+              height: dimensions.width / 8,
+              width: "min-content",
+              color: "white",
+            }}
+          >
+            {" "}
+            {square}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const GridXDirection = () => {
+    const squares = ["a", "b", "c", "d", "e", "f", "g", "h"];
+    return (
+      <div
+        style={{
+          display: "flex",
+          width: dimensions.width,
+          justifyContent: "space-evenly",
+        }}
+      >
+        {squares.map((square) => (
+          <div
+            style={{
+              textAlign: "end",
+              width: dimensions.width / 8,
+              color: "white",
+            }}
+          >
+            {" "}
+            {square}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   function loadVariationMoves(
     d: any,
     find: any,
@@ -741,24 +796,33 @@ const Trainer = () => {
           <Row>
             <Col>
               <div style={{ display: "inline-flex" }}>
+                <GridYDirection />
                 <Chessboard
                   onPieceDrop={onDrop}
                   position={game.fen()}
                   boardWidth={dimensions.width}
                   customPieces={{ wk: <King /> }}
-                  customLightSquareStyle={{ backgroundColor: "white" }}
+                  customDarkSquareStyle={{
+                    background:
+                      "url('../media/darkSquare.png') no-repeat 0 0 scroll",
+                  }}
+                  customLightSquareStyle={{
+                    background:
+                      "url('../media/lightSquare2.jpg') no-repeat 0 0 scroll",
+                  }}
                   arePiecesDraggable={
                     trainingMode && boardEnabled && !variationSolved
                   }
                   customArrows={arrows.length > 0 && [arrows]}
                   areArrowsAllowed={true}
                   boardOrientation={whiteOrientation ? "white" : "black"}
-                  showBoardNotation={true}
+                  showBoardNotation={false}
                   customBoardStyle={{
                     borderRadius: "5px",
                     boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
                   }}
                 />
+
                 <div style={{ marginLeft: "5px" }}>
                   {" "}
                   <Button
@@ -772,6 +836,8 @@ const Trainer = () => {
                   </Button>{" "}
                 </div>
               </div>
+              <GridXDirection />
+
               <div
                 style={{
                   marginTop: "10px",
@@ -828,7 +894,6 @@ const Trainer = () => {
                       }}
                     >
                       <div className="d-flex justify-content-center align-items-center">
-                        {" "}
                         <AiFillStepBackward />
                       </div>
                     </Button>{" "}
