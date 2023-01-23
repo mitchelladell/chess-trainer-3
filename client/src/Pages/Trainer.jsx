@@ -318,6 +318,10 @@ const Trainer = () => {
       ) + 1;
     console.log("variantMoves", variantMoves);
 
+    if (!nextMove) {
+      return;
+    }
+
     loadPosition(
       nextMove,
       variantMoves.map((move) => move.move)

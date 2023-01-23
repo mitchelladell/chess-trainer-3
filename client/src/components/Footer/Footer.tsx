@@ -22,12 +22,30 @@ const Footer: React.FC = () => {
   return (
     <div className="footer">
       <footer>
-        <Container fluid>
+        <Container>
           <Row>
-            <Col>
-              <p>Copyright 2023 Contact us at :chessarabs.gmail.com</p>
+            <Col sm={10} lg={10} md={10} xl={10}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  textAlign: "center",
+                }}
+              >
+                {" "}
+                <div> Info</div>
+                <div>Blog </div>
+                <div> Trainer</div>
+                <div>Sciences </div>
+                <div> Jobs</div>
+                <div> News</div>
+                <div> Leader Board</div>
+                <div> Road map</div>
+                <div>Help?</div>
+                <div>Privacy</div>
+              </div>
             </Col>
-            <Col className="d-flex justify-content-end">
+            <Col sm={2} lg={2} md={2} xl={2}>
               <Dropdown className="lang_button">
                 <Dropdown.Toggle variant="warning">
                   {(translations as Translation)[lang].lang}
@@ -49,6 +67,15 @@ const Footer: React.FC = () => {
                 </Dropdown.Menu>
               </Dropdown>
             </Col>
+          </Row>
+          <Row>
+            <div
+              style={{
+                display: "flex",
+                textAlign: "center",
+                justifyContent: "space-evenly",
+              }}
+            ></div>
           </Row>
         </Container>
       </footer>
