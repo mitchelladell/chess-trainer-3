@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { Nav, NavItem } from "react-bootstrap";
 import { AiOutlineBell } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
+import { FaHome } from "react-icons/fa";
 
 type Translation = {
   [key: string]: {
@@ -59,8 +60,12 @@ const Header: React.FC<IProps> = (props) => {
         <div className="header_container">
           <Container>
             <Row>
-              <Col align={"center"} xs={7} md={7} lg={7}>
-                {" "}
+              <Col>
+                <Link to="/">
+                  <FaHome size={50} />
+                </Link>
+              </Col>
+              <Col align={"left"} xs={6} md={7} lg={7}>
                 <Dropdown className="custom-dropdown">
                   <Dropdown.Toggle
                     className="custom-dropdown-toggle"
@@ -97,7 +102,6 @@ const Header: React.FC<IProps> = (props) => {
               <Col style={{ margin: "auto" }} align="right">
                 <AiOutlineBell size={"28px"} />
               </Col>
-
               <Col>
                 <Dropdown className="custom-dropdown">
                   <Dropdown.Toggle
