@@ -11,10 +11,32 @@ type Translation = {
     signUp: string;
     signIn: string;
     lang: string;
+    info: string;
+    blog: string;
+    trainer: string;
+    science: string;
+    jobs: string;
+    news: string;
+    leaderBoard: string;
+    roadMap: string;
+    help: string;
+    privacy: string;
   };
 };
 
 const Footer: React.FC = () => {
+  const footerContent = [
+    "info",
+    "blog",
+    "trainer",
+    "science",
+    "jobs",
+    "news",
+    "leaderBoard",
+    "roadMap",
+    "help",
+    "privacy",
+  ];
   const lang = useSelector(
     (state: { language: { value: string } }) => state.language.value
   );
@@ -32,16 +54,12 @@ const Footer: React.FC = () => {
                   flexWrap: "wrap",
                 }}
               >
-                <div style={{ margin: "5px" }}> Info</div>
-                <div style={{ margin: "5px" }}>Blog </div>
-                <div style={{ margin: "5px" }}> Trainer</div>
-                <div style={{ margin: "5px" }}>Sciences </div>
-                <div style={{ margin: "5px" }}> Jobs</div>
-                <div style={{ margin: "5px" }}> News</div>
-                <div style={{ margin: "5px" }}> Leader Board</div>
-                <div style={{ margin: "5px" }}> Road map</div>
-                <div style={{ margin: "5px" }}>Help?</div>
-                <div style={{ margin: "5px" }}>Privacy</div>
+                {footerContent.map((item) => (
+                  <div style={{ margin: "5px" }}>
+                    {" "}
+                    {(translations as any)[lang][item]}
+                  </div>
+                ))}
               </div>
             </Col>
             <Col sm={2} lg={2} md={2} xl={2}>

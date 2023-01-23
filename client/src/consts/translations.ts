@@ -24,6 +24,16 @@ const translations: {
     congratulations: string;
     learn: string;
     tryAgain: string;
+    info: string;
+    blog: string;
+    trainer: string;
+    science: string;
+    jobs: string;
+    news: string;
+    leaderBoard: string;
+    roadMap: string;
+    help: string;
+    privacy: string;
   };
   ar: {
     signIn: string;
@@ -50,6 +60,16 @@ const translations: {
     congratulations: string;
     learn: string;
     tryAgain: string;
+    info: string;
+    blog: string;
+    trainer: string;
+    science: string;
+    jobs: string;
+    news: string;
+    leaderBoard: string;
+    roadMap: string;
+    help: string;
+    privacy: string;
   };
 } = {
   en: {
@@ -77,6 +97,16 @@ const translations: {
     congratulations: "Congratulations!",
     learn: "Learn",
     tryAgain: "Try again",
+    info: "Info",
+    blog: "Blog",
+    trainer: "Turbo Coach",
+    science: "Science",
+    jobs: "Jobs",
+    news: "News",
+    leaderBoard: "Leader Board",
+    roadMap: "Road Map",
+    help: "Help",
+    privacy: "Privacy",
   },
 
   ar: {
@@ -104,6 +134,16 @@ const translations: {
     congratulations: "تهانينا",
     learn: "تعلم",
     tryAgain: "حاول مجددا",
+    info: "معلومات عننا",
+    blog: "مدونة",
+    trainer: "مدرب الحركة",
+    science: "علوم",
+    jobs: "وظائف",
+    news: "النشرة الأخبارية",
+    leaderBoard: "المتصدرين",
+    roadMap: "خارطة الطريق",
+    help: "مساعدة",
+    privacy: "خصوصية",
   },
 };
 
