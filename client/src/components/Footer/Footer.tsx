@@ -28,21 +28,20 @@ const Footer: React.FC = () => {
               <div
                 style={{
                   display: "flex",
-                  justifyContent: "space-between",
-                  textAlign: "center",
+                  justifyContent: "center",
+                  flexWrap: "wrap",
                 }}
               >
-                {" "}
-                <div> Info</div>
-                <div>Blog </div>
-                <div> Trainer</div>
-                <div>Sciences </div>
-                <div> Jobs</div>
-                <div> News</div>
-                <div> Leader Board</div>
-                <div> Road map</div>
-                <div>Help?</div>
-                <div>Privacy</div>
+                <div style={{ margin: "5px" }}> Info</div>
+                <div style={{ margin: "5px" }}>Blog </div>
+                <div style={{ margin: "5px" }}> Trainer</div>
+                <div style={{ margin: "5px" }}>Sciences </div>
+                <div style={{ margin: "5px" }}> Jobs</div>
+                <div style={{ margin: "5px" }}> News</div>
+                <div style={{ margin: "5px" }}> Leader Board</div>
+                <div style={{ margin: "5px" }}> Road map</div>
+                <div style={{ margin: "5px" }}>Help?</div>
+                <div style={{ margin: "5px" }}>Privacy</div>
               </div>
             </Col>
             <Col sm={2} lg={2} md={2} xl={2}>
