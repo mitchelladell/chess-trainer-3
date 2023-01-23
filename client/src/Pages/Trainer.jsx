@@ -12,6 +12,9 @@ import { Star, MdOutlineKeyboardArrowDown } from "react-bootstrap-icons";
 import { ProgressBar } from "react-bootstrap";
 import Stars from "../components/Stars/Star";
 import { useMeasure } from "react-measure";
+import Focus from "../pgns/Focus";
+
+import King from "../pgns/king";
 
 import { MdFlipCameraAndroid } from "react-icons/md";
 import {
@@ -742,6 +745,8 @@ const Trainer = () => {
                   onPieceDrop={onDrop}
                   position={game.fen()}
                   boardWidth={dimensions.width}
+                  customPieces={{ wk: <King /> }}
+                  customLightSquareStyle={{ backgroundColor: "white" }}
                   arePiecesDraggable={
                     trainingMode && boardEnabled && !variationSolved
                   }
@@ -796,7 +801,7 @@ const Trainer = () => {
                         </div>
                       ) : (
                         <div className="d-flex justify-content-center align-items-center">
-                          <MdCenterFocusStrong />
+                          <Focus />
                         </div>
                       )}
                     </Button>
