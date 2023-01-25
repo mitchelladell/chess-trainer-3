@@ -859,15 +859,13 @@ const Trainer = () => {
 
                 <div style={{ marginLeft: "5px" }}>
                   {" "}
-                  <Button
-                    className="trainer_buttons"
-                    variant="warning"
+                  <div
                     onClick={() => setWhiteOrientation(!whiteOrientation)}
+                    className="d-flex justify-content-center align-items-center"
+                    style={{ cursor: "pointer" }}
                   >
-                    <div className="d-flex justify-content-center align-items-center">
-                      <SwapBoard />
-                    </div>
-                  </Button>{" "}
+                    <SwapBoard />
+                  </div>
                 </div>
               </div>
               <GridXDirection />

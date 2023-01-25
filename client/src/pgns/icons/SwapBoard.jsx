@@ -3,11 +3,12 @@ const SwapBoard = () => {
     <div
       style={{
         backgroundImage: "url('../media/swapBoard.png')",
-        width: "24px",
-        height: "24px",
+        width: "30px",
+        height: "30px",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "cover",
+        cursor: "pointer",
       }}
     >
       {" "}
