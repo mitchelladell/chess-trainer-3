@@ -60,6 +60,10 @@
   border: none;
 }
 
+.styledLink {
+  color: #000000 !important;
+}
+
 .custom-dropdown-item:hover,
 .custom-dropdown-item:focus,
 .custom-dropdown-toggle:focus,

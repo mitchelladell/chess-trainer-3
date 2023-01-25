@@ -11,6 +11,8 @@ import { Nav, NavItem } from "react-bootstrap";
 import { AiOutlineBell } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
+import ProfilePic from "../../pgns/icons/ProfilePic";
+import Notification from "../../pgns/icons/Notification";
 
 type Translation = {
   [key: string]: {
@@ -61,7 +63,7 @@ const Header: React.FC<IProps> = (props) => {
           <Container>
             <Row>
               <Col>
-                <Link to="/">
+                <Link className="styledLink" to="/">
                   <FaHome size={50} />
                 </Link>
               </Col>
@@ -99,16 +101,21 @@ const Header: React.FC<IProps> = (props) => {
                   </Dropdown.Menu>
                 </Dropdown>
               </Col>
-              <Col style={{ margin: "auto" }} align="right">
-                <AiOutlineBell size={"28px"} />
+              <Col align="right">
+                <div className="d-flex justify-content-center align-items-center">
+                  <Notification />
+                </div>
               </Col>
               <Col>
                 <Dropdown className="custom-dropdown">
                   <Dropdown.Toggle
                     className="custom-dropdown-toggle-user"
                     id="dropdown-basic"
+                    bsPrefix="p-0"
                   >
-                    <FaUserAlt size={"28px"} />
+                    <div className="d-flex justify-content-center align-items-center">
+                      <ProfilePic />
+                    </div>
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu className="custom-dropdown-menu">

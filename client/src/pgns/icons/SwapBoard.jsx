@@ -1,10 +1,8 @@
-import Rectangle from "../pgns/Rectangle 1.png";
-
-const Focus = () => {
+const SwapBoard = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${Rectangle})`,
+        backgroundImage: "url('../media/swapBoard.png')",
         width: "24px",
         height: "24px",
         backgroundRepeat: "no-repeat",
@@ -17,4 +15,4 @@ const Focus = () => {
   );
 };
 
-export default Focus;
+export default SwapBoard;

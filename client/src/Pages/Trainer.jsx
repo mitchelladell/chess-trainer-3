@@ -12,9 +12,12 @@ import { Star, MdOutlineKeyboardArrowDown } from "react-bootstrap-icons";
 import { ProgressBar } from "react-bootstrap";
 import Stars from "../components/Stars/Star";
 import { useMeasure } from "react-measure";
-import Focus from "../pgns/Focus";
+import Focus from "../pgns/icons/Focus";
+/* import Bp from "../components/customPieces/gridPieces/Bp";
+import Wk from "../components/customPieces/Wk"; */
 
 import King from "../pgns/king";
+import BB from "../components/customPieces/BoardPieces/BB";
 
 import { MdFlipCameraAndroid } from "react-icons/md";
 import {
@@ -32,6 +35,18 @@ import Footer from "../components/Footer/Footer";
 import { Nav, Navbar } from "react-bootstrap";
 import { current } from "@reduxjs/toolkit";
 import { update } from "../features/pgns/pgnSlice";
+import SwapBoard from "../pgns/icons/SwapBoard";
+import Wk from "../components/customPieces/BoardPieces/Wk";
+import Wr from "../components/customPieces/BoardPieces/Wr";
+import Wp from "../components/customPieces/BoardPieces/Wp";
+import Wn from "../components/customPieces/BoardPieces/Wn";
+import Wq from "../components/customPieces/BoardPieces/Wq";
+import Wb from "../components/customPieces/BoardPieces/Wb";
+import Bk from "../components/customPieces/BoardPieces/BK";
+import Bq from "../components/customPieces/BoardPieces/BQ";
+import Bn from "../components/customPieces/BoardPieces/BN";
+import Br from "../components/customPieces/BoardPieces/BR";
+import Bp from "../components/customPieces/BoardPieces/BP";
 
 async function readPGN(pgn2) {
   // Read the PGN file and parse it
@@ -317,10 +332,6 @@ const Trainer = () => {
           obj?.move === selectedMove?.move && obj?.id === selectedMove?.id
       ) + 1;
     console.log("variantMoves", variantMoves);
-
-    if (!nextMove) {
-      return;
-    }
 
     loadPosition(
       nextMove,
@@ -734,6 +745,7 @@ const Trainer = () => {
       <div
         style={{
           display: "flex",
+          flexDirection: whiteOrientation ? "row" : "row-reverse",
           width: dimensions.width,
           justifyContent: "space-evenly",
         }}
@@ -806,7 +818,20 @@ const Trainer = () => {
                   onPieceDrop={onDrop}
                   position={game.fen()}
                   boardWidth={dimensions.width}
-                  customPieces={{ wk: <King /> }}
+                  customPieces={{
+                    wK: <Wk />,
+                    wR: <Wr />,
+                    wP: <Wp />,
+                    wN: <Wn />,
+                    wQ: <Wq />,
+                    wB: <Wb />,
+                    bK: <Bk />,
+                    bQ: <Bq />,
+                    bR: <Br />,
+                    bB: <BB />,
+                    bN: <Bn />,
+                    bP: <Bp />,
+                  }}
                   customDarkSquareStyle={{
                     background:
                       "url('../media/darkSquare.png') no-repeat 0 0 scroll",
@@ -825,6 +850,10 @@ const Trainer = () => {
                   customBoardStyle={{
                     borderRadius: "5px",
                     boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
+                    backgroundImage: `url('../media/board.png')`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    backgroundSize: "contain",
                   }}
                 />
 
@@ -836,7 +865,7 @@ const Trainer = () => {
                     onClick={() => setWhiteOrientation(!whiteOrientation)}
                   >
                     <div className="d-flex justify-content-center align-items-center">
-                      <MdFlipCameraAndroid />
+                      <SwapBoard />
                     </div>
                   </Button>{" "}
                 </div>
@@ -860,7 +889,7 @@ const Trainer = () => {
                 <audio ref={correctAudio} src="/correct-6033.mp3"></audio>
 
                 {!trainingMode && (
-                  <div>
+                  <div style={{ display: "flex" }}>
                     <Button
                       variant="warning"
                       className="trainer_buttons focus"
@@ -939,7 +968,11 @@ const Trainer = () => {
                   </div>
                 )}
                 <Button
-                  className=" trainer_buttons  test_yourself"
+                  className={
+                    !trainingMode
+                      ? "trainer_buttons test_yourself_training"
+                      : "trainer_buttons test_yourself"
+                  }
                   variant="warning"
                   onClick={() => {
                     setTrainningMode(!trainingMode);
@@ -950,6 +983,18 @@ const Trainer = () => {
                     ? `${translations[lang].exitTraining}`
                     : `${translations[lang].testYourself}`}
                 </Button>
+
+                {trainingMode && (
+                  <Button
+                    variant="warning"
+                    className="trainer_buttons test_yourself"
+                    disabled={!hasMadeMove}
+                    onClick={() => resetGame()}
+                  >
+                    {" "}
+                    Reset Training{" "}
+                  </Button>
+                )}
               </div>
             </Col>
 
