@@ -48,6 +48,7 @@ import Bq from "../components/customPieces/BoardPieces/BQ";
 import Bn from "../components/customPieces/BoardPieces/BN";
 import Br from "../components/customPieces/BoardPieces/BR";
 import Bp from "../components/customPieces/BoardPieces/BP";
+import gridShapes from "../consts/gridShapes";
 
 async function readPGN(pgn2) {
   // Read the PGN file and parse it
@@ -175,6 +176,9 @@ const Trainer = () => {
         moves.push({
           move: move.move,
           id: move.id,
+          ...(move.nags ? { nags: move.nags[0] } : null),
+
+          color: move.color,
           comment: move.comments.length > 0 ? move.comments[0].text : "",
           depth: depth,
           ...(move.move_number ? { move_number: move.move_number } : null),
@@ -188,7 +192,7 @@ const Trainer = () => {
     }
     return moves;
   }
-  function modifyDataStructure(data, depth = 0, id = 0, color = "white") {
+  function modifyDataStructure(data, depth = 0, id = 0, color = "w") {
     for (let move of data) {
       move.id = id++;
       move.isVariation = depth > 0;
@@ -199,11 +203,11 @@ const Trainer = () => {
           move.ravs[0].moves,
           depth + 1,
           id,
-          color === "white" ? "white" : "black"
+          color === "w" ? "w" : "b"
         );
-        color = color === "white" ? "black" : "white";
+        color = color === "w" ? "b" : "w";
       } else {
-        color = color === "white" ? "black" : "white";
+        color = color === "w" ? "b" : "w";
       }
     }
     return id;
@@ -519,11 +523,13 @@ const Trainer = () => {
                 }}
               >
                 {" "}
-                {move.move_number ? `${move.move_number}.` : "..."} {move.move}{" "}
-                <div style={{ color: "red" }}>
-                  {" "}
-                  {move.nags && annotaitons[move.nags]}
-                </div>
+                {move.color === "b" ? "..." : `${move.move_number}. `}
+                {gridShapes[`${move.color}${move.move[0]}`]
+                  ? `${
+                      gridShapes[`${move.color}${move.move[0]}`]
+                    } ${move.move.substr(1, move.move.length - 1)}`
+                  : `${move.move}`}
+                {move.nags && annotaitons[move.nags]}
               </div>
             ) : (
               <div //A variations Div
@@ -566,13 +572,14 @@ const Trainer = () => {
                   setTempVariationMoves(variantMoves);
                 }}
               >
-                {" "}
-                {move.move_number ? move.move_number : "..."}{" "}
-                {move.depth ? "*".repeat(move.depth) : ""} {move.move}
-                <div style={{ color: "red" }}>
-                  {" "}
-                  {move.nags && annotaitons[move.nags]}
-                </div>
+                {move.depth ? "*".repeat(move.depth) : ""}{" "}
+                {move.color === "b" ? "..." : `${move.move_number}. `}
+                {gridShapes[`${move.color}${move.move[0]}`]
+                  ? `${
+                      gridShapes[`${move.color}${move.move[0]}`]
+                    } ${move.move.substring(1, move.move.length)}`
+                  : `${move.move}`}
+                {move.nags && annotaitons[move.nags]}
               </div>
             )}
 
