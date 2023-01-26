@@ -543,7 +543,7 @@ const Trainer = () => {
                 ) : (
                   move.move
                 )}{" "}
-                {move.nags}
+                {annotaitons[move.nags]}
               </div>
             </div>
 
@@ -849,8 +849,8 @@ const Trainer = () => {
                     onPieceDrop={onDrop}
                     position={game.fen()}
                     boardWidth={dimensions.width}
-                    customDropSquareStyle={{ background: "red" }}
-                    cusome
+                    /* customDropSquareStyle={{ background: "red" }}
+                    cusome */
                     /*                     customSquareStyles={{{to}: background:'green'}}
                      */ customPieces={{
                       wK: <Wk />,
@@ -872,7 +872,7 @@ const Trainer = () => {
                     customSquareStyles={{
                       [toSquare]: {
                         position: "relative",
-                        background: "green",
+                        background: "#9A8516",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
 
@@ -890,7 +890,7 @@ const Trainer = () => {
                       },
                       [fromSquare]: {
                         position: "relative",
-                        background: "lightgreen",
+                        background: "#C0B638",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
 
