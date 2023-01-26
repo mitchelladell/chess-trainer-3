@@ -490,98 +490,48 @@ const Trainer = () => {
         {" "}
         {gridPGn.map((move, index) => (
           <div key={index} style={{ gridColumn: move.comment ? "1 / -1" : "" }}>
-            {!move.isVariation ? ( //A main Line Div
-              <div
-                style={{
-                  cursor: "pointer",
-                  fontFamily: "Montserrat-Bold",
-                  fontSize: "20px",
-                  margin: "5px",
-                  gridColumn: "1 / -1",
-                }}
-                className={
-                  selectedMove?.id === move.id ? "highlighted-move" : ""
-                }
-                onClick={() => {
-                  let variantMoves = loadVariationMoves(formattedPgn, move);
-                  console.log("selectedMove", selectedMove);
-                  console.log("gridPGN", gridPGn);
-                  console.log("varMoves", variantMoves);
-                  console.log("move", move);
+            <div
+              style={{
+                cursor: "pointer",
+                fontFamily: "Montserrat-Bold",
+                fontSize: "20px",
+                margin: "5px",
+                gridColumn: "1 / -1",
+              }}
+              className={selectedMove?.id === move.id ? "highlighted-move" : ""}
+              onClick={() => {
+                let variantMoves = loadVariationMoves(formattedPgn, move);
+                console.log("selectedMove", selectedMove);
+                console.log("gridPGN", gridPGn);
+                console.log("varMoves", variantMoves);
+                console.log("move", move);
 
-                  loadPosition(
-                    variantMoves.findIndex((obj) => obj.id === move.id),
-                    //    gridPGn.map((move) => move.move)
-                    variantMoves.map((move) => move.move)
-                  );
-                  setVariationEntered(false);
-                  setVariationMoves(variantMoves);
+                loadPosition(
+                  variantMoves.findIndex((obj) => obj.id === move.id),
+                  //    gridPGn.map((move) => move.move)
+                  variantMoves.map((move) => move.move)
+                );
+                setVariationEntered(false);
+                setVariationMoves(variantMoves);
 
-                  setSelectedMove(move);
-                  setCurrentMove(index);
-                  setHighlightedVariationIndex(null);
-                }}
-              >
+                setSelectedMove(move);
+                setCurrentMove(index);
+                setHighlightedVariationIndex(null);
+              }}
+            >
+              <div style={{ display: "flex" }}>
                 {" "}
                 {move.color === "b" ? "..." : `${move.move_number}. `}
-                {gridShapes[`${move.color}${move.move[0]}`]
-                  ? `${
-                      gridShapes[`${move.color}${move.move[0]}`]
-                    } ${move.move.substr(1, move.move.length - 1)}`
-                  : `${move.move}`}
-                {move.nags && annotaitons[move.nags]}
+                {gridShapes[`${move.color}${move.move[0]}`] ? (
+                  <>
+                    {gridShapes[`${move.color}${move.move[0]}`]}
+                    {move.move.substr(1, move.move.length - 1)}
+                  </>
+                ) : (
+                  move.move
+                )}{" "}
               </div>
-            ) : (
-              <div //A variations Div
-                style={{
-                  cursor: "pointer",
-                  fontFamily: "Montserrat-Medium",
-                  fontSize: "18px",
-                  margin: "5px",
-                  /*   display: "flex",
-                    flexWrap: "nowrap", */
-                }}
-                className={
-                  selectedMove?.id === move.id ? "highlighted-move" : ""
-                }
-                onClick={() => {
-                  console.log("formattedPGN", formattedPgn);
-                  console.log("selectedMove", selectedMove);
-
-                  let variantMoves = loadVariationMoves(formattedPgn, move);
-
-                  //   setHighlightedMoveIndex(index);
-                  console.log("move", move);
-                  console.log("gridPGN", gridPGn);
-                  console.log("varMoves", variantMoves);
-
-                  loadPosition(
-                    variantMoves.findIndex((obj) => obj.id === move.id),
-                    variantMoves.map((move) => move.move)
-                  );
-                  setVariationEntered(true);
-                  //  setHighlightedVariationIndex(index);
-                  // setHighlightedMoveIndex(null);
-
-                  setCurrentMove(index);
-
-                  // setHighlightedVariationIndex(null);
-
-                  setSelectedMove(move);
-                  setVariationMoves(variantMoves);
-                  setTempVariationMoves(variantMoves);
-                }}
-              >
-                {move.depth ? "*".repeat(move.depth) : ""}{" "}
-                {move.color === "b" ? "..." : `${move.move_number}. `}
-                {gridShapes[`${move.color}${move.move[0]}`]
-                  ? `${
-                      gridShapes[`${move.color}${move.move[0]}`]
-                    } ${move.move.substring(1, move.move.length)}`
-                  : `${move.move}`}
-                {move.nags && annotaitons[move.nags]}
-              </div>
-            )}
+            </div>
 
             <div className="comments">
               <div
