@@ -91,6 +91,8 @@ const Trainer = () => {
   const [arrows, setArrows] = useState([]);
   const [percent, setPercent] = useState(0);
   const [gridPGn, setGridPGN] = useState([]);
+  const [fromSquare, setFromSquare] = useState(null);
+  const [toSquare, setToSquare] = useState(null);
 
   const [gridMoves, setGridMoves] = useState([]);
 
@@ -121,6 +123,17 @@ const Trainer = () => {
 
   const [trainingMode, setTrainningMode] = useState(false);
   const [game, setGame] = useState(new Chess());
+
+  const [isBackgroundLoaded, setIsBackgroundLoaded] = useState(false);
+
+  useEffect(() => {
+    const backgroundImage = new Image();
+    backgroundImage.src = "../media/board.png";
+
+    backgroundImage.onload = () => {
+      setIsBackgroundLoaded(true);
+    };
+  }, []);
 
   const [dimensions, setDimensions] = useState({
     width:
@@ -530,6 +543,7 @@ const Trainer = () => {
                 ) : (
                   move.move
                 )}{" "}
+                {move.nags}
               </div>
             </div>
 
@@ -557,6 +571,10 @@ const Trainer = () => {
       to: targetSquare,
       promotion: "q", // always promote to a queen for example simplicity
     });
+    console.log("sourceMove", sourceSquare);
+    console.log("targetSqure", targetSquare);
+    setFromSquare(sourceSquare);
+    setToSquare(targetSquare);
 
     // illegal move
     if (move === null) return false;
@@ -594,7 +612,21 @@ const Trainer = () => {
     // Make all the moves up to the selected move
     for (let i = 0; i <= index; i++) {
       game.move(moves[i]);
+      // console.log('')
     }
+    console.log("gameHistory", game.history({ verbose: true }));
+    setToSquare(
+      game.history({ verbose: true })[
+        game.history({ verbose: true }).length - 1
+      ].to
+    );
+    setFromSquare(
+      game.history({ verbose: true })[
+        game.history({ verbose: true }).length - 1
+      ].from
+    );
+    console.log("fromSquare", fromSquare);
+    console.log("toSqure", toSquare);
 
     // Update the component's state with the new position and current move index
     setPosition(game.fen());
@@ -706,6 +738,7 @@ const Trainer = () => {
               width: "min-content",
               color: "white",
             }}
+            key={square}
           >
             {" "}
             {square}
@@ -733,6 +766,7 @@ const Trainer = () => {
               width: dimensions.width / 8,
               color: "white",
             }}
+            key={square}
           >
             {" "}
             {square}
@@ -779,6 +813,26 @@ const Trainer = () => {
     return undefined;
   }
 
+  const BoardBackround = () => {
+    return (
+      <div
+        style={{
+          width: dimensions.width,
+          height: dimensions.height,
+          display: "flex",
+        }}
+      >
+        <svg viewBox="0 0 4 3">
+          <image
+            href={`url('../media/board.png')`}
+            width="100%"
+            height="100%"
+          />
+        </svg>
+      </div>
+    );
+  };
+
   return (
     <div>
       {!focusMode && <Header isLoggedIn={true} />}
@@ -790,48 +844,87 @@ const Trainer = () => {
             <Col>
               <div style={{ display: "inline-flex" }}>
                 <GridYDirection />
-                <Chessboard
-                  onPieceDrop={onDrop}
-                  position={game.fen()}
-                  boardWidth={dimensions.width}
-                  customPieces={{
-                    wK: <Wk />,
-                    wR: <Wr />,
-                    wP: <Wp />,
-                    wN: <Wn />,
-                    wQ: <Wq />,
-                    wB: <Wb />,
-                    bK: <Bk />,
-                    bQ: <Bq />,
-                    bR: <Br />,
-                    bB: <BB />,
-                    bN: <Bn />,
-                    bP: <Bp />,
-                  }}
-                  customDarkSquareStyle={{
-                    background:
-                      "url('../media/darkSquare.png') no-repeat 0 0 scroll",
-                  }}
-                  customLightSquareStyle={{
-                    background:
-                      "url('../media/lightSquare2.jpg') no-repeat 0 0 scroll",
-                  }}
-                  arePiecesDraggable={
-                    trainingMode && boardEnabled && !variationSolved
-                  }
-                  customArrows={arrows.length > 0 ? [arrows] : []}
-                  areArrowsAllowed={true}
-                  boardOrientation={whiteOrientation ? "white" : "black"}
-                  showBoardNotation={false}
-                  customBoardStyle={{
-                    borderRadius: "5px",
-                    boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
-                    backgroundImage: `url('../media/board.png')`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    backgroundSize: "contain",
-                  }}
-                />
+                {isBackgroundLoaded && (
+                  <Chessboard
+                    onPieceDrop={onDrop}
+                    position={game.fen()}
+                    boardWidth={dimensions.width}
+                    customDropSquareStyle={{ background: "red" }}
+                    cusome
+                    /*                     customSquareStyles={{{to}: background:'green'}}
+                     */ customPieces={{
+                      wK: <Wk />,
+                      wR: <Wr />,
+                      wP: <Wp />,
+                      wN: <Wn />,
+                      wQ: <Wq />,
+                      wB: <Wb />,
+                      bK: <Bk />,
+                      bQ: <Bq />,
+                      bR: <Br />,
+                      bB: <BB />,
+                      bN: <Bn />,
+                      bP: <Bp />,
+                    }}
+                    arePiecesDraggable={
+                      trainingMode && boardEnabled && !variationSolved
+                    }
+                    customSquareStyles={{
+                      [toSquare]: {
+                        position: "relative",
+                        background: "green",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+
+                        backgroundSize: "cover",
+                        "&::after": {
+                          content: "hello",
+                          //  background: `url('../media/Wq.png') !important`,
+                          width: "15px",
+                          height: "15px",
+
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                        },
+                      },
+                      [fromSquare]: {
+                        position: "relative",
+                        background: "lightgreen",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+
+                        backgroundSize: "cover",
+                        "&::after": {
+                          content: "hello",
+                          //  background: `url('../media/Wq.png') !important`,
+                          width: "15px",
+                          height: "15px",
+
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                        },
+                      },
+                    }}
+                    customLightSquareStyle={{ background: "transparent" }}
+                    customDarkSquareStyle={{ background: "transparent" }}
+                    customArrows={arrows.length > 0 ? [arrows] : []}
+                    areArrowsAllowed={true}
+                    boardOrientation={whiteOrientation ? "white" : "black"}
+                    showBoardNotation={false}
+                    customBoardStyle={{
+                      borderRadius: "5px",
+                      boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
+                      background: `url('../media/board.png')`,
+                      // background: <BoardBackround />,
+
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      backgroundSize: "cover",
+                    }}
+                  />
+                )}
 
                 <div style={{ marginLeft: "5px" }}>
                   {" "}
