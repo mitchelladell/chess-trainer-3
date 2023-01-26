@@ -13,6 +13,7 @@ import { ProgressBar } from "react-bootstrap";
 import Stars from "../components/Stars/Star";
 import { useMeasure } from "react-measure";
 import Focus from "../pgns/icons/Focus";
+import annotaitons from "../consts/annotations";
 /* import Bp from "../components/customPieces/gridPieces/Bp";
 import Wk from "../components/customPieces/Wk"; */
 
@@ -134,11 +135,13 @@ const Trainer = () => {
   useEffect(() => {
     readPGN(pgn).then((formattedPgn) => {
       const parsedMoves = formattedPgn[0].moves;
+
       setMoves(parsedMoves);
 
       const newFormatted = modifyDataStructure(formattedPgn[0].moves, 0);
       console.log("newFormatted", newFormatted);
       setFormattedPgn(parsedMoves);
+
       console.log("formattedPGn", formattedPgn);
 
       setGridPGN(allExtractedMoves(formattedPgn[0].moves, 0));
@@ -185,14 +188,22 @@ const Trainer = () => {
     }
     return moves;
   }
-
-  function modifyDataStructure(data, depth = 0, id = 0) {
+  function modifyDataStructure(data, depth = 0, id = 0, color = "white") {
     for (let move of data) {
       move.id = id++;
       move.isVariation = depth > 0;
       move.depth = depth;
+      move.color = color;
       if (move.ravs) {
-        id = modifyDataStructure(move.ravs[0].moves, depth + 1, id);
+        id = modifyDataStructure(
+          move.ravs[0].moves,
+          depth + 1,
+          id,
+          color === "white" ? "white" : "black"
+        );
+        color = color === "white" ? "black" : "white";
+      } else {
+        color = color === "white" ? "black" : "white";
       }
     }
     return id;
@@ -469,6 +480,7 @@ const Trainer = () => {
   }
 
   const movesGrid = () => {
+    console.log("ravs", gridPGn);
     return (
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
         {" "}
@@ -491,6 +503,7 @@ const Trainer = () => {
                   console.log("selectedMove", selectedMove);
                   console.log("gridPGN", gridPGn);
                   console.log("varMoves", variantMoves);
+                  console.log("move", move);
 
                   loadPosition(
                     variantMoves.findIndex((obj) => obj.id === move.id),
@@ -506,7 +519,11 @@ const Trainer = () => {
                 }}
               >
                 {" "}
-                {move.move_number ? `${move.move_number}.` : "..."} {move.move}
+                {move.move_number ? `${move.move_number}.` : "..."} {move.move}{" "}
+                <div style={{ color: "red" }}>
+                  {" "}
+                  {move.nags && annotaitons[move.nags]}
+                </div>
               </div>
             ) : (
               <div //A variations Div
@@ -528,6 +545,7 @@ const Trainer = () => {
                   let variantMoves = loadVariationMoves(formattedPgn, move);
 
                   //   setHighlightedMoveIndex(index);
+                  console.log("move", move);
                   console.log("gridPGN", gridPGn);
                   console.log("varMoves", variantMoves);
 
@@ -551,6 +569,10 @@ const Trainer = () => {
                 {" "}
                 {move.move_number ? move.move_number : "..."}{" "}
                 {move.depth ? "*".repeat(move.depth) : ""} {move.move}
+                <div style={{ color: "red" }}>
+                  {" "}
+                  {move.nags && annotaitons[move.nags]}
+                </div>
               </div>
             )}
 
@@ -645,9 +667,6 @@ const Trainer = () => {
     setHintRequested(false);
 
     calculateStars();
-    console.log("moves", moves);
-    console.log("currentMove", moves[currentMove]);
-    console.log("game.history()[currentMove] ", game.history()[currentMove]);
 
     /*     moveSoundRef.current.play();
      */
