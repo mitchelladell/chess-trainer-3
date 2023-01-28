@@ -1,4 +1,3 @@
-import Bn from "../components/customPieces/BoardPieces/BN";
 import BBS from "../components/customPieces/gridPieces/BBS";
 import BKS from "../components/customPieces/gridPieces/BKS";
 import BNS from "../components/customPieces/gridPieces/BNS";

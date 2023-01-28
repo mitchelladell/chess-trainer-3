@@ -132,6 +132,9 @@
   width: 220px;
 }
 
+.test {
+  background-color: blue;
+}
 .swap-board {
   border-radius: 50%;
 }

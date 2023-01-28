@@ -34,6 +34,7 @@ import { MdCenterFocusWeak, MdCenterFocusStrong } from "react-icons/md";
 import "./Trainer.css";
 import translations from "../consts/translations";
 import Footer from "../components/Footer/Footer";
+import annotationShapes from "../consts/annotationShapes";
 
 import { Nav, Navbar } from "react-bootstrap";
 import { current } from "@reduxjs/toolkit";
@@ -114,6 +115,8 @@ const Trainer = () => {
   const [variantionMoves, setVariationMoves] = useState([]);
   const [tempVariantionMoves, setTempVariationMoves] = useState([]);
 
+  const [moveAnnotation, setMoveAnnotation] = useState(null);
+
   const [showHint, setShowHint] = useState(false);
   const [allMoves, setAllMoves] = useState([]);
 
@@ -138,6 +141,12 @@ const Trainer = () => {
   }, []);
 
   useEffect(() => {
+    console.log("selectedMove", selectedMove);
+    if (selectedMove?.nags) {
+      setMoveAnnotation(selectedMove.nags);
+    } else {
+      setMoveAnnotation(null);
+    }
     if (selectedMove === null) {
       setFromSquare(null);
       setToSquare(null);
@@ -823,17 +832,6 @@ const Trainer = () => {
     return undefined;
   }
 
-  const fromSquareStyle = css`
-    position: relative;
-    background: #c0b638;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    &.icon {
-      /* additional styles for icon class */
-    }
-  `;
-
   const BoardBackround = () => {
     return (
       <div
@@ -894,38 +892,14 @@ const Trainer = () => {
                       [toSquare]: {
                         position: "relative",
                         background: "rgba(154, 133, 22, 0.7)",
-                        backgroundPosition: "center",
+                        backgroundImage: `${annotationShapes[moveAnnotation]}`,
+                        backgroundPosition: "top right",
                         backgroundRepeat: "no-repeat",
-
-                        backgroundSize: "cover",
-                        "&::after": {
-                          content: "hello",
-                          //  background: `url('../media/Wq.png') !important`,
-                          width: "15px",
-                          height: "15px",
-
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                        },
+                        backgroundSize: "25px",
                       },
+
                       [fromSquare]: {
-                        position: "relative",
                         background: "rgba(192, 182, 56, .7)",
-                        backgroundPosition: "center",
-                        backgroundRepeat: "no-repeat",
-
-                        backgroundSize: "cover",
-                        "&::after": {
-                          content: "hello",
-                          //  background: `url('../media/Wq.png') !important`,
-                          width: "15px",
-                          height: "15px",
-
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                        },
                       },
                     }}
                     customLightSquareStyle={{ background: "transparent" }}
