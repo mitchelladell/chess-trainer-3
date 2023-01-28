@@ -122,6 +122,9 @@
 .trainer_buttons.test_yourself_training {
   border-top-right-radius: 30px;
 }
+
+.trainer_buttons.test_yourself,
+.trainer_buttons.test_yourself.reset,
 .trainer_buttons.previous[disabled],
 .trainer_buttons.next[disabled],
 .trainer_buttons.previous,

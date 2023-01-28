@@ -1075,7 +1075,7 @@ const Trainer = () => {
                 {trainingMode && (
                   <Button
                     variant="warning"
-                    className="trainer_buttons test_yourself"
+                    className="trainer_buttons test_yourself reset"
                     disabled={!hasMadeMove}
                     onClick={() => resetGame()}
                   >
