@@ -888,9 +888,9 @@ const Trainer = () => {
                         backgroundImage: `${
                           annotationShapes[selectedMove?.nags]
                         }`,
-                        backgroundPosition: "right -5px top -5px",
+                        backgroundPosition: "right -4px top -4px",
                         backgroundRepeat: "no-repeat",
-                        backgroundSize: "30px",
+                        backgroundSize: "27px",
                       },
 
                       [fromSquare]: {
