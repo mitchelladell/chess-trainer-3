@@ -1,4 +1,5 @@
 import "./Header.css";
+import react, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -13,6 +14,10 @@ import { FaUserAlt } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import ProfilePic from "../../pgns/icons/ProfilePic";
 import Notification from "../../pgns/icons/Notification";
+import { MdExpandLess, MdExpandMore } from "react-icons/md";
+import SignOutIcon from "../../pgns/icons/SignOut";
+import UserProfileIcon from "../../pgns/icons/UserProfile";
+import SettingsIcon from "../../pgns/icons/Settings";
 
 type Translation = {
   [key: string]: {
@@ -29,6 +34,11 @@ type IProps = {
 
 const Header: React.FC<IProps> = (props) => {
   const lang = useSelector((state: any) => state.language.value);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
 
   return (
     <div>
@@ -107,13 +117,32 @@ const Header: React.FC<IProps> = (props) => {
                 </div>
               </Col>
               <Col>
-                <Dropdown className="custom-dropdown">
+                <Dropdown className="custom-dropdown" onToggle={toggleDropdown}>
                   <Dropdown.Toggle
                     className="custom-dropdown-toggle-user"
                     id="dropdown-basic"
                     bsPrefix="p-0"
                   >
-                    <div className="d-flex justify-content-center align-items-center">
+                    <div className="d-flex justify-content-center align-items-center ">
+                      <div className="cornet">
+                        {" "}
+                        {isDropdownOpen ? (
+                          <MdExpandLess
+                            style={{
+                              position: "absolute",
+                              bottom: "0",
+                            }}
+                          />
+                        ) : (
+                          <MdExpandMore
+                            style={{
+                              position: "absolute",
+                              bottom: "0",
+                            }}
+                          />
+                        )}
+                      </div>
+
                       <ProfilePic />
                     </div>
                   </Dropdown.Toggle>
@@ -124,21 +153,56 @@ const Header: React.FC<IProps> = (props) => {
                       as={Link}
                       to="#/action-1"
                     >
-                      Action
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <UserProfileIcon />
+                        Profile
+                      </div>
+                    </Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item
+                      className="custom-dropdown-item"
+                      as={Link}
+                      to="#/action-1"
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        {" "}
+                        <SettingsIcon />
+                        Settings{" "}
+                      </div>
                     </Dropdown.Item>
                     <Dropdown.Item
                       className="custom-dropdown-item"
                       as={Link}
                       to="#/action-1"
                     >
-                      Another action
+                      Light Theme
                     </Dropdown.Item>
                     <Dropdown.Item
                       className="custom-dropdown-item"
                       as={Link}
                       to="#/action-1"
                     >
-                      Something else
+                      <div>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <SignOutIcon />
+                          Sign out
+                        </div>
+                      </div>
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

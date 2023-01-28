@@ -64,6 +64,12 @@
   color: #000000 !important;
 }
 
+.cornet {
+  width: 10px;
+  height: 10px;
+  margin-right: 10px;
+}
+
 .custom-dropdown-item:hover,
 .custom-dropdown-item:focus,
 .custom-dropdown-toggle:focus,

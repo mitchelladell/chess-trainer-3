@@ -18,6 +18,8 @@ import annotaitons from "../consts/annotations";
 import Wk from "../components/customPieces/Wk"; */
 
 import King from "../pgns/king";
+import { css } from "@emotion/react";
+
 import BB from "../components/customPieces/BoardPieces/BB";
 
 import { MdFlipCameraAndroid } from "react-icons/md";
@@ -134,6 +136,13 @@ const Trainer = () => {
       setIsBackgroundLoaded(true);
     };
   }, []);
+
+  useEffect(() => {
+    if (selectedMove === null) {
+      setFromSquare(null);
+      setToSquare(null);
+    }
+  }, [selectedMove]);
 
   const [dimensions, setDimensions] = useState({
     width:
@@ -437,7 +446,8 @@ const Trainer = () => {
 
   const resetGame = () => {
     setArrows([]);
-
+    setFromSquare(null);
+    setToSquare(null);
     game.reset();
     setPosition(game.fen());
     setCorrectMovesCount(0);
@@ -813,6 +823,17 @@ const Trainer = () => {
     return undefined;
   }
 
+  const fromSquareStyle = css`
+    position: relative;
+    background: #c0b638;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    &.icon {
+      /* additional styles for icon class */
+    }
+  `;
+
   const BoardBackround = () => {
     return (
       <div
@@ -872,7 +893,7 @@ const Trainer = () => {
                     customSquareStyles={{
                       [toSquare]: {
                         position: "relative",
-                        background: "#9A8516",
+                        background: "rgba(154, 133, 22, 0.7)",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
 
@@ -890,7 +911,7 @@ const Trainer = () => {
                       },
                       [fromSquare]: {
                         position: "relative",
-                        background: "#C0B638",
+                        background: "rgba(192, 182, 56, .7)",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
 
@@ -930,8 +951,7 @@ const Trainer = () => {
                   {" "}
                   <div
                     onClick={() => setWhiteOrientation(!whiteOrientation)}
-                    className="d-flex justify-content-center align-items-center"
-                    style={{ cursor: "pointer" }}
+                    className="d-flex justify-content-center align-items-center swap-board"
                   >
                     <SwapBoard />
                   </div>
@@ -945,9 +965,10 @@ const Trainer = () => {
                   marginBottom: "10px",
                   display: "flex",
                   flexWrap: "wrap",
-                  width: dimensions.width,
                   justifyContent: "center",
                   alignItems: "center",
+                  width: dimensions.width,
+                  marginLeft: "11px",
                   //   justifyContent: "left",
                   /*                   marginLeft: "30px",
                    */
@@ -1069,7 +1090,9 @@ const Trainer = () => {
               {!trainingMode ? (
                 <div
                   className="moves_container"
-                  style={{ height: dimensions.height }}
+                  style={{
+                    height: dimensions.height,
+                  }}
                 >
                   {movesGrid()}
                 </div>
@@ -1140,7 +1163,13 @@ const Trainer = () => {
               )}
 
               {!trainingMode && (
-                <div style={{ display: "flex", justifyContent: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginLeft: "11px",
+                  }}
+                >
                   {" "}
                   <Button
                     disabled={page <= 0}
