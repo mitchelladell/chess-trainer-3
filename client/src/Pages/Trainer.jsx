@@ -115,8 +115,6 @@ const Trainer = () => {
   const [variantionMoves, setVariationMoves] = useState([]);
   const [tempVariantionMoves, setTempVariationMoves] = useState([]);
 
-  const [moveAnnotation, setMoveAnnotation] = useState(null);
-
   const [showHint, setShowHint] = useState(false);
   const [allMoves, setAllMoves] = useState([]);
 
@@ -141,12 +139,7 @@ const Trainer = () => {
   }, []);
 
   useEffect(() => {
-    console.log("selectedMove", selectedMove);
-    if (selectedMove?.nags) {
-      setMoveAnnotation(selectedMove.nags);
-    } else {
-      setMoveAnnotation(null);
-    }
+    //  console.log("selectedMove", selectedMove);
     if (selectedMove === null) {
       setFromSquare(null);
       setToSquare(null);
@@ -892,10 +885,12 @@ const Trainer = () => {
                       [toSquare]: {
                         position: "relative",
                         background: "rgba(154, 133, 22, 0.7)",
-                        backgroundImage: `${annotationShapes[moveAnnotation]}`,
-                        backgroundPosition: "top right",
+                        backgroundImage: `${
+                          annotationShapes[selectedMove?.nags]
+                        }`,
+                        backgroundPosition: "right -5px top -5px",
                         backgroundRepeat: "no-repeat",
-                        backgroundSize: "25px",
+                        backgroundSize: "30px",
                       },
 
                       [fromSquare]: {
