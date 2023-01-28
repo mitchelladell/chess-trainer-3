@@ -199,6 +199,15 @@
   align-items: center;
 }
 
+.inputs {
+  background: #707070;
+  color: black;
+}
+
+.submit_container {
+  text-align: center;
+}
+
 .variation-move-number {
   margin-right: 8px;
   font-weight: bold;

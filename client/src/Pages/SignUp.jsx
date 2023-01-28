@@ -19,43 +19,72 @@ const SignUp = () => {
     }
   }, [dispatch]);
   return (
-    <div className="App">
-      <Container fluid>
-        <Row>
-          <Col sm={12} md={6} lg={6}>
+    <div className="parent">
+      <div className="flex-container">
+        <div className="intro_container flex-item item-text">
+          <div className="intro_text">
+            <div className="signup-intro"> انشاء حساب</div>
             <div className="sign-form">
-              {" "}
               <Form>
                 <Form.Group className="mb-3" controlId="formbasicuserName">
-                  <Form.Label>User name</Form.Label>
-                  <Form.Control type="text" placeholder="Enter user name" />
+                  <Form.Label>اسم المستخدم</Form.Label>
+                  <Form.Control
+                    className="inputs"
+                    type="text"
+                    placeholder="Enter user name"
+                  />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" />
-                  <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
-                  </Form.Text>
+                  <Form.Label>رقـم الهاتف</Form.Label>
+                  <Form.Control
+                    className="inputs"
+                    type="email"
+                    placeholder="Enter email"
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>البريد الالكتروني</Form.Label>
+                  <Form.Control
+                    className="inputs"
+                    type="email"
+                    placeholder="Enter email"
+                  />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" />
+                  <Form.Label>كلمة السر</Form.Label>
+                  <Form.Control
+                    className="inputs"
+                    type="password"
+                    placeholder="Password"
+                  />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                  <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                  Submit
-                </Button>
+
+                <div className="submit-container">
+                  <Button
+                    className="join_button"
+                    variant="warning"
+                    type="submit"
+                  >
+                    التسجيل
+                  </Button>
+                </div>
               </Form>
             </div>
-          </Col>
-          <Col sm={12} md={6} lg={6}>
-            <img alt="image here" />
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+        <div className="flex-item item-picture">
+          <div
+            style={{
+              backgroundImage: `url('../media/sign_up_background.png')`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              height: "88vh",
+            }}
+          ></div>
+        </div>
+      </div>
     </div>
   );
 };
