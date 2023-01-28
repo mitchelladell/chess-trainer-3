@@ -78,13 +78,28 @@
   border: 1px solid #d2ab32 !important;
   color: black !important;
 }
+.signin-intro {
+  color: #daa520;
+  font-size: 25px;
+  font-family: "Calibri";
+  text-align: end;
+  margin-bottom: 30px;
+}
+.or_keyword {
+  color: #daa520;
+  font-size: 30px;
+  font-family: "Calibri";
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
 
 .join_button {
   background: #707070;
   width: 150px;
   font-size: 30px;
   font-family: "Calibri";
-  height: 74px;
+  height: 50px;
   border-radius: 37px;
   border: 1px solid #d2ab32;
   color: black;
@@ -138,4 +153,5 @@
 
 .submit-container {
   text-align: center;
+  margin-top: 30px;
 }

@@ -1,17 +1,18 @@
+import { Row, Col, Container } from "react-bootstrap/";
+import { useEffect } from "react";
+
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-
-import translations from "../consts/translations";
-import { useSelector } from "react-redux";
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 import "./Sign.css";
-import { Container, Row, Col } from "react-bootstrap";
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { update } from "../features/language/languageSlice";
+import FacebookIcon from "../pgns/icons/FaceBookIcon";
+import GoogleIcon from "../pgns/icons/GoogleIcon";
+import { Justify } from "react-bootstrap-icons";
 
-const SignIn = () => {
-  const lang = useSelector((state: any) => state.language.value);
-
+const SignUp = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,45 +21,72 @@ const SignIn = () => {
       dispatch(update(lang));
     }
   }, [dispatch]);
-
   return (
-    <div>
-      <Container fluid>
-        <Row>
-          <Col sm={12} md={6} lg={6}>
+    <div className="parent">
+      <div className="flex-container">
+        <div className="intro_container flex-item item-text">
+          <div className="intro_text">
+            <div className="signin-intro">تسجيل الدخول</div>
             <div className="sign-form">
               <Form>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label> {translations[lang].email}</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>{translations[lang].password}</Form.Label>
-                  <Form.Control type="password" placeholder="Password" />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                  <Form.Check
-                    type="checkbox"
-                    label={translations[lang].keep_signIn}
+                <Form.Group className="mb-3" controlId="formbasicuserName">
+                  <Form.Label>اسم المستخدم أو البريد الإلكـتـروني</Form.Label>
+
+                  <Form.Control
+                    className="inputs"
+                    type="text"
+                    placeholder="Enter user name"
                   />
                 </Form.Group>
-                <Button
-                  variant="warning"
-                  className="singin_button"
-                  type="submit"
+
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label>كلمة السر</Form.Label>
+                  <Form.Control
+                    className="inputs"
+                    type="password"
+                    placeholder="Password"
+                  />
+                </Form.Group>
+
+                <div className="submit-container">
+                  <Button
+                    className="join_button"
+                    variant="warning"
+                    type="submit"
+                  >
+                    الدخول
+                  </Button>
+                </div>
+
+                <div className="or_keyword">أو</div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    marginRight: "20%",
+                    marginLeft: "20%",
+                  }}
                 >
-                  {translations[lang].signIn}
-                </Button>
+                  <FacebookIcon /> <GoogleIcon />
+                </div>
               </Form>
             </div>
-          </Col>
-          <Col sm={12} md={6} lg={6}>
-            <img alt="Image Goes here"></img>
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+        <div className="flex-item item-picture">
+          <div
+            style={{
+              backgroundImage: `url('../media/sign_in_background.png')`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              height: "88vh",
+            }}
+          ></div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default SignIn;
+export default SignUp;
