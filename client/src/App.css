@@ -30,13 +30,20 @@
     url("./css/fonts/AmiriQuran-Regular.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Calibri";
+  src: url("./css/fonts/CALIBRI.ttf") format("woff"),
+    url("./css/fonts/CALIBRI.ttf") format("opentype"),
+    url("./css/fonts/CALIBRI.ttf") format("truetype");
+}
+
 .main {
   font-family: "Montserrat-Regular" !important;
 }
 
 .App {
   text-align: center;
-  background-color: #e6e6e6;
+  background-color: #000000b3;
   min-height: 100vh;
 }
 

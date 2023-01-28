@@ -23,7 +23,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Layout>
+      <Layout isLoggedIn={false}>
         <App />
       </Layout>
     ),
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
   {
     path: "signup",
     element: (
-      <Layout>
+      <Layout isLoggedIn={false}>
         <SignUp />
       </Layout>
     ),
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
   {
     path: "signin",
     element: (
-      <Layout>
+      <Layout isLoggedIn={false}>
         <SignIn />
       </Layout>
     ),
@@ -48,20 +48,24 @@ const router = createBrowserRouter([
   {
     path: "tutorials",
     element: (
-      <Layout>
+      <Layout isLoggedIn={true}>
         <Tutorials />
       </Layout>
     ),
   },
   {
     path: "/trainer/:variation",
-    element: <Trainer />,
+    element: (
+      <Layout isLoggedIn={true}>
+        <Trainer />
+      </Layout>
+    ),
   },
 
   {
     path: "/courses/:course",
     element: (
-      <Layout>
+      <Layout isLoggedIn={true}>
         <Courses />
       </Layout>
     ),
@@ -69,7 +73,7 @@ const router = createBrowserRouter([
   {
     path: "/courses/",
     element: (
-      <Layout>
+      <Layout isLoggedIn={true}>
         <Courses />
       </Layout>
     ),
@@ -77,7 +81,7 @@ const router = createBrowserRouter([
   {
     path: "courses/variation",
     element: (
-      <Layout>
+      <Layout isLoggedIn={true}>
         <Variations />
       </Layout>
     ),

@@ -55,7 +55,7 @@ const Footer: React.FC = () => {
                 }}
               >
                 {footerContent.map((item) => (
-                  <div style={{ margin: "5px" }} key={item}>
+                  <div style={{ margin: "5px", color: "#FEFEFE" }} key={item}>
                     {" "}
                     {(translations as any)[lang][item]}
                   </div>

@@ -51,7 +51,7 @@
   border: none;
   color: black;
   border: none;
-  font-family: "AmiriQuran-Regular";
+  font-family: "Calibri";
   font-weight: bold;
 }
 .custom-dropdown-toggle:hover {
@@ -127,13 +127,16 @@
 .custom-dropdown-item {
   /* custom styles for the dropdown items */
   border: none;
-  color: black;
+  /*   color: black;
+ */
+  color: rgba(0, 0, 0, 0.7);
+
   font-family: "Montserrat-Bold";
 }
 .settings,
 .sign-out,
 .them,
 .profile {
-  font-family: "AmiriQuran-Regular";
+  font-family: "Calibri";
   font-weight: bold;
 }

@@ -545,8 +545,8 @@ const Trainer = () => {
               }}
             >
               <div style={{ display: "flex" }}>
-                {" "}
                 {move.color === "b" ? "..." : `${move.move_number}. `}
+                {"--".repeat(move.depth)}
                 {gridShapes[`${move.color}${move.move[0]}`] ? (
                   <>
                     {gridShapes[`${move.color}${move.move[0]}`]}
@@ -847,7 +847,6 @@ const Trainer = () => {
 
   return (
     <div>
-      {!focusMode && <Header isLoggedIn={true} />}
       <div
         className={focusMode ? "trainer_container_focus" : "trainer_container"}
       >
@@ -1162,7 +1161,6 @@ const Trainer = () => {
           </Row>
         </Container>
       </div>
-      {!focusMode && <Footer />}
     </div>
   );
 };

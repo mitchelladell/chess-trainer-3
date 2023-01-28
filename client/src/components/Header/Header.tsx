@@ -46,15 +46,40 @@ const Header: React.FC<IProps> = (props) => {
     <div>
       {!props.isLoggedIn ? (
         <div className="header_container">
-          <Nav>
-            <div
-              style={{ display: "flex", width: "100%", justifyContent: "left" }}
-            >
-              <Nav.Link className="link" href="/courses">
+          <div style={{ display: "flex" }}>
+            <Dropdown className="custom-dropdown">
+              <Dropdown.Toggle
+                className="custom-dropdown-toggle"
+                id="dropdown-basic"
+              >
                 {(translations as Translation)[lang].courses}
-              </Nav.Link>
-            </div>
-          </Nav>
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu className="custom-dropdown-menu">
+                <Dropdown.Item
+                  className="custom-dropdown-item"
+                  as={Link}
+                  to="#/action-1"
+                >
+                  Action
+                </Dropdown.Item>
+                <Dropdown.Item
+                  className="custom-dropdown-item"
+                  as={Link}
+                  to="#/action-1"
+                >
+                  Another action
+                </Dropdown.Item>
+                <Dropdown.Item
+                  className="custom-dropdown-item"
+                  as={Link}
+                  to="#/action-1"
+                >
+                  Something else
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
           <div
             style={{ display: "flex", width: "100%", justifyContent: "right" }}
           >
@@ -80,38 +105,40 @@ const Header: React.FC<IProps> = (props) => {
                 </Link>
               </Col>
               <Col align={"left"} xs={6} md={7} lg={7}>
-                <Dropdown className="custom-dropdown">
-                  <Dropdown.Toggle
-                    className="custom-dropdown-toggle"
-                    id="dropdown-basic"
-                  >
-                    {(translations as Translation)[lang].courses}
-                  </Dropdown.Toggle>
+                <div style={{ display: "flex" }}>
+                  <Dropdown className="custom-dropdown">
+                    <Dropdown.Toggle
+                      className="custom-dropdown-toggle"
+                      id="dropdown-basic"
+                    >
+                      {(translations as Translation)[lang].courses}
+                    </Dropdown.Toggle>
 
-                  <Dropdown.Menu className="custom-dropdown-menu">
-                    <Dropdown.Item
-                      className="custom-dropdown-item"
-                      as={Link}
-                      to="#/action-1"
-                    >
-                      Action
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      className="custom-dropdown-item"
-                      as={Link}
-                      to="#/action-1"
-                    >
-                      Another action
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      className="custom-dropdown-item"
-                      as={Link}
-                      to="#/action-1"
-                    >
-                      Something else
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                    <Dropdown.Menu className="custom-dropdown-menu">
+                      <Dropdown.Item
+                        className="custom-dropdown-item"
+                        as={Link}
+                        to="#/action-1"
+                      >
+                        Action
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className="custom-dropdown-item"
+                        as={Link}
+                        to="#/action-1"
+                      >
+                        Another action
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className="custom-dropdown-item"
+                        as={Link}
+                        to="#/action-1"
+                      >
+                        Something else
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
               </Col>
               <Col align="right">
                 <div className="d-flex justify-content-center align-items-center">

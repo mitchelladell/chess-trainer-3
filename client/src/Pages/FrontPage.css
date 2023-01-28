@@ -1,10 +1,120 @@
-.frontpage-container{
-    height: 85vh;
-    
+.intro {
+  height: 300px;
+  padding-top: 50px;
+  width: 50vw;
 }
 
-.intro{
-    height: 300px;
-    padding-top: 50px;
-    width: 50vw;
+.front_page_container {
+  display: flex;
+  flex-direction: row;
+  height: 80vh;
+  width: 100%;
+  background: #707070;
+}
+
+.intro_container {
+  height: 88vh;
+  border: 1px solid #707070;
+  box-shadow: -5px 0px 24px #333333;
+  background: #333333;
+  opacity: 1;
+}
+
+.intro_text {
+  font-family: "Calibri";
+
+  font-weight: bold;
+  color: black;
+
+  text-align: right;
+  margin-top: 25%;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+
+  font-size: calc(1100px * 0.02);
+  text-align: end;
+  line-height: calc(1100px * 0.03);
+  word-spacing: calc(1100px * 0.003);
+
+  @media (min-width: 1100px) {
+    line-height: 4.8vw;
+    word-spacing: 0.4vw;
+    font-size: 4.8vw;
+  }
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding-right: 10%;
+  padding-left: 10%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.flex-item {
+  min-height: 600px;
+  align-items: center;
+  margin: 5px;
+}
+
+.flex-item.item-picture {
+  width: 45vw;
+}
+
+.flex-item.item-text {
+  width: 30vw;
+}
+
+.button_container {
+  margin-top: 200px;
+  margin-right: 20%;
+}
+.join_button:active,
+.join_button:hover {
+  background: gold !important;
+  border: 1px solid #d2ab32 !important;
+  color: black !important;
+}
+
+.join_button {
+  background: #daa520;
+  width: 250px;
+  font-size: 25px;
+  font-family: "Calibri";
+  height: 74px;
+  border-radius: 37px;
+  border: 1px solid #d2ab32;
+  color: black;
+}
+
+.join_button.focus {
+  background: gold;
+}
+
+@media only screen and (max-width: 600px) {
+  .flex-container {
+    flex-direction: column;
+  }
+
+  .intro_text {
+    font-size: 24px;
+  }
+  .flex-container {
+    padding: 0;
+  }
+  .flex-item {
+    flex: 1 1;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .flex-item {
+    flex: 1 1;
+  }
+  .flex-item.item-text,
+  .flex-item.item-picture {
+    width: 100vw;
+  }
 }

@@ -112,7 +112,7 @@ const translations: {
   ar: {
     signIn: "تسجيل الدخول",
     signUp: "انشاء حساب",
-    courses: "الكورسات",
+    courses: "الدورات التدريبية",
     email: "بريد الكترونى",
     password: "كلمة المرور",
     keep_signIn: "ابقينى مسجل الدخول",
