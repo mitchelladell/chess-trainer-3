@@ -11,6 +11,7 @@ import { update } from "../features/language/languageSlice";
 import FacebookIcon from "../pgns/icons/FaceBookIcon";
 import GoogleIcon from "../pgns/icons/GoogleIcon";
 import { Justify } from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -49,13 +50,15 @@ const SignUp = () => {
                 </Form.Group>
 
                 <div className="submit-container">
-                  <Button
-                    className="join_button"
-                    variant="warning"
-                    type="submit"
-                  >
-                    الدخول
-                  </Button>
+                  <Link to="/courses">
+                    <Button
+                      className="join_button"
+                      variant="warning"
+                      type="submit"
+                    >
+                      الدخول
+                    </Button>
+                  </Link>
                 </div>
 
                 <div className="or_keyword">أو</div>

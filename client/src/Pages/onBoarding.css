@@ -1,0 +1,34 @@
+.radio_check_option {
+  border-radius: 17px;
+  background: #707070;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.form-check .form-check-input {
+  background-color: transparent;
+  margin-left: 10px;
+  border: 2px solid white;
+  border-color: white;
+}
+
+.confirm_button_container {
+  margin-top: 30px;
+  justify-content: end;
+  text-align: end;
+}
+
+.confirmation_button {
+  background: #707070;
+  width: 150px;
+  font-size: 30px;
+  font-family: "Calibri";
+  height: 50px;
+  border-radius: 37px;
+  border: 1px solid #d2ab32;
+  color: black !important;
+}
+
+.confirmation_button.focus {
+  background: gold !important;
+}

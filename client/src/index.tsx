@@ -14,6 +14,7 @@ import { store } from "./app/store";
 import Variations from "./Pages/Variations";
 import Footer from "./components/Footer/Footer";
 import Layout from "./components/Layout/Layout";
+import Onboarding from "./Pages/onBoarding";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -50,6 +51,14 @@ const router = createBrowserRouter([
     element: (
       <Layout isLoggedIn={true}>
         <Tutorials />
+      </Layout>
+    ),
+  },
+  {
+    path: "onboarding",
+    element: (
+      <Layout isLoggedIn={false}>
+        <Onboarding />
       </Layout>
     ),
   },

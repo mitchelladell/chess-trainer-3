@@ -8,6 +8,7 @@ import Footer from "../components/Footer/Footer";
 import "./Sign.css";
 import { useDispatch } from "react-redux";
 import { update } from "../features/language/languageSlice";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -61,13 +62,16 @@ const SignUp = () => {
                 </Form.Group>
 
                 <div className="submit-container">
-                  <Button
-                    className="join_button"
-                    variant="warning"
-                    type="submit"
-                  >
-                    التسجيل
-                  </Button>
+                  <Link to="/onboarding">
+                    {" "}
+                    <Button
+                      className="join_button"
+                      variant="warning"
+                      type="submit"
+                    >
+                      التسجيل
+                    </Button>{" "}
+                  </Link>
                 </div>
               </Form>
             </div>
