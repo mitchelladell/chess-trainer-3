@@ -160,7 +160,7 @@ const Header: React.FC<IProps> = (props) => {
                         }}
                       >
                         <UserProfileIcon />
-                        Profile
+                        <div className="profile"> الملف الشخصى </div>
                       </div>
                     </Dropdown.Item>
                     <Dropdown.Divider />
@@ -177,7 +177,7 @@ const Header: React.FC<IProps> = (props) => {
                       >
                         {" "}
                         <SettingsIcon />
-                        Settings{" "}
+                        <div className="settings"> الاعدادات </div>
                       </div>
                     </Dropdown.Item>
                     <Dropdown.Item
@@ -185,7 +185,7 @@ const Header: React.FC<IProps> = (props) => {
                       as={Link}
                       to="#/action-1"
                     >
-                      Light Theme
+                      <div className="theme"> الوضع النهارى </div>
                     </Dropdown.Item>
                     <Dropdown.Item
                       className="custom-dropdown-item"
@@ -200,7 +200,7 @@ const Header: React.FC<IProps> = (props) => {
                           }}
                         >
                           <SignOutIcon />
-                          Sign out
+                          <div className="sign-out"> تسجيل الخروج</div>
                         </div>
                       </div>
                     </Dropdown.Item>

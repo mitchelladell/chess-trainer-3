@@ -128,3 +128,10 @@
   color: black;
   font-family: "Montserrat-Bold";
 }
+.settings,
+.sign-out,
+.them,
+.profile {
+  font-family: "AmiriQuran-Regular";
+  font-weight: bold;
+}
