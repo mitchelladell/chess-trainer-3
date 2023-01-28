@@ -76,6 +76,7 @@
 .custom-dropdown-toggle:active {
   color: white;
   background: black !important;
+  filter: drop-shadow(0 0 10px red);
 }
 
 .custom-dropdown-toggle:not(:focus) {
@@ -98,6 +99,7 @@
 .custom-dropdown-toggle-user:active {
   background: goldenrod !important;
   color: black !important;
+  filter: drop-shadow(0 0 10px red);
 }
 
 .custom-dropdown-toggle-user:not(:focus) {
