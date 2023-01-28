@@ -1,12 +1,12 @@
 import { Row, Col, Container } from "react-bootstrap/";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import "./Sign.css";
-import { useDispatch } from "react-redux";
+import { useAppSelector } from "../app/hooks";
 import { update } from "../features/language/languageSlice";
 import FacebookIcon from "../pgns/icons/FaceBookIcon";
 import GoogleIcon from "../pgns/icons/GoogleIcon";
@@ -14,17 +14,18 @@ import { Justify } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  const dispatch = useDispatch();
+  const [direction, setDirection] = useState<"row" | "row-reverse">("row");
+
+  const lang = useAppSelector((state) => state.language.value);
 
   useEffect(() => {
-    const lang = localStorage.getItem("lang");
-    if (lang) {
-      dispatch(update(lang));
-    }
-  }, [dispatch]);
+    setDirection(lang === "ar" ? "row" : "row-reverse");
+    console.log("lang", lang);
+  }, [lang, setDirection]);
+
   return (
     <div className="parent">
-      <div className="flex-container">
+      <div className="flex-container" style={{ flexDirection: direction }}>
         <div className="intro_container flex-item item-text">
           <div className="intro_text">
             <div className="signin-intro">تسجيل الدخول</div>

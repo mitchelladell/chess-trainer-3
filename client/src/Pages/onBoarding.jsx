@@ -7,12 +7,17 @@ import Form from "react-bootstrap/Form";
 
 import "./Sign.css";
 import { useDispatch } from "react-redux";
+import { useAppSelector } from "../app/hooks";
 import { update } from "../features/language/languageSlice";
 import "./onBoarding.css";
 import { Link } from "react-router-dom";
 
 const Onboarding = () => {
   const [level, setLevel] = useState(null);
+  const [direction, setDirection] = useState("row");
+  const lang = useAppSelector((state) => state.language.value);
+  console.log("language", lang);
+
   console.log("value", level);
 
   function levelOptions() {
@@ -23,7 +28,7 @@ const Onboarding = () => {
           label="radio"
           value="new"
           name="level"
-          onClick={(e) => setLevel(e.target.value)}
+          onClick={(e) => setLevel(e?.target?.value)}
           id="radio"
           className="radio_check_option"
         />
@@ -33,7 +38,7 @@ const Onboarding = () => {
           label="radio"
           name="level"
           value="amateur"
-          onClick={(e) => setLevel(e.target.value)}
+          onClick={(e) => setLevel(e?.target?.value)}
           id="radio"
           className="radio_check_option"
         />
@@ -42,7 +47,7 @@ const Onboarding = () => {
           label="radio"
           value="intermediate"
           name="level"
-          onClick={(e) => setLevel(e.target.value)}
+          onClick={(e) => setLevel(e?.target?.value)}
           id="type"
           className="radio_check_option"
         />
@@ -51,7 +56,7 @@ const Onboarding = () => {
           label="radio"
           value="advanced"
           name="level"
-          onClick={(e) => setLevel(e.target.value)}
+          onClick={(e) => setLevel(e?.target?.value)}
           id="type"
           className="radio_check_option"
         />
@@ -59,17 +64,13 @@ const Onboarding = () => {
     );
   }
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    const lang = localStorage.getItem("lang");
-    if (lang) {
-      dispatch(update(lang));
-    }
-  }, [dispatch]);
+    setDirection(lang === "ar" ? "row" : "row-reverse");
+    console.log("lang", lang);
+  }, [lang]);
   return (
     <div className="parent">
-      <div className="flex-container">
+      <div className="flex-container" style={{ flexDirection: direction }}>
         <div className="intro_container flex-item item-text">
           <div className="intro_text">
             <div className="signin-intro">تسجيل الدخول</div>

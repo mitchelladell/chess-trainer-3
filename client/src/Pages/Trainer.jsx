@@ -128,6 +128,12 @@ const Trainer = () => {
   const [game, setGame] = useState(new Chess());
 
   const [isBackgroundLoaded, setIsBackgroundLoaded] = useState(false);
+  const [direction, setDirection] = useState("row");
+
+  useEffect(() => {
+    setDirection(lang === "en" ? "row" : "row-reverse");
+    console.log("lang", lang);
+  }, [lang, setDirection]);
 
   useEffect(() => {
     const backgroundImage = new Image();
@@ -210,7 +216,10 @@ const Trainer = () => {
         });
       }
       if (move.ravs) {
-        let subvariations = allExtractedMoves(move.ravs[0].moves, depth + 1);
+        let subvariations: any = allExtractedMoves(
+          move.ravs[0].moves,
+          depth + 1
+        );
         moves = [...moves, ...subvariations];
       }
     }
@@ -851,7 +860,7 @@ const Trainer = () => {
         className={focusMode ? "trainer_container_focus" : "trainer_container"}
       >
         <Container>
-          <Row>
+          <Row style={{ display: "flex", flexDirection: direction }}>
             <Col>
               <div style={{ display: "inline-flex" }}>
                 <GridYDirection />

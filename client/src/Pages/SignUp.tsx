@@ -1,5 +1,5 @@
 import { Row, Col, Container } from "react-bootstrap/";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -9,19 +9,20 @@ import "./Sign.css";
 import { useDispatch } from "react-redux";
 import { update } from "../features/language/languageSlice";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../app/hooks";
 
 const SignUp = () => {
-  const dispatch = useDispatch();
+  const [direction, setDirection] = useState<"row" | "row-reverse">("row");
+  const lang = useAppSelector((state) => state.language.value);
 
   useEffect(() => {
-    const lang = localStorage.getItem("lang");
-    if (lang) {
-      dispatch(update(lang));
-    }
-  }, [dispatch]);
+    setDirection(lang === "ar" ? "row" : "row-reverse");
+    console.log("lang", lang);
+  }, [lang, setDirection]);
+
   return (
     <div className="parent">
-      <div className="flex-container">
+      <div className="flex-container" style={{ flexDirection: direction }}>
         <div className="intro_container flex-item item-text">
           <div className="intro_text">
             <div className="signup-intro"> انشاء حساب</div>

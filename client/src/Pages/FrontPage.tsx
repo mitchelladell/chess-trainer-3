@@ -1,13 +1,21 @@
 import "./FrontPage.css";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../app/hooks";
 
 const FrontPage = () => {
+  const [direction, setDirection] = useState<"row" | "row-reverse">("row");
+  const lang = useAppSelector((state) => state.language.value);
+
+  useEffect(() => {
+    setDirection(lang === "ar" ? "row" : "row-reverse");
+    console.log("lang", lang);
+  }, [lang]);
   return (
     <div>
-      <div className="flex-container">
+      <div className="flex-container" style={{ flexDirection: direction }}>
         <div className="intro_container flex-item item-text">
           <div className="intro_text">
             أنت لا تنسى أبدًا <br /> بدايات الدور الخاصة بك مرة أخرى <br />{" "}
