@@ -18,6 +18,7 @@ import { MdExpandLess, MdExpandMore } from "react-icons/md";
 import SignOutIcon from "../../pgns/icons/SignOut";
 import UserProfileIcon from "../../pgns/icons/UserProfile";
 import SettingsIcon from "../../pgns/icons/Settings";
+import Form from "react-bootstrap/Form";
 
 type Translation = {
   [key: string]: {
@@ -35,6 +36,7 @@ type IProps = {
 const Header: React.FC<IProps> = (props) => {
   const lang = useSelector((state: any) => state.language.value);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [lightTheme, setLightTheme] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -182,10 +184,28 @@ const Header: React.FC<IProps> = (props) => {
                     </Dropdown.Item>
                     <Dropdown.Item
                       className="custom-dropdown-item"
-                      as={Link}
-                      to="#/action-1"
+                      onClick={(event) => {
+                        event.preventDefault(); /* your custom logic here */
+                      }}
                     >
-                      <div className="theme"> الوضع النهارى </div>
+                      <div className="theme">
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <Form>
+                            <Form.Check
+                              type="switch"
+                              id="custom-switch"
+                              checked={lightTheme}
+                              onChange={() => setLightTheme(!lightTheme)}
+                            />
+                          </Form>
+                          الوضع النهارى{" "}
+                        </div>
+                      </div>
                     </Dropdown.Item>
                     <Dropdown.Item
                       className="custom-dropdown-item"
