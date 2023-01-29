@@ -4,3 +4,8 @@
   flex-direction: column;
   min-height: 100vh;
 }
+
+.children_content {
+  flex: 1;
+  background: #333333;
+}

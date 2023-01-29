@@ -6,7 +6,7 @@ import Courses from "./Pages/Courses";
 import FrontPage from "./Pages/FrontPage";
 const App = () => {
   return (
-    <div className="App">
+    <div>
       <FrontPage />
     </div>
   );

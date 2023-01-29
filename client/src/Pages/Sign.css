@@ -14,9 +14,8 @@
 
 .intro_container {
   height: 88vh;
-  border: 1px solid #707070;
-  box-shadow: -5px 0px 24px #333333;
-  background: #333333;
+  border: 1px solid #000000b3;
+  box-shadow: -5px 0px 24px #000000b3;
   opacity: 1;
 }
 
@@ -145,10 +144,6 @@
 
 .sign-form {
   color: #daa520;
-}
-
-.parent {
-  background-color: #707070;
 }
 
 .submit-container {

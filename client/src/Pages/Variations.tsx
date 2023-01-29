@@ -12,7 +12,7 @@ const Variations = () => {
   const lang = useSelector((state: any) => state.language.value);
 
   return (
-    <div className="App">
+    <div>
       <div>
         <VariationBoard />
       </div>

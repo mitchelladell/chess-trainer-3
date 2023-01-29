@@ -11,7 +11,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { update } from "../../features/language/languageSlice";
 
-import "./Dashboard.css";
+import "./user-dashboard.css";
 
 import { BsThreeDotsVertical, BsBook } from "react-icons/bs";
 import translations from "../../consts/translations";
@@ -50,7 +50,7 @@ async function readPGN(pgn2: any) {
   // Return the initial position and solution
   return postion;
 }
-const Dashboard: React.FC<IProps> = (props) => {
+const UserDashboard: React.FC<IProps> = (props) => {
   const dispatch = useDispatch();
 
   const [data, setData] = useState<any>([]);
@@ -91,42 +91,13 @@ const Dashboard: React.FC<IProps> = (props) => {
   });
 
   return (
-    <div className="dashboard_container">
+    <div className="user_dashboard_container">
       <Container>
         <Row>
           <Col sm={3} md={3} lg={2} className="d-flex">
-            <img className="dashboard-image" alt=""></img>
+            <img className="UserDashboard-image" alt=""></img>
           </Col>
-          <Col sm={7} md={7} lg={8}>
-            {" "}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                fontFamily: "Montserrat-Bold",
-              }}
-            >
-              {" "}
-              <Link to="/courses/variation/">
-                <div style={{ cursor: "pointer" }}>
-                  {" "}
-                  {/* Should be a react Link redirecting to Variations */}
-                  {props.courseName}{" "}
-                </div>
-              </Link>
-              <div>
-                {" "}
-                {props.variationExist && (
-                  <BsBook />
-                )} <BsThreeDotsVertical />{" "}
-              </div>
-            </div>
-            <div className="spaced_divs"> 0 / {totalCount}</div>
-            <div className="progres_bar">
-              {" "}
-              <ProgressBar now={props.progress} />
-            </div>
-          </Col>
+
           <Col sm={3} md={3} lg={2}>
             {" "}
             <div className="spaced_divs">
@@ -144,4 +115,4 @@ const Dashboard: React.FC<IProps> = (props) => {
   );
 };
 
-export default Dashboard;
+export default UserDashboard;

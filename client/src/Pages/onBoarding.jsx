@@ -25,7 +25,24 @@ const Onboarding = () => {
       <Form>
         <Form.Check
           type={"radio"}
-          label="radio"
+          label={
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontSize: "20px",
+              }}
+            >
+              <div style={{ color: "#DAA520", marginRight: "10px" }}>
+                {" "}
+                انا جديد فـي اللعبة
+              </div>{" "}
+              <div style={{ color: "#43BF82", marginLeft: "10px" }}>
+                {" "}
+                جـديد
+              </div>{" "}
+            </div>
+          }
           value="new"
           name="level"
           onClick={(e) => setLevel(e?.target?.value)}
@@ -35,7 +52,24 @@ const Onboarding = () => {
 
         <Form.Check
           type={"radio"}
-          label="radio"
+          label={
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontSize: "20px",
+              }}
+            >
+              <div style={{ color: "#DAA520", marginRight: "10px" }}>
+                {" "}
+                اعرف القواعد وبعض الاستـراتيجيات
+              </div>{" "}
+              <div style={{ color: "#F6EE07", marginLeft: "10px" }}>
+                {" "}
+                مبتـدئ
+              </div>{" "}
+            </div>
+          }
           name="level"
           value="amateur"
           onClick={(e) => setLevel(e?.target?.value)}
@@ -44,7 +78,24 @@ const Onboarding = () => {
         />
         <Form.Check
           type={"radio"}
-          label="radio"
+          label={
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontSize: "20px",
+              }}
+            >
+              <div style={{ color: "#DAA520", marginRight: "10px" }}>
+                {" "}
+                لدي فهم لائـق فـي جميع الجوانب{" "}
+              </div>{" "}
+              <div style={{ color: "#20C7DA", marginLeft: "10px" }}>
+                {" "}
+                متوسط{" "}
+              </div>{" "}
+            </div>
+          }
           value="intermediate"
           name="level"
           onClick={(e) => setLevel(e?.target?.value)}
@@ -53,7 +104,24 @@ const Onboarding = () => {
         />
         <Form.Check
           type={"radio"}
-          label="radio"
+          label={
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontSize: "20px",
+              }}
+            >
+              <div style={{ color: "#DAA520", marginRight: "10px" }}>
+                {" "}
+                انا فـي مستوى الاحتـراف او اقـتـرب من مستوى الاحتـراف{" "}
+              </div>{" "}
+              <div style={{ color: "#EF7373", marginLeft: "10px" }}>
+                {" "}
+                متقــدم{" "}
+              </div>{" "}
+            </div>
+          }
           value="advanced"
           name="level"
           onClick={(e) => setLevel(e?.target?.value)}

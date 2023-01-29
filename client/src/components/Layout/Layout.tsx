@@ -9,7 +9,7 @@ const Layout: React.FC<{
 }> = ({ children, isLoggedIn }) => (
   <div className="layout_container">
     <Header isLoggedIn />
-    <div style={{ flex: 1 }}>{children}</div>
+    <div className="children_content">{children}</div>
     <Footer />
   </div>
 );

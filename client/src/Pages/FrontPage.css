@@ -15,7 +15,7 @@
 .intro_container {
   height: 88vh;
   border: 1px solid #707070;
-  box-shadow: -5px 0px 24px #333333;
+  box-shadow: -5px 0px 24px #000000b3;
   background: #333333;
   opacity: 1;
 }
@@ -69,7 +69,7 @@
 
 .button_container {
   margin-top: 200px;
-  margin-right: 20%;
+  margin-left: 20%;
 }
 .join_button:active,
 .join_button:hover {
@@ -95,7 +95,7 @@
 
 @media only screen and (max-width: 600px) {
   .flex-container {
-    flex-direction: column;
+    flex-direction: column !important;
   }
 
   .intro_text {

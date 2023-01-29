@@ -15,6 +15,7 @@ import Variations from "./Pages/Variations";
 import Footer from "./components/Footer/Footer";
 import Layout from "./components/Layout/Layout";
 import Onboarding from "./Pages/onBoarding";
+import AllCourses from "./Pages/AllCourses";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -92,6 +93,14 @@ const router = createBrowserRouter([
     element: (
       <Layout isLoggedIn={true}>
         <Variations />
+      </Layout>
+    ),
+  },
+  {
+    path: "allcourses",
+    element: (
+      <Layout isLoggedIn={true}>
+        <AllCourses />
       </Layout>
     ),
   },
