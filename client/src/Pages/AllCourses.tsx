@@ -5,6 +5,8 @@ import { useAppSelector } from "../app/hooks";
 
 const AllCourses = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
+
+  let coursesList = ["opening,", "endgame", "queen opening", "king opening"];
   const lang = useAppSelector((state: any) => state.language.value);
 
   useEffect(() => {
@@ -14,12 +16,21 @@ const AllCourses = () => {
   return (
     <div>
       <div className="flex-container" style={{ flexDirection: direction }}>
-        <div className="intro_container flex-item">
-          <div className="no_subsbcriptions_text">
-            ليـس لديك أي شـي ء للمراجعة هنا . قد تحتاج إلى البدء فـي تعلم شـي ء
-            جديد!
-          </div>
-          <div>لوحة القيادة الخاصة بك</div>
+        <div
+          className="intro_container flex-item"
+          style={{ display: "flex", flexWrap: "wrap" }}
+        >
+          {coursesList.map((course) => (
+            <div
+              key={course}
+              style={{
+                width: "350px",
+                height: "350px",
+                background: "#8B8B8B",
+                margin: "10px",
+              }}
+            />
+          ))}
         </div>
       </div>
     </div>

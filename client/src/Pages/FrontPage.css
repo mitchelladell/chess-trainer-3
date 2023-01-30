@@ -1,25 +1,3 @@
-.intro {
-  height: 300px;
-  padding-top: 50px;
-  width: 50vw;
-}
-
-.front_page_container {
-  display: flex;
-  flex-direction: row;
-  height: 80vh;
-  width: 100%;
-  background: #707070;
-}
-
-.intro_container {
-  height: 88vh;
-  border: 1px solid #707070;
-  box-shadow: -5px 0px 24px #000000b3;
-  background: #333333;
-  opacity: 1;
-}
-
 .intro_text {
   font-family: "Calibri";
 
@@ -68,7 +46,7 @@
 }
 
 .button_container {
-  margin-top: 200px;
+  margin-top: 50%;
   margin-left: 20%;
 }
 .join_button:active,
@@ -115,6 +93,6 @@
   }
   .flex-item.item-text,
   .flex-item.item-picture {
-    width: 100vw;
+    width: 95vw !important;
   }
 }

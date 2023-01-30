@@ -94,20 +94,20 @@ const UserDashboard: React.FC<IProps> = (props) => {
     <div className="user_dashboard_container">
       <Container>
         <Row>
-          <Col sm={3} md={3} lg={2} className="d-flex">
-            <img className="UserDashboard-image" alt=""></img>
-          </Col>
-
-          <Col sm={3} md={3} lg={2}>
-            {" "}
-            <div className="spaced_divs">
+          <Col sm={7} md={7} lg={7} style={{ position: "relative" }}>
+            <div
+              className="spaced_divs"
+              style={{ position: "absolute", bottom: 0 }}
+            >
               <Link to="/courses/variation/">
                 <Button variant="warning" className="golden_button">
-                  {" "}
-                  {(translations as Translation)[lang].learn}
+                  Learn
                 </Button>
               </Link>
             </div>
+          </Col>
+          <Col sm={5} md={5} lg={5} align="right">
+            <img className="dashboard-image" alt=""></img>
           </Col>
         </Row>
       </Container>
