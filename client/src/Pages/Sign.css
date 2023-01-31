@@ -25,15 +25,15 @@
   color: black;
 
   text-align: right;
-  margin-top: 10%;
-  width: 80%;
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-top: 3%;
+  width: 100%;
+  padding-right: 5%;
+  padding-left: 5%;
 
-  font-size: calc(1100px * 0.02);
+  font-size: calc(1100px * 0.015);
   text-align: end;
-  line-height: calc(1100px * 0.03);
-  word-spacing: calc(1100px * 0.003);
+  line-height: calc(1100px * 0.02);
+  word-spacing: calc(1100px * 0.002);
 
   @media (min-width: 1100px) {
     line-height: 4.8vw;
@@ -42,17 +42,7 @@
   }
 }
 
-.flex-container {
-  display: flex;
-  flex-wrap: wrap;
-  padding-right: 10%;
-  padding-left: 10%;
-  padding-top: 30px;
-  padding-bottom: 30px;
-}
-
 .flex-item {
-  min-height: 600px;
   align-items: center;
   margin: 5px;
   font-family: "Calibri";
@@ -63,16 +53,17 @@
 }
 
 .flex-item.item-text {
-  width: 30vw;
+  width: 25vw;
+  height: 65vh;
 }
 
 .button_container {
-  margin-top: 50%;
+  margin-top: 5%;
   margin-right: 20%;
 }
 .join_button:active,
 .join_button:hover {
-  background: gold !important;
+  background: #daa520 !important;
   border: 1px solid #d2ab32 !important;
   color: black !important;
 }
@@ -88,23 +79,25 @@
   font-size: 30px;
   font-family: "Calibri";
   text-align: center;
-  margin-bottom: 30px;
-  margin-top: 30px;
+  margin-bottom: 2%;
+  margin-top: 2%;
 }
 
 .join_button {
   background: #707070;
-  width: 150px;
-  font-size: 30px;
+  width: fit-content;
+  height: fit-content;
+  padding-left: 10%;
+  padding-right: 10%;
+  font-size: 26px;
   font-family: "Calibri";
-  height: 50px;
   border-radius: 37px;
   border: 1px solid #d2ab32;
   color: black;
 }
 
 .join_button.focus {
-  background: gold;
+  background: #daa520;
 }
 
 @media only screen and (max-width: 600px) {
@@ -129,7 +122,17 @@
   }
   .flex-item.item-text,
   .flex-item.item-picture {
-    width: 100vw;
+    width: 97%;
+  }
+}
+
+@media only screen and (1100px > width > 800px) {
+  .flex-item {
+    flex: 1 1;
+  }
+  .flex-item.item-text,
+  .flex-item.item-picture {
+    width: 60vw !important;
   }
 }
 
@@ -138,7 +141,7 @@
   font-size: 30px;
   font-family: "Calibri";
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 3%;
 }
 
 .sign-form {
@@ -147,5 +150,7 @@
 
 .submit-container {
   text-align: center;
-  margin-top: 30px;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  justify-content: center;
 }

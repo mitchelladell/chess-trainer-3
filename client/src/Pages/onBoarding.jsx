@@ -5,7 +5,6 @@ import { Button } from "react-bootstrap";
 
 import Form from "react-bootstrap/Form";
 
-import "./Sign.css";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../app/hooks";
 import { update } from "../features/language/languageSlice";
@@ -78,6 +77,7 @@ const Onboarding = () => {
         />
         <Form.Check
           type={"radio"}
+          style={{ backgroundImage: "green" }}
           label={
             <div
               style={{
@@ -109,7 +109,7 @@ const Onboarding = () => {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                fontSize: "20px",
+                fontSize: "17px",
               }}
             >
               <div style={{ color: "#DAA520", marginRight: "10px" }}>
@@ -138,16 +138,19 @@ const Onboarding = () => {
   }, [lang]);
   return (
     <div className="parent">
-      <div className="flex-container" style={{ flexDirection: direction }}>
-        <div className="intro_container flex-item item-text">
-          <div className="intro_text">
+      <div
+        className="flex-container_onboarding"
+        style={{ flexDirection: direction }}
+      >
+        <div className="intro_container flex-item item-text-onboarding">
+          <div className="onboarding_text">
             <div className="signin-intro">تسجيل الدخول</div>
             <div>{levelOptions()}</div>
             <div className="confirm_button_container">
               <Link to="/courses">
                 <Button variant="warning" className="confirmation_button">
                   {" "}
-                  تأكيد
+                  <div /* style={{ marginTop: "20%" }} */> تأكيد </div>
                 </Button>{" "}
               </Link>
             </div>
@@ -159,8 +162,8 @@ const Onboarding = () => {
               backgroundImage: `url('../media/onboarding_background.png')`,
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
-              backgroundSize: "cover",
-              height: "88vh",
+              backgroundSize: "contain",
+              height: "68vh",
             }}
           ></div>
         </div>

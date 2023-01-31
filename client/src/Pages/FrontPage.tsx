@@ -16,8 +16,8 @@ const FrontPage = () => {
   return (
     <div>
       <div className="flex-container" style={{ flexDirection: direction }}>
-        <div className="intro_container flex-item item-text">
-          <div className="intro_text">
+        <div className="intro_container flex-item item-text_front_page">
+          <div className="intro_text_front_page">
             أنت لا تنسى أبدًا <br /> بدايات الدور الخاصة بك مرة أخرى <br />{" "}
             تقنيات التعلم المدعومة علميًا للمساعدة في زيادة الحفظ والتذكر بنسبة
             تصل إلى 95%. حتـى تتمكن من لعب بدايات الأدوار مثل كتاب ... وسط
@@ -26,7 +26,9 @@ const FrontPage = () => {
 
           <div className="button_container">
             <Link to="/signup">
-              <Button className="join_button">التحـق مجانا</Button>
+              <Button className="join_button">
+                <div> التحـق مجانا</div>
+              </Button>
             </Link>
           </div>
         </div>
@@ -37,7 +39,7 @@ const FrontPage = () => {
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
               backgroundSize: "cover",
-              height: "88vh",
+              height: "68vh",
             }}
           ></div>
         </div>

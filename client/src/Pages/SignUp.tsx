@@ -70,8 +70,8 @@ const SignUp = () => {
                       variant="warning"
                       type="submit"
                     >
-                      التسجيل
-                    </Button>{" "}
+                      <div> تسجيل</div>
+                    </Button>
                   </Link>
                 </div>
               </Form>
@@ -84,8 +84,8 @@ const SignUp = () => {
               backgroundImage: `url('../media/sign_up_background.png')`,
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
-              backgroundSize: "cover",
-              height: "88vh",
+              backgroundSize: "contain",
+              height: "65vh",
             }}
           ></div>
         </div>

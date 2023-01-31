@@ -57,7 +57,7 @@ const SignUp = () => {
                       variant="warning"
                       type="submit"
                     >
-                      الدخول
+                      <div>الدخول</div>
                     </Button>
                   </Link>
                 </div>
@@ -69,6 +69,7 @@ const SignUp = () => {
                     justifyContent: "space-around",
                     marginRight: "20%",
                     marginLeft: "20%",
+                    marginBottom: "2%",
                   }}
                 >
                   <FacebookIcon /> <GoogleIcon />
@@ -83,8 +84,8 @@ const SignUp = () => {
               backgroundImage: `url('../media/sign_in_background.png')`,
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
-              backgroundSize: "cover",
-              height: "88vh",
+              backgroundSize: "contain",
+              height: "65vh",
             }}
           ></div>
         </div>
