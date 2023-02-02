@@ -8,7 +8,7 @@ const Layout: React.FC<{
   isLoggedIn: boolean;
 }> = ({ children, isLoggedIn }) => (
   <div className="layout_container">
-    <Header isLoggedIn />
+    <Header isLoggedIn={isLoggedIn} />
     <div className="children_content">{children}</div>
     <Footer />
   </div>

@@ -18,10 +18,15 @@ const FrontPage = () => {
       <div className="flex-container" style={{ flexDirection: direction }}>
         <div className="intro_container flex-item item-text_front_page">
           <div className="intro_text_front_page">
-            أنت لا تنسى أبدًا <br /> بدايات الدور الخاصة بك مرة أخرى <br />{" "}
-            تقنيات التعلم المدعومة علميًا للمساعدة في زيادة الحفظ والتذكر بنسبة
-            تصل إلى 95%. حتـى تتمكن من لعب بدايات الأدوار مثل كتاب ... وسط
-            الأدوار مثل الساحر ونهاية الأدوار مثل العظماء
+            <div className="front-page-intro-golden">
+              {" "}
+              أنت لا تنسى أبدًا <br /> بدايات الدور الخاصة بك مرة أخرى <br />
+            </div>{" "}
+            <div className="front-page-intro-extra">
+              تقنيات التعلم المدعومة علميًا للمساعدة في زيادة الحفظ والتذكر
+              بنسبة تصل إلى 95%. حتـى تتمكن من لعب بدايات الأدوار مثل كتاب ...
+              وسط الأدوار مثل الساحر ونهاية الأدوار مثل العظماء
+            </div>
           </div>
 
           <div className="button_container">

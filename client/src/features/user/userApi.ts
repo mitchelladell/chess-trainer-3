@@ -4,6 +4,7 @@
 
 import axios from "axios";
 import { END_POINT } from "../../helpers/consts";
+import Cookies from "js-cookie";
 
 export const loginUser = async (data: any) => {
   const test_endpoint = "http://localhost:5000/api";
@@ -15,6 +16,9 @@ export const loginUser = async (data: any) => {
       email: data.email,
       password: data.password,
     });
+    if (response.data.token) {
+      Cookies.set("token", response.data.token);
+    }
     return response.data;
   } catch (error) {
     console.log(error);

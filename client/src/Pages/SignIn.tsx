@@ -11,12 +11,13 @@ import { update } from "../features/language/languageSlice";
 import FacebookIcon from "../pgns/icons/FaceBookIcon";
 import GoogleIcon from "../pgns/icons/GoogleIcon";
 import { Justify } from "react-bootstrap-icons";
-import { Link } from "react-router-dom";
 import { loginUserAsync } from "../features/user/userSlice";
 import { useAppDispatch } from "../app/hooks";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -24,10 +25,14 @@ const SignUp = () => {
   const lang = useAppSelector((state) => state.language.value);
 
   const handleLogin = () => {
-    const response = dispatch(
-      loginUserAsync({ email: email, password: password })
+    dispatch(loginUserAsync({ email: email, password: password })).then(
+      (response) => {
+        if (response.payload.token) {
+          navigate("/courses");
+        }
+        console.log("resposne", response);
+      }
     );
-    console.log("response", response);
   };
   useEffect(() => {
     setDirection(lang === "ar" ? "row" : "row-reverse");
@@ -44,7 +49,6 @@ const SignUp = () => {
               <Form>
                 <Form.Group className="mb-3" controlId="formbasicuserName">
                   <Form.Label>اسم المستخدم أو البريد الإلكـتـروني</Form.Label>
-
                   <Form.Control
                     className="inputs"
                     type="text"
@@ -99,8 +103,8 @@ const SignUp = () => {
               backgroundImage: `url('../media/sign_in_background.png')`,
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
-              backgroundSize: "contain",
-              height: "65vh",
+              backgroundSize: "cover",
+              height: "75vh",
             }}
           ></div>
         </div>

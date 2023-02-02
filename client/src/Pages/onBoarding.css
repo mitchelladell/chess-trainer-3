@@ -50,6 +50,8 @@
   border-radius: 37px;
   border: 1px solid #d2ab32;
   color: black !important;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .confirmation_button.focus {

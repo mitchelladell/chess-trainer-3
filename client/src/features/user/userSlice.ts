@@ -55,6 +55,7 @@ export const userSlice = createSlice({
     builder
       .addCase(loginUserAsync.pending, (state) => {
         state.status = "loading";
+        console.log("hello");
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
@@ -64,7 +65,8 @@ export const userSlice = createSlice({
         console.log("token", token);
 
         let decodedResponse: IDecodedResponse = token ? jwt_decode(token) : {};
-        state.userInfo = decodedResponse?.data?.user;
+        console.log("decodedResponse", decodedResponse);
+        state.userInfo = decodedResponse;
         state.userLoggedIn = token ? true : false;
         console.log("userInfo", state.userInfo);
 

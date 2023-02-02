@@ -37,6 +37,7 @@ const Header: React.FC<IProps> = (props) => {
   const lang = useSelector((state: any) => state.language.value);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [lightTheme, setLightTheme] = useState(false);
+  console.log("isLoggedIn", props.isLoggedIn);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -46,7 +47,7 @@ const Header: React.FC<IProps> = (props) => {
     <div>
       {!props.isLoggedIn ? (
         <div className="header_container">
-          <div style={{ display: "flex" }}>
+          <div className="d-flex justify-content-center align-items-center">
             <Dropdown className="custom-dropdown">
               <Dropdown.Toggle
                 className="custom-dropdown-toggle"
@@ -83,16 +84,15 @@ const Header: React.FC<IProps> = (props) => {
           <div
             style={{ display: "flex", width: "100%", justifyContent: "right" }}
           >
-            {" "}
-            <Nav>
+            <Link to="/signup">
               {" "}
-              <Nav.Link className="link" href="/signup">
-                {(translations as Translation)[lang].signUp}
-              </Nav.Link>
-              <Nav.Link className="link" href="/signin">
-                {(translations as Translation)[lang].signIn}
-              </Nav.Link>
-            </Nav>
+              <Button>{(translations as Translation)[lang].signUp}</Button>{" "}
+            </Link>
+
+            <Link to="/login">
+              {" "}
+              <Button>{(translations as Translation)[lang].signIn}</Button>
+            </Link>
           </div>
         </div>
       ) : (

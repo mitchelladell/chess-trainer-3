@@ -16,16 +16,19 @@ import Footer from "./components/Footer/Footer";
 import Layout from "./components/Layout/Layout";
 import Onboarding from "./Pages/onBoarding";
 import AllCourses from "./Pages/AllCourses";
+import { useAppSelector } from "./app/hooks";
+import Cookies from "js-cookie";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+console.log(Cookies.get("token"));
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Layout isLoggedIn={false}>
+      <Layout isLoggedIn={Cookies.get("token") ? true : false}>
         <App />
       </Layout>
     ),
@@ -34,7 +37,7 @@ const router = createBrowserRouter([
   {
     path: "signup",
     element: (
-      <Layout isLoggedIn={false}>
+      <Layout isLoggedIn={Cookies.get("token") ? true : false}>
         <SignUp />
       </Layout>
     ),
@@ -42,7 +45,7 @@ const router = createBrowserRouter([
   {
     path: "login",
     element: (
-      <Layout isLoggedIn={false}>
+      <Layout isLoggedIn={Cookies.get("token") ? true : false}>
         <SignIn />
       </Layout>
     ),
@@ -50,7 +53,7 @@ const router = createBrowserRouter([
   {
     path: "tutorials",
     element: (
-      <Layout isLoggedIn={true}>
+      <Layout isLoggedIn={Cookies.get("token") ? true : false}>
         <Tutorials />
       </Layout>
     ),
@@ -58,7 +61,7 @@ const router = createBrowserRouter([
   {
     path: "onboarding",
     element: (
-      <Layout isLoggedIn={false}>
+      <Layout isLoggedIn={Cookies.get("token") ? true : false}>
         <Onboarding />
       </Layout>
     ),
@@ -66,7 +69,7 @@ const router = createBrowserRouter([
   {
     path: "/trainer/:variation",
     element: (
-      <Layout isLoggedIn={true}>
+      <Layout isLoggedIn={Cookies.get("token") ? true : false}>
         <Trainer />
       </Layout>
     ),
@@ -75,7 +78,7 @@ const router = createBrowserRouter([
   {
     path: "/courses/:course",
     element: (
-      <Layout isLoggedIn={true}>
+      <Layout isLoggedIn={Cookies.get("token") ? true : false}>
         <Courses />
       </Layout>
     ),
@@ -83,7 +86,7 @@ const router = createBrowserRouter([
   {
     path: "/courses/",
     element: (
-      <Layout isLoggedIn={true}>
+      <Layout isLoggedIn={Cookies.get("token") ? true : false}>
         <Courses />
       </Layout>
     ),
@@ -91,7 +94,7 @@ const router = createBrowserRouter([
   {
     path: "courses/variation",
     element: (
-      <Layout isLoggedIn={true}>
+      <Layout isLoggedIn={Cookies.get("token") ? true : false}>
         <Variations />
       </Layout>
     ),
@@ -99,7 +102,7 @@ const router = createBrowserRouter([
   {
     path: "allcourses",
     element: (
-      <Layout isLoggedIn={true}>
+      <Layout isLoggedIn={Cookies.get("token") ? true : false}>
         <AllCourses />
       </Layout>
     ),
