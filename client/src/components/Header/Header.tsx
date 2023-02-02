@@ -19,6 +19,7 @@ import SignOutIcon from "../../pgns/icons/SignOut";
 import UserProfileIcon from "../../pgns/icons/UserProfile";
 import SettingsIcon from "../../pgns/icons/Settings";
 import Form from "react-bootstrap/Form";
+import ChessUsityLogo from "../../pgns/icons/ChessUsityLogo";
 
 type Translation = {
   [key: string]: {
@@ -47,68 +48,83 @@ const Header: React.FC<IProps> = (props) => {
     <div>
       {!props.isLoggedIn ? (
         <div className="header_container">
-          <div className="d-flex justify-content-center align-items-center">
-            <Dropdown className="custom-dropdown">
-              <Dropdown.Toggle
-                className="custom-dropdown-toggle"
-                id="dropdown-basic"
-              >
-                {(translations as Translation)[lang].courses}
-              </Dropdown.Toggle>
+          <Container fluid>
+            {" "}
+            <Row>
+              <Col sm={4} md={4} lg={2}>
+                <Link to="/">
+                  <ChessUsityLogo />
+                </Link>
+              </Col>
 
-              <Dropdown.Menu className="custom-dropdown-menu">
-                <Dropdown.Item
-                  className="custom-dropdown-item"
-                  as={Link}
-                  to="#/action-1"
-                >
-                  Action
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className="custom-dropdown-item"
-                  as={Link}
-                  to="#/action-1"
-                >
-                  Another action
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className="custom-dropdown-item"
-                  as={Link}
-                  to="#/action-1"
-                >
-                  Something else
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-          <div
-            style={{ display: "flex", width: "100%", justifyContent: "right" }}
-          >
-            <Link to="/signup">
-              {" "}
-              <Button className="singup_button">
-                {(translations as Translation)[lang].signUp}
-              </Button>{" "}
-            </Link>
+              <Col style={{ margin: "auto" }}>
+                <div className="d-flex justify-content-center align-items-center">
+                  <Dropdown className="custom-dropdown">
+                    <Dropdown.Toggle
+                      className="custom-dropdown-toggle"
+                      id="dropdown-basic"
+                    >
+                      {(translations as Translation)[lang].courses}
+                    </Dropdown.Toggle>
 
-            <Link to="/login">
-              {" "}
-              <Button className="login_button">
-                {(translations as Translation)[lang].signIn}
-              </Button>
-            </Link>
-          </div>
+                    <Dropdown.Menu className="custom-dropdown-menu">
+                      <Dropdown.Item
+                        className="custom-dropdown-item"
+                        as={Link}
+                        to="#/action-1"
+                      >
+                        Action
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className="custom-dropdown-item"
+                        as={Link}
+                        to="#/action-1"
+                      >
+                        Another action
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className="custom-dropdown-item"
+                        as={Link}
+                        to="#/action-1"
+                      >
+                        Something else
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      justifyContent: "right",
+                    }}
+                  >
+                    <Link to="/signup">
+                      <Button variant="" className="signup_button">
+                        {(translations as Translation)[lang].signUp}
+                      </Button>{" "}
+                    </Link>
+
+                    <Link to="/login">
+                      <Button variant="" className="login_button">
+                        {(translations as Translation)[lang].signIn}
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </Container>
         </div>
       ) : (
         <div className="header_container">
           <Container>
             <Row>
-              <Col>
-                <Link className="styledLink" to="/">
-                  <FaHome size={50} />
+              <Col xs={3} sm={3} md={3} lg={3}>
+                <Link to="/">
+                  <ChessUsityLogo />
                 </Link>
               </Col>
-              <Col align={"left"} xs={6} md={7} lg={7}>
+              <Col align={"left"} xs={3} sm={3} md={3} lg={3}>
                 <div style={{ display: "flex" }}>
                   <Dropdown className="custom-dropdown">
                     <Dropdown.Toggle
@@ -144,12 +160,12 @@ const Header: React.FC<IProps> = (props) => {
                   </Dropdown>
                 </div>
               </Col>
-              <Col align="right">
+              <Col align="right" xs={1} sm={1} md={1} lg={1}>
                 <div className="d-flex justify-content-center align-items-center">
                   <Notification />
                 </div>
               </Col>
-              <Col>
+              <Col xs={3} sm={3} md={3} lg={3}>
                 <Dropdown className="custom-dropdown" onToggle={toggleDropdown}>
                   <Dropdown.Toggle
                     className="custom-dropdown-toggle-user"

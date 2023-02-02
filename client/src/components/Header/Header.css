@@ -141,23 +141,43 @@
   font-weight: bold;
 }
 
-.signup_button,
 .login_button {
   background: #20c7da !important;
+  background-color: #20c7da !important;
+  border: none !important;
+  border-top-right-radius: 30px !important;
+  margin-left: 5px;
+  margin-right: 5px;
+
   width: fit-content;
   height: fit-content;
-  font-size: 25px;
+  font-size: 20px;
   font-family: "Calibri";
 
-  border-radius: 37px;
+  border: 1px solid #20c7da;
+  color: black;
+}
+
+.signup_button {
+  background: #20c7da !important;
+  background-color: #20c7da !important;
+  border-top-left-radius: 30px !important;
+  margin-left: 5px;
+  margin-right: 5px;
+
+  width: fit-content;
+  height: fit-content;
+  font-size: 20px;
+  font-family: "Calibri";
+
   border: 1px solid #20c7da;
   color: black;
 }
 
 .login_button:hover,
-.singup_button:hover,
+.signup_button:hover,
 .login_button:focus,
-.singup_button:focus {
+.signup_button:focus {
   background: #707070 !important;
   color: white !important;
 }

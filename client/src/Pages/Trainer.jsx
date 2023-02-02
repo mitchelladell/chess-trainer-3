@@ -530,8 +530,7 @@ const Trainer = () => {
             <div
               key={index}
               style={{
-                display: prevDepth < move.depth ? "inline-grid" : "grid",
-                gridTemplateColumns: "1fr 1fr",
+                gridColumn: move.comment ? "-1 / 1" : "",
               }}
             >
               <div

@@ -28,6 +28,7 @@ const SignUp = () => {
     dispatch(loginUserAsync({ email: email, password: password })).then(
       (response) => {
         if (response.payload.token) {
+          //  dispatch()
           navigate("/courses");
         }
         console.log("resposne", response);
