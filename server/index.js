@@ -57,12 +57,12 @@ client.query("SELECT to_regclass('public.users');", (err, res) => {
       "CREATE TABLE users (id serial PRIMARY KEY, name VARCHAR(50) NOT NULL, email VARCHAR(100) NOT NULL UNIQUE, password VARCHAR(100) NOT NULL);",
       (err, res) => {
         console.log(err ? err.stack : res.command + " table created");
-        client.end();
+        // client.end();
       }
     );
   } else {
     console.log("Table already exists");
-    client.end();
+    //  client.end();
   }
 });
 
@@ -130,7 +130,6 @@ app.post("/api/session", (req, res) => {
 
 app.get("/api/pgn/1", (req, res) => {
   //Each Pgn param returns the whole course variations.
-  res.setHeader("Access-Control-Allow-Origin", "*");
   res.json([
     {
       "king opening":
