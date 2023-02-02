@@ -70,10 +70,10 @@ const Header: React.FC<IProps> = (props) => {
     <div>
       {!isLoggedIn ? (
         <div className="header_container">
-          <Container fluid>
+          <Container>
             {" "}
             <Row>
-              <Col sm={5} md={4} lg={2}>
+              <Col sm={5} md={4} lg={3} jusify="end">
                 <Link to="/">
                   <ChessUsityLogo />
                 </Link>
@@ -139,9 +139,9 @@ const Header: React.FC<IProps> = (props) => {
         </div>
       ) : (
         <div className="header_container">
-          <Container fluid>
+          <Container>
             <Row>
-              <Col sm={4} md={4} lg={2}>
+              <Col sm={5} md={4} lg={3}>
                 <Link to="/">
                   <ChessUsityLogo />
                 </Link>
@@ -182,7 +182,7 @@ const Header: React.FC<IProps> = (props) => {
                   </Dropdown>
                 </div>
               </Col>
-              <Col align="right" xs={1} sm={1} md={1} lg={1}>
+              <Col align="right" xs={4} sm={2} md={1} lg={1}>
                 <div className="d-flex justify-content-center align-items-center">
                   <Notification />
                 </div>
