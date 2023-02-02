@@ -1,5 +1,5 @@
 import "./Header.css";
-import react, { useState } from "react";
+import react, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -20,6 +20,11 @@ import UserProfileIcon from "../../pgns/icons/UserProfile";
 import SettingsIcon from "../../pgns/icons/Settings";
 import Form from "react-bootstrap/Form";
 import ChessUsityLogo from "../../pgns/icons/ChessUsityLogo";
+import { useAppDispatch } from "../../app/hooks";
+import { useNavigate } from "react-router-dom";
+
+import Cookies from "js-cookie";
+import { logoutAsync } from "../../features/user/userSlice";
 
 type Translation = {
   [key: string]: {
@@ -36,17 +41,34 @@ type IProps = {
 
 const Header: React.FC<IProps> = (props) => {
   const lang = useSelector((state: any) => state.language.value);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [lightTheme, setLightTheme] = useState(false);
   console.log("isLoggedIn", props.isLoggedIn);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    Cookies.get("token") ? true : false
+  );
+
+  useEffect(() => {
+    setIsLoggedIn(Cookies.get("token") ? true : false);
+  }, [Cookies.get("token")]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
+  const handleLogout = () => {
+    console.log("cliced");
+    dispatch(logoutAsync());
+    Cookies.remove("token");
+    navigate("/");
+  };
+
   return (
     <div>
-      {!props.isLoggedIn ? (
+      {!isLoggedIn ? (
         <div className="header_container">
           <Container fluid>
             {" "}
@@ -117,14 +139,14 @@ const Header: React.FC<IProps> = (props) => {
         </div>
       ) : (
         <div className="header_container">
-          <Container>
+          <Container fluid>
             <Row>
-              <Col xs={3} sm={3} md={3} lg={3}>
+              <Col sm={4} md={4} lg={2}>
                 <Link to="/">
                   <ChessUsityLogo />
                 </Link>
               </Col>
-              <Col align={"left"} xs={3} sm={3} md={3} lg={3}>
+              <Col style={{ margin: "auto" }}>
                 <div style={{ display: "flex" }}>
                   <Dropdown className="custom-dropdown">
                     <Dropdown.Toggle
@@ -256,8 +278,7 @@ const Header: React.FC<IProps> = (props) => {
                     </Dropdown.Item>
                     <Dropdown.Item
                       className="custom-dropdown-item"
-                      as={Link}
-                      to="#/action-1"
+                      onClick={() => handleLogout()}
                     >
                       <div>
                         <div

@@ -127,6 +127,10 @@ app.post("/api/session", (req, res) => {
     }
   );
 });
+app.post("/api/logout", (req, res) => {
+  res.cookie("token", "", { expires: new Date(0) });
+  res.send({ message: "Successfully logged out" });
+});
 
 app.get("/api/pgn/1", (req, res) => {
   //Each Pgn param returns the whole course variations.

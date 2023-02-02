@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { loginUser } from "./userApi";
+import { loginUser, logoutUser } from "./userApi";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 
@@ -45,6 +45,10 @@ export const loginUserAsync = createAsyncThunk(
     return loginUser(data); //return value of the api call gets assigned to user value
   }
 );
+
+export const logoutAsync = createAsyncThunk("user/logoutUser", async () => {
+  return logoutUser(); //return value of the api call gets assigned to user value
+});
 
 export const userSlice = createSlice({
   name: "user",

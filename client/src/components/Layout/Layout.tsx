@@ -5,10 +5,9 @@ import "./layout.css";
 
 const Layout: React.FC<{
   children: React.ReactElement;
-  isLoggedIn: boolean;
-}> = ({ children, isLoggedIn }) => (
+}> = ({ children }) => (
   <div className="layout_container">
-    <Header isLoggedIn={isLoggedIn} />
+    <Header />
     <div className="children_content">{children}</div>
     <Footer />
   </div>

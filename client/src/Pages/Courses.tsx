@@ -3,9 +3,12 @@ import "./Courses.css";
 import { useState, useEffect } from "react";
 import { useAppSelector } from "../app/hooks";
 import UserDashboard from "../components/Dashboard/UserDashboard";
+import Cookies from "js-cookie";
 const Courses = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
   const lang = useAppSelector((state: any) => state.language.value);
+
+  useEffect(() => {}, [Cookies.get("token")]);
 
   useEffect(() => {
     setDirection(lang === "en" ? "row" : "row-reverse");

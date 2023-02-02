@@ -25,3 +25,15 @@ export const loginUser = async (data: any) => {
     return error;
   }
 };
+
+export const logoutUser = async () => {
+  try {
+    const response = await axios.post(END_POINT + "logout", {});
+    console.log("response.dat", response);
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
