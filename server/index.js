@@ -130,6 +130,7 @@ app.post("/api/session", (req, res) => {
 
 app.get("/api/pgn/1", (req, res) => {
   //Each Pgn param returns the whole course variations.
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.json([
     {
       "king opening":

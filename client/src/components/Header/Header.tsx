@@ -86,12 +86,16 @@ const Header: React.FC<IProps> = (props) => {
           >
             <Link to="/signup">
               {" "}
-              <Button>{(translations as Translation)[lang].signUp}</Button>{" "}
+              <Button className="singup_button">
+                {(translations as Translation)[lang].signUp}
+              </Button>{" "}
             </Link>
 
             <Link to="/login">
               {" "}
-              <Button>{(translations as Translation)[lang].signIn}</Button>
+              <Button className="login_button">
+                {(translations as Translation)[lang].signIn}
+              </Button>
             </Link>
           </div>
         </div>
