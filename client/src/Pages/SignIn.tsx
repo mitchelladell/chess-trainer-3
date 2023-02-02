@@ -12,12 +12,23 @@ import FacebookIcon from "../pgns/icons/FaceBookIcon";
 import GoogleIcon from "../pgns/icons/GoogleIcon";
 import { Justify } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
+import { loginUserAsync } from "../features/user/userSlice";
+import { useAppDispatch } from "../app/hooks";
 
 const SignUp = () => {
+  const dispatch = useAppDispatch();
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const lang = useAppSelector((state) => state.language.value);
 
+  const handleLogin = () => {
+    const response = dispatch(
+      loginUserAsync({ email: email, password: password })
+    );
+    console.log("response", response);
+  };
   useEffect(() => {
     setDirection(lang === "ar" ? "row" : "row-reverse");
     console.log("lang", lang);
@@ -37,7 +48,8 @@ const SignUp = () => {
                   <Form.Control
                     className="inputs"
                     type="text"
-                    placeholder="Enter user name"
+                    placeholder="Enter user name or passsword"
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </Form.Group>
 
@@ -47,19 +59,22 @@ const SignUp = () => {
                     className="inputs"
                     type="password"
                     placeholder="Password"
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </Form.Group>
 
                 <div className="submit-container">
-                  <Link to="/courses">
-                    <Button
-                      className="join_button"
-                      variant="warning"
-                      type="submit"
-                    >
-                      <div>الدخول</div>
-                    </Button>
-                  </Link>
+                  {/*                   <Link to="/courses">
+                   */}{" "}
+                  <Button
+                    className="join_button"
+                    variant="warning"
+                    onClick={() => handleLogin()}
+                  >
+                    <div>الدخول</div>
+                  </Button>
+                  {/*                   </Link>
+                   */}{" "}
                 </div>
 
                 <div className="or_keyword">أو</div>

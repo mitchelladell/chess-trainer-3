@@ -54,12 +54,13 @@
 
 .flex-item.item-text {
   width: 25vw;
-  height: 65vh;
+  height: 75vh;
 }
 
 .button_container {
   margin-top: 5%;
-  margin-right: 20%;
+  /*   margin-right: 20%;
+ */
 }
 .join_button:active,
 .join_button:hover {

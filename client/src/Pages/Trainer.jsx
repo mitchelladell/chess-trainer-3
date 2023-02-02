@@ -99,6 +99,8 @@ const Trainer = () => {
 
   const [gridMoves, setGridMoves] = useState([]);
 
+  const [tempDisplay, setTempDisplay] = useState("grid");
+
   const [correctMove, setCorrectMove] = useState(false);
   const [hasMadeMove, setHasMadeMove] = useState(false);
   const [showIncorrectMove, setShowIncorrectMove] = useState(false);
@@ -516,72 +518,76 @@ const Trainer = () => {
 
     setGame(gameCopy);
   }
+  console.log("ravs", gridPGn);
 
-  const movesGrid = () => {
-    console.log("ravs", gridPGn);
+  const MovesGrid = () => {
     return (
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-        {" "}
-        {gridPGn.map((move, index) => (
-          <div key={index} style={{ gridColumn: move.comment ? "1 / -1" : "" }}>
+        {gridPGn.map((move, index) => {
+          let prevDepth = index > 0 ? gridPGn[index - 1].depth : 0;
+
+          return (
             <div
+              key={index}
               style={{
-                cursor: "pointer",
-                fontFamily: "Montserrat-Bold",
-                fontSize: "20px",
-                margin: "5px",
-                gridColumn: "1 / -1",
-              }}
-              className={selectedMove?.id === move.id ? "highlighted-move" : ""}
-              onClick={() => {
-                let variantMoves = loadVariationMoves(formattedPgn, move);
-                console.log("selectedMove", selectedMove);
-                console.log("gridPGN", gridPGn);
-                console.log("varMoves", variantMoves);
-                console.log("move", move);
-
-                loadPosition(
-                  variantMoves.findIndex((obj) => obj.id === move.id),
-                  //    gridPGn.map((move) => move.move)
-                  variantMoves.map((move) => move.move)
-                );
-                setVariationEntered(false);
-                setVariationMoves(variantMoves);
-
-                setSelectedMove(move);
-                setCurrentMove(index);
-                setHighlightedVariationIndex(null);
+                display: prevDepth < move.depth ? "inline-grid" : "grid",
+                gridTemplateColumns: "1fr 1fr",
               }}
             >
-              <div style={{ display: "flex" }}>
-                {move.color === "b" ? "..." : `${move.move_number}. `}
-                {"--".repeat(move.depth)}
-                {gridShapes[`${move.color}${move.move[0]}`] ? (
-                  <>
-                    {gridShapes[`${move.color}${move.move[0]}`]}
-                    {move.move.substr(1, move.move.length - 1)}
-                  </>
-                ) : (
-                  move.move
-                )}{" "}
-                {annotaitons[move.nags]}
-              </div>
-            </div>
-
-            <div className="comments">
               <div
                 style={{
-                  fontSize: "18px",
-                  fontFamily: "Montserrat-Medium",
-                  color: "white",
+                  cursor: "pointer",
+                  fontFamily: "Montserrat-Bold",
+                  fontSize: "20px",
+                  margin: "5px",
+                  marginLeft: `${move.depth * 20}px`,
+                }}
+                className={
+                  selectedMove?.id === move.id ? "highlighted-move" : ""
+                }
+                onClick={() => {
+                  let variantMoves = loadVariationMoves(formattedPgn, move);
+
+                  loadPosition(
+                    variantMoves.findIndex((obj) => obj.id === move.id),
+                    variantMoves.map((move) => move.move)
+                  );
+                  setVariationEntered(false);
+                  setVariationMoves(variantMoves);
+
+                  setSelectedMove(move);
+                  setCurrentMove(index);
+                  setHighlightedVariationIndex(null);
                 }}
               >
-                {" "}
-                {move.comment}
+                <div style={{ display: "flex", flex: "0 0 100%" }}>
+                  {move.color === "b" ? "..." : `${move.move_number}. `}
+                  {gridShapes[`${move.color}${move.move[0]}`] ? (
+                    <>
+                      {gridShapes[`${move.color}${move.move[0]}`]}
+                      {move.move.substr(1, move.move.length - 1)}
+                    </>
+                  ) : (
+                    move.move
+                  )}
+                  {annotaitons[move.nags]}
+                </div>
+              </div>
+
+              <div className="comments">
+                <div
+                  style={{
+                    fontSize: "18px",
+                    fontFamily: "Montserrat-Medium",
+                    color: "white",
+                  }}
+                >
+                  {move.comment}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     );
   };
@@ -1071,7 +1077,7 @@ const Trainer = () => {
                     height: dimensions.height,
                   }}
                 >
-                  {movesGrid()}
+                  <MovesGrid />
                 </div>
               ) : (
                 <div

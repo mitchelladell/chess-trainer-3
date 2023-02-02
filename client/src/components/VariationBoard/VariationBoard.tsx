@@ -25,7 +25,7 @@ const VariationBoard: React.FC<IProps> = (props) => {
   );
   useEffect(() => {
     axios
-      .get("http://localhost:3001/pgn/1")
+      .get("http://localhost:5000/api/pgn/1")
       .then((response) => setData(response.data));
   }, []);
 

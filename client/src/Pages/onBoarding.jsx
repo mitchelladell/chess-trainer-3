@@ -29,7 +29,7 @@ const Onboarding = () => {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                fontSize: "20px",
+                fontSize: "16px",
               }}
             >
               <div style={{ color: "#DAA520", marginRight: "10px" }}>
@@ -56,7 +56,7 @@ const Onboarding = () => {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                fontSize: "20px",
+                fontSize: "16px",
               }}
             >
               <div style={{ color: "#DAA520", marginRight: "10px" }}>
@@ -77,13 +77,12 @@ const Onboarding = () => {
         />
         <Form.Check
           type={"radio"}
-          style={{ backgroundImage: "green" }}
           label={
             <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                fontSize: "20px",
+                fontSize: "16px",
               }}
             >
               <div style={{ color: "#DAA520", marginRight: "10px" }}>
@@ -162,8 +161,8 @@ const Onboarding = () => {
               backgroundImage: `url('../media/onboarding_background.png')`,
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
-              backgroundSize: "contain",
-              height: "68vh",
+              backgroundSize: "cover",
+              height: "75vh",
             }}
           ></div>
         </div>

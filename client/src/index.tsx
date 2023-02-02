@@ -40,7 +40,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "signin",
+    path: "login",
     element: (
       <Layout isLoggedIn={false}>
         <SignIn />

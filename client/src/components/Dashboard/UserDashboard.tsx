@@ -71,7 +71,7 @@ const UserDashboard: React.FC<IProps> = (props) => {
   const [pgn, setPgn] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/pgn/1").then((response) => {
+    axios.get("http://localhost:5000/api/pgn/1").then((response) => {
       setData(response.data);
     });
   }, []);

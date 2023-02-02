@@ -84,8 +84,8 @@ const SignUp = () => {
               backgroundImage: `url('../media/sign_up_background.png')`,
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
-              backgroundSize: "contain",
-              height: "65vh",
+              backgroundSize: "cover",
+              height: "75vh",
             }}
           ></div>
         </div>
