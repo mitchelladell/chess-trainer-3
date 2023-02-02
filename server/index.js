@@ -35,65 +35,6 @@ app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
-const client = new Client({
-  host: "localhost",
-  port: 5432,
-  user: "postgres",
-  password: "Ombarkab1",
-  database: "chess_test",
-});
-
-client.connect((err) => {
-  if (err) {
-    console.error("Error connecting to PostgreSQL:", err.stack);
-    return;
-  }
-  console.log("Connected to PostgreSQL");
-});
-
-client.query("SELECT to_regclass('public.users');", (err, res) => {
-  if (!res.rows[0].to_regclass) {
-    client.query(
-      "CREATE TABLE users (id serial PRIMARY KEY, name VARCHAR(50) NOT NULL, email VARCHAR(100) NOT NULL UNIQUE, password VARCHAR(100) NOT NULL);",
-      (err, res) => {
-        console.log(err ? err.stack : res.command + " table created");
-        // client.end();
-      }
-    );
-  } else {
-    console.log("Table already exists");
-    //  client.end();
-  }
-});
-
-client.query(
-  "SELECT * FROM users WHERE email = $1",
-  ["mitchelladel@gmail.com"],
-  (err, res) => {
-    if (err) {
-      console.log(err.stack);
-    } else if (res.rows.length === 0) {
-      client.query(
-        "INSERT INTO users (name, email, password) VALUES ($1, $2, $3), ($4, $5, $6)",
-        [
-          "mitchell",
-          "mitchelladel@gmail.com",
-          "ombarkab",
-          "yahya",
-          "yahyabarghash@gmai.com",
-          "yahyayahya",
-        ],
-        (err, res) => {
-          console.log(err ? err.stack : res.rowCount + " rows inserted");
-          client.end();
-        }
-      );
-    } else {
-      console.log("Email already Exists in the table, population Stopped");
-    }
-  }
-);
-
 app.post("/api/session", (req, res) => {
   const email = req.body.email;
   console.log("email", email);
@@ -165,3 +106,62 @@ app.get("/api/pgn/1", (req, res) => {
     },
   ]);
 });
+
+const client = new Client({
+  host: "localhost",
+  port: 5432,
+  user: "postgres",
+  password: "Ombarkab1",
+  database: "chess_test",
+});
+
+client.connect((err) => {
+  if (err) {
+    console.error("Error connecting to PostgreSQL:", err.stack);
+    return;
+  }
+  console.log("Connected to PostgreSQL");
+});
+
+client.query("SELECT to_regclass('public.users');", (err, res) => {
+  if (!res.rows[0].to_regclass) {
+    client.query(
+      "CREATE TABLE users (id serial PRIMARY KEY, name VARCHAR(50) NOT NULL, email VARCHAR(100) NOT NULL UNIQUE, password VARCHAR(100) NOT NULL);",
+      (err, res) => {
+        console.log(err ? err.stack : res.command + " table created");
+        // client.end();
+      }
+    );
+  } else {
+    console.log("Table already exists");
+    //  client.end();
+  }
+});
+
+client.query(
+  "SELECT * FROM users WHERE email = $1",
+  ["mitchelladel@gmail.com"],
+  (err, res) => {
+    if (err) {
+      console.log(err.stack);
+    } else if (res.rows.length === 0) {
+      client.query(
+        "INSERT INTO users (name, email, password) VALUES ($1, $2, $3), ($4, $5, $6)",
+        [
+          "mitchell",
+          "mitchelladel@gmail.com",
+          "ombarkab",
+          "yahya",
+          "yahyabarghash@gmai.com",
+          "yahyayahya",
+        ],
+        (err, res) => {
+          console.log(err ? err.stack : res.rowCount + " rows inserted");
+          client.end();
+        }
+      );
+    } else {
+      console.log("Email already Exists in the table, population Stopped");
+    }
+  }
+);

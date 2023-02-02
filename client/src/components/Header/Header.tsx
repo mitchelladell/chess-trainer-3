@@ -73,7 +73,7 @@ const Header: React.FC<IProps> = (props) => {
           <Container fluid>
             {" "}
             <Row>
-              <Col sm={4} md={4} lg={2}>
+              <Col sm={5} md={4} lg={2}>
                 <Link to="/">
                   <ChessUsityLogo />
                 </Link>
