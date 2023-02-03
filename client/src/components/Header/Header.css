@@ -52,6 +52,7 @@
   color: black;
   border: none;
   font-family: "Calibri";
+  font-size: 25px;
   font-weight: bold;
 }
 .custom-dropdown-toggle:hover {
@@ -145,7 +146,7 @@
   background: #20c7da !important;
   background-color: #20c7da !important;
   border: none !important;
-  border-top-right-radius: 30px !important;
+  border-top-right-radius: 20px !important;
   margin-left: 5px;
   margin-right: 5px;
 
@@ -161,7 +162,7 @@
 .signup_button {
   background: #20c7da !important;
   background-color: #20c7da !important;
-  border-top-left-radius: 30px !important;
+  border-top-left-radius: 20px !important;
   margin-left: 5px;
   margin-right: 5px;
 
@@ -178,6 +179,6 @@
 .signup_button:hover,
 .login_button:focus,
 .signup_button:focus {
-  background: #707070 !important;
+  background: #333333 !important;
   color: white !important;
 }
