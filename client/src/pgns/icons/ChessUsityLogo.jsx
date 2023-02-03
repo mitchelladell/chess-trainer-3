@@ -2,9 +2,9 @@ const ChessUsityLogo = () => {
   return (
     <div
       style={{
-        backgroundImage: "url('../media/chessUsity_logo.png')",
+        backgroundImage: "url('../media/chessusity_logo.png')",
         width: "234px",
-        height: "60px",
+        height: "40px",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "contain",

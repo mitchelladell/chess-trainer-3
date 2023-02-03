@@ -1,3 +1,5 @@
+import DubiousMove from "./DubiousMove";
+
 const annotationShapes = {
   $6: "url(../media/Dubious_move.png)",
   $3: "url(../media/brilliant_move.png)",
