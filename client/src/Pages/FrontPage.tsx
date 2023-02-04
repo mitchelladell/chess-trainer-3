@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
+import translations from "../consts/translations";
 
 const FrontPage = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");

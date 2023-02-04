@@ -70,68 +70,84 @@ const Header: React.FC<IProps> = (props) => {
     <div>
       {!isLoggedIn ? (
         <div className="header_container">
-          <Container>
+          <Container fluid>
             {" "}
             <Row>
-              <Col sm={5} md={4} lg={3} jusify="end">
-                <Link to="/">
-                  <ChessUsityLogo />
-                </Link>
+              <Col sm={7} md={7} lg={7} jusify="end">
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                  {" "}
+                  <Link to="/">
+                    <ChessUsityLogo />
+                  </Link>
+                  <div
+                    style={{
+                      backgroundImage: "url('../media/v_line.png')",
+                      width: "4.66px",
+                      height: "auto",
+                      marginRight: "15px",
+                      marginLeft: "15px",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      backgroundSize: "cover",
+                    }}
+                  ></div>
+                  <div className="d-flex justify-content-center align-items-center">
+                    <Dropdown className="custom-dropdown">
+                      <Dropdown.Toggle
+                        className="custom-dropdown-toggle"
+                        id="dropdown-basic"
+                      >
+                        {(translations as Translation)[lang].courses}
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu className="custom-dropdown-menu">
+                        <Dropdown.Item
+                          className="custom-dropdown-item"
+                          as={Link}
+                          to="#/action-1"
+                        >
+                          Action
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          className="custom-dropdown-item"
+                          as={Link}
+                          to="#/action-1"
+                        >
+                          Another action
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          className="custom-dropdown-item"
+                          as={Link}
+                          to="#/action-1"
+                        >
+                          Something else
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
+                </div>
               </Col>
 
               <Col style={{ margin: "auto" }}>
-                <div className="d-flex justify-content-center align-items-center">
-                  <Dropdown className="custom-dropdown">
-                    <Dropdown.Toggle
-                      className="custom-dropdown-toggle"
-                      id="dropdown-basic"
-                    >
-                      {(translations as Translation)[lang].courses}
-                    </Dropdown.Toggle>
+                {" "}
+                <div
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "right",
+                  }}
+                >
+                  <Link to="/signup">
+                    <Button variant="" className="signup_button">
+                      {(translations as Translation)[lang].signUp}
+                    </Button>{" "}
+                  </Link>
 
-                    <Dropdown.Menu className="custom-dropdown-menu">
-                      <Dropdown.Item
-                        className="custom-dropdown-item"
-                        as={Link}
-                        to="#/action-1"
-                      >
-                        Action
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className="custom-dropdown-item"
-                        as={Link}
-                        to="#/action-1"
-                      >
-                        Another action
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className="custom-dropdown-item"
-                        as={Link}
-                        to="#/action-1"
-                      >
-                        Something else
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                  <div
-                    style={{
-                      display: "flex",
-                      width: "100%",
-                      justifyContent: "right",
-                    }}
-                  >
-                    <Link to="/signup">
-                      <Button variant="" className="signup_button">
-                        {(translations as Translation)[lang].signUp}
-                      </Button>{" "}
-                    </Link>
-
-                    <Link to="/login">
-                      <Button variant="" className="login_button">
-                        {(translations as Translation)[lang].signIn}
-                      </Button>
-                    </Link>
-                  </div>
+                  <Link to="/login">
+                    <Button variant="" className="login_button">
+                      {(translations as Translation)[lang].signIn}
+                    </Button>
+                  </Link>
                 </div>
               </Col>
             </Row>
@@ -139,21 +155,102 @@ const Header: React.FC<IProps> = (props) => {
         </div>
       ) : (
         <div className="header_container">
-          <Container>
+          <Container fluid>
             <Row>
-              <Col sm={5} md={4} lg={3}>
-                <Link to="/">
-                  <ChessUsityLogo />
-                </Link>
+              <Col sm={9} md={9} lg={9} align="end">
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                  {" "}
+                  <Link to="/">
+                    <ChessUsityLogo />
+                  </Link>
+                  <div
+                    style={{
+                      backgroundImage: "url('../media/v_line.png')",
+                      width: "4.66px",
+                      height: "auto",
+                      marginRight: "15px",
+                      marginLeft: "15px",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      backgroundSize: "cover",
+                    }}
+                  ></div>
+                  <div className="d-flex justify-content-center align-items-center">
+                    <Dropdown className="custom-dropdown">
+                      <Dropdown.Toggle
+                        className="custom-dropdown-toggle"
+                        id="dropdown-basic"
+                      >
+                        {(translations as Translation)[lang].courses}
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu className="custom-dropdown-menu">
+                        <Dropdown.Item
+                          className="custom-dropdown-item"
+                          as={Link}
+                          to="#/action-1"
+                        >
+                          Action
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          className="custom-dropdown-item"
+                          as={Link}
+                          to="#/action-1"
+                        >
+                          Another action
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          className="custom-dropdown-item"
+                          as={Link}
+                          to="#/action-1"
+                        >
+                          Something else
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
+                </div>
               </Col>
-              <Col style={{ margin: "auto" }}>
-                <div style={{ display: "flex" }}>
-                  <Dropdown className="custom-dropdown">
+
+              <Col align="end">
+                <div
+                  style={{
+                    justifyContent: "right",
+                    display: "flex",
+                  }}
+                >
+                  <Notification />
+                  <Dropdown
+                    className="custom-dropdown"
+                    onToggle={toggleDropdown}
+                  >
                     <Dropdown.Toggle
-                      className="custom-dropdown-toggle"
+                      className="custom-dropdown-toggle-user"
                       id="dropdown-basic"
+                      bsPrefix="p-0"
                     >
-                      {(translations as Translation)[lang].courses}
+                      <div className="d-flex justify-content-center align-items-center ">
+                        <div className="cornet">
+                          {" "}
+                          {isDropdownOpen ? (
+                            <MdExpandLess
+                              style={{
+                                position: "absolute",
+                                bottom: "0",
+                              }}
+                            />
+                          ) : (
+                            <MdExpandMore
+                              style={{
+                                position: "absolute",
+                                bottom: "0",
+                              }}
+                            />
+                          )}
+                        </div>
+
+                        <ProfilePic />
+                      </div>
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu className="custom-dropdown-menu">
@@ -162,141 +259,80 @@ const Header: React.FC<IProps> = (props) => {
                         as={Link}
                         to="#/action-1"
                       >
-                        Action
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <UserProfileIcon />
+                          <div className="profile"> الملف الشخصى </div>
+                        </div>
                       </Dropdown.Item>
+                      <Dropdown.Divider />
                       <Dropdown.Item
                         className="custom-dropdown-item"
                         as={Link}
                         to="#/action-1"
                       >
-                        Another action
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          {" "}
+                          <SettingsIcon />
+                          <div className="settings"> الاعدادات </div>
+                        </div>
                       </Dropdown.Item>
                       <Dropdown.Item
                         className="custom-dropdown-item"
-                        as={Link}
-                        to="#/action-1"
+                        onClick={(event) => {
+                          event.preventDefault(); /* your custom logic here */
+                        }}
                       >
-                        Something else
+                        <div className="theme">
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <Form>
+                              <Form.Check
+                                type="switch"
+                                id="custom-switch"
+                                checked={lightTheme}
+                                onChange={() => setLightTheme(!lightTheme)}
+                              />
+                            </Form>
+                            الوضع النهارى{" "}
+                          </div>
+                        </div>
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        className="custom-dropdown-item"
+                        onClick={() => handleLogout()}
+                      >
+                        <div>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <SignOutIcon />
+                            <div className="sign-out"> تسجيل الخروج</div>
+                          </div>
+                        </div>
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </div>
               </Col>
-              <Col align="right" xs={4} sm={2} md={1} lg={1}>
-                <div className="d-flex justify-content-center align-items-center">
-                  <Notification />
-                </div>
-              </Col>
-              <Col xs={3} sm={3} md={3} lg={3}>
-                <Dropdown className="custom-dropdown" onToggle={toggleDropdown}>
-                  <Dropdown.Toggle
-                    className="custom-dropdown-toggle-user"
-                    id="dropdown-basic"
-                    bsPrefix="p-0"
-                  >
-                    <div className="d-flex justify-content-center align-items-center ">
-                      <div className="cornet">
-                        {" "}
-                        {isDropdownOpen ? (
-                          <MdExpandLess
-                            style={{
-                              position: "absolute",
-                              bottom: "0",
-                            }}
-                          />
-                        ) : (
-                          <MdExpandMore
-                            style={{
-                              position: "absolute",
-                              bottom: "0",
-                            }}
-                          />
-                        )}
-                      </div>
-
-                      <ProfilePic />
-                    </div>
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu className="custom-dropdown-menu">
-                    <Dropdown.Item
-                      className="custom-dropdown-item"
-                      as={Link}
-                      to="#/action-1"
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <UserProfileIcon />
-                        <div className="profile"> الملف الشخصى </div>
-                      </div>
-                    </Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item
-                      className="custom-dropdown-item"
-                      as={Link}
-                      to="#/action-1"
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        {" "}
-                        <SettingsIcon />
-                        <div className="settings"> الاعدادات </div>
-                      </div>
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      className="custom-dropdown-item"
-                      onClick={(event) => {
-                        event.preventDefault(); /* your custom logic here */
-                      }}
-                    >
-                      <div className="theme">
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <Form>
-                            <Form.Check
-                              type="switch"
-                              id="custom-switch"
-                              checked={lightTheme}
-                              onChange={() => setLightTheme(!lightTheme)}
-                            />
-                          </Form>
-                          الوضع النهارى{" "}
-                        </div>
-                      </div>
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      className="custom-dropdown-item"
-                      onClick={() => handleLogout()}
-                    >
-                      <div>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <SignOutIcon />
-                          <div className="sign-out"> تسجيل الخروج</div>
-                        </div>
-                      </div>
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Col>
             </Row>
-          </Container>{" "}
+          </Container>
         </div> //Trainer Header
       )}
     </div>

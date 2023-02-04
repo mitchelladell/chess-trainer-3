@@ -59,7 +59,12 @@ app.post("/api/session", (req, res) => {
         res.status(400).json({ error: "Invalid email or password" });
       } else {
         const token = jwt.sign(
-          { userId: user.id, userName: user.name, userEmail: user.email },
+          {
+            userId: user.id,
+            userName: user.name,
+            userEmail: user.email,
+            userRole: user.role,
+          },
           "secret-key"
         );
         res.cookie("token", token);
@@ -146,14 +151,16 @@ client.query(
       console.log(err.stack);
     } else if (res.rows.length === 0) {
       client.query(
-        "INSERT INTO users (name, email, password) VALUES ($1, $2, $3), ($4, $5, $6)",
+        "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4), ($5, $6, $7, $8)",
         [
           "mitchell",
           "mitchelladel@gmail.com",
           "ombarkab",
+          "admin",
           "yahya",
           "yahyabarghash@gmai.com",
           "yahyayahya",
+          "admin",
         ],
         (err, res) => {
           console.log(err ? err.stack : res.rowCount + " rows inserted");

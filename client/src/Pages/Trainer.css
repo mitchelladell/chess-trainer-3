@@ -236,3 +236,35 @@
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
 }
+
+.pgn-moves {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.move-row {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  padding: 8px;
+}
+
+.move-number {
+  font-weight: bold;
+  width: 20px;
+  text-align: right;
+  margin-right: 8px;
+}
+
+.move-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.variation-start {
+  margin-left: 8px;
+}
+
+.variation-end {
+  margin-left: 8px;
+}
