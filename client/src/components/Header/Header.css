@@ -52,7 +52,7 @@
   color: black;
   border: none;
   font-family: "Calibri";
-  font-size: 25px;
+  font-size: 2vw;
   font-weight: bold;
 }
 .custom-dropdown-toggle:hover {
@@ -77,7 +77,6 @@
 .custom-dropdown-toggle:active {
   color: white;
   background: black !important;
-  filter: drop-shadow(0 0 10px red);
 }
 
 .custom-dropdown-toggle:not(:focus) {
@@ -100,7 +99,6 @@
 .custom-dropdown-toggle-user:active {
   background: goldenrod !important;
   color: black !important;
-  filter: drop-shadow(0 0 10px red);
 }
 
 .custom-dropdown-toggle-user:not(:focus) {
@@ -181,4 +179,10 @@
 .signup_button:focus {
   background: #333333 !important;
   color: white !important;
+}
+
+@media (max-width: 800px) {
+  .custom-dropdown-toggle {
+    font-size: 17px;
+  }
 }

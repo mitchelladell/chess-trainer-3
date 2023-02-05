@@ -18,6 +18,7 @@ import Onboarding from "./Pages/onBoarding";
 import AllCourses from "./Pages/AllCourses";
 import { useAppSelector } from "./app/hooks";
 import Cookies from "js-cookie";
+import UserProfile from "./Pages/UserProfile";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -104,6 +105,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <AllCourses />
+      </Layout>
+    ),
+  },
+  {
+    path: "profile",
+    element: (
+      <Layout>
+        <UserProfile />
       </Layout>
     ),
   },
