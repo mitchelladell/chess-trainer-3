@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAppSelector } from "../app/hooks";
+import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "./user_profile.css";
 
@@ -34,10 +35,12 @@ const UserProfile = () => {
             <Col align={"end"} xs={12} sm={9} md={6} lg={6}>
               {" "}
               <Button className="user_profile_button">المشتـــريات</Button>
-              <Button className="user_profile_button">
-                {" "}
-                تعديل الملف الشخصـي
-              </Button>
+              <Link to="/profilesettings">
+                <Button className="user_profile_button">
+                  {" "}
+                  تعديل الملف الشخصـي
+                </Button>
+              </Link>
             </Col>
           </Row>
         </Container>

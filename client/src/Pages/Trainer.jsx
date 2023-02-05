@@ -226,11 +226,11 @@ const Trainer = () => {
     }
     return moves;
   }
+  const myRef = useRef(null);
+  const executeScroll = () => myRef.current.scrollIntoView();
 
   const ChessMove = ({ key, move }) => {
     const indent = move.depth * 2;
-    const myRef = useRef(null);
-    const executeScroll = () => myRef.current.scrollIntoView();
 
     return (
       <div
@@ -245,6 +245,7 @@ const Trainer = () => {
           marginLeft: indent,
           flexWrap: "wrap",
         }}
+        ref={myRef}
       >
         <div
           style={{
@@ -256,6 +257,7 @@ const Trainer = () => {
           onClick={() => {
             let variantMoves = loadVariationMoves(formattedPgn, move);
             console.log("movee", move);
+            executeScroll();
 
             loadPosition(
               variantMoves.findIndex((obj) => obj.id === move.id),
@@ -357,7 +359,10 @@ const Trainer = () => {
   };
 
   const ChessMoves = ({ moves }) => {
-    console.log("movessss", moves);
+    const myRef = useRef(null);
+
+    const executeScroll = () => myRef.current.scrollIntoView();
+
     return (
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
         {moves.map((move) => (

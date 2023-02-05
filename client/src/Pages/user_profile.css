@@ -26,6 +26,7 @@
   box-shadow: -5px 0px 24px #000000b3;
   opacity: 1;
   width: 100%;
+  padding: 2%;
 }
 
 .item_keyword {
@@ -47,9 +48,9 @@
   width: fit-content;
   height: fit-content;
 
-  font-size: 1.5vw;
+  font-size: 2vw;
   font-family: "Calibri";
-  border-radius: 37px;
+  border-radius: 15px;
   border: 1px solid #d2ab32;
   color: black;
 }

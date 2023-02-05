@@ -1,0 +1,55 @@
+.settings_title {
+  color: white;
+  font-size: 2vw;
+}
+
+.user_settings_form {
+  color: white;
+  font-size: 2vw;
+  margin-left: 50%;
+}
+.inputs {
+  background-color: white;
+}
+
+.profile_save_container {
+  align-items: end;
+  margin: 10px;
+}
+
+.follow_button .dropdown-toggle {
+  /* styles for the dropdown toggle button */
+  background: #818181;
+  border-radius: 3px;
+  border: 1px solid #818181;
+  color: white;
+  font-size: 1.5vw;
+}
+
+.follow_button .dropdown-menu {
+  /* styles for the dropdown menu */
+  background: #333333;
+  border-radius: 3px;
+  color: white;
+  font-size: 1.5vw;
+}
+.follow_button .dropdown-menu .dropdown-item,
+.follow_button .dropdown-menu .dropdown-item:active {
+  border-radius: 3px;
+  color: white;
+  font-size: 1.5vw;
+}
+.follow_button .dropdown-toggle:active,
+.follow_button .dropdown-menu .dropdown-item:hover,
+.follow_button .dropdown-menu .dropdown-item:focus,
+.follow_button .dropdown-menu .dropdown-item:active {
+  background: black;
+}
+
+@media (max-width: 800px) {
+  .user_settings_form,
+  .settings_title {
+    font-size: 18px;
+    margin-left: 2%;
+  }
+}
