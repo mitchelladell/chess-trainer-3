@@ -42,11 +42,11 @@
 
 .user_profile_button {
   background: #daa520 !important;
+  font-weight: bold;
 
   width: fit-content;
   height: fit-content;
-  padding-left: 10%;
-  padding-right: 10%;
+
   font-size: 1.5vw;
   font-family: "Calibri";
   border-radius: 37px;

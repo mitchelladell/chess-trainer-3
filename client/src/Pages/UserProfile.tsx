@@ -62,7 +62,17 @@ const UserProfile = () => {
                 ))}
               </Col>
               <Col align={"end"} xs={12} sm={9} md={6} lg={6}>
-                <div>Hello Again</div>
+                <div
+                  style={{
+                    backgroundImage: `url('../media/empty_profile_photo.png')`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "right",
+                    backgroundSize: "contain",
+                    height: "111px",
+                    width: "95%",
+                    marginTop: "15px",
+                  }}
+                ></div>
               </Col>
             </Row>
           </div>
