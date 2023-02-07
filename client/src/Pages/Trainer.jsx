@@ -226,8 +226,6 @@ const Trainer = () => {
     }
     return moves;
   }
-  const myRef = useRef(null);
-  const executeScroll = () => myRef.current.scrollIntoView();
 
   const ChessMove = ({ key, move }) => {
     const indent = move.depth * 2;
@@ -245,7 +243,6 @@ const Trainer = () => {
           marginLeft: indent,
           flexWrap: "wrap",
         }}
-        ref={myRef}
       >
         <div
           style={{
@@ -257,7 +254,6 @@ const Trainer = () => {
           onClick={() => {
             let variantMoves = loadVariationMoves(formattedPgn, move);
             console.log("movee", move);
-            executeScroll();
 
             loadPosition(
               variantMoves.findIndex((obj) => obj.id === move.id),
@@ -624,6 +620,8 @@ const Trainer = () => {
       // left arrow
     }
     if (e.keyCode == "38") {
+      e.preventDefault();
+
       resetGame();
       // up arrow
     } else if (e.keyCode == "39") {
@@ -636,6 +634,8 @@ const Trainer = () => {
     }
     // right arrow
     else if (e.keyCode == "40") {
+      e.preventDefault();
+
       getLastMove();
       setStudyStarted(true);
       // down arrow

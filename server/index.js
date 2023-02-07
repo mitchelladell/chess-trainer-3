@@ -35,49 +35,6 @@ app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
-app.post("/api/session", (req, res) => {
-  const email = req.body.email;
-  console.log("email", email);
-  const password = req.body.password;
-  console.log("password", password);
-
-  //client.connect();
-
-  client.query(
-    "SELECT * FROM users WHERE email = $1",
-    [email],
-    (err, result) => {
-      if (err) {
-        res.status(500).json({ error: "Failed to retrieve user" });
-      }
-
-      const user = result.rows[0];
-
-      if (!user) {
-        res.status(400).json({ error: "Invalid email or password" });
-      } else if (user.password !== password) {
-        res.status(400).json({ error: "Invalid email or password" });
-      } else {
-        const token = jwt.sign(
-          {
-            userId: user.id,
-            userName: user.name,
-            userEmail: user.email,
-            userRole: user.role,
-          },
-          "secret-key"
-        );
-        res.cookie("token", token);
-        res.json({ token: token });
-      }
-    }
-  );
-});
-app.post("/api/logout", (req, res) => {
-  res.cookie("token", "", { expires: new Date(0) });
-  res.send({ message: "Successfully logged out" });
-});
-
 app.get("/api/pgn/1", (req, res) => {
   //Each Pgn param returns the whole course variations.
   res.json([
@@ -112,7 +69,7 @@ app.get("/api/pgn/1", (req, res) => {
   ]);
 });
 
-const client = new Client({
+/* const client = new Client({
   host: "localhost",
   port: 5432,
   user: "postgres",
@@ -172,3 +129,47 @@ client.query(
     }
   }
 );
+
+app.post("/api/session", (req, res) => {
+  const email = req.body.email;
+  console.log("email", email);
+  const password = req.body.password;
+  console.log("password", password);
+
+  //client.connect();
+
+  client.query(
+    "SELECT * FROM users WHERE email = $1",
+    [email],
+    (err, result) => {
+      if (err) {
+        res.status(500).json({ error: "Failed to retrieve user" });
+      }
+
+      const user = result.rows[0];
+
+      if (!user) {
+        res.status(400).json({ error: "Invalid email or password" });
+      } else if (user.password !== password) {
+        res.status(400).json({ error: "Invalid email or password" });
+      } else {
+        const token = jwt.sign(
+          {
+            userId: user.id,
+            userName: user.name,
+            userEmail: user.email,
+            userRole: user.role,
+          },
+          "secret-key"
+        );
+        res.cookie("token", token);
+        res.json({ token: token });
+      }
+    }
+  );
+});
+app.post("/api/logout", (req, res) => {
+  res.cookie("token", "", { expires: new Date(0) });
+  res.send({ message: "Successfully logged out" });
+});
+ */
