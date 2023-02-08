@@ -84,11 +84,11 @@ const UserDashboard: React.FC<IProps> = (props) => {
   console.log("pgnWithName", pgnWithName);
   let totalCount = 0;
 
-  pgnWithName.forEach((pgnwithname: any) => {
+  /*  pgnWithName.forEach((pgnwithname: any) => {
     const matches = pgnwithname.pgn.match(/\(/g);
     const count = matches ? matches.length + 1 : 1;
     totalCount += count;
-  });
+  }); */
 
   return (
     <div className="user_dashboard_container">

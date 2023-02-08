@@ -18,7 +18,7 @@ type Translation = {
 };
 
 const VariationBoard: React.FC<IProps> = (props) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>([]);
 
   const lang = useSelector(
     (state: { language: { value: string } }) => state.language.value
@@ -29,52 +29,48 @@ const VariationBoard: React.FC<IProps> = (props) => {
       .then((response) => setData(response.data));
   }, []);
 
-  const pgnWithName = data.map((obj) => {
-    const [name, pgn] = Object.entries(obj)[0];
-    return { name, pgn };
-  });
-
-  console.log("pgnNames", pgnWithName);
+  //console.log("pgnNames", pgnWithName);
 
   return (
     <Container fluid>
-      {data.map((obj) => (
-        <div key={Object.keys(obj)[0]}>
-          <Row>
-            <Col xs={12} sm={12} md={6} lg={6}>
-              <div className="variation_board">
-                <div className="variation_name">
-                  <Link
-                    to={`/trainer/${encodeURIComponent(
-                      obj[Object.keys(obj)[0]]
-                    )}`}
-                    state={{ pgnWithName: pgnWithName }}
-                  >
-                    {" "}
-                    {Object.keys(obj)[0]}: {obj[Object.keys(obj)[0]]}
-                  </Link>
-                </div>{" "}
-                <div className="variation">
-                  <Video />
-                </div>{" "}
-                <div>
-                  <Link
-                    to={`/trainer/${encodeURIComponent(
-                      obj[Object.keys(obj)[0]]
-                    )}`}
-                    state={{ pgnWithName: pgnWithName }}
-                  >
-                    <Button variant="warning">
+      {data.length > 0 &&
+        data.map((item: any) => (
+          <div key={item.id}>
+            <Row>
+              <Col xs={12} sm={12} md={6} lg={6}>
+                <div className="variation_board">
+                  <div className="variation_name">
+                    <Link
+                      to={`/trainer/${encodeURIComponent(item.value)}`}
+                      state={{
+                        pgnWithName: { name: item.name, pgn: item.value },
+                      }}
+                    >
                       {" "}
-                      {(translations as Translation)[lang].turboCoach}
-                    </Button>
-                  </Link>
+                      {item.value}
+                    </Link>
+                  </div>{" "}
+                  <div className="variation">
+                    <Video />
+                  </div>{" "}
+                  <div>
+                    <Link
+                      to={`/trainer/${encodeURIComponent(item.value)}`}
+                      state={{
+                        pgnWithName: { name: item.name, pgn: item.value },
+                      }}
+                    >
+                      <Button variant="warning">
+                        {" "}
+                        {(translations as Translation)[lang].turboCoach}
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            </Col>
-          </Row>
-        </div>
-      ))}
+              </Col>
+            </Row>
+          </div>
+        ))}
     </Container>
   );
 };

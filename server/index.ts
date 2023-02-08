@@ -1,41 +1,22 @@
-const express = require("express");
-const { Client } = require("pg");
-const jwt = require("jsonwebtoken");
-var bodyParser = require("body-parser");
-require("dotenv").config();
-
-const PORT = process.env.PORT || 5000;
-
+import * as express from "express";
+import * as bodyParser from "body-parser";
+import * as logger from "morgan";
+import * as methodOverride from "method-override";
+import * as cors from "cors";
+import { prisma } from "../prisma";
+import router from "./routes";
 const app = express();
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, Content-Length, X-Requested-With, Accept"
-  );
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-
-  next();
-});
-
+app.use(logger("dev"));
 app.use(bodyParser.json());
-
-app.use("/sounds", express.static("public"));
-
-app.listen(PORT, () => {
-  console.log(`Server listening on ${5000}`);
+app.use(methodOverride());
+app.use(cors());
+app.listen(process.env.PORT || 5000, () => {
+  console.log("listing on port 5000");
 });
 
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from server!" });
-});
-
-app.get("/api/pgn/1", (req, res) => {
+app.use("/", router);
+/* app.get("/api/pgn/1", (req: any, res: any) => {
   //Each Pgn param returns the whole course variations.
   res.json([
     {
@@ -67,109 +48,4 @@ app.get("/api/pgn/1", (req, res) => {
         "1. d4 Nf6 2. c4 c5 3. d5 e6 4. g3 exd5 5. cxd5 b5 $5 (5... d6 { Tranposition to 'normal' fianchetto}) 6. Bg2 (6. e4 Nxe4 7. Qe2 (7. Bg2 Nd6 8. Nf3 Be7 9. O-O O-O 10. Bf4 (10. a4 Bb7 11. Bf4 b4 12. Nbd2 Ne8 13. Ne4 d6 $11) 10... Na6 11. Re1 Bb7 (11... Re8 $5 $11) 12. Nc3 Nc7 $11) 7... Qe7 8. Bg2 f5 $5 (8... Nd6 9. Be3 Na6 $11) 9. Nh3 (9. d6 Qe6 10. Nc3 Bxd6 11. g4 g6 12. gxf5 gxf5 $13) 9... b4 10. d6 (10. Be3 g6 11. Qc2 d6 12. Nd2 Bg7 13. Nxe4 fxe4 14. Ng5 O-O 15. Bxe4 Bf5 $11) (10. O-O Ba6 11. Qc2 Bxf1 12. Kxf1 h6 13. Nd2 Nd6 14. Nb3 Qf6 15. Nxc5 Be7 $11) 10... Qxd6 11. f3 Ba6 12. Qe3 Nc6 13. fxe4 Be7 14. e5 $6 (14. Qd2 Nd4 15. e5 Qxe5+ $36) (14. exf5 O-O 15. Qe4 Rae8 16. Qd5+ Kh8 17. Qxd6 Bxd6+ 18. Kd1 Rxf5 $36) 14... Nxe5 $1 15. Bxa8 O-O $36) (6. Nf3 Bb7 7. e4 Nxe4 8. Bg2 (8. Bxb5 Qa5+ 9. Nfd2 Bxd5 10. O-O Qxb5 11. Nxe4 Qc6 12. Nbc3 Be6 $11) 8... Bd6 (8... Be7 $11) 9. O-O (9. Nh4 Nf6 10. Nf5 O-O 11. Nxd6 Qe7+ 12. Ne4 Nxe4 13. O-O Nd6 $11) 9... O-O 10. Nh4 (10. Re1 f5 11. Nc3 Nxc3 12. bxc3 Na6 $11) 10... Nf6 11. Nf5 Be5 12. f4 Bd4+ 13. Nxd4 cxd4 14. Qxd4 Na6 $11) 6... d6 7. b4 (7. e4 Nbd7 8. f4 (8. Ne2 g6 9. O-O Bg7 10. Bf4 Qb6 11. Nd2 O-O 12. a4 Nh5 13. Bg5 b4 $11) 8... g6 9. Qe2 Bg7 10. e5 dxe5 (10... O-O $5 11. exf6 Nxf6 12. Qxb5 Re8+ 13. Ne2 Rb8 $36) 11. fxe5 O-O 12. exf6 Nxf6 13. Qxb5 Rb8 14. Qd3 (14. Qxb8 $2 Re8+ 15. Ne2 Rxe2+ $19) 14... Re8+ $36) 7... Bb7 8. bxc5 dxc5 9. e4 Bd6 10. Nd2 O-O 11. Ne2 Re8 12. O-O Nbd7 13. a4 (13. Bb2 a5 14. Rc1 a4 15. a3 Ne5 16. Qc2 Qd7 $11) 13... b4 14. Nc4 Ne5 15. Nxd6 Qxd6 $11 *",
     },
   ]);
-});
-
-/* const client = new Client({
-  host: "localhost",
-  port: 5432,
-  user: "postgres",
-  password: "Ombarkab1",
-  database: "chess_test",
-});
-
-client.connect((err) => {
-  if (err) {
-    console.error("Error connecting to PostgreSQL:", err.stack);
-    return;
-  }
-  console.log("Connected to PostgreSQL");
-});
-
-client.query("SELECT to_regclass('public.users');", (err, res) => {
-  if (!res.rows[0].to_regclass) {
-    client.query(
-      "CREATE TABLE users (id serial PRIMARY KEY, name VARCHAR(50) NOT NULL, email VARCHAR(100) NOT NULL UNIQUE, password VARCHAR(100) NOT NULL);",
-      (err, res) => {
-        console.log(err ? err.stack : res.command + " table created");
-        // client.end();
-      }
-    );
-  } else {
-    console.log("Table already exists");
-    //  client.end();
-  }
-});
-
-client.query(
-  "SELECT * FROM users WHERE email = $1",
-  ["mitchelladel@gmail.com"],
-  (err, res) => {
-    if (err) {
-      console.log(err.stack);
-    } else if (res.rows.length === 0) {
-      client.query(
-        "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4), ($5, $6, $7, $8)",
-        [
-          "mitchell",
-          "mitchelladel@gmail.com",
-          "ombarkab",
-          "admin",
-          "yahya",
-          "yahyabarghash@gmai.com",
-          "yahyayahya",
-          "admin",
-        ],
-        (err, res) => {
-          console.log(err ? err.stack : res.rowCount + " rows inserted");
-          client.end();
-        }
-      );
-    } else {
-      console.log("Email already Exists in the table, population Stopped");
-    }
-  }
-);
-
-app.post("/api/session", (req, res) => {
-  const email = req.body.email;
-  console.log("email", email);
-  const password = req.body.password;
-  console.log("password", password);
-
-  //client.connect();
-
-  client.query(
-    "SELECT * FROM users WHERE email = $1",
-    [email],
-    (err, result) => {
-      if (err) {
-        res.status(500).json({ error: "Failed to retrieve user" });
-      }
-
-      const user = result.rows[0];
-
-      if (!user) {
-        res.status(400).json({ error: "Invalid email or password" });
-      } else if (user.password !== password) {
-        res.status(400).json({ error: "Invalid email or password" });
-      } else {
-        const token = jwt.sign(
-          {
-            userId: user.id,
-            userName: user.name,
-            userEmail: user.email,
-            userRole: user.role,
-          },
-          "secret-key"
-        );
-        res.cookie("token", token);
-        res.json({ token: token });
-      }
-    }
-  );
-});
-app.post("/api/logout", (req, res) => {
-  res.cookie("token", "", { expires: new Date(0) });
-  res.send({ message: "Successfully logged out" });
-});
- */
+}); */
