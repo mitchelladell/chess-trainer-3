@@ -43,7 +43,7 @@ const VariationBoard: React.FC<IProps> = (props) => {
                     <Link
                       to={`/trainer/${encodeURIComponent(item.value)}`}
                       state={{
-                        pgnWithName: { name: item.name, pgn: item.value },
+                        pgnWithName: data,
                       }}
                     >
                       {" "}
@@ -57,7 +57,7 @@ const VariationBoard: React.FC<IProps> = (props) => {
                     <Link
                       to={`/trainer/${encodeURIComponent(item.value)}`}
                       state={{
-                        pgnWithName: { name: item.name, pgn: item.value },
+                        pgnWithName: data,
                       }}
                     >
                       <Button variant="warning">

@@ -595,13 +595,14 @@ const Trainer = () => {
   };
 
   const handleNextPageClick = () => {
-    setPgn(pgnList[page + 1].pgn);
+    console.log("pgnList", pgnList);
+    setPgn(pgnList[page + 1].value);
     setPage(page + 1);
     resetGame();
   };
 
   const handlePreviousPageClick = () => {
-    setPgn(pgnList[page - 1].pgn);
+    setPgn(pgnList[page - 1].value);
     setPage(page - 1);
     resetGame();
   };
