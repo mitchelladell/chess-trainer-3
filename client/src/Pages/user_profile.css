@@ -3,6 +3,7 @@
   justify-content: space-between;
   background: grey;
   margin: 15px;
+  width: 80%;
 }
 
 .item_style {
@@ -54,6 +55,7 @@
   border: 1px solid #d2ab32;
   color: black;
 }
+
 .user_profile_button:active,
 .user_profile_button:hover {
   border: 1px solid black !important;
