@@ -19,6 +19,7 @@ const SignUp = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
+  const [logResponse, setLogResponse] = useState("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -27,9 +28,13 @@ const SignUp = () => {
   const handleLogin = () => {
     dispatch(loginUserAsync({ email: email, password: password })).then(
       (response) => {
-        if (response.payload.token) {
-          //  dispatch()
+        console.log("responseee", response);
+        if (response?.payload?.status === 200) {
+          setLogResponse(response.payload.message);
+
           navigate("/courses");
+        } else {
+          setLogResponse(response.payload.response.data.error);
         }
         console.log("resposne", response);
       }
@@ -67,6 +72,7 @@ const SignUp = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </Form.Group>
+                <div> {logResponse}</div>
 
                 <div className="submit-container">
                   {/*                   <Link to="/courses">

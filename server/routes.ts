@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "../prisma";
+import * as jwt from "jsonwebtoken";
 
 const router = Router();
 
@@ -35,7 +36,21 @@ router.post("/api/session", async (req: Request, res: Response) => {
   } else if (user.password !== req.body.password) {
     res.status(400).send({ error: "Incorrect password" });
   } else {
-    res.send({ message: "Successfully logged in" });
+    const token = jwt.sign(
+      {
+        userId: user.id,
+        userName: user.name,
+        userEmail: user.email,
+        /*         userRole: user.role,
+         */
+      },
+      "secret-key"
+    );
+    res.cookie("token", token);
+    // res.json({ token: token });
+    res
+      .status(200)
+      .send({ status: 200, message: "Successfully logged in", token });
   }
 });
 export default router;
