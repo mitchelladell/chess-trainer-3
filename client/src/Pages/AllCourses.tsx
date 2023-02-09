@@ -12,6 +12,12 @@ const AllCourses = () => {
   const [coursesFilterChoice, setCoursesFilterChoice] = useState("");
   const [levelsFilterChoice, setLevelsFilterChoice] = useState("");
 
+  const handleCancelFilters = () => {
+    setLangFilterChoice("");
+    setCoursesFilterChoice("");
+    setLevelsFilterChoice("");
+  };
+
   let coursesList = [
     "opening,",
     "endgame",
@@ -49,6 +55,19 @@ const AllCourses = () => {
                 <Link to="/">Chessusity </Link>
                 {">"} All Courses
               </div>
+              <Col xs={7} sm={9} md={9} lg={9}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    textAlign: "end",
+                  }}
+                >
+                  {coursesList.map((course) => (
+                    <div key={course} className="course-item" />
+                  ))}
+                </div>
+              </Col>
               <Col xs={5} sm={3} md={3} lg={3}>
                 <div
                   style={{
@@ -60,47 +79,92 @@ const AllCourses = () => {
                 >
                   <div className="filter_title">{"هيئة اللعب"} </div>
                   {coursesFilter.map((item) => (
-                    <div
-                      className="filter_item"
-                      onClick={() => setCoursesFilterChoice(item)}
-                    >
-                      {item}{" "}
+                    <div style={{ display: "flex" }}>
+                      <div
+                        className="filter_item"
+                        onClick={() => setCoursesFilterChoice(item)}
+                      >
+                        {item}
+                      </div>
+                      <div
+                        className={coursesFilterChoice === item ? "arrow" : ""}
+                        style={{
+                          width: "20px",
+                          height: "20px",
+                          backgroundRepeat: "no-repeat",
+                          marginTop: "auto",
+                          marginLeft: "3px",
+                          marginRight: "3px",
+                          marginBottom: "auto",
+                          backgroundPosition: "center",
+                        }}
+                      ></div>
                     </div>
                   ))}
                   <div className="filter_title"> {"اللغـــة"}</div>
 
                   {langFilter.map((item) => (
-                    <div
-                      className="filter_item"
-                      onClick={() => setLangFilterChoice(item)}
-                    >
-                      {item}{" "}
+                    <div style={{ display: "flex" }}>
+                      <div
+                        className="filter_item"
+                        onClick={() => setLangFilterChoice(item)}
+                      >
+                        {item}
+                      </div>
+                      <div
+                        className={langFilterChoice === item ? "arrow" : ""}
+                        style={{
+                          width: "20px",
+                          height: "20px",
+                          backgroundRepeat: "no-repeat",
+                          marginTop: "auto",
+                          marginLeft: "3px",
+                          marginRight: "3px",
+                          marginBottom: "auto",
+                          backgroundPosition: "center",
+                        }}
+                      >
+                        {" "}
+                      </div>
                     </div>
                   ))}
                   <div className="filter_title"> {"مدى الصعوبة"}</div>
 
                   {levelsFilter.map((item) => (
-                    <div
-                      className="filter_item"
-                      onClick={() => setLevelsFilterChoice(item)}
-                    >
-                      {item}{" "}
+                    <div style={{ display: "flex" }}>
+                      <div
+                        className="filter_item"
+                        onClick={() => setLevelsFilterChoice(item)}
+                      >
+                        {item}
+                      </div>
+                      <div
+                        className={levelsFilterChoice === item ? "arrow" : ""}
+                        style={{
+                          width: "20px",
+                          height: "20px",
+                          backgroundRepeat: "no-repeat",
+                          marginTop: "auto",
+                          marginLeft: "3px",
+                          marginRight: "3px",
+                          marginBottom: "auto",
+                          backgroundPosition: "center",
+                        }}
+                      >
+                        {" "}
+                      </div>
                     </div>
                   ))}
 
-                  <div style={{ marginTop: "15px" }}>
+                  <div style={{ marginTop: "30px", textAlign: "center" }}>
                     {" "}
-                    <Button className="cancel_filter_button">
+                    <Button
+                      className="cancel_filter_button"
+                      onClick={() => handleCancelFilters()}
+                    >
                       الغاء كل المرشحات
                     </Button>{" "}
                   </div>
-                </div>
-              </Col>
-              <Col xs={7} sm={9} md={9} lg={9}>
-                <div style={{ display: "flex", flexWrap: "wrap" }}>
-                  {coursesList.map((course) => (
-                    <div key={course} className="course-item" />
-                  ))}
                 </div>
               </Col>
             </Row>
