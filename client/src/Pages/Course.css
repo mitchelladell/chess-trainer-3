@@ -1,0 +1,79 @@
+.course-info {
+  width: 100%;
+  margin-top: 10px;
+  background-color: white;
+  padding: 5%;
+  border-radius: 13px;
+}
+
+.info-title {
+  text-align: center;
+  font-size: 1.5vw;
+  font-weight: bold;
+}
+
+.prespective {
+  justify-content: space-between;
+  display: flex;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.key-title {
+  color: #daa520;
+  font-size: 1.7vw;
+  text-align: right;
+}
+
+.course-time {
+  margin-left: 50%;
+  justify-content: space-between;
+  display: flex;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.key-value {
+  font-family: "Calibri";
+  font-size: 1.3vw;
+  font-weight: bold;
+}
+
+.course-intro {
+  display: flex;
+}
+
+.course-buy-buttons {
+  background: #daa520 !important;
+  font-weight: bold;
+  width: fit-content;
+  height: fit-content;
+  font-size: 1.5vw;
+  font-family: "Calibri";
+  margin: 5px;
+
+  border: 1px solid #d2ab32;
+  color: black;
+}
+
+.course-buy-buttons:active,
+.course-buy-buttons:hover {
+  border: 1px solid black !important;
+  background: black !important;
+
+  color: #d2ab32 !important;
+}
+
+.course-buy-buttons:focus {
+  background: black !important;
+  color: #d2ab32;
+}
+
+@media (max-width: 800px) {
+  .key-title,
+  .key-value,
+  .course-buy-buttons,
+  .info-title {
+    font-size: 18px;
+  }
+}

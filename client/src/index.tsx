@@ -20,6 +20,7 @@ import { useAppSelector } from "./app/hooks";
 import Cookies from "js-cookie";
 import UserProfile from "./Pages/UserProfile";
 import UserProfileSettings from "./Pages/UserProfileSettings";
+import Course from "./Pages/Course";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -122,6 +123,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <UserProfileSettings />
+      </Layout>
+    ),
+  },
+  {
+    path: "course",
+    element: (
+      <Layout>
+        <Course />
       </Layout>
     ),
   },
