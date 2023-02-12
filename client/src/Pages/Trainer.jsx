@@ -146,14 +146,6 @@ const Trainer = () => {
     };
   }, []);
 
-  useEffect(() => {
-    //  console.log("selectedMove", selectedMove);
-    if (selectedMove === null) {
-      setFromSquare(null);
-      setToSquare(null);
-    }
-  }, [selectedMove]);
-
   const [dimensions, setDimensions] = useState({
     width:
       window.innerWidth > window.innerHeight
@@ -164,6 +156,49 @@ const Trainer = () => {
         ? window.innerHeight * 0.7
         : window.innerWidth * 0.7,
   });
+
+  useEffect(() => {
+    const toSquareElement = document.querySelector(
+      `[data-square="${toSquare}"]`
+    );
+    console.log("ToSquareelemnet", toSquareElement);
+
+    if (toSquareElement) {
+      const toSquareDecorator = document.createElement("div");
+      toSquareElement.className = "decorator";
+
+      toSquareDecorator.style.background = annotationShapes[selectedMove?.nags];
+      toSquareDecorator.style.width = "30px";
+      toSquareDecorator.style.height = "30px";
+      toSquareDecorator.style.backgroundSize = "contain";
+
+      toSquareDecorator.style.position = "absolute";
+      toSquareDecorator.style.right = `${
+        toSquareElement.offsetLeft - 15 - dimensions.width / 8
+      }px`;
+      toSquareDecorator.style.top = `${
+        toSquareElement.offsetTop +
+        toSquareElement.offsetHeight -
+        15 -
+        dimensions.width / 8
+      }px`;
+      toSquareDecorator.style.zIndex = "10";
+
+      toSquareElement.parentNode.insertBefore(
+        toSquareDecorator,
+        toSquareElement
+      );
+
+      return () => {
+        toSquareDecorator.remove();
+      };
+    }
+
+    if (selectedMove === null) {
+      setFromSquare(null);
+      setToSquare(null);
+    }
+  }, [selectedMove, toSquare, dimensions.width]);
 
   useEffect(() => {
     readPGN(pgn).then((formattedPgn) => {
@@ -773,6 +808,7 @@ const Trainer = () => {
         game.history({ verbose: true }).length - 1
       ].to
     );
+
     setFromSquare(
       game.history({ verbose: true })[
         game.history({ verbose: true }).length - 1
@@ -1025,15 +1061,14 @@ const Trainer = () => {
                       [toSquare]: {
                         position: "relative",
                         background: "rgba(154, 133, 22, 0.7)",
-                        backgroundImage: `${
+                        /*        backgroundImage: `${
                           annotationShapes[selectedMove?.nags]
                         }`,
                         backgroundPosition: "right -4px top -4px",
 
                         backgroundRepeat: "no-repeat",
-                        backgroundSize: "27px",
+                        backgroundSize: "27px", */
                       },
-
                       [fromSquare]: {
                         background: "rgba(192, 182, 56, .7)",
                       },

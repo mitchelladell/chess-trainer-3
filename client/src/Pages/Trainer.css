@@ -268,3 +268,10 @@
 .variation-end {
   margin-left: 8px;
 }
+
+/* .decorator::before {
+  content: "<<";
+  background-color: #ffba10;
+  border-color: black;
+  border-style: dotted;
+} */
