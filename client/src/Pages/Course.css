@@ -1,9 +1,9 @@
 .course-info {
   width: 100%;
   margin-top: 10px;
-  background-color: white;
   padding: 5%;
   border-radius: 13px;
+  background: linear-gradient(to left top, #808080, #ffffff);
 }
 
 .info-title {
@@ -41,6 +41,12 @@
 
 .course-intro {
   display: flex;
+}
+
+.ads-area {
+  border-radius: 20px;
+  border: 3px solid white;
+  height: 100%;
 }
 
 .course-buy-buttons {

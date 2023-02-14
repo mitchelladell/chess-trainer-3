@@ -21,6 +21,7 @@ import Cookies from "js-cookie";
 import UserProfile from "./Pages/UserProfile";
 import UserProfileSettings from "./Pages/UserProfileSettings";
 import Course from "./Pages/Course";
+import ShoppingCart from "./Pages/ShoppingCart";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -118,6 +119,15 @@ const router = createBrowserRouter([
       </Layout>
     ),
   },
+  {
+    path: "shoppingCart",
+    element: (
+      <Layout>
+        <ShoppingCart />
+      </Layout>
+    ),
+  },
+
   {
     path: "profilesettings",
     element: (

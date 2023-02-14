@@ -18,6 +18,10 @@ const Course = () => {
       <div className="flex-container" style={{ flexDirection: direction }}>
         <Container>
           <Row>
+            <Col xs={5} sm={5} md={3} lg={3}>
+              <div className="ads-area"> Hello</div>
+            </Col>
+
             <Col xs={9} sm={9} md={3} lg={3}>
               <div className="course-info">
                 <div className="info-title"> معلومات الدورة التدريبية</div>{" "}
@@ -79,8 +83,36 @@ const Course = () => {
                   30
                 </div>
               </div>
+              <div className="course-info">
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-evenly",
+                  }}
+                >
+                  {" "}
+                  <div
+                    style={{
+                      textAlign: "right",
+                    }}
+                  >
+                    {" "}
+                    name{" "}
+                  </div>{" "}
+                  <div
+                    style={{
+                      background: "white",
+                      width: "50px",
+                      height: "50px",
+                      paddingLeft: "5px",
+                    }}
+                  >
+                    {" "}
+                  </div>
+                </div>
+              </div>
             </Col>
-            <Col xs={12} sm={12} md={9} lg={9} align="right">
+            <Col xs={12} sm={12} md={6} lg={6} align="right">
               <div
                 className="course-intro"
                 style={{ flexDirection: "row-reverse" }}

@@ -1,0 +1,40 @@
+.shopping-buttons {
+  background: #daa520 !important;
+  font-weight: bold;
+  width: 235px;
+  height: fit-content;
+  font-size: 1.5vw;
+  font-family: "Calibri";
+  margin: 5px;
+
+  border: 1px solid #d2ab32;
+  color: black;
+}
+
+.shopping-buttons:active,
+.shopping-buttons:hover {
+  border: 1px solid black !important;
+  background: black !important;
+
+  color: #d2ab32 !important;
+}
+
+.shopping-buttons:focus {
+  background: black !important;
+  color: #d2ab32;
+}
+
+.white-texts,
+.orange-texts {
+  color: #daa520;
+  font-family: "Calibiri";
+  font-weight: bold;
+  font-size: 1.5vw;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 15px;
+}
+
+.white-texts {
+  color: white;
+}
