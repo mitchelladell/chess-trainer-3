@@ -5,16 +5,23 @@ import EtisalatIcon from "../pgns/icons/EtisalatIcon";
 import MasterCardIcon from "../pgns/icons/MasterCardIcon";
 import PayPalIcon from "../pgns/icons/PayPalIcon";
 import VodafoneIcon from "../pgns/icons/VodafoneIcon";
+import PaymentModal from "../components/PaymentModal/PaymentModal";
+import EtisalatModal from "../components/PaymentModal/EtisalatModal";
+import VodafoneModal from "../components/PaymentModal/VodafoneModal";
 import "./Payment.css";
 
 const Payment = () => {
   const [paymentMethod, setPaymentMethod] = useState("MasterCard");
+  const [show, setShow] = useState(false);
+
   return (
     <div>
       {" "}
       <Container>
         <Row>
           <Col xs={12} sm={12} md={4} lg={4}>
+            <EtisalatModal show={show} handleClose={() => setShow(!show)} />
+
             <div className="payment-container">
               <div style={{ textAlign: "center" }}>
                 {" "}
@@ -50,11 +57,17 @@ const Payment = () => {
                     justifyContent: "center",
                   }}
                 >
-                  <div>
+                  <div
+                    onClick={() => setShow(true)}
+                    style={{ cursor: "pointer" }}
+                  >
                     {" "}
                     <EtisalatIcon />{" "}
                   </div>
-                  <div>
+                  <div
+                    onClick={() => setShow(true)}
+                    style={{ cursor: "pointer" }}
+                  >
                     {" "}
                     <VodafoneIcon />{" "}
                   </div>
