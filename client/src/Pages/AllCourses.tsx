@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useAppSelector } from "../app/hooks";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import CourseCard from "../components/CourseCard/CourseCard";
 
 const AllCourses = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
@@ -64,19 +65,12 @@ const AllCourses = () => {
                   }}
                 >
                   {coursesList.map((course) => (
-                    <div key={course} className="course-item" />
+                    <CourseCard />
                   ))}
                 </div>
               </Col>
               <Col xs={5} sm={3} md={3} lg={3}>
-                <div
-                  style={{
-                    background: "#8B8B8B",
-                    padding: "10px",
-                    marginTop: "10px",
-                    borderRadius: "6px",
-                  }}
-                >
+                <div className="courses_controller">
                   <div className="filter_title">{"هيئة اللعب"} </div>
                   {coursesFilter.map((item) => (
                     <div style={{ display: "flex" }}>

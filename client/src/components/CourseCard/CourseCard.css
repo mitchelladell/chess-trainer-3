@@ -1,0 +1,66 @@
+.course_card_container {
+  width: max-content;
+  height: max-content;
+  background: linear-gradient(to left top, #808080, #ffffff);
+  margin: 20px;
+  border-radius: 11px;
+}
+
+.course_img_container {
+  background: white;
+  margin-top: 12px;
+  border: 3px solid black;
+  width: 88px;
+  height: 88px;
+  margin-right: 12px;
+  position: relative;
+  overflow: hidden;
+  object-fit: cover;
+  float: left;
+}
+.creator_name,
+.course_name {
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.creator_name {
+  color: #daa520;
+}
+
+.buy_button {
+  background: linear-gradient(to top, #20c7da, #ffffff);
+  font-weight: bold;
+  width: fit-content;
+  height: fit-content;
+  font-size: 1vw;
+  font-family: "Calibri";
+  border-top-right-radius: 5px;
+  border: 1px solid #d2ab32;
+  color: black;
+  margin: 5px;
+}
+
+.buy_button:active,
+.buy_button:hover {
+  border: 1px solid black !important;
+  background: black !important;
+
+  color: #d2ab32 !important;
+}
+
+.buy_button:focus {
+  background: black !important;
+  color: #d2ab32;
+}
+
+@media (max-width: 800px) {
+  .course_img_container {
+    width: 50px;
+    height: 50px;
+  }
+  .buy_button {
+    font-size: 16px;
+  }
+}
