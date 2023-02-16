@@ -1,0 +1,26 @@
+.payment-container {
+  box-shadow: -5px 0px 24px #000000b3;
+  padding: 15px;
+  margin: 15px;
+}
+
+.payment_keyword {
+  color: #daa520;
+  font-size: 1.6vw;
+  font-weight: bold;
+}
+
+.payment_counts {
+  color: white;
+  font-weight: bold;
+  font-size: 1.3vw;
+}
+
+@media (max-width: 800px) {
+  .payment_counts {
+    font-size: 15px;
+  }
+  .payment_keyword {
+    font-size: 18px;
+  }
+}

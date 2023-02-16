@@ -22,6 +22,7 @@ import UserProfile from "./Pages/UserProfile";
 import UserProfileSettings from "./Pages/UserProfileSettings";
 import Course from "./Pages/Course";
 import ShoppingCart from "./Pages/ShoppingCart";
+import Payment from "./Pages/Payment";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -141,6 +142,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <Course />
+      </Layout>
+    ),
+  },
+  {
+    path: "payment",
+    element: (
+      <Layout>
+        <Payment />
       </Layout>
     ),
   },
