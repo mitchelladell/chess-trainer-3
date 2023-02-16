@@ -38,3 +38,47 @@
 .white-texts {
   color: white;
 }
+
+.currency_dropdown .dropdown-toggle {
+  /* styles for the dropdown toggle button */
+  background: #818181;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 3px;
+  border: 1px solid #818181;
+  color: white;
+  font-size: 1.5vw;
+}
+
+.currency_dropdown .dropdown-menu {
+  /* styles for the dropdown menu */
+  background: #333333;
+  border-radius: 3px;
+  color: white;
+  font-size: 1.5vw;
+}
+.currency_dropdown .dropdown-menu .dropdown-item,
+.currency_dropdown .dropdown-menu .dropdown-item:active {
+  border-radius: 3px;
+  color: white;
+  font-size: 1.5vw;
+}
+.currency_dropdown .dropdown-toggle:active,
+.currency_dropdown .dropdown-menu .dropdown-item:hover,
+.currency_dropdown .dropdown-menu .dropdown-item:focus,
+.currency_dropdown .dropdown-menu .dropdown-item:active {
+  background: #daa520;
+}
+
+@media (max-width: 800px) {
+  .shopping-buttons,
+  .dropdown-toggle,
+  .currency_dropdown .dropdown-toggle,
+  .white-texts,
+  .orange-texts,
+  .currency_dropdown .dropdown-menu .dropdown-item,
+  .currency_dropdown,
+  .dropdown-menu {
+    font-size: 18px;
+  }
+}

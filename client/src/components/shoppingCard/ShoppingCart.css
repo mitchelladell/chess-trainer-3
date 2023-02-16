@@ -3,3 +3,9 @@
   font-weight: bold;
   font-size: 1.4vw;
 }
+
+@media (max-width: 800px) {
+  .cart-texts {
+    font-size: 16px;
+  }
+}
