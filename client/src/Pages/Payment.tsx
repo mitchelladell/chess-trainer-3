@@ -107,7 +107,13 @@ const Payment = () => {
                       }}
                     >
                       <input type="text" style={{ width: "40%" }} />
-                      <div className="payment_counts"> رقــــم الكــــارت </div>
+                      <div style={{ width: "20%" }}>
+                        {" "}
+                        <div className="payment_counts">
+                          {" "}
+                          رقــــم الكــــارت{" "}
+                        </div>
+                      </div>
                     </div>
 
                     <div
@@ -119,7 +125,10 @@ const Payment = () => {
                       }}
                     >
                       <input type="text" value="" style={{ width: "15%" }} />
-                      <div className="payment_counts"> كـود التــأميــن </div>
+                      <div style={{ width: "20%" }}>
+                        {" "}
+                        <div className="payment_counts"> كـود التــأميــن </div>
+                      </div>
                     </div>
                     <div
                       style={{
@@ -131,7 +140,10 @@ const Payment = () => {
                     >
                       <input type="text" value="" style={{ width: "15%" }} />
                       <input type="text" value="" style={{ width: "15%" }} />
-                      <div className="payment_counts"> تاريخ الانتهاء </div>
+                      <div style={{ width: "20%" }}>
+                        {" "}
+                        <div className="payment_counts"> تاريخ الانتهاء </div>
+                      </div>
                     </div>
                   </form>{" "}
                 </div>
@@ -148,7 +160,12 @@ const Payment = () => {
                       }}
                     >
                       <input type="text" style={{ width: "40%" }} />
-                      <div className="payment_counts"> البريد الالكترونى </div>
+                      <div style={{ width: "20%" }}>
+                        <div className="payment_counts">
+                          {" "}
+                          البريد الالكترونى{" "}
+                        </div>
+                      </div>
                     </div>
 
                     <div
@@ -160,7 +177,9 @@ const Payment = () => {
                       }}
                     >
                       <input type="text" value="" style={{ width: "15%" }} />
-                      <div className="payment_counts"> كلمة المرور </div>
+                      <div style={{ width: "20%" }}>
+                        <div className="payment_counts"> كلمة المرور </div>
+                      </div>
                     </div>
                   </form>{" "}
                 </div>
