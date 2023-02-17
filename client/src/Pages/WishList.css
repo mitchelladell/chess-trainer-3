@@ -1,0 +1,8 @@
+.wish_list_container {
+  border: 1px solid #000000b3;
+  box-shadow: -5px 0px 24px #000000b3;
+  opacity: 1;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}

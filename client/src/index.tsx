@@ -24,6 +24,7 @@ import Course from "./Pages/Course";
 import ShoppingCart from "./Pages/ShoppingCart";
 import Payment from "./Pages/Payment";
 import CourseContent from "./Pages/CourseContent";
+import WishList from "./Pages/WishList";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -159,6 +160,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <CourseContent />
+      </Layout>
+    ),
+  },
+  {
+    path: "wishlist",
+    element: (
+      <Layout>
+        <WishList />
       </Layout>
     ),
   },
