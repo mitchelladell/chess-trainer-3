@@ -1,5 +1,5 @@
 .course_card_container {
-  width: max-content;
+  width: 300px;
   height: max-content;
   background: linear-gradient(to left top, #808080, #ffffff);
   margin: 20px;
@@ -63,4 +63,14 @@
   .buy_button {
     font-size: 16px;
   }
+}
+
+.course_description {
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  text-align: right;
 }

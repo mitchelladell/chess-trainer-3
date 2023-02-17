@@ -65,7 +65,7 @@ const AllCourses = () => {
                   }}
                 >
                   {coursesList.map((course) => (
-                    <CourseCard />
+                    <CourseCard buy={true} />
                   ))}
                 </div>
               </Col>

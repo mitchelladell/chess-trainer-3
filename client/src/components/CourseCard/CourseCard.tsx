@@ -8,7 +8,7 @@ import { StarSign } from "../../pgns/icons/UserProfileIcons/StarSign";
 import VideoIcon from "../../pgns/icons/VideoIcon";
 import "./CourseCard.css";
 
-const CourseCard = () => {
+const CourseCard = (props: any) => {
   return (
     <div className="course_card_container">
       {" "}
@@ -52,20 +52,46 @@ const CourseCard = () => {
             <img alt="" src="" />
           </div>
         </Row>
-        <Button className="buy_button">
-          {" "}
-          <div style={{ display: "flex" }}>
-            <BookIcon />
-            شـــــراء
-          </div>{" "}
-        </Button>
-        <Button className="buy_button">
-          {" "}
-          <div style={{ display: "flex" }}>
-            <VideoIcon />
-            شـراء الفيديوهات{" "}
-          </div>{" "}
-        </Button>
+        {props.buy ? (
+          <div>
+            {" "}
+            <Button className="buy_button">
+              {" "}
+              <div style={{ display: "flex" }}>
+                <BookIcon />
+                شـــــراء
+              </div>{" "}
+            </Button>
+            <Button className="buy_button">
+              {" "}
+              <div style={{ display: "flex" }}>
+                <VideoIcon />
+                شـراء الفيديوهات{" "}
+              </div>{" "}
+            </Button>{" "}
+          </div>
+        ) : (
+          <div className="course_description">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="265"
+              height="1"
+              viewBox="0 0 265 1"
+            >
+              <line
+                id="Line_11"
+                data-name="Line 11"
+                x1="265"
+                transform="translate(0 0.5)"
+                fill="none"
+                stroke="#fff"
+                stroke-width="1"
+              />
+            </svg>{" "}
+            تحكم فــي الجزء الحاسم من اللوحة وقم بتحويل التحكم المـركزي إلى
+            انتصارات مذهلة{" "}
+          </div>
+        )}
       </Container>
     </div>
   );
