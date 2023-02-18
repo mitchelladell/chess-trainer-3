@@ -1,4 +1,11 @@
-.wish_list_container {
+.payments_keyword {
+  color: #daa520;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: right;
+}
+
+.payments_container {
   border: 1px solid #000000b3;
   box-shadow: -5px 0px 24px #000000b3;
   opacity: 1;

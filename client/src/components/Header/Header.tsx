@@ -257,7 +257,7 @@ const Header: React.FC<IProps> = (props) => {
                       <Dropdown.Item
                         className="custom-dropdown-item"
                         as={Link}
-                        to="#/action-1"
+                        to="/profile"
                       >
                         <div
                           style={{
@@ -273,7 +273,7 @@ const Header: React.FC<IProps> = (props) => {
                       <Dropdown.Item
                         className="custom-dropdown-item"
                         as={Link}
-                        to="#/action-1"
+                        to="/profilesettings"
                       >
                         <div
                           style={{

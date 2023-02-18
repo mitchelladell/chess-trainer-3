@@ -138,8 +138,6 @@ const UserProfileSettings = () => {
                     </Dropdown>
 
                     <div className="profile_save_container">
-                      {/*                   <Link to="/courses">
-                       */}
                       <Button className="user_profile_button">
                         {" "}
                         حفظ الاعدادات
