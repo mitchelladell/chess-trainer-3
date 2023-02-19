@@ -1082,7 +1082,7 @@ const Trainer = () => {
                     customBoardStyle={{
                       borderRadius: "5px",
                       boxShadow: "0 5px 15px rgba(0, 0, 0, 0.5) ",
-                      background: `url('../media/board.png')`,
+                      background: `url('../media/01board.png')`,
                       // background: <BoardBackround />,
 
                       backgroundRepeat: "no-repeat",
