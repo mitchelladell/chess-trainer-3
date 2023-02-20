@@ -14,7 +14,7 @@ const CourseCard = (props: any) => {
       {" "}
       <Container>
         <Row>
-          <Col sm={12} md={7} lg={7} xs={12}>
+          <Col>
             <div
               style={{ marginTop: "12px", textAlign: "right", width: "100%" }}
             >
@@ -44,7 +44,7 @@ const CourseCard = (props: any) => {
                 <StarSign /> <StarSign /> <StarSign /> <StarSign /> <StarSign />{" "}
               </div>
 
-              <div className="course_name"> اسم الدورة التدريبية</div>
+              <div className="course_card_name"> اسم الدورة التدريبية</div>
               <div className="creator_name"> اسم منشـئ المحتوى </div>
             </div>
           </Col>{" "}

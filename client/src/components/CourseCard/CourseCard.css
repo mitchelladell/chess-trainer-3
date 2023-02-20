@@ -1,6 +1,7 @@
 .course_card_container {
-  width: 300px;
-  height: max-content;
+  /*   width: 300px;
+  height: 160px; */
+  max-width: 300px;
   background: linear-gradient(to left top, #808080, #ffffff);
   margin: 20px;
   border-radius: 11px;
@@ -19,7 +20,7 @@
   float: left;
 }
 .creator_name,
-.course_name {
+.course_card_name {
   color: black;
   font-weight: bold;
   font-size: 18px;
@@ -34,7 +35,7 @@
   font-weight: bold;
   width: fit-content;
   height: fit-content;
-  font-size: 1vw;
+  font-size: 17px;
   font-family: "Calibri";
   border-top-right-radius: 5px;
   border: 1px solid #d2ab32;
@@ -53,16 +54,6 @@
 .buy_button:focus {
   background: black !important;
   color: #d2ab32;
-}
-
-@media (max-width: 800px) {
-  .course_img_container {
-    width: 50px;
-    height: 50px;
-  }
-  .buy_button {
-    font-size: 16px;
-  }
 }
 
 .course_description {

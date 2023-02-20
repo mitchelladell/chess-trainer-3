@@ -1,15 +1,21 @@
 import KingChapterIcon from "../../pgns/icons/ChapterKingIcon";
 import ProgressBar from "react-bootstrap/ProgressBar";
+import { useState } from "react";
 
 import "./CourseChapter.css";
 
-const CourseChapter = () => {
+const CourseChapter = (props: any) => {
+  const [progress, setProgress] = useState(60);
+
   return (
     <div className="chapter_container">
       {" "}
       <KingChapterIcon />
       <div style={{ display: "flex" }}>
-        <div style={{ cursor: "pointer", marginLeft: "5px" }}>
+        <div
+          style={{ cursor: "pointer", marginLeft: "5px" }}
+          onClick={props.handleProgress}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -28,7 +34,7 @@ const CourseChapter = () => {
           {" "}
           <ProgressBar style={{ height: "8px" }}>
             <ProgressBar
-              now={60}
+              now={progress}
               variant=""
               style={{
                 background: "linear-gradient(to left, #FF0000, #F6EE07)",
@@ -36,7 +42,7 @@ const CourseChapter = () => {
             />
 
             <ProgressBar
-              now={60}
+              now={progress}
               variant=""
               style={{
                 background: "linear-gradient(to left, #818181, #FFFFFF)",
