@@ -14,6 +14,7 @@ import Stars from "../components/Stars/Star";
 import { useMeasure } from "react-measure";
 import Focus from "../pgns/icons/Focus";
 import annotaitons from "../consts/annotations";
+import { useAppSelector } from "../app/hooks";
 /* import Bp from "../components/customPieces/gridPieces/Bp";
 import Wk from "../components/customPieces/Wk"; */
 
@@ -67,6 +68,7 @@ const Trainer = () => {
   let pgndata = useLocation();
   let currentMoveIndex = 0;
   const dispatch = useDispatch();
+  const theme = useAppSelector((state) => state.theme.value);
 
   const lang = useSelector((state: any) => state.language.value);
 
@@ -1026,6 +1028,9 @@ const Trainer = () => {
     <div>
       <div
         className={focusMode ? "trainer_container_focus" : "trainer_container"}
+        style={{
+          background: theme === "dark" ? "" : "white",
+        }}
       >
         <Container>
           <Row style={{ display: "flex", flexDirection: direction }}>
@@ -1237,6 +1242,7 @@ const Trainer = () => {
                   className="moves_container"
                   style={{
                     height: dimensions.height,
+                    background: "#E4E4E4",
                   }}
                 >
                   <ChessMoves moves={formattedPgn} />

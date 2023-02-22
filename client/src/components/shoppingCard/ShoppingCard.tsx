@@ -1,20 +1,38 @@
 import "./ShoppingCart.css";
 import { Container, Col, Row } from "react-bootstrap";
+import { useAppSelector } from "../../app/hooks";
 
 const ShoppingCard = () => {
+  const theme = useAppSelector((state) => state.theme.value);
   return (
     <Container>
       <Row>
         <Col align="center">
-          <div className="cart-texts"> 300 EGP</div>
+          <div
+            className="cart-texts"
+            style={{ color: theme === "dark" ? "white" : "black" }}
+          >
+            {" "}
+            300 EGP
+          </div>
         </Col>
         <Col></Col>
         <Col>
           <div style={{ width: "100%", display: "flex", height: "100%" }}>
             {" "}
             <div>
-              <div style={{ display: "flex" }}>
-                <div className="cart-texts">
+              <div
+                style={{
+                  display: "flex",
+                  color: theme === "dark" ? "white" : "black",
+                }}
+              >
+                <div
+                  className="cart-texts"
+                  style={{
+                    color: theme === "dark" ? "white" : "black",
+                  }}
+                >
                   Name OF the course{" "}
                   <div>
                     <svg

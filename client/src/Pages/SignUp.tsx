@@ -27,7 +27,7 @@ const SignUp = () => {
         className="flex-container"
         style={{
           flexDirection: direction,
-          background: theme === "light" ? "white" : "black",
+          background: theme === "light" ? "white" : "",
         }}
       >
         <div

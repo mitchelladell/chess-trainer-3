@@ -8,48 +8,97 @@ import VodafoneIcon from "../pgns/icons/VodafoneIcon";
 import PaymentModal from "../components/PaymentModal/PaymentModal";
 import EtisalatModal from "../components/PaymentModal/EtisalatModal";
 import VodafoneModal from "../components/PaymentModal/VodafoneModal";
+import { useAppSelector } from "../app/hooks";
 import "./Payment.css";
 
 const Payment = () => {
   const [paymentMethod, setPaymentMethod] = useState("MasterCard");
+  const theme = useAppSelector((state) => state.theme.value);
   const [show, setShow] = useState(false);
 
   return (
-    <div>
+    <div
+      style={{
+        background: theme === "dark" ? "" : "white",
+      }}
+    >
       {" "}
       <Container>
         <Row>
           <Col xs={12} sm={12} md={4} lg={4}>
             <EtisalatModal show={show} handleClose={() => setShow(!show)} />
 
-            <div className="payment-container">
+            <div
+              className="payment-container"
+              style={{
+                background: theme === "dark" ? "" : "white",
+              }}
+            >
               <div style={{ textAlign: "center" }}>
                 {" "}
                 <div className="payment_keyword">الاجمـالــــــى</div>
-                <div className="payment_counts"> 600 EGP </div>
+                <div
+                  className="payment_counts"
+                  style={{
+                    color: theme === "light" ? "black" : "",
+                  }}
+                >
+                  {" "}
+                  600 EGP{" "}
+                </div>
               </div>{" "}
             </div>
-            <div className="payment-container">
+            <div
+              className="payment-container"
+              style={{
+                background: theme === "dark" ? "" : "white",
+              }}
+            >
               {" "}
-              <div className="payment_counts">
+              <div
+                className="payment_counts"
+                style={{
+                  color: theme === "light" ? "black" : "",
+                }}
+              >
                 وصول غيـر محدود إلى الدورات الرقمية &nbsp;
                 <CheckMark />
               </div>
-              <div className="payment_counts">
+              <div
+                className="payment_counts"
+                style={{
+                  color: theme === "light" ? "black" : "",
+                }}
+              >
                 معاملات آمنة &nbsp;
                 <CheckMark />
               </div>
-              <div className="payment_counts">
+              <div
+                className="payment_counts"
+                style={{
+                  color: theme === "light" ? "black" : "",
+                }}
+              >
                 دخول فوري &nbsp;
                 <CheckMark />
               </div>
             </div>
-            <div className="payment-container">
+            <div
+              className="payment-container"
+              style={{
+                background: theme === "dark" ? "" : "white",
+              }}
+            >
               {" "}
               <div className="payment_keyword">
                 الدفع عن طريق كارت الدفع اونلاين
               </div>
-              <div className="payment_counts">
+              <div
+                className="payment_counts"
+                style={{
+                  color: theme === "light" ? "black" : "",
+                }}
+              >
                 <div
                   style={{
                     display: "flex",
@@ -76,19 +125,39 @@ const Payment = () => {
             </div>
           </Col>
           <Col xs={12} sm={12} md={8} lg={8} align="right">
-            <div className="payment-container">
+            <div
+              className="payment-container"
+              style={{
+                background: theme === "dark" ? "" : "white",
+              }}
+            >
               {" "}
               <div className="payment_keyword"> الدفـع </div>
-              <div className="payment_counts">
+              <div
+                className="payment_counts"
+                style={{
+                  color: theme === "light" ? "black" : "",
+                }}
+              >
                 {" "}
                 2 &nbsp; دورة تدريبية فـى سلة التسوق الخاصة بك{" "}
               </div>
             </div>
 
-            <div className="payment-container">
+            <div
+              className="payment-container"
+              style={{
+                background: theme === "dark" ? "" : "white",
+              }}
+            >
               {" "}
               <div className="payment_keyword"> اختــر طريقة الدفع </div>
-              <div className="payment_counts">
+              <div
+                className="payment_counts"
+                style={{
+                  color: theme === "light" ? "black" : "",
+                }}
+              >
                 <div
                   style={{
                     display: "flex",
@@ -122,7 +191,12 @@ const Payment = () => {
                       <input type="text" style={{ width: "40%" }} />
                       <div style={{ width: "20%" }}>
                         {" "}
-                        <div className="payment_counts">
+                        <div
+                          className="payment_counts"
+                          style={{
+                            color: theme === "light" ? "black" : "",
+                          }}
+                        >
                           {" "}
                           رقــــم الكــــارت{" "}
                         </div>
@@ -140,7 +214,15 @@ const Payment = () => {
                       <input type="text" value="" style={{ width: "15%" }} />
                       <div style={{ width: "20%" }}>
                         {" "}
-                        <div className="payment_counts"> كـود التــأميــن </div>
+                        <div
+                          className="payment_counts"
+                          style={{
+                            color: theme === "light" ? "black" : "",
+                          }}
+                        >
+                          {" "}
+                          كـود التــأميــن{" "}
+                        </div>
                       </div>
                     </div>
                     <div
@@ -155,7 +237,15 @@ const Payment = () => {
                       <input type="text" value="" style={{ width: "15%" }} />
                       <div style={{ width: "20%" }}>
                         {" "}
-                        <div className="payment_counts"> تاريخ الانتهاء </div>
+                        <div
+                          className="payment_counts"
+                          style={{
+                            color: theme === "light" ? "black" : "",
+                          }}
+                        >
+                          {" "}
+                          تاريخ الانتهاء{" "}
+                        </div>
                       </div>
                     </div>
                   </form>{" "}
@@ -174,7 +264,12 @@ const Payment = () => {
                     >
                       <input type="text" style={{ width: "40%" }} />
                       <div style={{ width: "20%" }}>
-                        <div className="payment_counts">
+                        <div
+                          className="payment_counts"
+                          style={{
+                            color: theme === "light" ? "black" : "",
+                          }}
+                        >
                           {" "}
                           البريد الالكترونى{" "}
                         </div>
@@ -191,7 +286,15 @@ const Payment = () => {
                     >
                       <input type="text" value="" style={{ width: "15%" }} />
                       <div style={{ width: "20%" }}>
-                        <div className="payment_counts"> كلمة المرور </div>
+                        <div
+                          className="payment_counts"
+                          style={{
+                            color: theme === "light" ? "black" : "",
+                          }}
+                        >
+                          {" "}
+                          كلمة المرور{" "}
+                        </div>
                       </div>
                     </div>
                   </form>{" "}

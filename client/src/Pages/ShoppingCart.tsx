@@ -16,6 +16,7 @@ const ShoppingCart = () => {
   const [countrySelection, setCountrySelection] = useState("اختـــر دولتـــك");
 
   const lang = useAppSelector((state: any) => state.language.value);
+  const theme = useAppSelector((state) => state.theme.value);
 
   let paymentCurrencies = ["USD $", "EGP"];
   let countryOptions = ["USA", "EGYPT", "UK"];
@@ -26,7 +27,13 @@ const ShoppingCart = () => {
   }, [lang]);
   return (
     <div>
-      <div className="flex-container" style={{ flexDirection: direction }}>
+      <div
+        className="flex-container"
+        style={{
+          flexDirection: direction,
+          background: theme === "dark" ? "" : "white",
+        }}
+      >
         <Container>
           <Row>
             <Col>
@@ -90,7 +97,13 @@ const ShoppingCart = () => {
               >
                 {" "}
                 <div className="orange-texts"> الاجمـالى </div>{" "}
-                <div className="white-texts"> 600 EGP</div>{" "}
+                <div
+                  className="white-texts"
+                  style={{ color: theme === "light" ? "black" : "" }}
+                >
+                  {" "}
+                  600 EGP
+                </div>{" "}
               </div>
               <div className="profile_container">
                 {" "}
@@ -98,7 +111,13 @@ const ShoppingCart = () => {
                   {" "}
                   ارسل المحتـــوى كهديـــة{" "}
                 </div>{" "}
-                <div className="white-texts"> 600 EGP</div>{" "}
+                <div
+                  className="white-texts"
+                  style={{ color: theme === "light" ? "black" : "" }}
+                >
+                  {" "}
+                  600 EGP
+                </div>{" "}
               </div>
               <div style={{ textAlign: "center" }}>
                 <Link to="/allcourses">
