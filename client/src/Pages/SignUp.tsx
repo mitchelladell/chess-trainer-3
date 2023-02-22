@@ -14,6 +14,7 @@ import { useAppSelector } from "../app/hooks";
 const SignUp = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
   const lang = useAppSelector((state) => state.language.value);
+  const theme = useAppSelector((state) => state.theme.value);
 
   useEffect(() => {
     setDirection(lang === "ar" ? "row" : "row-reverse");
@@ -22,11 +23,30 @@ const SignUp = () => {
 
   return (
     <div className="parent">
-      <div className="flex-container" style={{ flexDirection: direction }}>
-        <div className="intro_container flex-item item-text">
+      <div
+        className="flex-container"
+        style={{
+          flexDirection: direction,
+          background: theme === "light" ? "white" : "black",
+        }}
+      >
+        <div
+          className="intro_container flex-item item-text"
+          style={{
+            background:
+              theme === "dark"
+                ? "#333333"
+                : "linear-gradient(to left top, #808080, #ffffff)",
+          }}
+        >
           <div className="intro_text">
             <div className="signup-intro"> انشاء حساب</div>
-            <div className="sign-form">
+            <div
+              className="sign-form"
+              style={{
+                color: theme === "dark" ? "#daa520" : "black",
+              }}
+            >
               <Form>
                 <Form.Group className="mb-3" controlId="formbasicuserName">
                   <Form.Label>اسم المستخدم</Form.Label>

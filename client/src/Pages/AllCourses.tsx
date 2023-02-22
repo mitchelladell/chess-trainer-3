@@ -13,6 +13,8 @@ const AllCourses = () => {
   const [coursesFilterChoice, setCoursesFilterChoice] = useState("");
   const [levelsFilterChoice, setLevelsFilterChoice] = useState("");
 
+  const theme = useAppSelector((state) => state.theme.value);
+
   const handleCancelFilters = () => {
     setLangFilterChoice("");
     setCoursesFilterChoice("");
@@ -47,7 +49,13 @@ const AllCourses = () => {
   }, [lang]);
   return (
     <div>
-      <div className="flex-container" style={{ flexDirection: direction }}>
+      <div
+        className="flex-container"
+        style={{
+          flexDirection: direction,
+          background: theme === "light" ? "white" : "",
+        }}
+      >
         <div>
           <Container>
             <Row>

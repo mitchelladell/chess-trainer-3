@@ -9,6 +9,7 @@ import { WhomIFollow } from "../pgns/icons/UserProfileIcons/WhomIFollow";
 import { WhoFollowsMe } from "../pgns/icons/UserProfileIcons/whoFollowsMe";
 import { Streak } from "../pgns/icons/UserProfileIcons/Streak";
 import { MaxStreak } from "../pgns/icons/UserProfileIcons/MaxStreak";
+import CourseCard from "../components/CourseCard/CourseCard";
 
 const UserProfile = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
@@ -16,6 +17,7 @@ const UserProfile = () => {
   const coursesMade = [1, 2, 3, 4];
 
   const lang = useAppSelector((state: any) => state.language.value);
+  const theme = useAppSelector((state) => state.theme.value);
 
   useEffect(() => {
     setDirection(lang === "ar" ? "row" : "row-reverse");
@@ -23,7 +25,13 @@ const UserProfile = () => {
   }, [lang]);
   return (
     <div>
-      <div className="flex-container" style={{ flexDirection: direction }}>
+      <div
+        className="flex-container"
+        style={{
+          flexDirection: direction,
+          background: theme === "light" ? "white" : "",
+        }}
+      >
         <Container>
           <Row>
             <Col xs={12} sm={9} md={6} lg={6}>
@@ -45,15 +53,43 @@ const UserProfile = () => {
           </Row>
         </Container>
         <Container>
-          <div className="profile_container">
+          <div
+            className="profile_container"
+            style={{
+              background:
+                theme === "dark"
+                  ? "#333333"
+                  : "linear-gradient(to left top, #808080, #ffffff)",
+            }}
+          >
             <Row style={{ flexDirection: direction }}>
               <Col align={"end"} xs={12} sm={9} md={9} lg={9}>
                 <div style={{ display: "inline-flex", width: "100%" }}>
-                  <div className="item_dashboard">
+                  <div
+                    className="item_dashboard"
+                    style={{
+                      color: theme === "dark" ? "" : "black",
+                      background: theme === "dark" ? "" : "white",
+                    }}
+                  >
                     <div className="item_style">
                       {" "}
-                      <div className="item_keyword">Hello</div>
-                      <div className="item_value">Hello</div>
+                      <div
+                        className="item_keyword"
+                        style={{
+                          color: theme === "dark" ? "" : "black",
+                        }}
+                      >
+                        Hello
+                      </div>
+                      <div
+                        className="item_value"
+                        style={{
+                          color: theme === "dark" ? "" : "black",
+                        }}
+                      >
+                        Hello
+                      </div>
                     </div>
                   </div>
                   <div style={{ marginTop: "auto", marginBottom: "auto" }}>
@@ -62,10 +98,23 @@ const UserProfile = () => {
                   </div>
                 </div>
                 <div style={{ display: "inline-flex", width: "100%" }}>
-                  <div className="item_dashboard">
+                  <div
+                    className="item_dashboard"
+                    style={{
+                      color: theme === "dark" ? "" : "black",
+                      background: theme === "dark" ? "" : "white",
+                    }}
+                  >
                     <div className="item_style">
                       {" "}
-                      <div className="item_keyword">Hello</div>
+                      <div
+                        className="item_keyword"
+                        style={{
+                          color: theme === "dark" ? "" : "black",
+                        }}
+                      >
+                        Hello
+                      </div>
                       <div className="item_value">Hello</div>
                     </div>
                   </div>
@@ -74,10 +123,23 @@ const UserProfile = () => {
                   </div>
                 </div>
                 <div style={{ display: "inline-flex", width: "100%" }}>
-                  <div className="item_dashboard">
+                  <div
+                    className="item_dashboard"
+                    style={{
+                      color: theme === "dark" ? "" : "black",
+                      background: theme === "dark" ? "" : "white",
+                    }}
+                  >
                     <div className="item_style">
                       {" "}
-                      <div className="item_keyword">Hello</div>
+                      <div
+                        className="item_keyword"
+                        style={{
+                          color: theme === "dark" ? "" : "black",
+                        }}
+                      >
+                        Hello
+                      </div>
                       <div className="item_value">Hello</div>
                     </div>
                   </div>
@@ -87,10 +149,23 @@ const UserProfile = () => {
                   </div>
                 </div>
                 <div style={{ display: "inline-flex", width: "100%" }}>
-                  <div className="item_dashboard">
+                  <div
+                    className="item_dashboard"
+                    style={{
+                      color: theme === "dark" ? "" : "black",
+                      background: theme === "dark" ? "" : "white",
+                    }}
+                  >
                     <div className="item_style">
                       {" "}
-                      <div className="item_keyword">Hello</div>
+                      <div
+                        className="item_keyword"
+                        style={{
+                          color: theme === "dark" ? "" : "black",
+                        }}
+                      >
+                        Hello
+                      </div>
                       <div className="item_value">Hello</div>
                     </div>
                   </div>
@@ -100,10 +175,23 @@ const UserProfile = () => {
                   </div>
                 </div>
                 <div style={{ display: "inline-flex", width: "100%" }}>
-                  <div className="item_dashboard">
+                  <div
+                    className="item_dashboard"
+                    style={{
+                      color: theme === "dark" ? "" : "black",
+                      background: theme === "dark" ? "" : "white",
+                    }}
+                  >
                     <div className="item_style">
                       {" "}
-                      <div className="item_keyword">Hello</div>
+                      <div
+                        className="item_keyword"
+                        style={{
+                          color: theme === "dark" ? "" : "black",
+                        }}
+                      >
+                        Hello
+                      </div>
                       <div className="item_value">Hello</div>
                     </div>
                   </div>
@@ -113,10 +201,23 @@ const UserProfile = () => {
                   </div>
                 </div>
                 <div style={{ display: "inline-flex", width: "100%" }}>
-                  <div className="item_dashboard">
+                  <div
+                    className="item_dashboard"
+                    style={{
+                      color: theme === "dark" ? "" : "black",
+                      background: theme === "dark" ? "" : "white",
+                    }}
+                  >
                     <div className="item_style">
                       {" "}
-                      <div className="item_keyword">Hello</div>
+                      <div
+                        className="item_keyword"
+                        style={{
+                          color: theme === "dark" ? "" : "black",
+                        }}
+                      >
+                        Hello
+                      </div>
                       <div className="item_value">Hello</div>
                     </div>
                   </div>
@@ -141,7 +242,13 @@ const UserProfile = () => {
               </Col>
             </Row>
           </div>
-          <div className="profile-intro-text" style={{ textAlign: "right" }}>
+          <div
+            className="profile-intro-text"
+            style={{
+              textAlign: "right",
+              color: theme === "dark" ? "#daa520" : "black",
+            }}
+          >
             {" "}
             الدورات التـي قمت بدراستها
           </div>
@@ -154,20 +261,16 @@ const UserProfile = () => {
             }}
           >
             {subScribtedCourses.map((course) => (
-              <div
-                style={{
-                  backgroundImage: ``,
-                  background: "gold",
-                  height: "10vw",
-                  width: "15vw",
-                  minHeight: "100px",
-                  margin: "15px",
-                  minWidth: "100px",
-                }}
-              ></div>
+              <CourseCard />
             ))}
           </div>
-          <div className="profile-intro-text" style={{ textAlign: "right" }}>
+          <div
+            className="profile-intro-text"
+            style={{
+              textAlign: "right",
+              color: theme === "dark" ? "#daa520" : "black",
+            }}
+          >
             {" "}
             الدورات التـي قمت بإعدادها
           </div>
@@ -180,18 +283,7 @@ const UserProfile = () => {
             }}
           >
             {subScribtedCourses.map((course) => (
-              <div
-                style={{
-                  backgroundImage: ``,
-                  background: "gold",
-                  backgroundRepeat: "no-repeat",
-                  height: "10vw",
-                  width: "15vw",
-                  margin: "15px",
-                  minHeight: "100px",
-                  minWidth: "100px",
-                }}
-              ></div>
+              <CourseCard />
             ))}
           </div>
         </Container>

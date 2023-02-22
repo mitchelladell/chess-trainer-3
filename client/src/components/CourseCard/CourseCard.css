@@ -5,6 +5,7 @@
   background: linear-gradient(to left top, #808080, #ffffff);
   margin: 20px;
   border-radius: 11px;
+  border: 1px solid black;
 }
 
 .course_img_container {

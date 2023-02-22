@@ -1,6 +1,7 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import LanguageReducer from "../features/language/languageSlice";
 import pgnSlice from "../features/pgns/pgnSlice";
+import themeSlice from "../features/Theme/themeSlice";
 import userSlice from "../features/user/userSlice";
 
 export const store = configureStore({
@@ -8,6 +9,7 @@ export const store = configureStore({
     language: LanguageReducer,
     pgn: pgnSlice,
     user: userSlice,
+    theme: themeSlice,
   },
 });
 

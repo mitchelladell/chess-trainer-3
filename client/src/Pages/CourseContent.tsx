@@ -3,13 +3,14 @@ import CourseCard from "../components/CourseCard/CourseCard";
 import CourseChapter from "../components/CourseChapter/CourseChapter";
 import ResetModal from "../components/PaymentModal/ResetModal";
 import { useState } from "react";
+import { useAppSelector } from "../app/hooks";
 import "./CourseContent.css";
 
 const CourseContent = () => {
   const [show, setShow] = useState(true);
-
+  const theme = useAppSelector((state) => state.theme.value);
   return (
-    <div>
+    <div style={{ background: theme === "light" ? "white" : "" }}>
       <ResetModal
         show={show}
         handleClose={() => setShow(false)}

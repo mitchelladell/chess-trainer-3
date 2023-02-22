@@ -5,6 +5,7 @@ import "./user_profile_settings.css";
 
 const UserProfileSettings = () => {
   const options = ["الكل", "من يتبعونى", "لا احد"];
+  const theme = useAppSelector((state) => state.theme.value);
 
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
   const [followFirstselectedOption, setfollowFirstSelectedOption] = useState(
@@ -31,30 +32,29 @@ const UserProfileSettings = () => {
   }, [lang]);
   return (
     <div>
-      <div className="flex-container" style={{ flexDirection: direction }}>
-        {/*         <Container>
-          <Row>
-            <Col xs={12} sm={9} md={6} lg={6}>
-              {" "}
-              <div className="profile-intro-text">
-                ملف أسم صاحب الحساب الشخصى{" "}
-              </div>
-            </Col>
-            <Col align={"end"} xs={12} sm={9} md={6} lg={6}>
-              {" "}
-              <Button className="user_profile_button">المشتـــريات</Button>
-              <Button className="user_profile_button">
-                {" "}
-                تعديل الملف الشخصـي
-              </Button>
-            </Col>
-          </Row>
-        </Container> */}
+      <div
+        className="flex-container"
+        style={{
+          flexDirection: direction,
+          background:
+            theme === "dark"
+              ? "#333333"
+              : "linear-gradient(to left top, #808080, #ffffff)",
+        }}
+      >
         <Container>
           <div className="profile_container">
             <Row>
               <Col align={"end"} xs={8} sm={8} md={9} lg={9}>
-                <div className="settings_title"> اعدادات الحساب الشخصى</div>
+                <div
+                  className="settings_title"
+                  style={{
+                    color: theme === "dark" ? "#daa520" : "black",
+                  }}
+                >
+                  {" "}
+                  اعدادات الحساب الشخصى
+                </div>
                 <div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +73,12 @@ const UserProfileSettings = () => {
                     />
                   </svg>
                 </div>
-                <div className="user_settings_form">
+                <div
+                  className="user_settings_form"
+                  style={{
+                    color: theme === "dark" ? "white" : "black",
+                  }}
+                >
                   <Form>
                     <Form.Group className="mb-3" controlId="formbasicuserName">
                       <Form.Label>اسم المستخدم </Form.Label>

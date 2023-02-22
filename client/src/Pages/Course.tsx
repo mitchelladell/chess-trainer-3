@@ -8,6 +8,7 @@ import { StarSign } from "../pgns/icons/UserProfileIcons/StarSign";
 const Course = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
   const lang = useAppSelector((state: any) => state.language.value);
+  const theme = useAppSelector((state) => state.theme.value);
 
   useEffect(() => {
     setDirection(lang === "en" ? "row" : "row-reverse");
@@ -15,7 +16,13 @@ const Course = () => {
   }, [lang]);
   return (
     <div>
-      <div className="flex-container" style={{ flexDirection: direction }}>
+      <div
+        className="flex-container"
+        style={{
+          flexDirection: direction,
+          background: theme === "light" ? "white" : "",
+        }}
+      >
         <Container>
           <Row>
             <Col xs={5} sm={5} md={3} lg={3}>
@@ -101,7 +108,7 @@ const Course = () => {
                   </div>{" "}
                   <div
                     style={{
-                      background: "white",
+                      background: theme === "light" ? "black" : "white",
                       width: "50px",
                       height: "50px",
                       paddingLeft: "5px",
@@ -120,7 +127,7 @@ const Course = () => {
                 <div
                   style={{
                     background: "",
-                    backgroundColor: "white",
+                    backgroundColor: theme === "dark" ? "white" : "black",
                     width: "150px",
                     height: "150px",
                     margin: "10px",
@@ -130,9 +137,9 @@ const Course = () => {
                   {" "}
                   <div
                     style={{
-                      color: "white",
                       fontSize: "1.2vw",
                       fontWeight: "bold",
+                      color: theme === "light" ? "black" : "white",
                     }}
                   >
                     {" "}
@@ -140,9 +147,9 @@ const Course = () => {
                   </div>
                   <div
                     style={{
-                      color: "white",
                       fontSize: "1.6vw",
                       fontWeight: "bold",
+                      color: theme === "light" ? "black" : "white",
                     }}
                   >
                     اسم الدورة التدريبية{" "}
@@ -173,7 +180,7 @@ const Course = () => {
               <div
                 style={{
                   background: "",
-                  backgroundColor: "white",
+                  backgroundColor: theme === "light" ? "black" : "white",
                   width: "100%",
                   height: "300px",
                   marginLeft: "10px",
@@ -185,7 +192,7 @@ const Course = () => {
 
               <div
                 style={{
-                  color: "white",
+                  color: theme === "light" ? "black" : "white",
                   fontSize: "1.2vw",
                   fontWeight: "bold",
                   marginLeft: "10px",

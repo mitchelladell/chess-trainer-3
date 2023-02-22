@@ -25,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 
 import Cookies from "js-cookie";
 import { logoutAsync } from "../../features/user/userSlice";
+import { updateTheme } from "../../features/Theme/themeSlice";
 
 type Translation = {
   [key: string]: {
@@ -57,6 +58,11 @@ const Header: React.FC<IProps> = (props) => {
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleThemeChange = () => {
+    setLightTheme(!lightTheme);
+    dispatch(updateTheme(!lightTheme ? "light" : "dark"));
   };
 
   const handleLogout = () => {
@@ -304,7 +310,7 @@ const Header: React.FC<IProps> = (props) => {
                                 type="switch"
                                 id="custom-switch"
                                 checked={lightTheme}
-                                onChange={() => setLightTheme(!lightTheme)}
+                                onChange={() => handleThemeChange()}
                               />
                             </Form>
                             الوضع النهارى{" "}

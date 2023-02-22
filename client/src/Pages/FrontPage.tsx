@@ -9,6 +9,7 @@ import translations from "../consts/translations";
 const FrontPage = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
   const lang = useAppSelector((state) => state.language.value);
+  const theme = useAppSelector((state) => state.theme.value);
 
   useEffect(() => {
     setDirection(lang === "ar" ? "row" : "row-reverse");
@@ -16,14 +17,33 @@ const FrontPage = () => {
   }, [lang]);
   return (
     <div>
-      <div className="flex-container" style={{ flexDirection: direction }}>
-        <div className="intro_container flex-item item-text_front_page">
+      <div
+        className="flex-container"
+        style={{
+          flexDirection: direction,
+          background: theme === "dark" ? "#333333" : "white",
+        }}
+      >
+        <div
+          className="intro_container flex-item item-text_front_page"
+          style={{
+            background:
+              theme === "dark"
+                ? "#333333"
+                : "linear-gradient(to left top, #808080, #ffffff)",
+          }}
+        >
           <div className="intro_text_front_page">
             <div className="front-page-intro-golden">
               {" "}
               أنت لا تنسى أبدًا <br /> بدايات الدور الخاصة بك مرة أخرى <br />
             </div>{" "}
-            <div className="front-page-intro-extra">
+            <div
+              className="front-page-intro-extra"
+              style={{
+                color: theme === "light" ? "black" : "white",
+              }}
+            >
               تقنيات التعلم المدعومة علميًا للمساعدة في زيادة الحفظ والتذكر
               بنسبة تصل إلى 95%. حتـى تتمكن من لعب بدايات الأدوار مثل كتاب ...
               وسط الأدوار مثل الساحر ونهاية الأدوار مثل العظماء

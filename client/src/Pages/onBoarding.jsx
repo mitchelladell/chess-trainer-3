@@ -15,6 +15,7 @@ const Onboarding = () => {
   const [level, setLevel] = useState(null);
   const [direction, setDirection] = useState("row");
   const lang = useAppSelector((state) => state.language.value);
+  const theme = useAppSelector((state) => state.theme.value);
   console.log("language", lang);
 
   console.log("value", level);
@@ -32,7 +33,12 @@ const Onboarding = () => {
                 fontSize: "16px",
               }}
             >
-              <div style={{ color: "#DAA520", marginRight: "10px" }}>
+              <div
+                style={{
+                  color: theme === "dark" ? "#daa520" : "black",
+                  marginRight: "10px",
+                }}
+              >
                 {" "}
                 انا جديد فـي اللعبة
               </div>{" "}
@@ -47,6 +53,9 @@ const Onboarding = () => {
           onClick={(e) => setLevel(e?.target?.value)}
           id="radio"
           className="radio_check_option"
+          style={{
+            background: theme === "dark" ? "#707070" : "white",
+          }}
         />
 
         <Form.Check
@@ -59,7 +68,12 @@ const Onboarding = () => {
                 fontSize: "16px",
               }}
             >
-              <div style={{ color: "#DAA520", marginRight: "10px" }}>
+              <div
+                style={{
+                  color: theme === "dark" ? "#daa520" : "black",
+                  marginRight: "10px",
+                }}
+              >
                 {" "}
                 اعرف القواعد وبعض الاستـراتيجيات
               </div>{" "}
@@ -74,6 +88,9 @@ const Onboarding = () => {
           onClick={(e) => setLevel(e?.target?.value)}
           id="radio"
           className="radio_check_option"
+          style={{
+            background: theme === "dark" ? "#707070" : "white",
+          }}
         />
         <Form.Check
           type={"radio"}
@@ -85,7 +102,12 @@ const Onboarding = () => {
                 fontSize: "16px",
               }}
             >
-              <div style={{ color: "#DAA520", marginRight: "10px" }}>
+              <div
+                style={{
+                  color: theme === "dark" ? "#daa520" : "black",
+                  marginRight: "10px",
+                }}
+              >
                 {" "}
                 لدي فهم لائـق فـي جميع الجوانب{" "}
               </div>{" "}
@@ -100,6 +122,9 @@ const Onboarding = () => {
           onClick={(e) => setLevel(e?.target?.value)}
           id="type"
           className="radio_check_option"
+          style={{
+            background: theme === "dark" ? "#707070" : "white",
+          }}
         />
         <Form.Check
           type={"radio"}
@@ -111,7 +136,12 @@ const Onboarding = () => {
                 fontSize: "17px",
               }}
             >
-              <div style={{ color: "#DAA520", marginRight: "10px" }}>
+              <div
+                style={{
+                  color: theme === "dark" ? "#daa520" : "black",
+                  marginRight: "10px",
+                }}
+              >
                 {" "}
                 انا فـي مستوى الاحتـراف او اقـتـرب من مستوى الاحتـراف{" "}
               </div>{" "}
@@ -126,6 +156,9 @@ const Onboarding = () => {
           onClick={(e) => setLevel(e?.target?.value)}
           id="type"
           className="radio_check_option"
+          style={{
+            background: theme === "dark" ? "#707070" : "white",
+          }}
         />
       </Form>
     );
@@ -139,15 +172,45 @@ const Onboarding = () => {
     <div className="parent">
       <div
         className="flex-container_onboarding"
-        style={{ flexDirection: direction }}
+        style={{
+          flexDirection: direction,
+          background: theme === "light" ? "white" : "black",
+        }}
       >
-        <div className="intro_container flex-item item-text-onboarding">
-          <div className="onboarding_text">
-            <div className="signin-intro">تسجيل الدخول</div>
+        <div
+          className="intro_container flex-item item-text-onboarding"
+          style={{
+            background:
+              theme === "dark"
+                ? "#333333"
+                : "linear-gradient(to left top, #808080, #ffffff)",
+          }}
+        >
+          <div
+            className="onboarding_text"
+            style={{
+              color: theme === "dark" ? "#daa520" : "black",
+            }}
+          >
+            <div
+              className="signin-intro"
+              style={{
+                color: theme === "dark" ? "#daa520" : "black",
+              }}
+            >
+              اختـر مستواك
+            </div>
             <div>{levelOptions()}</div>
             <div className="confirm_button_container">
               <Link to="/courses">
-                <Button variant="warning" className="confirmation_button">
+                <Button
+                  variant="warning"
+                  className="confirmation_button"
+                  /*                   style={{
+                    background:
+                      theme === "dark" ? "rgb(112, 112, 112)" : "#DAA520",
+                  }} */
+                >
                   {" "}
                   <div /* style={{ marginTop: "20%" }} */> تأكيد </div>
                 </Button>{" "}
