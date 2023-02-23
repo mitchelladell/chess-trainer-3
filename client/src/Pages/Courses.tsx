@@ -24,7 +24,7 @@ const Courses = () => {
         لوحة القيادة الخاصة بك
       </div>
       <div className="flex-container" style={{ flexDirection: direction }}>
-        <div>
+        <div style={{ width: "100%" }}>
           <div
             className="flex-item"
             style={{
@@ -60,11 +60,16 @@ const Courses = () => {
                 />
               </svg>
             </div>
-            <div className="learn_new_course_container">
+            <div
+              className="learn_new_course_container"
+              style={{
+                backgroundColor: theme === "light" ? "white" : "",
+              }}
+            >
               <div
                 className="course-title"
                 style={{
-                  color: theme === "dark" ? "white" : "",
+                  color: theme === "light" ? "black" : "white",
                 }}
               >
                 تعلم دورة تدريبية جديدة

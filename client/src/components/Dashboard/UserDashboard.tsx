@@ -98,14 +98,14 @@ const UserDashboard: React.FC<IProps> = (props) => {
   }); */
 
   return (
-    <Container>
-      <Row>
-        <div
-          className="user_dashboard_container"
-          style={{
-            background: theme === "dark" ? "" : "white",
-          }}
-        >
+    <div
+      className="user_dashboard_container"
+      style={{
+        background: theme === "dark" ? "" : "white",
+      }}
+    >
+      <Container>
+        <Row>
           <Col sm={12} xs={12} md={5} lg={5} style={{ margin: "auto" }}>
             <div
               style={{
@@ -127,53 +127,57 @@ const UserDashboard: React.FC<IProps> = (props) => {
                 display: "flex",
                 justifyContent: "right",
                 gap: "10px",
+                padding: "15px",
               }}
             >
-              <div>
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "5px",
-                    marginTop: "30px",
-                    marginBottom: "15px",
-                    justifyContent: "right",
-                  }}
-                >
-                  <NoviceIcon />
-                  <AmaterurIcon />
-                  <IntermediateIcon />
-                  <AdvancedIcon />
+              <Col>
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "5px",
+                      marginTop: "30px",
+                      marginBottom: "15px",
+                      justifyContent: "right",
+                    }}
+                  >
+                    <NoviceIcon />
+                    <AmaterurIcon />
+                    <IntermediateIcon />
+                    <AdvancedIcon />
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "5px",
+                      justifyContent: "right",
+                    }}
+                  >
+                    <StarSign />
+                    <StarSign /> <StarSign /> <StarSign />
+                  </div>
+                  <div
+                    className="course-title"
+                    style={{
+                      color: theme === "light" ? "black" : "white",
+                    }}
+                  >
+                    {" "}
+                    اسم الدورة التدريبية
+                  </div>
                 </div>
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "5px",
-                    justifyContent: "right",
-                  }}
-                >
-                  <StarSign />
-                  <StarSign /> <StarSign /> <StarSign />
-                </div>
-                <div
-                  className="course-title"
-                  style={{
-                    color: theme === "dark" ? "white" : "",
-                  }}
-                >
+              </Col>
+              <Col>
+                <div>
                   {" "}
-                  اسم الدورة التدريبية
+                  <img className="dashboard-image" alt=""></img>
                 </div>
-              </div>
-
-              <div>
-                {" "}
-                <img className="dashboard-image" alt=""></img>
-              </div>
+              </Col>
             </div>
           </Col>
-        </div>
-      </Row>
-    </Container>
+        </Row>
+      </Container>
+    </div>
   );
 };
 
