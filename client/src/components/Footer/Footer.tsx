@@ -4,6 +4,7 @@ import translations from "../../consts/translations";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useSelector, useDispatch } from "react-redux";
 import { update } from "../../features/language/languageSlice";
+import { useAppSelector } from "../../app/hooks";
 import { Container, Row, Col } from "react-bootstrap";
 type Translation = {
   [key: string]: {
@@ -40,9 +41,15 @@ const Footer: React.FC = () => {
   const lang = useSelector(
     (state: { language: { value: string } }) => state.language.value
   );
+  const theme = useAppSelector((state) => state.theme.value);
   const dispatch = useDispatch();
   return (
-    <div className="footer">
+    <div
+      className="footer"
+      style={{
+        background: theme === "dark" ? "#333333" : "white",
+      }}
+    >
       <footer>
         <Container>
           <Row>
@@ -55,7 +62,13 @@ const Footer: React.FC = () => {
                 }}
               >
                 {footerContent.map((item) => (
-                  <div style={{ margin: "5px", color: "#FEFEFE" }} key={item}>
+                  <div
+                    style={{
+                      margin: "5px",
+                      color: theme === "dark" ? "#FEFEFE" : "black",
+                    }}
+                    key={item}
+                  >
                     {" "}
                     {(translations as any)[lang][item]}
                   </div>
