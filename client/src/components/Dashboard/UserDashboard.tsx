@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import { Link } from "react-router-dom";
 import PGN from "pgn-parser";
+import { useAppSelector } from "../../app/hooks";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -88,6 +89,7 @@ const UserDashboard: React.FC<IProps> = (props) => {
 
   console.log("pgnWithName", pgnWithName);
   let totalCount = 0;
+  const theme = useAppSelector((state) => state.theme.value);
 
   /*  pgnWithName.forEach((pgnwithname: any) => {
     const matches = pgnwithname.pgn.match(/\(/g);
@@ -98,7 +100,12 @@ const UserDashboard: React.FC<IProps> = (props) => {
   return (
     <Container>
       <Row>
-        <div className="user_dashboard_container">
+        <div
+          className="user_dashboard_container"
+          style={{
+            background: theme === "dark" ? "" : "white",
+          }}
+        >
           <Col sm={12} xs={12} md={5} lg={5} style={{ margin: "auto" }}>
             <div
               style={{
@@ -147,7 +154,15 @@ const UserDashboard: React.FC<IProps> = (props) => {
                   <StarSign />
                   <StarSign /> <StarSign /> <StarSign />
                 </div>
-                <div className="course-title"> اسم الدورة التدريبية</div>
+                <div
+                  className="course-title"
+                  style={{
+                    color: theme === "dark" ? "white" : "",
+                  }}
+                >
+                  {" "}
+                  اسم الدورة التدريبية
+                </div>
               </div>
 
               <div>

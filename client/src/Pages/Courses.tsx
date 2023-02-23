@@ -9,8 +9,7 @@ import Cookies from "js-cookie";
 const Courses = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
   const lang = useAppSelector((state: any) => state.language.value);
-
-  useEffect(() => {}, [Cookies.get("token")]);
+  const theme = useAppSelector((state) => state.theme.value);
 
   useEffect(() => {
     setDirection(lang === "en" ? "row" : "row-reverse");
@@ -62,7 +61,14 @@ const Courses = () => {
               </svg>
             </div>
             <div className="learn_new_course_container">
-              <div className="course-title"> تعلم دورة تدريبية جديدة</div>
+              <div
+                className="course-title"
+                style={{
+                  color: theme === "dark" ? "white" : "",
+                }}
+              >
+                تعلم دورة تدريبية جديدة
+              </div>
 
               <Link to="/allcourses">
                 {" "}
