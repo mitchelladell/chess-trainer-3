@@ -31,19 +31,27 @@ const UserProfileSettings = () => {
     console.log("lang", lang);
   }, [lang]);
   return (
-    <div>
+    <div
+      style={{
+        background: theme === "dark" ? "" : "white",
+      }}
+    >
       <div
         className="flex-container"
         style={{
           flexDirection: direction,
-          background:
-            theme === "dark"
-              ? "#333333"
-              : "linear-gradient(to left top, #808080, #ffffff)",
         }}
       >
         <Container>
-          <div className="profile_container">
+          <div
+            className="profile_container"
+            style={{
+              background:
+                theme === "dark"
+                  ? "#333333"
+                  : "linear-gradient(to left top, #808080, #ffffff)",
+            }}
+          >
             <Row>
               <Col align={"end"} xs={8} sm={8} md={9} lg={9}>
                 <div

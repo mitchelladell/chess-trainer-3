@@ -7,7 +7,7 @@ import { useAppSelector } from "../app/hooks";
 import "./CourseContent.css";
 
 const CourseContent = () => {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const theme = useAppSelector((state) => state.theme.value);
   return (
     <div style={{ background: theme === "light" ? "white" : "" }}>
@@ -20,7 +20,7 @@ const CourseContent = () => {
         <div className="course_name"> اسم الدورة التدريبية </div>{" "}
         <div className="course_card_description_container">
           {" "}
-          <CourseCard buy={false} />
+          <CourseCard buy={false} handleProgress={() => setShow(true)} />
         </div>
       </Container>
       <Container>

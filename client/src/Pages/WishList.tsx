@@ -14,7 +14,10 @@ const WishList = () => {
         <Row>
           <Col md={2} lg={2} sm={6} xs={6}>
             {" "}
-            <div className="ads-area"> Hello</div>
+            <div className={theme === "dark" ? "ads-area" : "ads-area-light"}>
+              {" "}
+              Hello
+            </div>
           </Col>{" "}
           <Col md={12} lg={10} sm={6} xs={6}>
             <div

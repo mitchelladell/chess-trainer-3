@@ -15,3 +15,35 @@
   font-size: 30px;
   font-weight: bold;
 }
+
+.learn_new_course_container {
+  border-radius: 15px;
+  background-color: #333333;
+  height: 130px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  box-shadow: 0px 0px 24px #000000;
+  justify-content: right;
+  display: flex;
+  gap: 15px;
+}
+
+.new_course_button {
+  border: 1px solid goldenrod;
+  font-weight: bold;
+  font-size: 25px;
+  width: 33px;
+  height: 33px;
+  background: #daa520;
+  border-radius: 3px;
+}
+
+.new_course_button:hover {
+  background-color: gold;
+  border: 1px solid goldenrod;
+}
+
+.new_course_button:active {
+  background-color: #ffbf00;
+  border: 1px solid goldenrod;
+}

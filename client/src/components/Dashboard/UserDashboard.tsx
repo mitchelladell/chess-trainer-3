@@ -15,6 +15,11 @@ import "./user-dashboard.css";
 
 import { BsThreeDotsVertical, BsBook } from "react-icons/bs";
 import translations from "../../consts/translations";
+import NoviceIcon from "../../pgns/icons/CoursesLevelColors/Novice";
+import AmaterurIcon from "../../pgns/icons/CoursesLevelColors/Amateur";
+import IntermediateIcon from "../../pgns/icons/CoursesLevelColors/Intermediate";
+import AdvancedIcon from "../../pgns/icons/CoursesLevelColors/Advanced";
+import { StarSign } from "../../pgns/icons/UserProfileIcons/StarSign";
 
 type IProps = {
   variationExist: boolean;
@@ -91,27 +96,69 @@ const UserDashboard: React.FC<IProps> = (props) => {
   }); */
 
   return (
-    <div className="user_dashboard_container">
-      <Container>
-        <Row>
-          <Col sm={7} md={7} lg={7} style={{ position: "relative" }}>
+    <Container>
+      <Row>
+        <div className="user_dashboard_container">
+          <Col sm={12} xs={12} md={5} lg={5} style={{ margin: "auto" }}>
             <div
-              className="spaced_divs"
-              style={{ position: "absolute", bottom: 0 }}
+              style={{
+                display: "flex",
+                margin: "auto",
+                justifyContent: "left",
+              }}
             >
               <Link to="/courses/variation/">
                 <Button variant="warning" className="golden_button">
-                  Learn
+                  تعلـــم{" "}
                 </Button>
               </Link>
+            </div>{" "}
+          </Col>
+          <Col sm={12} xs={12} md={7} lg={7} align="right">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "right",
+                gap: "10px",
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "5px",
+                    marginTop: "30px",
+                    marginBottom: "15px",
+                    justifyContent: "right",
+                  }}
+                >
+                  <NoviceIcon />
+                  <AmaterurIcon />
+                  <IntermediateIcon />
+                  <AdvancedIcon />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "5px",
+                    justifyContent: "right",
+                  }}
+                >
+                  <StarSign />
+                  <StarSign /> <StarSign /> <StarSign />
+                </div>
+                <div className="course-title"> اسم الدورة التدريبية</div>
+              </div>
+
+              <div>
+                {" "}
+                <img className="dashboard-image" alt=""></img>
+              </div>
             </div>
           </Col>
-          <Col sm={5} md={5} lg={5} align="right">
-            <img className="dashboard-image" alt=""></img>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+        </div>
+      </Row>
+    </Container>
   );
 };
 

@@ -26,7 +26,9 @@ const Course = () => {
         <Container>
           <Row>
             <Col xs={5} sm={5} md={3} lg={3}>
-              <div className="ads-area"> Hello</div>
+              <div
+                className={theme === "dark" ? "ads-area" : "ads-area-light"}
+              ></div>
             </Col>
 
             <Col xs={9} sm={9} md={3} lg={3}>

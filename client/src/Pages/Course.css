@@ -44,11 +44,16 @@
   display: flex;
 }
 
+.ads-area-light,
 .ads-area {
   border-radius: 20px;
   border: 3px solid white;
   height: 100%;
   margin-top: 20p;
+}
+
+.ads-area-light {
+  border: 3px solid black;
 }
 
 .course-buy-buttons {
