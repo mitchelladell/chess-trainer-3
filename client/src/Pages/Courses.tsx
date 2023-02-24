@@ -73,17 +73,14 @@ const Courses = () => {
                 }}
               >
                 تعلم دورة تدريبية جديدة
-              </div>
-
-              <Link to="/allcourses">
-                {" "}
-                <Button className="new_course_button">
-                  {" "}
+              </div>{" "}
+              <Button className="new_course_button">
+                <Link to="/allcourses">
                   <div className="d-flex justify-content-center align-items-center">
                     +{" "}
                   </div>
-                </Button>{" "}
-              </Link>
+                </Link>
+              </Button>{" "}
             </div>
           </div>
         </div>
