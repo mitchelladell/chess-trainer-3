@@ -1114,7 +1114,6 @@ const Trainer = () => {
                   marginTop: "10px",
                   marginBottom: "10px",
                   display: "flex",
-                  flexWrap: "wrap",
                   justifyContent: "center",
                   alignItems: "center",
                   width: dimensions.width,
