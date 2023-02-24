@@ -181,6 +181,14 @@
   color: white !important;
 }
 
+.form-check-input:checked {
+  background-color: lightgray;
+  border-color: lightgrey;
+}
+.form-check-input {
+  background-color: #333333;
+}
+
 @media (max-width: 800px) {
   .custom-dropdown-toggle {
     font-size: 17px;
