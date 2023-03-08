@@ -1,6 +1,6 @@
 import Modal from "react-bootstrap/Modal";
 
-const EtisalatModal: React.FC<{
+const CurrencyModal: React.FC<{
   show: boolean;
   handleClose: any;
 }> = ({ show, handleClose }) => (
@@ -9,7 +9,7 @@ const EtisalatModal: React.FC<{
       <Modal.Body style={{ padding: 0 }}>
         <div
           style={{
-            backgroundImage: "url('../media/etisalat.png')",
+            backgroundImage: "url('../media/currencyInfo.png')",
             width: "60vw",
             height: "60vh",
             backgroundPosition: "center",
@@ -25,4 +25,4 @@ const EtisalatModal: React.FC<{
   </div>
 );
 
-export default EtisalatModal;
+export default CurrencyModal;

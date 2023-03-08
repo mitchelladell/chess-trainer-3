@@ -101,6 +101,7 @@
   margin-left: 2px !important ;
   margin-right: 2px !important;
   min-height: 50px;
+  font-weight: bolder;
   top: 813px;
   /*   width: 154px;
   height: 86px; */
@@ -151,7 +152,7 @@
 
 @media screen and (max-width: 700px) {
   .trainer_buttons {
-    font-size: 18px;
+    font-size: small;
   }
 }
 

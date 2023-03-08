@@ -24,6 +24,8 @@
   font-size: 1.7vw;
   font-weight: bold;
   cursor: pointer;
+  display: flex;
+  gap: 10px;
 }
 a {
   color: white;

@@ -2,6 +2,7 @@
   width: 100%;
   margin-top: 10px;
   padding: 5%;
+  width: 230px;
   border-radius: 13px;
   border: 1px solid black;
   background: linear-gradient(to left top, #808080, #ffffff);
@@ -61,8 +62,8 @@
   background: #daa520 !important;
   font-weight: bold;
   width: fit-content;
-  height: fit-content;
-  font-size: 1.5vw;
+  height: 55px;
+  font-size: 15px;
   font-family: "Calibri";
   margin: 5px;
 

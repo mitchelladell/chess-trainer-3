@@ -2,16 +2,15 @@ import { Button, Modal } from "react-bootstrap";
 import { useAppSelector } from "../../app/hooks";
 import "./ModalStyle.css";
 
-const ResetModal: React.FC<{
+const ResetConfirmedModal: React.FC<{
   show: boolean;
-  handleClose: any;
   handleConfirm: any;
-}> = ({ show, handleClose, handleConfirm }) => {
+}> = ({ show, handleConfirm }) => {
   const theme = useAppSelector((state) => state.theme.value);
 
   return (
     <div>
-      <Modal centered show={show} onHide={handleClose}>
+      <Modal centered show={show} onHide={handleConfirm}>
         <Modal.Body
           style={{
             background:
@@ -59,7 +58,7 @@ const ResetModal: React.FC<{
                 style={{ margin: "auto", fontSize: "25px", fontWeight: "bold" }}
               >
                 {" "}
-                هل انت متـأكد من إعادة ضبط تقدمك فــى كل الدورة{" "}
+                تم الضبط{" "}
               </div>
             </div>
             <div
@@ -70,11 +69,8 @@ const ResetModal: React.FC<{
                 justifyContent: "center",
               }}
             >
-              <Button onClick={handleClose} className="reset_button_no">
-                No
-              </Button>
-              <Button onClick={handleConfirm} className="reset_button_yes">
-                Yes
+              <Button onClick={handleConfirm} className="reset_button_no">
+                حسنا
               </Button>
             </div>
           </div>
@@ -84,4 +80,4 @@ const ResetModal: React.FC<{
   );
 };
 
-export default ResetModal;
+export default ResetConfirmedModal;

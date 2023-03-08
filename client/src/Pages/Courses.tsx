@@ -18,12 +18,21 @@ const Courses = () => {
   return (
     <div>
       <div
-        style={{ textAlign: lang === "ar" ? "end" : "start" }}
+        style={{
+          textAlign: lang === "ar" ? "end" : "start",
+          background: theme === "dark" ? "" : "white",
+        }}
         className="user_courses_text"
       >
         لوحة القيادة الخاصة بك
       </div>
-      <div className="flex-container" style={{ flexDirection: direction }}>
+      <div
+        className="flex-container"
+        style={{
+          flexDirection: direction,
+          background: theme === "dark" ? "" : "white",
+        }}
+      >
         <div style={{ width: "100%" }}>
           <div
             className="flex-item"

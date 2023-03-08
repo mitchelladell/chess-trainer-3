@@ -11,3 +11,25 @@
     max-width: initial;
   }
 }
+
+.reset_button_no {
+  background: #707070;
+  border-top-left-radius: 15px;
+  border: 1px solid #707070;
+  height: 40px;
+  width: 100px;
+}
+
+.reset_button_yes {
+  background: #707070;
+  border-bottom-right-radius: 15px;
+  border: 1px solid #707070;
+  height: 40px;
+  width: 100px;
+}
+.reset_button_yes:active,
+.reset_button_yes:hover,
+.reset_button_no:active,
+.reset_button_no:hover {
+  background: #707070 !important;
+}

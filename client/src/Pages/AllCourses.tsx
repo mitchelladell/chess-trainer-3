@@ -5,6 +5,10 @@ import { useAppSelector } from "../app/hooks";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import CourseCard from "../components/CourseCard/CourseCard";
+import NoviceIcon from "../pgns/icons/CoursesLevelColors/Novice";
+import AmaterurIcon from "../pgns/icons/CoursesLevelColors/Amateur";
+import IntermediateIcon from "../pgns/icons/CoursesLevelColors/Intermediate";
+import AdvancedIcon from "../pgns/icons/CoursesLevelColors/Advanced";
 
 const AllCourses = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
@@ -41,7 +45,12 @@ const AllCourses = () => {
     "Puzzles",
   ];
   const langFilter = ["English", " Arabic"];
-  const levelsFilter = ["novice", "beginner", "intermdiate", "advance"];
+  const levelsFilter = [
+    { label: "Novice", icon: <NoviceIcon /> },
+    { label: "Beginner", icon: <AmaterurIcon /> },
+    { label: "Intermediate", icon: <IntermediateIcon /> },
+    { label: "Advanced", icon: <AdvancedIcon /> },
+  ];
 
   useEffect(() => {
     setDirection(lang === "ar" ? "row" : "row-reverse");
@@ -136,12 +145,18 @@ const AllCourses = () => {
                     <div style={{ display: "flex" }}>
                       <div
                         className="filter_item"
-                        onClick={() => setLevelsFilterChoice(item)}
+                        onClick={() => setLevelsFilterChoice(item.label)}
                       >
-                        {item}
+                        {item.label}
+                        <div style={{ display: "flex", margin: "auto" }}>
+                          {" "}
+                          {item.icon}
+                        </div>
                       </div>
                       <div
-                        className={levelsFilterChoice === item ? "arrow" : ""}
+                        className={
+                          levelsFilterChoice === item.label ? "arrow" : ""
+                        }
                         style={{
                           width: "20px",
                           height: "20px",

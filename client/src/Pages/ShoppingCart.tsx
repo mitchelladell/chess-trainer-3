@@ -8,6 +8,8 @@ import ShoppingCard from "../components/shoppingCard/ShoppingCard";
 import ShoppingCartIcon from "../pgns/icons/ShoppingCartIcon";
 import WorldMap from "../pgns/icons/WorldMap";
 import QuestionMark from "../pgns/icons/QuestionMark";
+import CurrencyModal from "../components/PaymentModal/CurrencyModal";
+import ShoppingCartIconAdded from "../pgns/icons/ShoppingCartIconAdded";
 
 const ShoppingCart = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
@@ -17,6 +19,7 @@ const ShoppingCart = () => {
 
   const lang = useAppSelector((state: any) => state.language.value);
   const theme = useAppSelector((state) => state.theme.value);
+  const [show, setShow] = useState(false);
 
   let paymentCurrencies = ["USD $", "EGP"];
   let countryOptions = ["USA", "EGYPT", "UK"];
@@ -27,6 +30,7 @@ const ShoppingCart = () => {
   }, [lang]);
   return (
     <div>
+      <CurrencyModal show={show} handleClose={() => setShow(false)} />
       <div
         className="flex-container"
         style={{
@@ -37,8 +41,8 @@ const ShoppingCart = () => {
         <Container>
           <Row>
             <Col>
-              <div style={{ display: "flex" }}>
-                <div>
+              <div style={{ display: "flex", cursor: "pointer" }}>
+                <div onClick={() => setShow(true)}>
                   {" "}
                   <QuestionMark />
                 </div>
@@ -78,9 +82,11 @@ const ShoppingCart = () => {
             <Col align={"right"}>
               {" "}
               <Button className="shopping-buttons" style={{ color: "white" }}>
-                <div>
+                <div
+                  style={{ display: "flex", gap: "10px", flexWrap: "nowrap" }}
+                >
                   {" "}
-                  سلة التسوق الخاصة بك <ShoppingCartIcon />
+                  <ShoppingCartIconAdded /> سلة التسوق الخاصة بك
                 </div>
               </Button>
             </Col>
@@ -96,14 +102,13 @@ const ShoppingCart = () => {
                 style={{ marginBottom: "20px" }}
               >
                 {" "}
-                <div className="orange-texts"> الاجمـالى </div>{" "}
+                <div className="orange-texts"> الاجمـالى </div>
                 <div
                   className="white-texts"
                   style={{ color: theme === "light" ? "black" : "" }}
                 >
-                  {" "}
                   600 EGP
-                </div>{" "}
+                </div>
               </div>
               <div className="profile_container">
                 {" "}

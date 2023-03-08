@@ -9,13 +9,14 @@ const VodafoneModal: React.FC<{
       <div
         style={{
           backgroundImage: "url('../media/etisalat.png')",
-          width: "100%",
-          height: "100%",
+          width: "60vw",
+          height: "60vh",
           backgroundPosition: "center",
           backgroundSize: "contain",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          backgroundRepeat: "no-repeat",
         }}
       ></div>{" "}
     </Modal>

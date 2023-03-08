@@ -325,7 +325,7 @@ const Trainer = () => {
             gridColumn: "-1 / 1",
             marginTop: "auto",
             marginBottom: "auto",
-            color: "whitesmoke",
+            color: "blue",
           }}
         >
           {move.comments.map((comment) => (
