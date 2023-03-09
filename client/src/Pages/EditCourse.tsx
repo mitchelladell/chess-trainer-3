@@ -1,0 +1,283 @@
+import { Container, Row, Col } from "react-bootstrap";
+import { useState } from "react";
+import FactoryImg from "../pgns/factoryImg";
+import { Dropdown, Form } from "react-bootstrap";
+import "./EditCourse.css";
+
+const EditCourse = () => {
+  const [factoryOpen, setFactoryOpen] = useState(false);
+  const [selectedPhase, setSelectedPhase] = useState("معلومات عن الدورة");
+  const [prespective, setPrespective] = useState("ابيض");
+  const [courseLang, setcourseLang] = useState("العربية");
+  const [courseType, setCourseType] = useState("محتوى مكتوب");
+  const [courseCategory, setCourseCategory] = useState("نوع الدورة");
+
+  const prespectives = ["ابيض", "اسود", "كلاهما"];
+  const courseLangs = ["English", "العربية"];
+  const courseTypes = ["محتوى مكتوب", "محتوى مكتوب ومرئـى"];
+  const courseCategories = [
+    "بدايات الدور",
+    "وسط الدور",
+    "نهايات الدور",
+    "استـراتجيات",
+    "تـــكـــتيكـــــات ",
+    "اللعب الموقفــي",
+    "افخاخ الشطرنج",
+  ];
+
+  return (
+    <div>
+      <Container>
+        <Row>
+          <Col align="right">
+            <div
+              style={{ display: "flex", gap: "15px", justifyContent: "right" }}
+            >
+              <div
+                className="white-texts"
+                style={{ textAlign: "right", margin: "0" }}
+              >
+                {" "}
+                مصنع الدورات{" "}
+              </div>{" "}
+              <div
+                style={{ cursor: "pointer" }}
+                onClick={() => setFactoryOpen(!factoryOpen)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="38"
+                  height="19"
+                  viewBox="0 0 38 19"
+                >
+                  <g
+                    id="ha_icon"
+                    data-name="ha icon"
+                    transform="translate(-1553 -154)"
+                  >
+                    <path
+                      id="Path_29"
+                      data-name="Path 29"
+                      d="M0,0H35"
+                      transform="translate(1554.5 155.5)"
+                      fill="none"
+                      stroke="#fff"
+                      stroke-linecap="round"
+                      stroke-width="3"
+                    />
+                    <line
+                      id="Line_17"
+                      data-name="Line 17"
+                      x2="35"
+                      transform="translate(1554.5 163.5)"
+                      fill="none"
+                      stroke="#fff"
+                      stroke-linecap="round"
+                      stroke-width="3"
+                    />
+                    <line
+                      id="Line_18"
+                      data-name="Line 18"
+                      x2="35"
+                      transform="translate(1554.5 171.5)"
+                      fill="none"
+                      stroke="#fff"
+                      stroke-linecap="round"
+                      stroke-width="3"
+                    />
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </Col>{" "}
+        </Row>{" "}
+        {!factoryOpen ? (
+          <Row>
+            <Col align="right">
+              <div className="intro_container flex-item">
+                <FactoryImg />
+              </div>
+            </Col>
+          </Row>
+        ) : (
+          <Row>
+            {" "}
+            <Col md={6} sm={6} lg={6}>
+              {" "}
+              <div className="intro_container flex-item">
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "30px",
+                    justifyContent: "right",
+                  }}
+                >
+                  <Dropdown className="currency_dropdown">
+                    <Dropdown.Toggle>{prespective}</Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      {prespectives.map((prespective) => (
+                        <Dropdown.Item
+                          key={prespective}
+                          onClick={() => setPrespective(prespective)}
+                        >
+                          {prespective}
+                        </Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                  <div className="factory_white_texts"> المنظور </div>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "30px",
+                    justifyContent: "right",
+                  }}
+                >
+                  <div> Hello There</div>
+                  <div className="factory_white_texts"> مستوى الدورة </div>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "30px",
+                    justifyContent: "right",
+                  }}
+                >
+                  <Form style={{ width: "40%" }}>
+                    <Form.Group
+                      className="mb-3"
+                      controlId="exampleForm.ControlTextarea1"
+                    >
+                      <Form.Control as="textarea" rows={1} />
+                    </Form.Group>
+                  </Form>{" "}
+                  <div className="factory_white_texts"> اســـم الدورة </div>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "30px",
+                    justifyContent: "right",
+                  }}
+                >
+                  <Dropdown className="currency_dropdown">
+                    <Dropdown.Toggle>{courseCategory}</Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      {courseCategories.map((cat) => (
+                        <Dropdown.Item
+                          key={cat}
+                          onClick={() => setCourseCategory(cat)}
+                        >
+                          {cat}
+                        </Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                  <div className="factory_white_texts">
+                    {" "}
+                    اختـر نوع الدورة التدريبة{" "}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "30px",
+                    justifyContent: "right",
+                  }}
+                >
+                  <Dropdown className="currency_dropdown">
+                    <Dropdown.Toggle>{courseLang}</Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      {courseLangs.map((lang) => (
+                        <Dropdown.Item
+                          key={lang}
+                          onClick={() => setcourseLang(lang)}
+                        >
+                          {lang}
+                        </Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                  <div className="factory_white_texts"> لغة الدورة </div>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "30px",
+                    justifyContent: "right",
+                  }}
+                >
+                  <Dropdown className="currency_dropdown">
+                    <Dropdown.Toggle>{courseType}</Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      {courseTypes.map((type) => (
+                        <Dropdown.Item
+                          key={type}
+                          onClick={() => setCourseType(type)}
+                        >
+                          {type}
+                        </Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+
+                  <div className="factory_white_texts"> هيئة الدورة </div>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "30px",
+                    justifyContent: "right",
+                  }}
+                >
+                  <Form style={{ width: "40%" }}>
+                    <Form.Group
+                      className="mb-3"
+                      controlId="exampleForm.ControlTextarea1"
+                    >
+                      <Form.Control as="textarea" rows={4} />
+                    </Form.Group>
+                  </Form>{" "}
+                  <div className="factory_white_texts"> وصف الدورة</div>
+                </div>
+              </div>
+            </Col>
+            <Col md={3} sm={6} lg={3}>
+              {" "}
+              <div className="intro_container flex-item">
+                {" "}
+                <div
+                  className={
+                    selectedPhase === "معلومات عن الدورة"
+                      ? "active_phase"
+                      : "idle_phase"
+                  }
+                  onClick={() => setSelectedPhase("معلومات عن الدورة")}
+                >
+                  معلومات عن الدورة{" "}
+                </div>{" "}
+                <div
+                  className={
+                    selectedPhase === "إدارة الفصول"
+                      ? "active_phase"
+                      : "idle_phase"
+                  }
+                  onClick={() => setSelectedPhase("إدارة الفصول")}
+                >
+                  إدارة الفصول
+                </div>{" "}
+              </div>
+            </Col>
+          </Row>
+        )}
+      </Container>
+    </div>
+  );
+};
+
+export default EditCourse;

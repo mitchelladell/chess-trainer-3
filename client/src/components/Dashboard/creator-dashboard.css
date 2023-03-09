@@ -1,0 +1,47 @@
+.user_dashboard_container {
+  border-radius: 15px;
+  background-color: #333333;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  box-shadow: 0px 0px 24px #000000;
+  display: flex;
+}
+.dashboard-image {
+  width: 183px;
+  height: 158px;
+  margin-top: 15px;
+  background: gold;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.spaced_divs {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  text-align: initial;
+}
+.golden_button_creator {
+  background-color: goldenrod;
+  border: 1px solid goldenrod;
+  font-family: "Montserrat-Bold";
+  font-weight: bold;
+  font-size: 18px;
+  width: 180px;
+}
+
+.golden_button_creator:hover {
+  background-color: gold;
+  border: 1px solid goldenrod;
+}
+
+.golden_button_creator:active {
+  background-color: #ffbf00;
+  border: 1px solid goldenrod;
+}
+
+.course-title {
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+}

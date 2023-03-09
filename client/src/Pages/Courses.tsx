@@ -5,11 +5,14 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
 import UserDashboard from "../components/Dashboard/UserDashboard";
 import { Button } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 import Cookies from "js-cookie";
+import CreatorDashboard from "../components/Dashboard/CreatorDashboard";
 const Courses = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
   const lang = useAppSelector((state: any) => state.language.value);
   const theme = useAppSelector((state) => state.theme.value);
+  const [showCreatedCourses, setShowCreatedCourses] = useState(false);
 
   useEffect(() => {
     setDirection(lang === "en" ? "row" : "row-reverse");
@@ -26,6 +29,27 @@ const Courses = () => {
       >
         لوحة القيادة الخاصة بك
       </div>
+      <div className="flex-container" style={{ justifyContent: "right" }}>
+        {" "}
+        <div style={{ display: "flex", gap: "15px " }}>
+          {" "}
+          <Button
+            className="created_courses_button"
+            onClick={() => setShowCreatedCourses(false)}
+          >
+            {" "}
+            + دوراتـــــــي التدريبية
+          </Button>
+          <Button
+            className="created_courses_button"
+            onClick={() => setShowCreatedCourses(true)}
+          >
+            {" "}
+            + الدورات التـي انشأتها
+          </Button>
+        </div>
+      </div>
+
       <div
         className="flex-container"
         style={{
@@ -46,13 +70,21 @@ const Courses = () => {
               ليـس لديك أي شـي ء للمراجعة هنا . قد تحتاج إلى البدء فـي تعلم شـي
               ء جديد!
             </div>
-
-            <UserDashboard
-              variationExist={true}
-              courseName="first"
-              progress={0}
-              numberOfVariations={"60"}
-            />
+            {!showCreatedCourses ? (
+              <UserDashboard
+                variationExist={true}
+                courseName="first"
+                progress={0}
+                numberOfVariations={"60"}
+              />
+            ) : (
+              <CreatorDashboard
+                variationExist={true}
+                courseName="first"
+                progress={0}
+                numberOfVariations={"60"}
+              />
+            )}
             <div style={{ textAlign: "center" }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

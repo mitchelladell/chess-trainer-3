@@ -61,3 +61,25 @@ a:active {
   background-color: none !important;
   color: none !important;
 }
+
+.created_courses_button {
+  border: 1px solid goldenrod;
+  font-weight: bold;
+  font-size: 25px;
+  min-height: 60px;
+  color: black;
+  background: #daa520;
+  border-radius: 3px;
+  line-height: 16px;
+}
+
+.created_courses_button:hover {
+  background-color: #ffbf00 !important;
+  border: 1px solid #ffbf00;
+  color: black;
+}
+
+.created_courses_button:active {
+  background-color: #ffbf00 !important;
+  border: 1px solid #ffbf00 !important;
+}
