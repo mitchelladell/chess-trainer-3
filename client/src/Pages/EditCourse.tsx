@@ -184,11 +184,57 @@ const EditCourse = () => {
     );
   };
 
-  const ProfileSettingsCard = ({ id }: any) => {
+  const PGNUploadPhase = () => {
     return (
       <div
         className="learn_new_course_container"
         style={{ height: "fit-content", width: "100%" }}
+      >
+        <Container>
+          <Row>
+            <Col md={6} lg={4} sm={12}>
+              <div className="course_chapter_wrapper">
+                {" "}
+                <CourseChapter />
+              </div>
+              <div
+                style={{
+                  color: "#DAA520",
+                  fontSize: "25px",
+                  fontWeight: "bold",
+                }}
+              >
+                الفصل الاول
+              </div>
+            </Col>
+            <Col md={6} lg={8} sm={12} style={{ margin: "auto" }}>
+              <div style={{ display: "flex", justifyContent: "right" }}>
+                <input type="file" style={{ width: "70%", height: "30px" }} />
+                <div style={{ marginTop: "auto", marginBottom: "auto" }}>
+                  <div className="payment_counts"> pgn رفع ملف للتعلم </div>
+                </div>
+              </div>
+              <div style={{ display: "flex", justifyContent: "right" }}>
+                <input type="file" style={{ width: "70%", height: "30px" }} />
+                <div style={{ marginTop: "auto", marginBottom: "auto" }}>
+                  <div className="payment_counts"> pgn رفع ملف التدريب </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    );
+  };
+
+  const ProfileSettingsCard = ({ id }: any) => {
+    const [hovered, setHovered] = useState(false);
+    return (
+      <div
+        className="learn_new_course_container"
+        style={{ height: "fit-content", width: "100%" }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
         id={id}
       >
         <Container>
@@ -197,11 +243,14 @@ const EditCourse = () => {
               <div className="course_chapter_wrapper">
                 {" "}
                 <CourseChapter />
-                <div className="remove_icon">
+                <div className={`remove_icon_${hovered ? "hovered" : ""}`}>
                   {" "}
                   <ChapterRemoveIcon />
                 </div>
-                <div className="edit_icon">
+                <div
+                  className={`edit_icon_${hovered ? "hovered" : ""}`}
+                  onClick={() => setSelectedPhase("editCard")}
+                >
                   {" "}
                   <ChapterEditIcon />
                 </div>
@@ -405,11 +454,9 @@ const EditCourse = () => {
         ) : (
           <Row align="right">
             <Col md={9} sm={9} lg={9} align="right">
-              {selectedPhase === "معلومات عن الدورة" ? (
-                <CourseInfo />
-              ) : (
-                <CourseSettings />
-              )}
+              {selectedPhase === "معلومات عن الدورة" && <CourseInfo />}
+              {selectedPhase === "إدارة الفصول" && <CourseSettings />}
+              {selectedPhase === "editCard" && <PGNUploadPhase />}
             </Col>
 
             <Col md={3} sm={3} lg={3} align="right">

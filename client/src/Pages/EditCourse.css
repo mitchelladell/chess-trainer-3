@@ -93,7 +93,12 @@
   position: relative; /* This is important for positioning the icon */
 }
 
-.remove_icon {
+.remove_icon_,
+.edit_icon_ {
+  display: none;
+}
+
+.remove_icon_hovered {
   position: absolute;
   top: 70%; /* Position the icon in the middle vertically */
   left: 10%; /* Position the icon in the middle horizontally */
@@ -101,7 +106,7 @@
   display: none; /* Hide the icon by default */
 }
 
-.edit_icon {
+.edit_icon_hovered {
   position: absolute;
   top: 30%; /* Position the icon in the middle vertically */
   left: 10%; /* Position the icon in the middle horizontally */
@@ -109,7 +114,7 @@
   display: none; /* Hide the icon by default */
 }
 
-.container:hover .edit_icon,
-.container:hover .remove_icon {
+.container:hover .edit_icon_hovered,
+.container:hover .remove_icon_hovered {
   display: block; /* Show the icon on hover */
 }
