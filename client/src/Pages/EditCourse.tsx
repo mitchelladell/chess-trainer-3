@@ -5,6 +5,8 @@ import { Dropdown, Form, Button } from "react-bootstrap";
 import "./EditCourse.css";
 import SaveChangesIcon from "../pgns/icons/SaveChangesIcon";
 import CourseChapter from "../components/CourseChapter/CourseChapter";
+import ChapterRemoveIcon from "../pgns/icons/ChapterRemoveIcon";
+import ChapterEditIcon from "../pgns/icons/ChapterEditIcon";
 
 const EditCourse = () => {
   const [factoryOpen, setFactoryOpen] = useState(false);
@@ -182,17 +184,28 @@ const EditCourse = () => {
     );
   };
 
-  const ProfileSettingsCard = () => {
+  const ProfileSettingsCard = ({ id }: any) => {
     return (
       <div
         className="learn_new_course_container"
         style={{ height: "fit-content", width: "100%" }}
+        id={id}
       >
         <Container>
-          {" "}
           <Row>
             <Col md={6} lg={4} sm={12}>
-              <CourseChapter />
+              <div className="course_chapter_wrapper">
+                {" "}
+                <CourseChapter />
+                <div className="remove_icon">
+                  {" "}
+                  <ChapterRemoveIcon />
+                </div>
+                <div className="edit_icon">
+                  {" "}
+                  <ChapterEditIcon />
+                </div>
+              </div>
               <div
                 style={{
                   color: "#DAA520",
@@ -205,19 +218,48 @@ const EditCourse = () => {
             </Col>
             <Col md={6} lg={8} sm={12} style={{ margin: "auto" }}>
               <div style={{ display: "flex", justifyContent: "right" }}>
-                {" "}
                 <input type="text" style={{ width: "70%", height: "30px" }} />
                 <div style={{ marginTop: "auto", marginBottom: "auto" }}>
-                  {" "}
                   <div className="payment_counts"> عنوان الفصل </div>
-                </div>{" "}
+                </div>
               </div>
-            </Col>{" "}
-          </Row>{" "}
+            </Col>
+          </Row>
         </Container>
       </div>
     );
   };
+
+  function handleDragStart(event: any) {
+    event.dataTransfer.setData("text/plain", event.target.id);
+  }
+
+  function handleDragEnter(event: any) {
+    event.preventDefault();
+    // Add CSS class to indicate hover state
+    event.target.classList.add("hover");
+  }
+
+  function handleDragLeave(event: any) {
+    // Remove CSS class for hover state
+    event.target.classList.remove("hover");
+  }
+
+  function handleDragOver(event: any) {
+    event.preventDefault();
+  }
+
+  function handleDrop(event: any) {
+    event.preventDefault();
+    // Get the ID of the dragged item
+    const id = event.dataTransfer.getData("text/plain");
+    // Get the target element and remove the CSS class for hover state
+    const target = event.target;
+    target.classList.remove("hover");
+    // Move the dragged item to the target position
+    const draggedItem = document.getElementById(id);
+    target.parentNode.insertBefore(draggedItem, target.nextSibling);
+  }
 
   const CourseSettings = () => {
     return (
@@ -225,10 +267,12 @@ const EditCourse = () => {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
             {" "}
-            <Button className="save_changes_button">
-              {" "}
-              <SaveChangesIcon /> حفظ التغيـرات{" "}
-            </Button>
+            {chapterCardItems.length && (
+              <Button className="save_changes_button">
+                {" "}
+                <SaveChangesIcon /> حفظ التغيـرات{" "}
+              </Button>
+            )}
           </div>
           <div>
             <div
@@ -274,7 +318,12 @@ const EditCourse = () => {
         </div>
 
         {chapterCardItems &&
-          chapterCardItems.map((item: any) => <ProfileSettingsCard />)}
+          chapterCardItems.map((item: any, index: number) => (
+            <div>
+              <ProfileSettingsCard key={index} id={index} index={index} />
+              <div> {index}</div>
+            </div>
+          ))}
       </div>
     );
   };

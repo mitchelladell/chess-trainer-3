@@ -88,3 +88,28 @@
 .save_button_container {
   padding: 3%;
 }
+
+.course_chapter_wrapper {
+  position: relative; /* This is important for positioning the icon */
+}
+
+.remove_icon {
+  position: absolute;
+  top: 70%; /* Position the icon in the middle vertically */
+  left: 10%; /* Position the icon in the middle horizontally */
+  transform: translate(-50%, -50%); /* Center the icon precisely */
+  display: none; /* Hide the icon by default */
+}
+
+.edit_icon {
+  position: absolute;
+  top: 30%; /* Position the icon in the middle vertically */
+  left: 10%; /* Position the icon in the middle horizontally */
+  transform: translate(-50%, -50%); /* Center the icon precisely */
+  display: none; /* Hide the icon by default */
+}
+
+.container:hover .edit_icon,
+.container:hover .remove_icon {
+  display: block; /* Show the icon on hover */
+}
