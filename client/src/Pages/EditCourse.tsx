@@ -17,6 +17,8 @@ const EditCourse = () => {
   const prespectives = ["ابيض", "اسود", "كلاهما"];
   const courseLangs = ["English", "العربية"];
   const courseTypes = ["محتوى مكتوب", "محتوى مكتوب ومرئـى"];
+  const [chapterCardItems, setChapterCardItems] = useState<any>([]);
+
   const courseCategories = [
     "بدايات الدور",
     "وسط الدور",
@@ -27,159 +29,156 @@ const EditCourse = () => {
     "افخاخ الشطرنج",
   ];
 
+  const courseChapters = () => {
+    const newChapters = [...chapterCardItems, "item"];
+    setChapterCardItems(newChapters);
+    console.log("item", newChapters);
+  };
+
   const CourseInfo = () => {
     return (
-      <Col md={6} sm={6} lg={6}>
-        {" "}
-        <div className="intro_container flex-item">
-          <div
-            style={{
-              display: "flex",
-              gap: "30px",
-              justifyContent: "right",
-              padding: "15px",
-            }}
-          >
-            <Dropdown className="currency_dropdown">
-              <Dropdown.Toggle>{prespective}</Dropdown.Toggle>
+      <div className="intro_container flex-item">
+        <div
+          style={{
+            display: "flex",
+            gap: "30px",
+            justifyContent: "right",
+            padding: "15px",
+          }}
+        >
+          <Dropdown className="currency_dropdown">
+            <Dropdown.Toggle>{prespective}</Dropdown.Toggle>
 
-              <Dropdown.Menu>
-                {prespectives.map((prespective) => (
-                  <Dropdown.Item
-                    key={prespective}
-                    onClick={() => setPrespective(prespective)}
-                  >
-                    {prespective}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-            <div className="factory_white_texts"> المنظور </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              gap: "30px",
-              justifyContent: "right",
-            }}
-          >
-            <div> Hello There</div>
-            <div className="factory_white_texts"> مستوى الدورة </div>
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              gap: "30px",
-              justifyContent: "right",
-            }}
-          >
-            <Form style={{ width: "40%" }}>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
-              >
-                <Form.Control as="textarea" rows={1} />
-              </Form.Group>
-            </Form>{" "}
-            <div className="factory_white_texts"> اســـم الدورة </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              gap: "30px",
-              justifyContent: "right",
-              padding: "15px",
-            }}
-          >
-            <Dropdown className="currency_dropdown">
-              <Dropdown.Toggle>{courseCategory}</Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                {courseCategories.map((cat) => (
-                  <Dropdown.Item
-                    key={cat}
-                    onClick={() => setCourseCategory(cat)}
-                  >
-                    {cat}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-            <div className="factory_white_texts">
-              {" "}
-              اختـر نوع الدورة التدريبة{" "}
-            </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              gap: "30px",
-              justifyContent: "right",
-            }}
-          >
-            <Dropdown className="currency_dropdown">
-              <Dropdown.Toggle>{courseLang}</Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                {courseLangs.map((lang) => (
-                  <Dropdown.Item key={lang} onClick={() => setcourseLang(lang)}>
-                    {lang}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-            <div className="factory_white_texts"> لغة الدورة </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              gap: "30px",
-              justifyContent: "right",
-              padding: "15px",
-            }}
-          >
-            <Dropdown className="currency_dropdown">
-              <Dropdown.Toggle>{courseType}</Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                {courseTypes.map((type) => (
-                  <Dropdown.Item key={type} onClick={() => setCourseType(type)}>
-                    {type}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-
-            <div className="factory_white_texts"> هيئة الدورة </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              gap: "30px",
-              justifyContent: "right",
-              padding: "15px",
-            }}
-          >
-            <Form style={{ width: "40%" }}>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
-              >
-                <Form.Control as="textarea" rows={4} />
-              </Form.Group>
-            </Form>{" "}
-            <div className="factory_white_texts"> وصف الدورة</div>
-          </div>
-          <div className="save_button_container">
-            {" "}
-            <Button className="save_changes_button">
-              {" "}
-              <SaveChangesIcon /> حفظ التغيـرات{" "}
-            </Button>{" "}
-          </div>
+            <Dropdown.Menu>
+              {prespectives.map((prespective) => (
+                <Dropdown.Item
+                  key={prespective}
+                  onClick={() => setPrespective(prespective)}
+                >
+                  {prespective}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+          <div className="factory_white_texts"> المنظور </div>
         </div>
-      </Col>
+        <div
+          style={{
+            display: "flex",
+            gap: "30px",
+            justifyContent: "right",
+          }}
+        >
+          <div> Hello There</div>
+          <div className="factory_white_texts"> مستوى الدورة </div>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            gap: "30px",
+            justifyContent: "right",
+          }}
+        >
+          <Form style={{ width: "40%" }}>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Control as="textarea" rows={1} />
+            </Form.Group>
+          </Form>{" "}
+          <div className="factory_white_texts"> اســـم الدورة </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            gap: "30px",
+            justifyContent: "right",
+            padding: "15px",
+          }}
+        >
+          <Dropdown className="currency_dropdown">
+            <Dropdown.Toggle>{courseCategory}</Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              {courseCategories.map((cat) => (
+                <Dropdown.Item key={cat} onClick={() => setCourseCategory(cat)}>
+                  {cat}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+          <div className="factory_white_texts"> اختـر نوع الدورة التدريبة </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            gap: "30px",
+            justifyContent: "right",
+          }}
+        >
+          <Dropdown className="currency_dropdown">
+            <Dropdown.Toggle>{courseLang}</Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              {courseLangs.map((lang) => (
+                <Dropdown.Item key={lang} onClick={() => setcourseLang(lang)}>
+                  {lang}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+          <div className="factory_white_texts"> لغة الدورة </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            gap: "30px",
+            justifyContent: "right",
+            padding: "15px",
+          }}
+        >
+          <Dropdown className="currency_dropdown">
+            <Dropdown.Toggle>{courseType}</Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              {courseTypes.map((type) => (
+                <Dropdown.Item key={type} onClick={() => setCourseType(type)}>
+                  {type}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+
+          <div className="factory_white_texts"> هيئة الدورة </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            gap: "30px",
+            justifyContent: "right",
+            padding: "15px",
+          }}
+        >
+          <Form style={{ width: "40%" }}>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Control as="textarea" rows={4} />
+            </Form.Group>
+          </Form>{" "}
+          <div className="factory_white_texts"> وصف الدورة</div>
+        </div>
+        <div className="save_button_container">
+          {" "}
+          <Button className="save_changes_button">
+            {" "}
+            <SaveChangesIcon /> حفظ التغيـرات{" "}
+          </Button>{" "}
+        </div>
+      </div>
     );
   };
 
@@ -207,7 +206,7 @@ const EditCourse = () => {
             <Col md={6} lg={8} sm={12} style={{ margin: "auto" }}>
               <div style={{ display: "flex", justifyContent: "right" }}>
                 {" "}
-                <input type="text" style={{ width: "40%", height: "30px" }} />
+                <input type="text" style={{ width: "70%", height: "30px" }} />
                 <div style={{ marginTop: "auto", marginBottom: "auto" }}>
                   {" "}
                   <div className="payment_counts"> عنوان الفصل </div>
@@ -237,7 +236,10 @@ const EditCourse = () => {
             >
               {" "}
               <div className="add_new_chapter_text"> إضافة فصل جديد</div>{" "}
-              <Button className="add_chapter_button">
+              <Button
+                className="add_chapter_button"
+                onClick={() => courseChapters()}
+              >
                 {" "}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -270,7 +272,9 @@ const EditCourse = () => {
             </div>
           </div>
         </div>
-        <ProfileSettingsCard />
+
+        {chapterCardItems &&
+          chapterCardItems.map((item: any) => <ProfileSettingsCard />)}
       </div>
     );
   };
@@ -351,14 +355,15 @@ const EditCourse = () => {
           </Row>
         ) : (
           <Row align="right">
-            {selectedPhase === "معلومات عن الدورة" ? (
-              <CourseInfo />
-            ) : (
-              <Col md={6} sm={6} lg={6} align="right">
+            <Col md={9} sm={9} lg={9} align="right">
+              {selectedPhase === "معلومات عن الدورة" ? (
+                <CourseInfo />
+              ) : (
                 <CourseSettings />
-              </Col>
-            )}
-            <Col md={3} sm={6} lg={3} align="right">
+              )}
+            </Col>
+
+            <Col md={3} sm={3} lg={3} align="right">
               {" "}
               <div className="intro_container flex-item">
                 {" "}
