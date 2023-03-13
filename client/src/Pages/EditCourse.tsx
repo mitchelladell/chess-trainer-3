@@ -206,11 +206,12 @@ const EditCourse = () => {
               >
                 الفصل الاول
               </div>
-
-              <Button className="save_changes_button">
-                {" "}
-                <SaveChangesIcon /> حفظ التغيـرات{" "}
-              </Button>
+              <div style={{ marginTop: "50%" }}>
+                <Button className="save_changes_button">
+                  {" "}
+                  <SaveChangesIcon /> حفظ التغيـرات{" "}
+                </Button>{" "}
+              </div>
             </Col>
             <Col md={6} lg={8} sm={12} style={{ margin: "auto" }}>
               <div style={{ display: "flex", justifyContent: "right" }}>
@@ -224,6 +225,14 @@ const EditCourse = () => {
                 <div style={{ marginTop: "auto", marginBottom: "auto" }}>
                   <div className="payment_counts"> pgn رفع ملف التدريب </div>
                 </div>
+              </div>
+              <div style={{}}>
+                <div className="payment_counts">
+                  {" "}
+                  رابط الفيديو الخاص بالدورة
+                </div>
+                <input type="text" style={{ width: "70%", height: "30px" }} />
+                <div style={{ marginTop: "auto", marginBottom: "auto" }}></div>
               </div>
 
               <div style={{ display: "flex" }}>
@@ -503,6 +512,14 @@ const EditCourse = () => {
                       : "idle_phase"
                   }
                   onClick={() => setSelectedPhase("إدارة الفصول")}
+                >
+                  إدارة الفصول
+                </div>{" "}
+                <div
+                  className={
+                    selectedPhase === "editCard" ? "active_phase" : "idle_phase"
+                  }
+                  onClick={() => setSelectedPhase("editCard")}
                 >
                   إدارة الفصول
                 </div>{" "}
