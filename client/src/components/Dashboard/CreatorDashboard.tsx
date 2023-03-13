@@ -122,7 +122,7 @@ const CreatorDashboard: React.FC<IProps> = (props) => {
                 }}
               >
                 {" "}
-                <Link to="/courses/variation/">
+                <Link to="/editcourse">
                   <Button variant="warning" className="golden_button_creator">
                     تعديل{" "}
                   </Button>
