@@ -215,14 +215,26 @@ const EditCourse = () => {
             </Col>
             <Col md={6} lg={8} sm={12} style={{ margin: "auto" }}>
               <div style={{ display: "flex", justifyContent: "right" }}>
-                <input type="file" style={{ width: "70%", height: "30px" }} />
-                <div style={{ marginTop: "auto", marginBottom: "auto" }}>
+                <input type="file" style={{ height: "30px" }} />
+                <div
+                  style={{
+                    marginTop: "auto",
+                    marginBottom: "auto",
+                    width: "30%",
+                  }}
+                >
                   <div className="payment_counts"> pgn رفع ملف للتعلم </div>
                 </div>
               </div>
               <div style={{ display: "flex", justifyContent: "right" }}>
-                <input type="file" style={{ width: "70%", height: "30px" }} />
-                <div style={{ marginTop: "auto", marginBottom: "auto" }}>
+                <input type="file" style={{ height: "30px" }} />
+                <div
+                  style={{
+                    marginTop: "auto",
+                    marginBottom: "auto",
+                    width: "30%",
+                  }}
+                >
                   <div className="payment_counts"> pgn رفع ملف التدريب </div>
                 </div>
               </div>
@@ -515,14 +527,56 @@ const EditCourse = () => {
                 >
                   إدارة الفصول
                 </div>{" "}
-                <div
-                  className={
-                    selectedPhase === "editCard" ? "active_phase" : "idle_phase"
-                  }
-                  onClick={() => setSelectedPhase("editCard")}
-                >
-                  إدارة الفصول
-                </div>{" "}
+                {selectedPhase === "editCard" && (
+                  <div
+                    className={
+                      selectedPhase === "editCard"
+                        ? "active_phase"
+                        : "idle_phase"
+                    }
+                    onClick={() => setSelectedPhase("editCard")}
+                  >
+                    تعديل الفصل الاول{" "}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="37.5"
+                      height="40"
+                      viewBox="0 0 37.5 40"
+                    >
+                      <g
+                        id="Group_68"
+                        data-name="Group 68"
+                        transform="translate(-218.511 -130.5)"
+                      >
+                        <line
+                          id="Line_23"
+                          data-name="Line 23"
+                          y2="32"
+                          transform="translate(254.511 130.5)"
+                          fill="none"
+                          stroke="#000"
+                          stroke-width="3"
+                        />
+                        <line
+                          id="Line_24"
+                          data-name="Line 24"
+                          x2="27"
+                          transform="translate(227.511 162.5)"
+                          fill="none"
+                          stroke="#000"
+                          stroke-linecap="round"
+                          stroke-width="3"
+                        />
+                        <path
+                          id="Polygon_5"
+                          data-name="Polygon 5"
+                          d="M8,0l8,13H0Z"
+                          transform="translate(218.511 170.5) rotate(-90)"
+                        />
+                      </g>
+                    </svg>
+                  </div>
+                )}
               </div>
             </Col>
           </Row>

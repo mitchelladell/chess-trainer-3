@@ -118,3 +118,10 @@
 .container:hover .remove_icon_hovered {
   display: block; /* Show the icon on hover */
 }
+
+input[type="text"] {
+  border: 1px solid #ccc; /* adds a border */
+  padding: 8px; /* adds padding inside the input field */
+  font-size: 16px; /* sets font size */
+  border-radius: 5px; /* adds rounded corners */
+}
