@@ -53,6 +53,7 @@ import Bn from "../components/customPieces/BoardPieces/BN";
 import Br from "../components/customPieces/BoardPieces/BR";
 import Bp from "../components/customPieces/BoardPieces/BP";
 import gridShapes from "../consts/gridShapes";
+import Video from "../components/VideoPlayer/VideoPlayer";
 
 async function readPGN(pgn2) {
   // Read the PGN file and parse it
@@ -684,77 +685,6 @@ const Trainer = () => {
   }
   console.log("ravs", gridPGn);
 
-  const MovesGrid = () => {
-    return (
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-        {gridPGn.map((move, index) => {
-          let prevDepth = index > 0 ? gridPGn[index - 1].depth : 0;
-
-          return (
-            <div
-              key={index}
-              style={{
-                gridColumn: move.comment ? "-1 / 1" : "",
-              }}
-            >
-              <div
-                style={{
-                  cursor: "pointer",
-                  fontFamily: "Montserrat-Bold",
-                  fontSize: "20px",
-                  margin: "5px",
-                  marginLeft: `${move.depth * 20}px`,
-                }}
-                className={
-                  selectedMove?.id === move.id ? "highlighted-move" : ""
-                }
-                onClick={() => {
-                  let variantMoves = loadVariationMoves(formattedPgn, move);
-
-                  loadPosition(
-                    variantMoves.findIndex((obj) => obj.id === move.id),
-                    variantMoves.map((move) => move.move)
-                  );
-                  setVariationEntered(false);
-                  setVariationMoves(variantMoves);
-
-                  setSelectedMove(move);
-                  setCurrentMove(index);
-                  setHighlightedVariationIndex(null);
-                }}
-              >
-                <div style={{ display: "flex", flex: "0 0 100%" }}>
-                  {move.color === "b" ? "..." : `${move.move_number}. `}
-                  {gridShapes[`${move.color}${move.move[0]}`] ? (
-                    <>
-                      {gridShapes[`${move.color}${move.move[0]}`]}
-                      {move.move.substr(1, move.move.length - 1)}
-                    </>
-                  ) : (
-                    move.move
-                  )}
-                  {annotaitons[move.nags]}
-                </div>
-              </div>
-
-              <div className="comments">
-                <div
-                  style={{
-                    fontSize: "18px",
-                    fontFamily: "Montserrat-Medium",
-                    color: "white",
-                  }}
-                >
-                  {move.comment}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
-
   function onDrop(sourceSquare, targetSquare) {
     const move = makeAMove({
       from: sourceSquare,
@@ -1237,14 +1167,23 @@ const Trainer = () => {
 
             <Col>
               {!trainingMode ? (
-                <div
-                  className="moves_container"
-                  style={{
-                    height: dimensions.height,
-                    background: "#E4E4E4",
-                  }}
-                >
-                  <ChessMoves moves={formattedPgn} />
+                <div>
+                  <div
+                    style={{
+                      height: dimensions.height / 2,
+                    }}
+                  >
+                    <Video />
+                  </div>
+                  <div
+                    className="moves_container"
+                    style={{
+                      height: dimensions.height / 2,
+                      background: "#E4E4E4",
+                    }}
+                  >
+                    <ChessMoves moves={formattedPgn} />
+                  </div>
                 </div>
               ) : (
                 <div
@@ -1339,6 +1278,12 @@ const Trainer = () => {
                   </Button>
                 </div>
               )}
+            </Col>
+            <Col>
+              <Video />
+              <Video />
+              <Video />
+              <Video />
             </Col>
           </Row>
         </Container>

@@ -9,6 +9,7 @@ import ChapterRemoveIcon from "../pgns/icons/ChapterRemoveIcon";
 import ChapterEditIcon from "../pgns/icons/ChapterEditIcon";
 import TruckInFactory from "../pgns/TruckInFactory";
 import TruckInFactoryVideo from "../pgns/TruckInFactoryVideo";
+import RemoveCourseModal from "../components/PaymentModal/RemoveCourseModal";
 
 const EditCourse = () => {
   const [factoryOpen, setFactoryOpen] = useState(false);
@@ -17,6 +18,8 @@ const EditCourse = () => {
   const [courseLang, setcourseLang] = useState("العربية");
   const [courseType, setCourseType] = useState("محتوى مكتوب");
   const [courseCategory, setCourseCategory] = useState("نوع الدورة");
+  const [showRemoveChapter, setShowRemoveChapter] = useState(false);
+  const [indexToRemove, setIndexToRemove] = useState(null);
 
   const prespectives = ["ابيض", "اسود", "كلاهما"];
   const courseLangs = ["English", "العربية"];
@@ -37,6 +40,18 @@ const EditCourse = () => {
     const newChapters = [...chapterCardItems, "item"];
     setChapterCardItems(newChapters);
     console.log("item", newChapters);
+  };
+
+  const handleRemoveConfirm = () => {
+    setChapterCardItems((prevItems: any) =>
+      prevItems.filter((_: any, index: number) => index !== indexToRemove)
+    );
+    setShowRemoveChapter(false);
+  };
+
+  const handleRemoveClick = (id: any) => {
+    setShowRemoveChapter(true);
+    setIndexToRemove(id);
   };
 
   const CourseInfo = () => {
@@ -73,7 +88,140 @@ const EditCourse = () => {
             justifyContent: "right",
           }}
         >
-          <div> Hello There</div>
+          <Form>
+            <div key={`default-${"checkbox"}`} className="mb-3">
+              <Form.Check
+                type={"checkbox"}
+                id={`default-${"checkbox"}`}
+                style={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  color: "#43BF82",
+                }}
+                label={
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    جـــــديــــد
+                    <div style={{ margin: "auto" }}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                      >
+                        <circle
+                          id="Ellipse_10"
+                          data-name="Ellipse 10"
+                          cx="7"
+                          cy="7"
+                          r="7"
+                          fill="#43bf82"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                }
+              />
+            </div>
+            <div key={`default-${"checkbox"}`} className="mb-3">
+              <Form.Check
+                type={"checkbox"}
+                id={`default-${"checkbox"}`}
+                style={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  color: "#F6EE07",
+                }}
+                label={
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    مبتـــــدئ{" "}
+                    <div style={{ margin: "auto" }}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                      >
+                        <circle
+                          id="Ellipse_11"
+                          data-name="Ellipse 11"
+                          cx="7"
+                          cy="7"
+                          r="7"
+                          fill="#f6ee07"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                }
+              />
+            </div>
+            <div key={`default-${"checkbox"}`} className="mb-3">
+              <Form.Check
+                type={"checkbox"}
+                id={`default-${"checkbox"}`}
+                style={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  color: "#20C7DA",
+                }}
+                label={
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    متوسط
+                    <div style={{ margin: "auto" }}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                      >
+                        <circle
+                          id="Ellipse_12"
+                          data-name="Ellipse 12"
+                          cx="7"
+                          cy="7"
+                          r="7"
+                          fill="#20c7da"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                }
+              />
+            </div>
+            <div key={`default-${"checkbox"}`} className="mb-3">
+              <Form.Check
+                type={"checkbox"}
+                id={`default-${"checkbox"}`}
+                style={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  color: "#EF7373",
+                }}
+                label={
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    متقــدم{" "}
+                    <div style={{ margin: "auto" }}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                      >
+                        <circle
+                          id="Ellipse_13"
+                          data-name="Ellipse 13"
+                          cx="7"
+                          cy="7"
+                          r="7"
+                          fill="#ef7373"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                }
+              />
+            </div>
+          </Form>{" "}
           <div className="factory_white_texts"> مستوى الدورة </div>
         </div>
 
@@ -282,7 +430,10 @@ const EditCourse = () => {
               <div className="course_chapter_wrapper">
                 {" "}
                 <CourseChapter />
-                <div className={`remove_icon_${hovered ? "hovered" : ""}`}>
+                <div
+                  className={`remove_icon_${hovered ? "hovered" : ""}`}
+                  onClick={() => handleRemoveClick(id)}
+                >
                   {" "}
                   <ChapterRemoveIcon />
                 </div>
@@ -407,7 +558,7 @@ const EditCourse = () => {
 
         {chapterCardItems &&
           chapterCardItems.map((item: any, index: number) => (
-            <div>
+            <div key={index}>
               <ProfileSettingsCard key={index} id={index} index={index} />
               <div> {index}</div>
             </div>
@@ -419,6 +570,11 @@ const EditCourse = () => {
   return (
     <div>
       <Container>
+        <RemoveCourseModal
+          show={showRemoveChapter}
+          handleClose={() => setShowRemoveChapter(false)}
+          handleConfirm={handleRemoveConfirm}
+        />
         <Row>
           <Col align="right">
             <div
