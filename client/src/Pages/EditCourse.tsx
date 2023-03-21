@@ -92,7 +92,7 @@ const EditCourse = () => {
             <div key={`default-${"checkbox"}`} className="mb-3">
               <Form.Check
                 type={"checkbox"}
-                id={`default-${"checkbox"}`}
+                id={`new`}
                 style={{
                   display: "flex",
                   flexDirection: "row-reverse",
@@ -125,7 +125,7 @@ const EditCourse = () => {
             <div key={`default-${"checkbox"}`} className="mb-3">
               <Form.Check
                 type={"checkbox"}
-                id={`default-${"checkbox"}`}
+                id={`amateur`}
                 style={{
                   display: "flex",
                   flexDirection: "row-reverse",
@@ -158,7 +158,7 @@ const EditCourse = () => {
             <div key={`default-${"checkbox"}`} className="mb-3">
               <Form.Check
                 type={"checkbox"}
-                id={`default-${"checkbox"}`}
+                id={`intermediate`}
                 style={{
                   display: "flex",
                   flexDirection: "row-reverse",
@@ -191,7 +191,7 @@ const EditCourse = () => {
             <div key={`default-${"checkbox"}`} className="mb-3">
               <Form.Check
                 type={"checkbox"}
-                id={`default-${"checkbox"}`}
+                id={`advanced`}
                 style={{
                   display: "flex",
                   flexDirection: "row-reverse",
@@ -325,7 +325,10 @@ const EditCourse = () => {
         </div>
         <div className="save_button_container">
           {" "}
-          <Button className="save_changes_button">
+          <Button
+            className="save_changes_button"
+            onClick={() => setSelectedPhase("إدارة الفصول")}
+          >
             {" "}
             <SaveChangesIcon /> حفظ التغيـرات{" "}
           </Button>{" "}
