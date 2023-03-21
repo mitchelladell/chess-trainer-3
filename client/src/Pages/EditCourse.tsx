@@ -10,6 +10,7 @@ import ChapterEditIcon from "../pgns/icons/ChapterEditIcon";
 import TruckInFactory from "../pgns/TruckInFactory";
 import TruckInFactoryVideo from "../pgns/TruckInFactoryVideo";
 import RemoveCourseModal from "../components/PaymentModal/RemoveCourseModal";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const EditCourse = () => {
   const [factoryOpen, setFactoryOpen] = useState(false);
@@ -37,12 +38,20 @@ const EditCourse = () => {
   ];
 
   const courseChapters = () => {
-    const newChapters = [...chapterCardItems, "item"];
+    const newChapters = [
+      ...chapterCardItems,
+      {
+        id: chapterCardItems.length.toString(),
+        item: `${chapterCardItems.length + 1} card`,
+      },
+    ];
     setChapterCardItems(newChapters);
     console.log("item", newChapters);
   };
 
   const handleRemoveConfirm = () => {
+    console.log("indexToRemove", indexToRemove);
+
     setChapterCardItems((prevItems: any) =>
       prevItems.filter((_: any, index: number) => index !== indexToRemove)
     );
@@ -472,36 +481,16 @@ const EditCourse = () => {
     );
   };
 
-  function handleDragStart(event: any) {
-    event.dataTransfer.setData("text/plain", event.target.id);
-  }
+  const handleDragEnd = (result: any) => {
+    if (!result.destination) {
+      return;
+    }
+    const items = Array.from(chapterCardItems);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
 
-  function handleDragEnter(event: any) {
-    event.preventDefault();
-    // Add CSS class to indicate hover state
-    event.target.classList.add("hover");
-  }
-
-  function handleDragLeave(event: any) {
-    // Remove CSS class for hover state
-    event.target.classList.remove("hover");
-  }
-
-  function handleDragOver(event: any) {
-    event.preventDefault();
-  }
-
-  function handleDrop(event: any) {
-    event.preventDefault();
-    // Get the ID of the dragged item
-    const id = event.dataTransfer.getData("text/plain");
-    // Get the target element and remove the CSS class for hover state
-    const target = event.target;
-    target.classList.remove("hover");
-    // Move the dragged item to the target position
-    const draggedItem = document.getElementById(id);
-    target.parentNode.insertBefore(draggedItem, target.nextSibling);
-  }
+    setChapterCardItems(items);
+  };
 
   const CourseSettings = () => {
     return (
@@ -559,13 +548,28 @@ const EditCourse = () => {
           </div>
         </div>
 
-        {chapterCardItems &&
-          chapterCardItems.map((item: any, index: number) => (
-            <div key={index}>
-              <ProfileSettingsCard key={index} id={index} index={index} />
-              <div> {index}</div>
-            </div>
-          ))}
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId="chapterCardItems">
+            {(provided, snapshot) => (
+              <div ref={provided.innerRef} {...provided.droppableProps}>
+                {chapterCardItems.map((item: any, index: number) => (
+                  <Draggable key={item.id} draggableId={item.id} index={index}>
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <ProfileSettingsCard id={item.id} index={item.id} />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       </div>
     );
   };
