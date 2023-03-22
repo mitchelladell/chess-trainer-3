@@ -10,6 +10,7 @@ import ChapterEditIcon from "../pgns/icons/ChapterEditIcon";
 import TruckInFactory from "../pgns/TruckInFactory";
 import TruckInFactoryVideo from "../pgns/TruckInFactoryVideo";
 import RemoveCourseModal from "../components/PaymentModal/RemoveCourseModal";
+import dictNumbering from "../helpers/dictNumbering";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const EditCourse = () => {
@@ -21,6 +22,7 @@ const EditCourse = () => {
   const [courseCategory, setCourseCategory] = useState("نوع الدورة");
   const [showRemoveChapter, setShowRemoveChapter] = useState(false);
   const [indexToRemove, setIndexToRemove] = useState(null);
+  const [inputFieldValue, setInputValue] = useState<any>(null);
 
   const prespectives = ["ابيض", "اسود", "كلاهما"];
   const courseLangs = ["English", "العربية"];
@@ -50,17 +52,31 @@ const EditCourse = () => {
   };
 
   const handleRemoveConfirm = () => {
-    console.log("indexToRemove", indexToRemove);
+    console.log("indexToRemove", typeof indexToRemove);
 
-    setChapterCardItems((prevItems: any) =>
-      prevItems.filter((_: any, index: number) => index !== indexToRemove)
-    );
+    indexToRemove &&
+      setChapterCardItems((prevItems: any) =>
+        prevItems
+          .filter((_: any, index: number) => index !== parseInt(indexToRemove))
+          .map((item: any, index: number) => ({
+            ...item,
+            id: index.toString(),
+          }))
+      );
+
+    console.log("updatedChapterCards", chapterCardItems);
+
     setShowRemoveChapter(false);
   };
 
   const handleRemoveClick = (id: any) => {
     setShowRemoveChapter(true);
     setIndexToRemove(id);
+  };
+
+  const handleEditCourse = (id: any) => {
+    setIndexToRemove(id);
+    setSelectedPhase("editCard");
   };
 
   const CourseInfo = () => {
@@ -357,7 +373,7 @@ const EditCourse = () => {
             <Col md={6} lg={4} sm={12}>
               <div className="course_chapter_wrapper">
                 {" "}
-                <CourseChapter />
+                <CourseChapter chapterEdit={false} />
               </div>
               <div
                 style={{
@@ -451,7 +467,7 @@ const EditCourse = () => {
                 </div>
                 <div
                   className={`edit_icon_${hovered ? "hovered" : ""}`}
-                  onClick={() => setSelectedPhase("editCard")}
+                  onClick={() => handleEditCourse(id)}
                 >
                   {" "}
                   <ChapterEditIcon />
@@ -464,12 +480,17 @@ const EditCourse = () => {
                   fontWeight: "bold",
                 }}
               >
-                الفصل الاول
+                الفصل {dictNumbering[id]} {inputFieldValue}
               </div>
             </Col>
             <Col md={6} lg={8} sm={12} style={{ margin: "auto" }}>
               <div style={{ display: "flex", justifyContent: "right" }}>
-                <input type="text" style={{ width: "70%", height: "30px" }} />
+                <input
+                  onChange={(e) => setInputValue(e.target.value)}
+                  type="text"
+                  value={inputFieldValue}
+                  style={{ width: "70%", height: "30px" }}
+                />
                 <div style={{ marginTop: "auto", marginBottom: "auto" }}>
                   <div className="payment_counts"> عنوان الفصل </div>
                 </div>
@@ -488,8 +509,14 @@ const EditCourse = () => {
     const items = Array.from(chapterCardItems);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
+    const updatedItems = items.map((item: any, index) => {
+      return {
+        ...item,
+        id: index.toString(),
+      };
+    });
 
-    setChapterCardItems(items);
+    setChapterCardItems(updatedItems);
   };
 
   const CourseSettings = () => {
@@ -506,45 +533,51 @@ const EditCourse = () => {
             )}
           </div>
           <div>
-            <div
-              style={{ display: "flex", gap: "20px", justifyContent: "right" }}
-            >
-              {" "}
-              <div className="add_new_chapter_text"> إضافة فصل جديد</div>{" "}
-              <Button
-                className="add_chapter_button"
-                onClick={() => courseChapters()}
+            {chapterCardItems.length < 20 && (
+              <div
+                style={{
+                  display: "flex",
+                  gap: "20px",
+                  justifyContent: "right",
+                }}
               >
                 {" "}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="30"
-                  height="30"
-                  viewBox="0 0 30 30"
+                <div className="add_new_chapter_text"> إضافة فصل جديد</div>{" "}
+                <Button
+                  className="add_chapter_button"
+                  onClick={() => courseChapters()}
                 >
-                  <g id="_" data-name="+" transform="translate(0.286 0.286)">
-                    <line
-                      id="Line_3"
-                      data-name="Line 3"
-                      x2="30"
-                      transform="translate(-0.286 14.714)"
-                      fill="none"
-                      stroke="#fff"
-                      stroke-width="2"
-                    />
-                    <line
-                      id="Line_4"
-                      data-name="Line 4"
-                      y2="30"
-                      transform="translate(14.714 -0.286)"
-                      fill="none"
-                      stroke="#fff"
-                      stroke-width="2"
-                    />
-                  </g>
-                </svg>
-              </Button>
-            </div>
+                  {" "}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    viewBox="0 0 30 30"
+                  >
+                    <g id="_" data-name="+" transform="translate(0.286 0.286)">
+                      <line
+                        id="Line_3"
+                        data-name="Line 3"
+                        x2="30"
+                        transform="translate(-0.286 14.714)"
+                        fill="none"
+                        stroke="#fff"
+                        stroke-width="2"
+                      />
+                      <line
+                        id="Line_4"
+                        data-name="Line 4"
+                        y2="30"
+                        transform="translate(14.714 -0.286)"
+                        fill="none"
+                        stroke="#fff"
+                        stroke-width="2"
+                      />
+                    </g>
+                  </svg>
+                </Button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -694,7 +727,7 @@ const EditCourse = () => {
                     }
                     onClick={() => setSelectedPhase("editCard")}
                   >
-                    تعديل الفصل الاول{" "}
+                    تعديل الفصل {indexToRemove && dictNumbering[indexToRemove]}{" "}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="37.5"
