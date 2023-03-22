@@ -22,7 +22,6 @@ const EditCourse = () => {
   const [courseCategory, setCourseCategory] = useState("نوع الدورة");
   const [showRemoveChapter, setShowRemoveChapter] = useState(false);
   const [indexToRemove, setIndexToRemove] = useState(null);
-  const [inputFieldValue, setInputValue] = useState<any>(null);
 
   const prespectives = ["ابيض", "اسود", "كلاهما"];
   const courseLangs = ["English", "العربية"];
@@ -114,7 +113,7 @@ const EditCourse = () => {
           }}
         >
           <Form>
-            <div key={`default-${"checkbox"}`} className="mb-3">
+            <div key={`new-${"checkbox"}`} className="mb-3">
               <Form.Check
                 type={"checkbox"}
                 id={`new`}
@@ -147,7 +146,7 @@ const EditCourse = () => {
                 }
               />
             </div>
-            <div key={`default-${"checkbox"}`} className="mb-3">
+            <div key={`amateur-${"checkbox"}`} className="mb-3">
               <Form.Check
                 type={"checkbox"}
                 id={`amateur`}
@@ -180,7 +179,7 @@ const EditCourse = () => {
                 }
               />
             </div>
-            <div key={`default-${"checkbox"}`} className="mb-3">
+            <div key={`intermediate-${"checkbox"}`} className="mb-3">
               <Form.Check
                 type={"checkbox"}
                 id={`intermediate`}
@@ -213,7 +212,7 @@ const EditCourse = () => {
                 }
               />
             </div>
-            <div key={`default-${"checkbox"}`} className="mb-3">
+            <div key={`advanced-${"checkbox"}`} className="mb-3">
               <Form.Check
                 type={"checkbox"}
                 id={`advanced`}
@@ -444,6 +443,8 @@ const EditCourse = () => {
 
   const ProfileSettingsCard = ({ id }: any) => {
     const [hovered, setHovered] = useState(false);
+    const [inputFieldValue, setInputValue] = useState<any>("");
+
     return (
       <div
         className="learn_new_course_container"
