@@ -27,6 +27,7 @@ import CourseContent from "./Pages/CourseContent";
 import WishList from "./Pages/WishList";
 import Payments from "./Pages/Payments";
 import EditCourse from "./Pages/EditCourse";
+import AddCourse from "./Pages/AddCourse";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -186,6 +187,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <EditCourse />
+      </Layout>
+    ),
+  },
+  {
+    path: "addcourse",
+    element: (
+      <Layout>
+        <AddCourse />
       </Layout>
     ),
   },

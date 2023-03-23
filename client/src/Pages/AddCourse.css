@@ -1,0 +1,48 @@
+.intro_text_add_course {
+  color: white;
+  height: 60;
+  background: #8b8b8b;
+  font-size: 25px;
+  font-family: "Calibri";
+  font-weight: bold;
+  width: 661px;
+}
+
+.into_grey_text {
+  font-size: 18px;
+  color: #909090;
+  text-align: right;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.course_types_dropdown .dropdown-toggle {
+  /* styles for the dropdown toggle button */
+  background: white;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 3px;
+  border: 1px solid #818181;
+  color: black;
+  font-size: 1.5vw;
+}
+
+.course_types_dropdown .dropdown-menu {
+  /* styles for the dropdown menu */
+  background: white;
+  border-radius: 3px;
+  color: black;
+  font-size: 1.5vw;
+}
+.course_types_dropdown .dropdown-menu .dropdown-item,
+.course_types_dropdown .dropdown-menu .dropdown-item:active {
+  border-radius: 3px;
+  color: black;
+  font-size: 1.5vw;
+}
+.course_types_dropdown .dropdown-toggle:active,
+.course_types_dropdown .dropdown-menu .dropdown-item:hover,
+.course_types_dropdown .dropdown-menu .dropdown-item:focus,
+.course_types_dropdown .dropdown-menu .dropdown-item:active {
+  background: #daa520;
+}

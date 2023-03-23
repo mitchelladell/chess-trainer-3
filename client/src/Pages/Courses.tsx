@@ -113,10 +113,12 @@ const Courses = () => {
                   color: theme === "light" ? "black" : "white",
                 }}
               >
-                تعلم دورة تدريبية جديدة
+                {!showCreatedCourses
+                  ? "تعلم دورة تدريبية جديدة"
+                  : "إنشاء دورة تدريبية جديدة"}{" "}
               </div>{" "}
               <Button className="new_course_button">
-                <Link to="/allcourses">
+                <Link to="/addcourse">
                   <div className="d-flex justify-content-center align-items-center">
                     +{" "}
                   </div>
