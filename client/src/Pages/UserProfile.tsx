@@ -41,8 +41,10 @@ const UserProfile = () => {
               </div>
             </Col>
             <Col align={"end"} xs={12} sm={9} md={6} lg={6}>
-              {" "}
-              <Button className="user_profile_button">المشتـــريات</Button>
+              <Link to="/payments">
+                {" "}
+                <Button className="user_profile_button">المشتـــريات</Button>
+              </Link>{" "}
               <Link to="/profilesettings">
                 <Button className="user_profile_button">
                   {" "}
