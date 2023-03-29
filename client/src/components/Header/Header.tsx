@@ -194,6 +194,13 @@ const Header: React.FC<IProps> = (props) => {
                         <Dropdown.Item
                           className="custom-dropdown-item"
                           as={Link}
+                          to="/allcourses"
+                        >
+                          all courses
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          className="custom-dropdown-item"
+                          as={Link}
                           to="#/action-1"
                         >
                           Action

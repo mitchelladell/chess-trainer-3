@@ -1279,12 +1279,6 @@ const Trainer = () => {
                 </div>
               )}
             </Col>
-            <Col>
-              <Video />
-              <Video />
-              <Video />
-              <Video />
-            </Col>
           </Row>
         </Container>
       </div>

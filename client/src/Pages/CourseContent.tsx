@@ -43,14 +43,32 @@ const CourseContent = () => {
         <div className="course-content-container">
           <div>
             {" "}
-            <CourseChapter handleProgress={() => setShowModal(true)} />
+            <CourseChapter
+              handleProgress={() => setShowModal(true)}
+              chapterEdit={true}
+            />
             <div className="chapter_number"> chapter 1</div>
           </div>
-          <CourseChapter handleProgress={() => setShowModal(true)} />
-          <CourseChapter handleProgress={() => setShowModal(true)} />
-          <CourseChapter handleProgress={() => setShowModal(true)} />
-          <CourseChapter handleProgress={() => setShowModal(true)} />
-          <CourseChapter handleProgress={() => setShowModal(true)} />
+          <CourseChapter
+            handleProgress={() => setShowModal(true)}
+            chapterEdit={true}
+          />
+          <CourseChapter
+            handleProgress={() => setShowModal(true)}
+            chapterEdit={true}
+          />
+          <CourseChapter
+            handleProgress={() => setShowModal(true)}
+            chapterEdit={true}
+          />
+          <CourseChapter
+            handleProgress={() => setShowModal(true)}
+            chapterEdit={true}
+          />
+          <CourseChapter
+            handleProgress={() => setShowModal(true)}
+            chapterEdit={true}
+          />
         </div>
       </Container>
     </div>

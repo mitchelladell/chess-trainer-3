@@ -74,17 +74,20 @@ const AllCourses = () => {
                 {">"} All Courses
               </div>
               <Col xs={7} sm={9} md={9} lg={9}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    textAlign: "end",
-                  }}
-                >
-                  {coursesList.map((course) => (
-                    <CourseCard buy={true} />
-                  ))}
-                </div>
+                <Link to="/course">
+                  {" "}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      textAlign: "end",
+                    }}
+                  >
+                    {coursesList.map((course) => (
+                      <CourseCard buy={true} />
+                    ))}
+                  </div>{" "}
+                </Link>
               </Col>
               <Col xs={5} sm={3} md={3} lg={3}>
                 <div className="courses_controller">

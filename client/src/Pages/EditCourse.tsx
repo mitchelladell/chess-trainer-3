@@ -391,7 +391,13 @@ const EditCourse = () => {
               </div>
             </Col>
             <Col md={6} lg={8} sm={12} style={{ margin: "auto" }}>
-              <div style={{ display: "flex", justifyContent: "right" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "right",
+                  marginBottom: "15px",
+                }}
+              >
                 <input type="file" style={{ height: "30px" }} />
                 <div
                   style={{
@@ -416,7 +422,7 @@ const EditCourse = () => {
                 </div>
               </div>
               {courseType === "محتوى مكتوب ومرئـى" && (
-                <div style={{}}>
+                <div style={{ marginTop: "15px", marginBottom: "5px" }}>
                   <div className="payment_counts">
                     {" "}
                     رابط الفيديو الخاص بالدورة
@@ -456,7 +462,10 @@ const EditCourse = () => {
         <Container>
           <Row>
             <Col md={6} lg={4} sm={12}>
-              <div className="course_chapter_wrapper">
+              <div
+                className="course_chapter_wrapper"
+                style={{ marginTop: "15px" }}
+              >
                 {" "}
                 <CourseChapter />
                 <div
