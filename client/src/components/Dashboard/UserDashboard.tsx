@@ -73,22 +73,7 @@ const UserDashboard: React.FC<IProps> = (props) => {
   const lang = useSelector(
     (state: { language: { value: string } }) => state.language.value
   );
-  const [totalVariations, setTotalVariations] = useState(0);
-  const [pgn, setPgn] = useState([]);
 
-  useEffect(() => {
-    axios.get("http://localhost:5000/api/pgn/1").then((response) => {
-      setData(response.data);
-    });
-  }, []);
-
-  const pgnWithName = data.map((obj: any) => {
-    const [name, pgn] = Object.entries(obj)[0];
-    return { name, pgn };
-  });
-
-  console.log("pgnWithName", pgnWithName);
-  let totalCount = 0;
   const theme = useAppSelector((state) => state.theme.value);
 
   /*  pgnWithName.forEach((pgnwithname: any) => {
@@ -114,7 +99,7 @@ const UserDashboard: React.FC<IProps> = (props) => {
                 justifyContent: "left",
               }}
             >
-              <Link to="/courses/variation/">
+              <Link to="/coursecontent">
                 <Button variant="warning" className="golden_button">
                   تعلـــم{" "}
                 </Button>
