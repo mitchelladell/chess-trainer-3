@@ -1,8 +1,10 @@
 import { Container } from "react-bootstrap";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import CourseCard from "../components/CourseCard/CourseCard";
 import CourseChapter from "../components/CourseChapter/CourseChapter";
 import ResetModal from "../components/PaymentModal/ResetModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppSelector } from "../app/hooks";
 import "./CourseContent.css";
 import ResetConfirmedModal from "../components/PaymentModal/ResetConfirmedModal";
@@ -10,11 +12,19 @@ import ResetConfirmedModal from "../components/PaymentModal/ResetConfirmedModal"
 const CourseContent = () => {
   const [showModal, setShowModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [data, setData] = useState([]);
 
   const resetState = () => {
     setShowModal(false);
     setShowConfirmModal(true);
   };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/pgn/1")
+      .then((response: any) => setData(response.data));
+  }, []);
+
   const handleConfirmModal = () => {
     setShowConfirmModal(false);
   };
@@ -41,34 +51,22 @@ const CourseContent = () => {
       <Container>
         <div className="course_name"> الفصول</div>
         <div className="course-content-container">
-          <div>
-            {" "}
-            <CourseChapter
-              handleProgress={() => setShowModal(true)}
-              chapterEdit={true}
-            />
-            <div className="chapter_number"> chapter 1</div>
-          </div>
-          <CourseChapter
-            handleProgress={() => setShowModal(true)}
-            chapterEdit={true}
-          />
-          <CourseChapter
-            handleProgress={() => setShowModal(true)}
-            chapterEdit={true}
-          />
-          <CourseChapter
-            handleProgress={() => setShowModal(true)}
-            chapterEdit={true}
-          />
-          <CourseChapter
-            handleProgress={() => setShowModal(true)}
-            chapterEdit={true}
-          />
-          <CourseChapter
-            handleProgress={() => setShowModal(true)}
-            chapterEdit={true}
-          />
+          {data.length > 0 &&
+            data.map((item: any) => (
+              <div key={item.id}>
+                <Link
+                  to={`/trainer/${encodeURIComponent(item.value)}`}
+                  state={{
+                    pgnWithName: data,
+                  }}
+                >
+                  <CourseChapter
+                    handleProgress={() => setShowModal(true)}
+                    chapterEdit={true}
+                  />
+                </Link>
+              </div>
+            ))}
         </div>
       </Container>
     </div>
