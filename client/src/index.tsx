@@ -89,7 +89,7 @@ const router = createBrowserRouter([
     path: "/courses/:course",
     element: (
       <Layout>
-        <Courses />
+        <Course />
       </Layout>
     ),
   },
@@ -159,7 +159,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "coursecontent",
+    path: "courses/:course/coursecontent",
     element: (
       <Layout>
         <CourseContent />

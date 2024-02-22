@@ -15,8 +15,7 @@ import { useMeasure } from "react-measure";
 import Focus from "../pgns/icons/Focus";
 import annotaitons from "../consts/annotations";
 import { useAppSelector } from "../app/hooks";
-/* import Bp from "../components/customPieces/gridPieces/Bp";
-import Wk from "../components/customPieces/Wk"; */
+import { mySupabase } from "../mysuba";
 
 import King from "../pgns/king";
 import { css } from "@emotion/react";
@@ -71,9 +70,40 @@ const Trainer = () => {
   const dispatch = useDispatch();
   const theme = useAppSelector((state) => state.theme.value);
 
-  const lang = useSelector((state: any) => state.language.value);
+  const lang = useSelector((state) => state.language.value);
 
-  let pgnList = pgndata.state.pgnWithName;
+
+  const [pagesDAta,setPagesData] = useState([]);
+  let pgnWithName = pgndata.state.pgnWithName;
+  console.log('pgnWithName', pgnWithName)
+
+
+
+  useEffect(() => {
+    (async () => {
+      let { data, error } = await mySupabase
+        .from("pages")
+        .select("*")
+        .eq('course_id', 2)
+        .eq('chapter_id',6)
+
+   //   setPgn(data[0].pgn)
+      
+      
+      //   setCourseList(data);
+      // console.log(coursesList);
+    //  setData(data);
+
+      console.log("pagesDAta", data, error);
+   //   setPagesData(data);
+    
+    })();
+  }, []);
+
+  console.log('newPAgesData', pagesDAta)
+
+  
+
 
   const { variation } = useParams();
 
@@ -90,7 +120,7 @@ const Trainer = () => {
   const [incorrectMoves, setIncorrectMoves] = useState(new Set());
 
   const [whiteOrientation, setWhiteOrientation] = useState(true);
-  const [pgn, setPgn] = useState(variation);
+  const [pgn, setPgn] = useState(pgnWithName.pgn);
   const [page, setPage] = useState(0);
   const [collapsed, setCollapsed] = useState(false);
   const [navSelected, setNavSelected] = useState(null);
@@ -137,7 +167,6 @@ const Trainer = () => {
 
   useEffect(() => {
     setDirection(lang === "en" ? "row" : "row-reverse");
-    console.log("lang", lang);
   }, [lang, setDirection]);
 
   useEffect(() => {
@@ -164,13 +193,15 @@ const Trainer = () => {
     const toSquareElement = document.querySelector(
       `[data-square="${toSquare}"]`
     );
-    console.log("ToSquareelemnet", toSquareElement);
 
     if (toSquareElement) {
       const toSquareDecorator = document.createElement("div");
       toSquareElement.className = "decorator";
+      console.log('ToSquareElement', toSquareElement)
 
       toSquareDecorator.style.background = annotationShapes[selectedMove?.nags];
+      console.log('selectedMoveNags', selectedMove?.nags);
+      
       toSquareDecorator.style.width = "30px";
       toSquareDecorator.style.height = "30px";
       toSquareDecorator.style.backgroundSize = "contain";
@@ -210,10 +241,8 @@ const Trainer = () => {
       setMoves(parsedMoves);
 
       const newFormatted = modifyDataStructure(formattedPgn[0].moves, 0);
-      console.log("newFormatted", newFormatted);
       setFormattedPgn(parsedMoves);
 
-      console.log("formattedPGn", formattedPgn);
 
       setGridPGN(allExtractedMoves(formattedPgn[0].moves, 0));
       setGridMoves(
@@ -291,7 +320,6 @@ const Trainer = () => {
           }}
           onClick={() => {
             let variantMoves = loadVariationMoves(formattedPgn, move);
-            console.log("movee", move);
 
             loadPosition(
               variantMoves.findIndex((obj) => obj.id === move.id),
@@ -300,7 +328,6 @@ const Trainer = () => {
             );
             setVariationEntered(false);
             setVariationMoves(variantMoves);
-            console.log("variatnt Moves", variantMoves);
 
             setSelectedMove(move);
             setCurrentMove(move.id);
@@ -347,7 +374,7 @@ const Trainer = () => {
           >
             {move.ravs.map((rav, index) => (
               <div
-                key={rav.moves[index].id}
+                key={rav.index}
                 style={{
                   display: "flex",
                   flexDirection: "row",
@@ -518,7 +545,7 @@ const Trainer = () => {
       // Update the component's state with the new position
       setPosition(game.fen());
       setShowIncorrectMove(false);
-    }, 250); // delay of 1/4 second
+    }, 50); // delay of 1/4 second
     setBoardEnabled(true);
     setCorrectMove(true);
   };
@@ -550,8 +577,7 @@ const Trainer = () => {
         (obj) =>
           obj?.move === selectedMove?.move && obj?.id === selectedMove?.id
       ) + 1;
-    console.log("nextMove", nextMove);
-    console.log("variantMoves", variantMoves);
+   
 
     loadPosition(
       nextMove,
@@ -565,14 +591,12 @@ const Trainer = () => {
         obj?.move_number === variantMoves[nextMove].move_number
     );
 
-    console.log("gridMoveIndex", gridMoveIndex);
     setSelectedMove(gridPGn[gridMoveIndex]);
     setCurrentMove(gridPGn[gridMoveIndex]);
   };
 
   const getPreviousMove = () => {
     const variantMoves = loadVariationMoves(formattedPgn, selectedMove);
-    console.log("gridPGN", gridPGn);
     setVariationMoves(variantMoves);
     const nextMoveIndex =
       variantMoves.findIndex(
@@ -582,14 +606,12 @@ const Trainer = () => {
           obj?.move_number === selectedMove?.move_number
       ) - 1;
 
-    console.log("nextMoveIndex", nextMoveIndex);
     if (nextMoveIndex < 0 || nextMoveIndex === undefined) {
       setSelectedMove(null);
       game.reset();
       return;
     }
     const nextMove = variantMoves[nextMoveIndex];
-    console.log("nextMOve", nextMove);
     loadPosition(
       nextMoveIndex,
       variantMoves.map((move) => move.move)
@@ -600,7 +622,6 @@ const Trainer = () => {
         obj.id === nextMove.id &&
         obj.move_number === nextMove.move_number
     );
-    console.log("gridMovesIndex", gridMoveIndex);
     setSelectedMove(gridPGn[gridMoveIndex]);
     setCurrentMove(gridPGn[gridMoveIndex]);
   };
@@ -632,18 +653,18 @@ const Trainer = () => {
     setSelectedMove(null);
   };
 
-  const handleNextPageClick = () => {
+ /*  const handleNextPageClick = () => {
     console.log("pgnList", pgnList);
     setPgn(pgnList[page + 1].value);
     setPage(page + 1);
     resetGame();
-  };
+  }; */
 
-  const handlePreviousPageClick = () => {
+ /*  const handlePreviousPageClick = () => {
     setPgn(pgnList[page - 1].value);
     setPage(page - 1);
     resetGame();
-  };
+  }; */
 
   document.onkeydown = checkKey;
 
@@ -683,7 +704,6 @@ const Trainer = () => {
 
     setGame(gameCopy);
   }
-  console.log("ravs", gridPGn);
 
   function onDrop(sourceSquare, targetSquare) {
     const move = makeAMove({
@@ -691,8 +711,7 @@ const Trainer = () => {
       to: targetSquare,
       promotion: "q", // always promote to a queen for example simplicity
     });
-    console.log("sourceMove", sourceSquare);
-    console.log("targetSqure", targetSquare);
+    
     setFromSquare(sourceSquare);
     setToSquare(targetSquare);
 
@@ -724,7 +743,6 @@ const Trainer = () => {
   };
 
   const loadPosition = (index, moves) => {
-    console.log("moves", moves);
     // Reset the game to the initial position
     game.reset();
     // Highlight the selected move
@@ -734,7 +752,6 @@ const Trainer = () => {
       game.move(moves[i]);
       // console.log('')
     }
-    console.log("gameHistory", game.history({ verbose: true }));
     setToSquare(
       game.history({ verbose: true })[
         game.history({ verbose: true }).length - 1
@@ -746,8 +763,7 @@ const Trainer = () => {
         game.history({ verbose: true }).length - 1
       ].from
     );
-    console.log("fromSquare", fromSquare);
-    console.log("toSqure", toSquare);
+
 
     // Update the component's state with the new position and current move index
     setPosition(game.fen());
@@ -1262,7 +1278,7 @@ const Trainer = () => {
                   {" "}
                   <Button
                     disabled={page <= 0}
-                    onClick={handlePreviousPageClick}
+                 //   onClick={handlePreviousPageClick}
                     className="mx-2 trainer_buttons previous"
                     variant="warning"
                   >
@@ -1271,8 +1287,8 @@ const Trainer = () => {
                   <Button
                     className="mx-2 trainer_buttons next"
                     variant="warning"
-                    disabled={page >= pgnList.length - 1}
-                    onClick={handleNextPageClick}
+                 //   disabled={page >= pgnList.length - 1}
+                 //   onClick={handleNextPageClick}
                   >
                     {translations[lang].NextPage}
                   </Button>

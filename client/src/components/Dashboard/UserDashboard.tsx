@@ -27,6 +27,7 @@ type IProps = {
   courseName: string;
   progress: number;
   numberOfVariations: string;
+  courseNumber: string;
 };
 
 type Translation = {
@@ -99,9 +100,9 @@ const UserDashboard: React.FC<IProps> = (props) => {
                 justifyContent: "left",
               }}
             >
-              <Link to="/coursecontent">
+              <Link to={`${props.courseNumber}/coursecontent`}>
                 <Button variant="warning" className="golden_button">
-                  تعلـــم{" "}
+                  تعلـــم
                 </Button>
               </Link>
             </div>{" "}

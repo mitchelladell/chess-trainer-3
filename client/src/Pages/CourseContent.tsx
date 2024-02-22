@@ -8,11 +8,19 @@ import { useState, useEffect } from "react";
 import { useAppSelector } from "../app/hooks";
 import "./CourseContent.css";
 import ResetConfirmedModal from "../components/PaymentModal/ResetConfirmedModal";
+import { mySupabase } from "../mysuba";
+import { useLocation } from "react-router-dom";
 
 const CourseContent = () => {
   const [showModal, setShowModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>([]);
+
+  const [courseInfo, setCourseInfo] = useState<any>({});
+
+  const location = useLocation();
+
+  console.log("location", location);
 
   const resetState = () => {
     setShowModal(false);
@@ -20,10 +28,40 @@ const CourseContent = () => {
   };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/pgn/1")
-      .then((response: any) => setData(response.data));
-  }, []);
+    const matchedCourseNum = location.pathname.match(/\/(\d+)\/coursecontent/);
+
+    if (matchedCourseNum) {
+      const courseNum = matchedCourseNum[1];
+
+      (async () => {
+        let { data, error } = await mySupabase
+          .from("courses")
+          .select("*")
+          .eq("id", courseNum)
+          .single();
+
+        setCourseInfo(data);
+
+        console.log("courseINfo", data, error);
+      })();
+
+      (async () => {
+        let { data, error } = await mySupabase
+          .from("chapters")
+          .select("*")
+          .eq("course", courseNum);
+        //   setCourseList(data);
+        // console.log(coursesList);
+        setData(data);
+
+        console.log("dataIs", data, error);
+      })();
+
+      console.log(courseNum);
+    } else {
+      console.log("Number not found in the pathname");
+    }
+  }, [location]);
 
   const handleConfirmModal = () => {
     setShowConfirmModal(false);
@@ -45,7 +83,13 @@ const CourseContent = () => {
         <div className="course_name"> اسم الدورة التدريبية </div>
         <div className="course_card_description_container">
           {" "}
-          <CourseCard buy={false} handleProgress={() => setShowModal(true)} />
+          <CourseCard
+            name={courseInfo.name}
+            author={courseInfo.authorname}
+            description={courseInfo.description}
+            buy={false}
+            handleProgress={() => setShowModal(true)}
+          />
         </div>
       </Container>
       <Container>
@@ -55,9 +99,9 @@ const CourseContent = () => {
             data.map((item: any) => (
               <div key={item.id}>
                 <Link
-                  to={`/trainer/${encodeURIComponent(item.value)}`}
+                  to={`/trainer/${encodeURIComponent(item.title)}`}
                   state={{
-                    pgnWithName: data,
+                    pgnWithName: { title: item.title, pgn: item.pgn },
                   }}
                 >
                   <CourseChapter

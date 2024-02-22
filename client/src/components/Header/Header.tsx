@@ -20,12 +20,13 @@ import UserProfileIcon from "../../pgns/icons/UserProfile";
 import SettingsIcon from "../../pgns/icons/Settings";
 import Form from "react-bootstrap/Form";
 import ChessUsityLogo from "../../pgns/icons/ChessUsityLogo";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useNavigate } from "react-router-dom";
 
 import Cookies from "js-cookie";
 import { logoutAsync } from "../../features/user/userSlice";
 import { updateTheme } from "../../features/Theme/themeSlice";
+import { link } from "fs";
 
 type Translation = {
   [key: string]: {
@@ -33,9 +34,9 @@ type Translation = {
     signUp: string;
     signIn: string;
     lang: string;
+    allCourses: string;
   };
 };
-
 type IProps = {
   isLoggedIn?: boolean;
 };
@@ -46,15 +47,13 @@ const Header: React.FC<IProps> = (props) => {
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [lightTheme, setLightTheme] = useState(false);
-  console.log("isLoggedIn", props.isLoggedIn);
-
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    Cookies.get("token") ? true : false
+  const coursesList = useAppSelector(
+    (state) => state.courses.subscribedCourses
   );
 
-  useEffect(() => {
-    setIsLoggedIn(Cookies.get("token") ? true : false);
-  }, [Cookies.get("token")]);
+  console.log("coursesList", coursesList);
+
+  const isLoggedIn = useAppSelector((state) => state.user.userLoggedIn);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -69,6 +68,7 @@ const Header: React.FC<IProps> = (props) => {
     console.log("cliced");
     dispatch(logoutAsync());
     Cookies.remove("token");
+
     navigate("/");
   };
 
@@ -82,7 +82,7 @@ const Header: React.FC<IProps> = (props) => {
               <Col sm={7} md={7} lg={7} jusify="end">
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
                   {" "}
-                  <Link to="/">
+                  <Link to={isLoggedIn ? "/courses" : "/"}>
                     <ChessUsityLogo />
                   </Link>
                   <div
@@ -166,7 +166,7 @@ const Header: React.FC<IProps> = (props) => {
               <Col sm={9} md={9} lg={9} align="end">
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
                   {" "}
-                  <Link to="/">
+                  <Link to={isLoggedIn ? "/courses" : "/"}>
                     <ChessUsityLogo />
                   </Link>
                   <div
@@ -181,6 +181,7 @@ const Header: React.FC<IProps> = (props) => {
                       backgroundSize: "cover",
                     }}
                   ></div>
+                  <div className="d-flex justify-content-center align-items-center"></div>
                   <div className="d-flex justify-content-center align-items-center">
                     <Dropdown className="custom-dropdown">
                       <Dropdown.Toggle
@@ -196,29 +197,21 @@ const Header: React.FC<IProps> = (props) => {
                           as={Link}
                           to="/allcourses"
                         >
-                          all courses
+                          {(translations as Translation)[lang].allCourses}
                         </Dropdown.Item>
-                        <Dropdown.Item
-                          className="custom-dropdown-item"
-                          as={Link}
-                          to="#/action-1"
-                        >
-                          Action
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          className="custom-dropdown-item"
-                          as={Link}
-                          to="#/action-1"
-                        >
-                          Another action
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          className="custom-dropdown-item"
-                          as={Link}
-                          to="#/action-1"
-                        >
-                          Something else
-                        </Dropdown.Item>
+
+                        {coursesList.map((course: any) => {
+                          return (
+                            <Dropdown.Item
+                              className="custom-dropdown-item"
+                              as={Link}
+                              to={`/courses/${course.id}/coursecontent`}
+                              key={course.id}
+                            >
+                              {course.name}
+                            </Dropdown.Item>
+                          );
+                        })}
                       </Dropdown.Menu>
                     </Dropdown>
                   </div>

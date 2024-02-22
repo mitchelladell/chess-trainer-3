@@ -5,7 +5,11 @@ import { loginUser, logoutUser } from "./userApi";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 
-interface IDecodedResponse {
+export interface IDecodedResponse {
+  [key: string]: any;
+}
+
+interface SuperbaseResponse {
   [key: string]: any;
 }
 
@@ -53,7 +57,12 @@ export const logoutAsync = createAsyncThunk("user/logoutUser", async () => {
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    updateUserInfo: (state, action: PayloadAction<IUserData>) => {
+      // Update user information locally
+      state.userInfo = { ...state.userInfo, ...action.payload };
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -63,27 +72,39 @@ export const userSlice = createSlice({
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.value = action.payload; //Here how the value of the state gets modified to be the payload of the action
-        console.log("acttionPayload", action.payload);
-        let token = Cookies.get("token");
-        console.log("token", token);
+        const superbaseResponse = action.payload as SuperbaseResponse;
+        const accessToken = superbaseResponse.session?.access_token;
 
-        let decodedResponse: IDecodedResponse = token ? jwt_decode(token) : {};
-        console.log("decodedResponse", decodedResponse);
-        state.userInfo = decodedResponse;
-        state.userLoggedIn = token ? true : false;
-        console.log("userInfo", state.userInfo);
-
-        /*   patchUserDataAsync({ locale: 'nl' }, state.userInfo.id).then(
-          (response) => console.log('response', response)
-        ); */
+        if (accessToken) {
+          const decodedResponse: IDecodedResponse = jwt_decode(accessToken);
+          state.userInfo = decodedResponse;
+          console.log("decodedResponse", decodedResponse);
+          state.userLoggedIn = true;
+          Cookies.set("token", accessToken);
+        }
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
+        state.status = "failed";
+        state.errors = action.payload;
+      })
+      .addCase(logoutAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(logoutAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+
+        Cookies.remove("token");
+        state.userLoggedIn = false;
+        state.userInfo = {};
+      })
+      .addCase(logoutAsync.rejected, (state, action) => {
         state.status = "failed";
         state.errors = action.payload;
       });
   },
 });
+
+export const { updateUserInfo } = userSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

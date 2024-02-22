@@ -34,6 +34,7 @@ const translations: {
     roadMap: string;
     help: string;
     privacy: string;
+    allCourses: string;
   };
   ar: {
     signIn: string;
@@ -70,6 +71,7 @@ const translations: {
     roadMap: string;
     help: string;
     privacy: string;
+    allCourses: string;
   };
 } = {
   en: {
@@ -107,6 +109,7 @@ const translations: {
     roadMap: "Road Map",
     help: "Help",
     privacy: "Privacy",
+    allCourses: "All Courses",
   },
 
   ar: {
@@ -144,6 +147,7 @@ const translations: {
     roadMap: "خارطة الطريق",
     help: "مساعدة",
     privacy: "سياسة الخصوصية",
+    allCourses: "كل الكورسات",
   },
 };
 

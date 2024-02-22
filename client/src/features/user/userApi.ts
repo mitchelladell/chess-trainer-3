@@ -1,39 +1,32 @@
-// A mock function to mimic making an async request for data
+// userApi.js
+import { mySupabase } from "../../mysuba";;
 
-//open api for shows that could return an array of shows
-
-import axios from "axios";
-import { END_POINT } from "../../helpers/consts";
-import Cookies from "js-cookie";
-
-export const loginUser = async (data: any) => {
-  const test_endpoint = "http://localhost:5000/api";
-
-  console.log("endPoint", END_POINT);
-
+export const loginUser = async (loginData : any) => {
   try {
-    const response = await axios.post(END_POINT + "session", {
-      email: data.email,
-      password: data.password,
+    let { data, error } = await mySupabase.auth.signInWithPassword({
+      email: loginData.email,
+      password: loginData.password,
     });
-    if (response.data.token) {
-      Cookies.set("token", response.data.token);
+    if (error) {
+      throw new Error(error.message);
     }
-    return response.data;
+
+    return data;
   } catch (error) {
-    console.log(error);
-    return error;
+   return error
   }
 };
 
 export const logoutUser = async () => {
   try {
-    const response = await axios.post(END_POINT + "logout", {});
-    console.log("response.dat", response);
+    const { error } = await mySupabase.auth.signOut();
 
-    return response.data;
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return null; // You might not need to return anything after a successful logout
   } catch (error) {
-    console.log(error);
-    return error;
+    return error
   }
 };

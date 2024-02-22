@@ -105,8 +105,8 @@ const CourseCard = (props: any) => {
                 <StarSign /> <StarSign /> <StarSign /> <StarSign /> <StarSign />{" "}
               </div>
 
-              <div className="course_card_name"> اسم الدورة التدريبية</div>
-              <div className="creator_name"> اسم منشـئ المحتوى </div>
+              <div className="course_card_name"> {props.name}</div>
+              <div className="creator_name"> {props.author}</div>
             </div>
           </Col>{" "}
           <div className="course_img_container">
@@ -132,8 +132,7 @@ const CourseCard = (props: any) => {
                 stroke-width="1"
               />
             </svg>{" "}
-            تحكم فــي الجزء الحاسم من اللوحة وقم بتحويل التحكم المـركزي إلى
-            انتصارات مذهلة{" "}
+            {props.description}
           </div>
         )}
       </Container>

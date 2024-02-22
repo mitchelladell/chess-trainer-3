@@ -8,11 +8,71 @@ import { Button } from "react-bootstrap";
 import { Container, Col, Row } from "react-bootstrap";
 import Cookies from "js-cookie";
 import CreatorDashboard from "../components/Dashboard/CreatorDashboard";
+import { mySupabase } from "../mysuba";
+import { ICourse } from "./AllCourses";
 const Courses = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
+  const [subscribedCoursesIds, setSubscribedCoursesIds] = useState<any>([]);
+  const [subscribedCourses, setSubscribedCourses] = useState<any>([]);
+
   const lang = useAppSelector((state: any) => state.language.value);
   const theme = useAppSelector((state) => state.theme.value);
+
   const [showCreatedCourses, setShowCreatedCourses] = useState(false);
+  const userInfo = useAppSelector((state) => state.user.userInfo);
+  console.log(userInfo);
+
+  useEffect(() => {
+    if (userInfo?.sub) {
+      (async () => {
+        try {
+          // Fetch subscribed course IDs
+          const { data: subscribedCoursesData, error: subscribedCoursesError } =
+            await mySupabase
+              .from("purchases")
+              .select("course")
+              .eq("user_", userInfo.sub);
+
+          if (subscribedCoursesError) {
+            console.error(
+              "Error fetching subscribed courses:",
+              subscribedCoursesError.message
+            );
+            return;
+          }
+
+          console.log("subscribedCoursesData", subscribedCoursesData);
+
+          // Extract subscribed course IDs
+          const subscribedCourseIds = subscribedCoursesData.map(
+            (course) => course.course
+          );
+
+          // Fetch details of courses based on IDs
+          const { data: coursesData, error: coursesError } = await mySupabase
+            .from("courses")
+            .select("*")
+            .in("id", subscribedCourseIds);
+
+          if (coursesError) {
+            console.error("Error fetching courses:", coursesError.message);
+            return;
+          }
+
+          // Handle the fetched course data
+          console.log("Fetched courses:", coursesData);
+          setSubscribedCourses(coursesData);
+          // Use the course data as needed
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      })();
+    } else {
+      console.log("no courses");
+    }
+  }, [userInfo]);
+
+  console.log(subscribedCourses, "subscribed");
 
   useEffect(() => {
     setDirection(lang === "en" ? "row" : "row-reverse");
@@ -66,17 +126,25 @@ const Courses = () => {
               background: "linear-gradient(to left top, #808080, #ffffff)",
             }}
           >
-            <div className="no_subsbcriptions_text d-flex justify-content-center align-items-center">
-              ليـس لديك أي شـي ء للمراجعة هنا . قد تحتاج إلى البدء فـي تعلم شـي
-              ء جديد!
-            </div>
+            {subscribedCourses.length === 0 && (
+              <div className="no_subsbcriptions_text d-flex justify-content-center align-items-center">
+                ليـس لديك أي شـي ء للمراجعة هنا . قد تحتاج إلى البدء فـي تعلم
+                شـي ء جديد!
+              </div>
+            )}
             {!showCreatedCourses ? (
-              <UserDashboard
-                variationExist={true}
-                courseName="first"
-                progress={0}
-                numberOfVariations={"60"}
-              />
+              subscribedCourses.map((course: ICourse) => {
+                return (
+                  <UserDashboard
+                    variationExist={true}
+                    courseName="first"
+                    progress={0}
+                    numberOfVariations={"60"}
+                    courseNumber={course.id}
+                    key={course.id}
+                  />
+                );
+              })
             ) : (
               <CreatorDashboard
                 variationExist={true}
@@ -117,13 +185,13 @@ const Courses = () => {
                   ? "تعلم دورة تدريبية جديدة"
                   : "إنشاء دورة تدريبية جديدة"}{" "}
               </div>{" "}
-              <Button className="new_course_button">
-                <Link to="/addcourse">
+              <Link to={showCreatedCourses ? "/addcourse" : "/allcourses"}>
+                <Button className="new_course_button">
                   <div className="d-flex justify-content-center align-items-center">
                     +{" "}
                   </div>
-                </Link>
-              </Button>{" "}
+                </Button>{" "}
+              </Link>
             </div>
           </div>
         </div>

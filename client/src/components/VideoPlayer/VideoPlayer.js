@@ -1,7 +1,7 @@
 import React from "react";
 import "./VideoPlayer.css";
 
-const src = "https://www.youtube.com/embed/tgbNymZ7vqY";
+const src = "https://www.youtube.com/embed/0mvwoxMdFkM";
 
 const Video = () => {
   return (

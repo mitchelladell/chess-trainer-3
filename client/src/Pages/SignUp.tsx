@@ -8,11 +8,18 @@ import Footer from "../components/Footer/Footer";
 import "./Sign.css";
 import { useDispatch } from "react-redux";
 import { update } from "../features/language/languageSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
+import { mySupabase } from "../mysuba";
 
 const SignUp = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
+  const [userName, setUserName] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const navigate = useNavigate();
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+
   const lang = useAppSelector((state) => state.language.value);
   const theme = useAppSelector((state) => state.theme.value);
 
@@ -20,6 +27,27 @@ const SignUp = () => {
     setDirection(lang === "ar" ? "row" : "row-reverse");
     console.log("lang", lang);
   }, [lang, setDirection]);
+  useEffect(() => {
+    console.log("weird");
+  }, []);
+
+  const userInfo = useAppSelector((state) => state.user.userInfo);
+
+  useEffect(() => {
+    if (userInfo.email) {
+      navigate("/courses");
+    }
+  }, [userInfo]);
+  const handleSignUp = async (e: any) => {
+    e.preventDefault();
+
+    let { data, error } = await mySupabase.auth.signUp({
+      email: email,
+      password: password,
+    });
+
+    console.log(data, error);
+  };
 
   return (
     <div className="parent">
@@ -54,22 +82,28 @@ const SignUp = () => {
                     className="inputs"
                     type="text"
                     placeholder="Enter user name"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
                   />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
                   <Form.Label>رقـم الهاتف</Form.Label>
                   <Form.Control
                     className="inputs"
-                    type="email"
-                    placeholder="Enter email"
+                    type="text"
+                    placeholder="Enter phone number"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>البريد الالكتروني</Form.Label>
                   <Form.Control
                     className="inputs"
-                    type="email"
+                    type="text"
                     placeholder="Enter email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </Form.Group>
 
@@ -79,20 +113,23 @@ const SignUp = () => {
                     className="inputs"
                     type="password"
                     placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </Form.Group>
 
                 <div className="submit-container">
-                  <Link to="/onboarding">
-                    {" "}
-                    <Button
-                      className="join_button"
-                      variant="warning"
-                      type="submit"
-                    >
-                      <div> تسجيل</div>
-                    </Button>
-                  </Link>
+                  {/*     <Link to="/onboarding">
+                    {" "} */}
+                  <Button
+                    className="join_button"
+                    variant="warning"
+                    type="submit"
+                    onClick={(e: any) => handleSignUp(e)}
+                  >
+                    <div> تسجيل</div>
+                  </Button>
+                  {/*     // </Link> */}
                 </div>
               </Form>
             </div>

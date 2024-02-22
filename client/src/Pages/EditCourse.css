@@ -124,6 +124,7 @@ input[type="text"] {
   padding: 8px; /* adds padding inside the input field */
   font-size: 16px; /* sets font size */
   border-radius: 5px; /* adds rounded corners */
+  color: black;
 }
 
 input {

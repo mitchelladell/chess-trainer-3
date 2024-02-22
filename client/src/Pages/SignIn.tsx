@@ -13,7 +13,8 @@ import GoogleIcon from "../pgns/icons/GoogleIcon";
 import { Justify } from "react-bootstrap-icons";
 import { loginUserAsync } from "../features/user/userSlice";
 import { useAppDispatch } from "../app/hooks";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { mySupabase } from "../mysuba";
 
 const SignUp = () => {
   const dispatch = useAppDispatch();
@@ -22,24 +23,42 @@ const SignUp = () => {
   const [logResponse, setLogResponse] = useState("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const userInfo = useAppSelector((state) => state.user.userInfo);
 
   const lang = useAppSelector((state) => state.language.value);
   const theme = useAppSelector((state) => state.theme.value);
 
-  const handleLogin = () => {
-    dispatch(loginUserAsync({ email: email, password: password })).then(
-      (response) => {
-        console.log("responseee", response);
-        if (response?.payload?.status === 200) {
-          setLogResponse(response.payload.message);
+  const handleLogin = async () => {
+    dispatch(loginUserAsync({ email: email, password: password }));
+    if (userInfo.email) {
+      navigate("/courses");
+    }
+    console.log("useInfo", userInfo);
+  };
 
-          navigate("/courses");
-        } else {
-          setLogResponse(response.payload.response.data.error);
-        }
-        console.log("resposne", response);
-      }
-    );
+  useEffect(() => {
+    if (userInfo.email) {
+      navigate("/courses");
+    }
+  }, [userInfo]);
+
+  const handleGoogleLogin = async () => {
+    console.log("loggin");
+
+    let { data, error } = await mySupabase.auth.signInWithOAuth({
+      provider: "google",
+    });
+
+    console.log(data, error);
+  };
+
+  const handleFacebookLogin = async () => {
+    console.log("login");
+    let { data, error } = await mySupabase.auth.signInWithOAuth({
+      provider: "facebook",
+    });
+
+    console.log(data, error);
   };
   useEffect(() => {
     setDirection(lang === "ar" ? "row" : "row-reverse");
@@ -118,7 +137,19 @@ const SignUp = () => {
                     marginBottom: "2%",
                   }}
                 >
-                  <FacebookIcon /> <GoogleIcon />
+                  <div
+                    onClick={handleGoogleLogin}
+                    className="external_login_icons"
+                  >
+                    <FacebookIcon />{" "}
+                  </div>
+                  <div
+                    onClick={handleGoogleLogin}
+                    className="external_login_icons"
+                  >
+                    {" "}
+                    <GoogleIcon />{" "}
+                  </div>
                 </div>
               </Form>
             </div>

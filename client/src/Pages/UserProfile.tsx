@@ -14,7 +14,21 @@ import CourseCard from "../components/CourseCard/CourseCard";
 const UserProfile = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
   const subScribtedCourses = [1, 2, 3, 4];
+
+  const subscribedCourses = useAppSelector(
+    (state) => state.courses.subscribedCourses
+  );
+
+  console.log("subscribedCoures", subscribedCourses);
+
   const coursesMade = [1, 2, 3, 4];
+
+  const userInfo = useAppSelector((state) => state.user.userInfo);
+  console.log("userInfo", userInfo);
+
+  /*  state.userInfo = decodedResponse;
+  console.log("decodedResponse", decodedResponse);
+   */
 
   const lang = useAppSelector((state: any) => state.language.value);
   const theme = useAppSelector((state) => state.theme.value);
@@ -262,8 +276,13 @@ const UserProfile = () => {
               justifyContent: "center",
             }}
           >
-            {subScribtedCourses.map((course) => (
-              <CourseCard />
+            {subscribedCourses.map((course: any) => (
+              <Link to={`/courses/${course.id}/coursecontent`}>
+                <CourseCard
+                  name={course.name}
+                  description={course.description}
+                />
+              </Link>
             ))}
           </div>
           <div

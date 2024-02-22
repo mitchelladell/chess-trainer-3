@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAppSelector } from "../app/hooks";
+import { useLocation } from "react-router-dom";
+
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 
 import "./Course.css";
@@ -10,13 +12,33 @@ import IntermediateIcon from "../pgns/icons/CoursesLevelColors/Intermediate";
 import AdvancedIcon from "../pgns/icons/CoursesLevelColors/Advanced";
 import FavoriteIcon from "../pgns/icons/FavoriteIcon";
 import NotFavoriteIcon from "../pgns/icons/NotFavoriteIcon";
+import { mySupabase } from "../mysuba";
 import { Link } from "react-router-dom";
 const Course = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
   const lang = useAppSelector((state: any) => state.language.value);
   const theme = useAppSelector((state) => state.theme.value);
+  const location = useLocation();
 
   const [addedToFavorite, setAddedToFavorte] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const courseId = 2;
+      console.log("location", location);
+
+      const { data, error } = await mySupabase
+        .from("courses")
+        .select("*")
+        .eq("id", courseId);
+
+      if (error) {
+        console.error("Error fetching course:", error.message);
+      } else {
+        console.log("Course:", data);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     setDirection(lang === "en" ? "row" : "row-reverse");
@@ -41,7 +63,7 @@ const Course = () => {
 
             <Col xs={9} sm={9} md={3} lg={3}>
               <div className="course-info">
-                <div className="info-title"> معلومات الدورة التدريبية</div>{" "}
+                <div className="info-title"> معلومات الدورة التدريبية</div>
                 <div className="prespective">
                   <div>
                     {" "}

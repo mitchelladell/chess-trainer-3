@@ -4,12 +4,15 @@ import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
+import { mySupabase } from "../mysuba";
+
 
 const FrontPage = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
   const lang = useAppSelector((state) => state.language.value);
   const theme = useAppSelector((state) => state.theme.value);
 
+ 
   useEffect(() => {
     setDirection(lang === "ar" ? "row" : "row-reverse");
     console.log("lang", lang);

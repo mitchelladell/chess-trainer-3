@@ -1,9 +1,111 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { useAppSelector } from "../app/hooks";
+import { mySupabase } from "../mysuba";
 import "./Payments.css";
+import { useEffect, useState } from "react";
+import { ICourse } from "./AllCourses";
+import { RootState } from "../app/store";
+
+interface IPurchase {
+  course: ICourse;
+}
 
 const Payments = () => {
-  const theme = useAppSelector((state) => state.theme.value);
+  const theme = useAppSelector((state: RootState) => state.theme.value);
+
+  const userInfo = useAppSelector((state: RootState) => state.user.userInfo);
+
+  const [purchases, setPurchases] = useState<any>([]);
+  const subscribedCoures = useAppSelector(
+    (state: RootState) => state.courses.subscribedCourses
+  );
+  console.log("subscribedCourses", subscribedCoures);
+
+  useEffect(() => {
+    (async () => {
+      let { data, error } = await mySupabase
+        .from("purchases")
+        .select(userInfo.sub);
+
+      if (error) {
+        console.error("Error fetching course:", error.message);
+      } else {
+        console.log("Course:", data);
+
+        setPurchases(data);
+      }
+    })();
+  }, []);
+
+  const PurchasesInfo = (props: IPurchase) => {
+    return (
+      <Row>
+        <Col>
+          <div
+            className="white-texts"
+            style={{
+              color: theme === "light" ? "black" : "white",
+            }}
+          >
+            {
+              purchases.find(
+                (purchase: any) => purchase.course == props.course.id
+              ).boughtat
+            }
+          </div>
+        </Col>
+        <Col>
+          <div>
+            <img width={"75px"} height="75px" alt="" />{" "}
+          </div>
+        </Col>
+        <Col>
+          {" "}
+          <div
+            className="white-texts"
+            style={{
+              color: theme === "light" ? "black" : "white",
+            }}
+          >
+            {props.course.authorname}
+          </div>
+        </Col>
+        <Col>
+          <div
+            className="white-texts"
+            style={{
+              color: theme === "light" ? "black" : "white",
+            }}
+          >
+            {" "}
+            1200 EP{" "}
+          </div>
+        </Col>
+        <Col>
+          <div
+            className="white-texts"
+            style={{
+              color: theme === "light" ? "black" : "white",
+            }}
+          >
+            {" "}
+            lolasasa123@gmail.com{" "}
+          </div>
+        </Col>
+        <div
+          style={{
+            height: "3px",
+            border: `3px solid ${theme === "dark" ? "white" : "black"}`,
+            width: "80%",
+            margin: "auto",
+          }}
+        >
+          {" "}
+        </div>
+      </Row>
+    );
+  };
+
   return (
     <div
       style={{
@@ -48,7 +150,7 @@ const Payments = () => {
                       color: theme === "dark" ? "" : "black",
                     }}
                   >
-                    صورة الدورة{" "}
+                    صورة الدورة
                   </div>
                 </Col>
                 <Col>
@@ -59,7 +161,7 @@ const Payments = () => {
                       color: theme === "dark" ? "" : "black",
                     }}
                   >
-                    مؤلف الدورة{" "}
+                    مؤلف الدورة
                   </div>
                 </Col>
                 <Col>
@@ -96,66 +198,9 @@ const Payments = () => {
               >
                 {" "}
               </div>
-              <Row>
-                <Col>
-                  <div
-                    className="white-texts"
-                    style={{
-                      color: theme === "light" ? "black" : "white",
-                    }}
-                  >
-                    2022/4/13{" "}
-                  </div>
-                </Col>
-                <Col>
-                  <div>
-                    <img width={"75px"} height="75px" alt="" />{" "}
-                  </div>
-                </Col>
-                <Col>
-                  {" "}
-                  <div
-                    className="white-texts"
-                    style={{
-                      color: theme === "light" ? "black" : "white",
-                    }}
-                  >
-                    اسم مؤلف الدورة التدريبية{" "}
-                  </div>
-                </Col>
-                <Col>
-                  <div
-                    className="white-texts"
-                    style={{
-                      color: theme === "light" ? "black" : "white",
-                    }}
-                  >
-                    {" "}
-                    1200 EP{" "}
-                  </div>
-                </Col>
-                <Col>
-                  <div
-                    className="white-texts"
-                    style={{
-                      color: theme === "light" ? "black" : "white",
-                    }}
-                  >
-                    {" "}
-                    lolasasa123@gmail.com{" "}
-                  </div>
-                </Col>
-                <div
-                  style={{
-                    height: "3px",
-                    border: `3px solid ${theme === "dark" ? "white" : "black"}`,
-                    width: "80%",
-                    margin: "auto",
-                  }}
-                >
-                  {" "}
-                </div>
-              </Row>
+              {subscribedCoures.map((course: any) => {
+                return <PurchasesInfo course={course} />;
+              })}
             </Container>
           </div>
         </Row>
