@@ -9,3 +9,9 @@ In the project directory client, you can run:
 ### `npm install`
 
 ### `npm start`
+
+
+To Login with an already existing user: 
+
+email: ahmedmitchellhope@gmail.com
+password: Liverpool1-
