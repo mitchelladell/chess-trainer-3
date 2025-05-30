@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { loginUser, logoutUser } from "./userApi";
 import jwt_decode from "jwt-decode";
@@ -45,10 +44,21 @@ const initialState: UserState = {
 // typically used to make async requests.
 export const loginUserAsync = createAsyncThunk(
   "user/loginUser",
-  async (data: IloginData) => {
-    return loginUser(data); //return value of the api call gets assigned to user value
+  async (data: IloginData ) => {
+    try {
+      const response = await loginUser(data); // Call API to log in
+      console.log('response', response)
+      return response; // Return the response if login is successful
+    } catch (error) {
+      // Reject with a custom error message
+      return error
+    }
   }
 );
+
+
+
+
 
 export const logoutAsync = createAsyncThunk("user/logoutUser", async () => {
   return logoutUser(); //return value of the api call gets assigned to user value
@@ -68,24 +78,31 @@ export const userSlice = createSlice({
     builder
       .addCase(loginUserAsync.pending, (state) => {
         state.status = "loading";
-        console.log("hello");
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const superbaseResponse = action.payload as SuperbaseResponse;
+
+        console.log('supaBase Response', action.payload)
+
         const accessToken = superbaseResponse.session?.access_token;
 
         if (accessToken) {
           const decodedResponse: IDecodedResponse = jwt_decode(accessToken);
           state.userInfo = decodedResponse;
-          console.log("decodedResponse", decodedResponse);
           state.userLoggedIn = true;
+          state.errors = null;
           Cookies.set("token", accessToken);
+        }
+        else {
+          // If no accessToken, handle this as an error or invalid response
+          state.errors = "Login failed.";  // Set a relevant error message
         }
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
         state.status = "failed";
-        state.errors = action.payload;
+        state.errors = 'Login Failed';
+
       })
       .addCase(logoutAsync.pending, (state) => {
         state.status = "loading";

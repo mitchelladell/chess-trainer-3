@@ -87,7 +87,7 @@ const Courses = () => {
         }}
         className="user_courses_text"
       >
-        لوحة القيادة الخاصة بك
+        Your Courses Dashboard
       </div>
       <div className="flex-container" style={{ justifyContent: "right" }}>
         {" "}
@@ -98,14 +98,14 @@ const Courses = () => {
             onClick={() => setShowCreatedCourses(false)}
           >
             {" "}
-            + دوراتـــــــي التدريبية
+            My Courses +
           </Button>
           <Button
             className="created_courses_button"
             onClick={() => setShowCreatedCourses(true)}
           >
             {" "}
-            + الدورات التـي انشأتها
+            Courses That I have Created +
           </Button>
         </div>
       </div>
@@ -128,8 +128,7 @@ const Courses = () => {
           >
             {subscribedCourses.length === 0 && (
               <div className="no_subsbcriptions_text d-flex justify-content-center align-items-center">
-                ليـس لديك أي شـي ء للمراجعة هنا . قد تحتاج إلى البدء فـي تعلم
-                شـي ء جديد!
+                You have no subscriptions; you may need to add new ones
               </div>
             )}
             {!showCreatedCourses ? (
@@ -182,8 +181,8 @@ const Courses = () => {
                 }}
               >
                 {!showCreatedCourses
-                  ? "تعلم دورة تدريبية جديدة"
-                  : "إنشاء دورة تدريبية جديدة"}{" "}
+                  ? "Learn A new Course"
+                  : "Create a new Course"}{" "}
               </div>{" "}
               <Link to={showCreatedCourses ? "/addcourse" : "/allcourses"}>
                 <Button className="new_course_button">

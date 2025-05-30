@@ -668,11 +668,11 @@ const Trainer = () => {
 
   document.onkeydown = checkKey;
 
-  function checkKey(e: any) {
+  function checkKey(e) {
     e = e || window.event;
 
     // up arrow
-    if (e.keyCode == "37") {
+    if (e.keyCode =="37") {
       e.preventDefault();
 
       getPreviousMove(e);
@@ -693,7 +693,7 @@ const Trainer = () => {
       setStudyStarted(true);
     }
     // right arrow
-    else if (e.keyCode == "40") {
+    else if (e.keyCode =="40") {
       e.preventDefault();
 
       getLastMove();
@@ -914,11 +914,11 @@ const Trainer = () => {
   };
 
   function loadVariationMoves(
-    d: any,
-    find: any,
-    isMain: boolean = true,
+    d,
+    find,
+    isMain = true,
     depth = 0
-  ): any {
+  ) {
     const ret = [];
     const seen = new Set();
 
@@ -950,25 +950,7 @@ const Trainer = () => {
     return undefined;
   }
 
-  const BoardBackround = () => {
-    return (
-      <div
-        style={{
-          width: dimensions.width,
-          height: dimensions.height,
-          display: "flex",
-        }}
-      >
-        <svg viewBox="0 0 4 3">
-          <image
-            href={`url('../media/board.png')`}
-            width="100%"
-            height="100%"
-          />
-        </svg>
-      </div>
-    );
-  };
+  
 
   return (
     <div>

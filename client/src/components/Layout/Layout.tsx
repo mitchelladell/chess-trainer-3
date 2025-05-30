@@ -3,7 +3,7 @@ import { useAppSelector } from "../../app/hooks";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import jwt_decode from "jwt-decode";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { updateCoursesList } from "../../features/courses/coursesSlice";
 
@@ -41,7 +41,7 @@ const Layout: React.FC<{
       dispatch(updateUserInfo(decodedResponse));
       // navigate("/courses");
     }
-  }, []);
+  }, [dispatch]);
 
   console.log(userInfo);
 
@@ -93,7 +93,7 @@ const Layout: React.FC<{
     } else {
       console.log("no courses");
     }
-  }, [userInfo]);
+  }, [userInfo, dispatch]);
 
   return (
     <div className="layout_container">

@@ -19,7 +19,6 @@ const Payments = () => {
   const subscribedCoures = useAppSelector(
     (state: RootState) => state.courses.subscribedCourses
   );
-  console.log("subscribedCourses", subscribedCoures);
 
   useEffect(() => {
     (async () => {
@@ -35,7 +34,7 @@ const Payments = () => {
         setPurchases(data);
       }
     })();
-  }, []);
+  }, [userInfo.sub]);
 
   const PurchasesInfo = (props: IPurchase) => {
     return (
@@ -49,7 +48,7 @@ const Payments = () => {
           >
             {
               purchases.find(
-                (purchase: any) => purchase.course == props.course.id
+                (purchase: any) => purchase.course === props.course.id
               ).boughtat
             }
           </div>

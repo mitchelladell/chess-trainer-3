@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useAppSelector } from "../app/hooks";
-import { useLocation } from "react-router-dom";
 
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 
@@ -18,14 +17,11 @@ const Course = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
   const lang = useAppSelector((state: any) => state.language.value);
   const theme = useAppSelector((state) => state.theme.value);
-  const location = useLocation();
-
   const [addedToFavorite, setAddedToFavorte] = useState(false);
 
   useEffect(() => {
     (async () => {
       const courseId = 2;
-      console.log("location", location);
 
       const { data, error } = await mySupabase
         .from("courses")
@@ -191,7 +187,7 @@ const Course = () => {
                       marginBottom: "0px",
                     }}
                   >
-                    اسم الدورة التدريبية{" "}
+                    Course Name{" "}
                   </div>
                   <div
                     style={{

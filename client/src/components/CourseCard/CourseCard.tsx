@@ -1,11 +1,9 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
-import BookIcon from "../../pgns/icons/BookIcon";
+import { Container, Row, Col } from "react-bootstrap";
 import AdvancedIcon from "../../pgns/icons/CoursesLevelColors/Advanced";
 import AmaterurIcon from "../../pgns/icons/CoursesLevelColors/Amateur";
 import IntermediateIcon from "../../pgns/icons/CoursesLevelColors/Intermediate";
 import NoviceIcon from "../../pgns/icons/CoursesLevelColors/Novice";
 import { StarSign } from "../../pgns/icons/UserProfileIcons/StarSign";
-import VideoIcon from "../../pgns/icons/VideoIcon";
 import "./CourseCard.css";
 
 const CourseCard = (props: any) => {

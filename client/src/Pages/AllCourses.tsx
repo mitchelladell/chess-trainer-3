@@ -12,11 +12,6 @@ import AdvancedIcon from "../pgns/icons/CoursesLevelColors/Advanced";
 import { mySupabase } from "../mysuba";
 
 export interface ICourse {
-  /*   name: string;
-  authorname: string;
-  author: any;
-   */
-
   [key: string]: any;
 }
 
@@ -40,9 +35,8 @@ const AllCourses = () => {
     let subscribedCoursesIds = subscribedCourses.map((course: any) => {
       return course.id;
     });
-
     setSubscribedCoursesIds(subscribedCoursesIds);
-  }, []);
+  }, [subscribedCourses]);
 
   const theme = useAppSelector((state) => state.theme.value);
 
@@ -53,9 +47,8 @@ const AllCourses = () => {
   };
   useEffect(() => {
     (async () => {
-      let { data, error } = await mySupabase.from("courses").select("*");
+      let { data } = await mySupabase.from("courses").select("*");
       setCourseList(data);
-      console.log(coursesList);
     })();
   }, []);
 
@@ -80,19 +73,9 @@ const AllCourses = () => {
   ];
 
   //this function filters the courses based on the filters:
-  const filterCourses = () => {
-    console.log("courseList", coursesList);
-    let courses = coursesList.filter(
-      (course: ICourse) => course.language === langFilterChoice
-    );
-
-    console.log("langFilter", langFilterChoice);
-    console.log("coures", courses);
-  };
-  filterCourses();
 
   useEffect(() => {
-    setDirection(lang === "ar" ? "row" : "row-reverse");
+    setDirection(lang === "en" ? "row" : "row-reverse");
     console.log("lang", lang);
   }, [lang]);
   return (
@@ -141,7 +124,7 @@ const AllCourses = () => {
               </Col>
               <Col xs={5} sm={3} md={3} lg={3}>
                 <div className="courses_controller">
-                  <div className="filter_title">{"هيئة اللعب"} </div>
+                  <div className="filter_title"> Game Type </div>
                   {coursesFilter.map((item) => (
                     <div style={{ display: "flex" }} key={item}>
                       <div
@@ -165,7 +148,7 @@ const AllCourses = () => {
                       ></div>
                     </div>
                   ))}
-                  <div className="filter_title"> {"اللغـــة"}</div>
+                  <div className="filter_title"> Language</div>
 
                   {langFilter.map((item) => (
                     <div style={{ display: "flex" }} key={item}>
@@ -192,7 +175,7 @@ const AllCourses = () => {
                       </div>
                     </div>
                   ))}
-                  <div className="filter_title"> {"مدى الصعوبة"}</div>
+                  <div className="filter_title"> Difficulty Level</div>
 
                   {levelsFilter.map((item) => (
                     <div style={{ display: "flex" }} key={item.label}>
@@ -232,7 +215,7 @@ const AllCourses = () => {
                       className="cancel_filter_button"
                       onClick={() => handleCancelFilters()}
                     >
-                      الغاء كل المرشحات
+                      Reset Filter{" "}
                     </Button>{" "}
                   </div>
                 </div>

@@ -19,22 +19,14 @@ const UserProfile = () => {
     (state) => state.courses.subscribedCourses
   );
 
-  console.log("subscribedCoures", subscribedCourses);
-
-  const coursesMade = [1, 2, 3, 4];
-
   const userInfo = useAppSelector((state) => state.user.userInfo);
   console.log("userInfo", userInfo);
-
-  /*  state.userInfo = decodedResponse;
-  console.log("decodedResponse", decodedResponse);
-   */
 
   const lang = useAppSelector((state: any) => state.language.value);
   const theme = useAppSelector((state) => state.theme.value);
 
   useEffect(() => {
-    setDirection(lang === "ar" ? "row" : "row-reverse");
+    setDirection(lang === "en" ? "row" : "row-reverse");
     console.log("lang", lang);
   }, [lang]);
   return (
@@ -50,20 +42,15 @@ const UserProfile = () => {
           <Row>
             <Col xs={12} sm={9} md={6} lg={6}>
               {" "}
-              <div className="profile-intro-text">
-                ملف أسم صاحب الحساب الشخصى{" "}
-              </div>
+              <div className="profile-intro-text">Profile Name </div>
             </Col>
             <Col align={"end"} xs={12} sm={9} md={6} lg={6}>
               <Link to="/payments">
                 {" "}
-                <Button className="user_profile_button">المشتـــريات</Button>
+                <Button className="user_profile_button">Buys</Button>
               </Link>{" "}
               <Link to="/profilesettings">
-                <Button className="user_profile_button">
-                  {" "}
-                  تعديل الملف الشخصـي
-                </Button>
+                <Button className="user_profile_button"> Edit Profile </Button>
               </Link>
             </Col>
           </Row>
@@ -266,7 +253,7 @@ const UserProfile = () => {
             }}
           >
             {" "}
-            الدورات التـي قمت بدراستها
+            Courses you studied{" "}
           </div>
           <div
             style={{
@@ -293,7 +280,7 @@ const UserProfile = () => {
             }}
           >
             {" "}
-            الدورات التـي قمت بإعدادها
+            Courses you created{" "}
           </div>
           <div
             style={{

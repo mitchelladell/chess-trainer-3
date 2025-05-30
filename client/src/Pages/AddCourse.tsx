@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 
 const AddCourse = () => {
   const [courseLang, setcourseLang] = useState("العربية");
-  const [courseType, setCourseType] = useState("محتوى مكتوب");
+  const [courseType, setCourseType] = useState("Written Content");
 
   const courseLangs = ["English", "العربية"];
   const [courseCategory, setCourseCategory] = useState("نوع الدورة");
 
-  const courseTypes = ["محتوى مكتوب", "محتوى مكتوب ومرئـى"];
+  const courseTypes = ["Written Content", "Written and media content"];
   const courseCategories = [
     "بدايات الدور",
     "وسط الدور",

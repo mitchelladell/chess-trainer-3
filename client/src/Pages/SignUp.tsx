@@ -1,14 +1,11 @@
-import { Row, Col, Container } from "react-bootstrap/";
 import { useEffect, useState } from "react";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
+
 import "./Sign.css";
-import { useDispatch } from "react-redux";
-import { update } from "../features/language/languageSlice";
-import { Link, useNavigate } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
 import { mySupabase } from "../mysuba";
 
@@ -17,6 +14,9 @@ const SignUp = () => {
   const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [signUpError, setSignupError] = useState<string>("");
+  const [validationMessage, setValidationMessage] = useState<string>("");
+
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState<string>("");
 
@@ -24,12 +24,9 @@ const SignUp = () => {
   const theme = useAppSelector((state) => state.theme.value);
 
   useEffect(() => {
-    setDirection(lang === "ar" ? "row" : "row-reverse");
+    setDirection(lang === "en" ? "row" : "row-reverse");
     console.log("lang", lang);
   }, [lang, setDirection]);
-  useEffect(() => {
-    console.log("weird");
-  }, []);
 
   const userInfo = useAppSelector((state) => state.user.userInfo);
 
@@ -37,16 +34,30 @@ const SignUp = () => {
     if (userInfo.email) {
       navigate("/courses");
     }
-  }, [userInfo]);
-  const handleSignUp = async (e: any) => {
+  }, [userInfo, navigate]);
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    let { data, error } = await mySupabase.auth.signUp({
-      email: email,
-      password: password,
-    });
+    try {
+      const { data, error } = await mySupabase.auth.signUp({
+        email,
+        password,
+      });
 
-    console.log(data, error);
+      if (error) {
+        setSignupError(error.message); // or error.code if you want the code
+      } else {
+        // Handle success (e.g., redirect or show success message)
+        console.log("Sign-up successful:", data);
+        setValidationMessage("Check your  Email Inbox");
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000);
+      }
+    } catch (err) {
+      console.error("Unexpected error during sign-up:", err);
+      setSignupError("Unexpected error occurred.");
+    }
   };
 
   return (
@@ -68,7 +79,7 @@ const SignUp = () => {
           }}
         >
           <div className="intro_text">
-            <div className="signup-intro"> انشاء حساب</div>
+            <div className="signup-intro"> </div>
             <div
               className="sign-form"
               style={{
@@ -77,7 +88,7 @@ const SignUp = () => {
             >
               <Form>
                 <Form.Group className="mb-3" controlId="formbasicuserName">
-                  <Form.Label>اسم المستخدم</Form.Label>
+                  <Form.Label>User Name</Form.Label>
                   <Form.Control
                     className="inputs"
                     type="text"
@@ -87,7 +98,7 @@ const SignUp = () => {
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
-                  <Form.Label>رقـم الهاتف</Form.Label>
+                  <Form.Label>Phone Number</Form.Label>
                   <Form.Control
                     className="inputs"
                     type="text"
@@ -97,7 +108,7 @@ const SignUp = () => {
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>البريد الالكتروني</Form.Label>
+                  <Form.Label>Email</Form.Label>
                   <Form.Control
                     className="inputs"
                     type="text"
@@ -108,7 +119,7 @@ const SignUp = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>كلمة السر</Form.Label>
+                  <Form.Label>Password</Form.Label>
                   <Form.Control
                     className="inputs"
                     type="password"
@@ -117,7 +128,10 @@ const SignUp = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </Form.Group>
-
+                {signUpError && (
+                  <div className="sign-error">Sign up Failed</div>
+                )}
+                <div> {validationMessage}</div>
                 <div className="submit-container">
                   {/*     <Link to="/onboarding">
                     {" "} */}
@@ -127,7 +141,7 @@ const SignUp = () => {
                     type="submit"
                     onClick={(e: any) => handleSignUp(e)}
                   >
-                    <div> تسجيل</div>
+                    <div> Sign Up</div>
                   </Button>
                   {/*     // </Link> */}
                 </div>

@@ -1,16 +1,12 @@
-import { Row, Col, Container } from "react-bootstrap/";
 import { useEffect, useState } from "react";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
+
 import "./Sign.css";
 import { useAppSelector } from "../app/hooks";
-import { update } from "../features/language/languageSlice";
 import FacebookIcon from "../pgns/icons/FaceBookIcon";
 import GoogleIcon from "../pgns/icons/GoogleIcon";
-import { Justify } from "react-bootstrap-icons";
 import { loginUserAsync } from "../features/user/userSlice";
 import { useAppDispatch } from "../app/hooks";
 import { useNavigate } from "react-router-dom";
@@ -20,27 +16,28 @@ const SignUp = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
-  const [logResponse, setLogResponse] = useState("");
   const [email, setEmail] = useState<string>("");
+  const [error, setError] = useState<any>("");
   const [password, setPassword] = useState<string>("");
-  const userInfo = useAppSelector((state) => state.user.userInfo);
+  const userInfo = useAppSelector((state) => state.user);
 
   const lang = useAppSelector((state) => state.language.value);
   const theme = useAppSelector((state) => state.theme.value);
 
   const handleLogin = async () => {
     dispatch(loginUserAsync({ email: email, password: password }));
-    if (userInfo.email) {
+    if (userInfo.userLoggedIn) {
       navigate("/courses");
+    } else {
+      setError("Login Failed");
     }
-    console.log("useInfo", userInfo);
   };
 
   useEffect(() => {
-    if (userInfo.email) {
+    if (userInfo.userLoggedIn) {
       navigate("/courses");
     }
-  }, [userInfo]);
+  }, [userInfo, navigate]);
 
   const handleGoogleLogin = async () => {
     console.log("loggin");
@@ -61,7 +58,7 @@ const SignUp = () => {
     console.log(data, error);
   };
   useEffect(() => {
-    setDirection(lang === "ar" ? "row" : "row-reverse");
+    setDirection(lang === "en" ? "row" : "row-reverse");
     console.log("lang", lang);
   }, [lang, setDirection]);
 
@@ -84,7 +81,7 @@ const SignUp = () => {
           }}
         >
           <div className="intro_text">
-            <div className="signin-intro">تسجيل الدخول</div>
+            <div className="signin-intro">Login</div>
             <div
               className="sign-form"
               style={{
@@ -93,7 +90,7 @@ const SignUp = () => {
             >
               <Form>
                 <Form.Group className="mb-3" controlId="formbasicuserName">
-                  <Form.Label>اسم المستخدم أو البريد الإلكـتـروني</Form.Label>
+                  <Form.Label> Name or Email</Form.Label>
                   <Form.Control
                     className="inputs"
                     type="text"
@@ -103,7 +100,7 @@ const SignUp = () => {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>كلمة السر</Form.Label>
+                  <Form.Label>Password</Form.Label>
                   <Form.Control
                     className="inputs"
                     type="password"
@@ -111,23 +108,18 @@ const SignUp = () => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </Form.Group>
-                <div> {logResponse}</div>
-
+                {error && <div className="sign-error"> {error}</div>}
                 <div className="submit-container">
-                  {/*                   <Link to="/courses">
-                   */}{" "}
                   <Button
                     className="join_button"
                     variant="warning"
                     onClick={() => handleLogin()}
                   >
-                    <div>الدخول</div>
+                    <div>Login</div>
                   </Button>
-                  {/*                   </Link>
-                   */}{" "}
                 </div>
 
-                <div className="or_keyword">أو</div>
+                <div className="or_keyword">Or Login With</div>
                 <div
                   style={{
                     display: "flex",
@@ -138,7 +130,7 @@ const SignUp = () => {
                   }}
                 >
                   <div
-                    onClick={handleGoogleLogin}
+                    onClick={handleFacebookLogin}
                     className="external_login_icons"
                   >
                     <FacebookIcon />{" "}

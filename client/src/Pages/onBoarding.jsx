@@ -1,13 +1,10 @@
-import { Row, Col, Container } from "react-bootstrap/";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 
 import Form from "react-bootstrap/Form";
 
-import { useDispatch } from "react-redux";
 import { useAppSelector } from "../app/hooks";
-import { update } from "../features/language/languageSlice";
 import "./onBoarding.css";
 import { Link } from "react-router-dom";
 
@@ -40,11 +37,11 @@ const Onboarding = () => {
                 }}
               >
                 {" "}
-                انا جديد فـي اللعبة
-              </div>{" "}
+                  I am new to the game              
+                  </div>{" "}
               <div style={{ color: "#43BF82", marginLeft: "10px" }}>
                 {" "}
-                جـديد
+                new
               </div>{" "}
             </div>
           }
@@ -74,12 +71,12 @@ const Onboarding = () => {
                   marginRight: "10px",
                 }}
               >
+                I Know some rules and strategies   
                 {" "}
-                اعرف القواعد وبعض الاستـراتيجيات
-              </div>{" "}
+           </div>{" "}
               <div style={{ color: "#F6EE07", marginLeft: "10px" }}>
                 {" "}
-                مبتـدئ
+                Amateur
               </div>{" "}
             </div>
           }
@@ -109,11 +106,10 @@ const Onboarding = () => {
                 }}
               >
                 {" "}
-                لدي فهم لائـق فـي جميع الجوانب{" "}
-              </div>{" "}
+              I have decent understanding              </div>{" "}
               <div style={{ color: "#20C7DA", marginLeft: "10px" }}>
                 {" "}
-                متوسط{" "}
+               Intermediate
               </div>{" "}
             </div>
           }
@@ -143,12 +139,12 @@ const Onboarding = () => {
                 }}
               >
                 {" "}
-                انا فـي مستوى الاحتـراف او اقـتـرب من مستوى الاحتـراف{" "}
-              </div>{" "}
+                Almost professional              
+                </div>
               <div style={{ color: "#EF7373", marginLeft: "10px" }}>
                 {" "}
-                متقــدم{" "}
-              </div>{" "}
+                Advanced              
+                </div>
             </div>
           }
           value="advanced"
@@ -165,8 +161,7 @@ const Onboarding = () => {
   }
 
   useEffect(() => {
-    setDirection(lang === "ar" ? "row" : "row-reverse");
-    console.log("lang", lang);
+    setDirection(lang === "en" ? "row" : "row-reverse");    console.log("lang", lang);
   }, [lang]);
   return (
     <div className="parent">
@@ -198,7 +193,7 @@ const Onboarding = () => {
                 color: theme === "dark" ? "#daa520" : "black",
               }}
             >
-              اختـر مستواك
+              Choose your level
             </div>
             <div>{levelOptions()}</div>
             <div className="confirm_button_container">
@@ -212,7 +207,7 @@ const Onboarding = () => {
                   }} */
                 >
                   {" "}
-                  <div /* style={{ marginTop: "20%" }} */> تأكيد </div>
+                  <div /* style={{ marginTop: "20%" }} */> Confirm</div>
                 </Button>{" "}
               </Link>
             </div>

@@ -80,7 +80,7 @@ const CourseContent = () => {
         handleConfirm={resetState}
       />
       <Container>
-        <div className="course_name"> اسم الدورة التدريبية </div>
+        <div className="course_name"> Course Name </div>
         <div className="course_card_description_container">
           {" "}
           <CourseCard
@@ -93,7 +93,7 @@ const CourseContent = () => {
         </div>
       </Container>
       <Container>
-        <div className="course_name"> الفصول</div>
+        <div className="course_name"> Chapters</div>
         <div className="course-content-container">
           {data.length > 0 &&
             data.map((item: any) => (

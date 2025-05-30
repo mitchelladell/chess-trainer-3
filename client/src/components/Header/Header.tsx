@@ -1,5 +1,5 @@
 import "./Header.css";
-import react, { useState, useEffect } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -8,10 +8,6 @@ import translations from "../../consts/translations";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Nav, NavItem } from "react-bootstrap";
-import { AiOutlineBell } from "react-icons/ai";
-import { FaUserAlt } from "react-icons/fa";
-import { FaHome } from "react-icons/fa";
 import ProfilePic from "../../pgns/icons/ProfilePic";
 import Notification from "../../pgns/icons/Notification";
 import { MdExpandLess, MdExpandMore } from "react-icons/md";
@@ -26,7 +22,6 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { logoutAsync } from "../../features/user/userSlice";
 import { updateTheme } from "../../features/Theme/themeSlice";
-import { link } from "fs";
 
 type Translation = {
   [key: string]: {
@@ -50,8 +45,6 @@ const Header: React.FC<IProps> = (props) => {
   const coursesList = useAppSelector(
     (state) => state.courses.subscribedCourses
   );
-
-  console.log("coursesList", coursesList);
 
   const isLoggedIn = useAppSelector((state) => state.user.userLoggedIn);
 
@@ -98,38 +91,40 @@ const Header: React.FC<IProps> = (props) => {
                     }}
                   ></div>
                   <div className="d-flex justify-content-center align-items-center">
-                    <Dropdown className="custom-dropdown">
-                      <Dropdown.Toggle
-                        className="custom-dropdown-toggle"
-                        id="dropdown-basic"
-                      >
-                        {(translations as Translation)[lang].courses}
-                      </Dropdown.Toggle>
+                    {isLoggedIn && (
+                      <Dropdown className="custom-dropdown">
+                        <Dropdown.Toggle
+                          className="custom-dropdown-toggle"
+                          id="dropdown-basic"
+                        >
+                          {(translations as Translation)[lang].courses}
+                        </Dropdown.Toggle>
 
-                      <Dropdown.Menu className="custom-dropdown-menu">
-                        <Dropdown.Item
-                          className="custom-dropdown-item"
-                          as={Link}
-                          to="#/action-1"
-                        >
-                          Action
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          className="custom-dropdown-item"
-                          as={Link}
-                          to="#/action-1"
-                        >
-                          Another action
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          className="custom-dropdown-item"
-                          as={Link}
-                          to="#/action-1"
-                        >
-                          Something else
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
+                        <Dropdown.Menu className="custom-dropdown-menu">
+                          <Dropdown.Item
+                            className="custom-dropdown-item"
+                            as={Link}
+                            to="#/action-1"
+                          >
+                            Course 1
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            className="custom-dropdown-item"
+                            as={Link}
+                            to="#/action-1"
+                          >
+                            Course 2
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            className="custom-dropdown-item"
+                            as={Link}
+                            to="#/action-1"
+                          >
+                            Course 3
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    )}
                   </div>
                 </div>
               </Col>
@@ -272,7 +267,7 @@ const Header: React.FC<IProps> = (props) => {
                           }}
                         >
                           <UserProfileIcon />
-                          <div className="profile"> الملف الشخصى </div>
+                          <div className="profile"> Profile </div>
                         </div>
                       </Dropdown.Item>
                       <Dropdown.Divider />
@@ -289,7 +284,7 @@ const Header: React.FC<IProps> = (props) => {
                         >
                           {" "}
                           <SettingsIcon />
-                          <div className="settings"> الاعدادات </div>
+                          <div className="settings"> Settings </div>
                         </div>
                       </Dropdown.Item>
                       <Dropdown.Item
@@ -313,7 +308,7 @@ const Header: React.FC<IProps> = (props) => {
                                 onChange={() => handleThemeChange()}
                               />
                             </Form>
-                            الوضع النهارى{" "}
+                            Bright Theme
                           </div>
                         </div>
                       </Dropdown.Item>
@@ -329,7 +324,7 @@ const Header: React.FC<IProps> = (props) => {
                             }}
                           >
                             <SignOutIcon />
-                            <div className="sign-out"> تسجيل الخروج</div>
+                            <div className="sign-out"> Sign out</div>
                           </div>
                         </div>
                       </Dropdown.Item>

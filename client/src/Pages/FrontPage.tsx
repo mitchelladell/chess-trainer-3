@@ -1,21 +1,16 @@
 import "./FrontPage.css";
-import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
-import { mySupabase } from "../mysuba";
-
 
 const FrontPage = () => {
   const [direction, setDirection] = useState<"row" | "row-reverse">("row");
   const lang = useAppSelector((state) => state.language.value);
   const theme = useAppSelector((state) => state.theme.value);
 
- 
   useEffect(() => {
-    setDirection(lang === "ar" ? "row" : "row-reverse");
-    console.log("lang", lang);
+    setDirection(lang === "en" ? "row" : "row-reverse");
   }, [lang]);
   return (
     <div style={{ background: theme === "dark" ? "#333333" : "white" }}>
@@ -37,7 +32,7 @@ const FrontPage = () => {
           <div className="intro_text_front_page">
             <div className="front-page-intro-golden">
               {" "}
-              أنت لا تنسى أبدًا <br /> بدايات الدور الخاصة بك مرة أخرى <br />
+              You never forget the openings
             </div>{" "}
             <div
               className="front-page-intro-extra"
@@ -45,16 +40,17 @@ const FrontPage = () => {
                 color: theme === "light" ? "black" : "white",
               }}
             >
-              تقنيات التعلم المدعومة علميًا للمساعدة في زيادة الحفظ والتذكر
-              بنسبة تصل إلى 95%. حتـى تتمكن من لعب بدايات الأدوار مثل كتاب ...
-              وسط الأدوار مثل الساحر ونهاية الأدوار مثل العظماء
+              Learning and support techniques help increase retention and recall
+              by up to 95%. Even from the beginning of painful play, like a
+              book... to the middle of change, like an actor, and the end of
+              impact, like the greats.
             </div>
           </div>
 
           <div className="button_container">
             <Link to="/signup">
               <Button className="join_button">
-                <div> التحـق مجانا</div>
+                <div> Join for Free</div>
               </Button>
             </Link>
           </div>

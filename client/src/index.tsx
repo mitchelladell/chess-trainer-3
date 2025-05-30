@@ -12,11 +12,10 @@ import Courses from "./Pages/Courses";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 import Variations from "./Pages/Variations";
-import Footer from "./components/Footer/Footer";
+
 import Layout from "./components/Layout/Layout";
 import Onboarding from "./Pages/onBoarding";
 import AllCourses from "./Pages/AllCourses";
-import { useAppSelector } from "./app/hooks";
 import Cookies from "js-cookie";
 import UserProfile from "./Pages/UserProfile";
 import UserProfileSettings from "./Pages/UserProfileSettings";

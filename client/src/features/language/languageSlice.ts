@@ -5,7 +5,7 @@ export type LanguageState = {
 };
 
 const initialState: LanguageState = {
-  value: "ar",
+  value: "en",
 };
 
 export const languageSlice = createSlice({

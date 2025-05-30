@@ -9,8 +9,6 @@ import Footer from "../components/Footer/Footer";
 import VariationBoard from "../components/VariationBoard/VariationBoard";
 
 const Variations = () => {
-  const lang = useSelector((state: any) => state.language.value);
-
   return (
     <div>
       <div>

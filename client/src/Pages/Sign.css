@@ -70,9 +70,9 @@
 }
 .signin-intro {
   color: #daa520;
-  font-size: 25px;
+  font-size: 35px;
   font-family: "Calibri";
-  text-align: end;
+  text-align: center;
   margin-bottom: 30px;
 }
 .or_keyword {
@@ -96,6 +96,23 @@
   border: 1px solid #d2ab32;
   color: black;
 }
+
+.sign-error {
+  color: #e53935; /* Red shade for errors */
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  padding: 0.4rem 0.6rem;
+  background-color: #fdecea;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  font-weight: 500;
+  display: inline-block;
+  width: 100%;
+  
+  margin-bottom: 10px;
+  text-align: center;
+}
+
 
 .join_button.focus {
   background: #daa520;
