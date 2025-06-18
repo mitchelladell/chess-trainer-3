@@ -10,3 +10,7 @@ In the project directory client, you can run:
 
 ### `npm start`
 
+
+*Login with already existing and subscribed user: 
+- ahmedmitchellhope@gmail.com
+- Liverpool1-
